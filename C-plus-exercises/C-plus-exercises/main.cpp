@@ -1,15 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <iostream>
-
-#include "Class1.h"
+#include <iostream>  // std::cout ���g�����߂̃w�b�_
 
 void main() {
-	Class1 obj;
-	obj.greet();
-	obj.set(3);
-	int age = obj.get();
-	std::cout << age << std::endl;
-}
+    // �������o��
+    std::cout << "Hello, World!" << std::endl;
 
+    // �ϐ����o��
+    int a = 10;
+    double b = 3.14;
+
+    std::cout << "a = " << a << std::endl;
+    std::cout << "b = " << b << std::endl;
+
+    // �����̒l���܂Ƃ߂ďo��
+    std::cout << "a + b = " << (a + b) << std::endl;
+}
 
