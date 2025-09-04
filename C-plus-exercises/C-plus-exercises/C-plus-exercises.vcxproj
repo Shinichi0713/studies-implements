@@ -139,11 +139,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Card.cpp" />
+    <ClCompile Include="Hand.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ref-black-jack.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Card.h" />
+    <ClInclude Include="Hand.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="HTMLPage.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
