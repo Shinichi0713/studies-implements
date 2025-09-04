@@ -1,10 +1,5 @@
-<<<<<<< Updated upstream
-﻿  Class1.cpp
+﻿  Hand.cpp
   main.cpp
-C:\Users\yoshinaga\Documents\Python Scripts\ForRealWork\studies-implements\C-plus-exercises\C-plus-exercises\main.cpp(7,13): warning C4326: 'main' の戻り値の型には、'int' を使用してください。'void' は使用できません
+C:\Users\yoshinaga\Documents\Python Scripts\hard-related\studies-implements\C-plus-exercises\C-plus-exercises\main.cpp(8,13): warning C4326: 'main' の戻り値の型には、'int' を使用してください。'void' は使用できません
   コードを生成中...
-=======
-﻿  main.cpp
-C:\Users\yoshinaga\Documents\Python Scripts\ForRealWork\studies-implements\C-plus-exercises\C-plus-exercises\main.cpp(5,13): warning C4326: 'main' の戻り値の型には、'int' を使用してください。'void' は使用できません
->>>>>>> Stashed changes
-  C-plus-exercises.vcxproj -> C:\Users\yoshinaga\Documents\Python Scripts\ForRealWork\studies-implements\C-plus-exercises\Debug\C-plus-exercises.exe
+  C-plus-exercises.vcxproj -> C:\Users\yoshinaga\Documents\Python Scripts\hard-related\studies-implements\C-plus-exercises\Debug\C-plus-exercises.exe

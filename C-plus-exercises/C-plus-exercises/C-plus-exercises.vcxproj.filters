@@ -21,40 +21,32 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Class1.h">
+    <ClInclude Include="Card.h">
+      <Filter>head</Filter>
+    </ClInclude>
+    <ClInclude Include="Hand.h">
       <Filter>head</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Class1.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>src</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="0-guide-line.md">
+    <ClCompile Include="ref-black-jack.cpp">
       <Filter>documents</Filter>
-    </None>
-    <None Include="1-class-cplus.md">
-      <Filter>documents</Filter>
-    </None>
-    <None Include="2-reference.md">
-      <Filter>documents</Filter>
-    </None>
+    </ClCompile>
+    <ClCompile Include="Hand.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Card.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Card.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
+    <None Include="HTMLPage.md">
+      <Filter>documents</Filter>
+    </None>
   </ItemGroup>
 </Project>
