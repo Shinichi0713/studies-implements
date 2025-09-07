@@ -15,6 +15,9 @@ void main() {
     std::cout << "Card 2: rank=" << c2.rank << " suit=" << c2.suit << "\n";
 
     Hand handPlayer;
-
+    handPlayer.Add(c1);
+    handPlayer.Add(c2);
+    handPlayer.Remove(1);
+    handPlayer.ShowHand();
 }
 
