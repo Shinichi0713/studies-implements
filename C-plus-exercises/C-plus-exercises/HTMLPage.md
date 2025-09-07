@@ -57,7 +57,9 @@ returnValue: count the value of cards
 
 askYesNo: choice discard or decide
 
-replaceCard: replace card
+Add: add card
+
+
 
 
 
