@@ -17,7 +17,6 @@ void main() {
     Hand handPlayer;
     handPlayer.Add(c1);
     handPlayer.Add(c2);
-    handPlayer.Remove(1);
-    handPlayer.ShowHand();
+    handPlayer.Ask();
 }
 
