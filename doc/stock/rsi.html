@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>RSI&#x3068;&#x306f;&#xff1f;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+/* 目次全体のコンテナ */
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <p>株のトレードをされる方であれば気になっている指標は25日移動平均線やMACD、デッドクロス / ゴールデンクロスなど様々です。
+うちデイをされる方がよく使う&quot;RSI&quot;について扱ってみます。</p>
+
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+
+<h2 id="rsiとは">RSIとは？</h2>
+<p>RSI（Relative Strength Index：相対力指数）は、一言でいえば <strong>「相場の過熱感（買われすぎ・売られすぎ）」を0〜100%の数値で示す指標</strong> です。</p>
+<p>1978年に米国のJ.W.ワイルダーによって考案され、現在でも世界中のトレーダーに最も愛用されているテクニカル指標の一つです。</p>
+<h3 id="計算方法">計算方法</h3>
+<p>RSIは、一定期間（一般的には14日間）の「値上がり幅」と「値下がり幅」を合計し、そのうち <strong>「値上がり幅が何%を占めているか」</strong> を計算したものです。</p>
+<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>R</mi><mi>S</mi><mi>I</mi><mo>=</mo><mfrac><mtext>一定期間の上げ幅の合計</mtext><mrow><mtext>一定期間の上げ幅の合計</mtext><mo>+</mo><mtext>一定期間の下げ幅の合計</mtext></mrow></mfrac><mo>×</mo><mn>100</mn></mrow><annotation encoding="application/x-tex">RSI = \frac{\text{一定期間の上げ幅の合計}}{\text{一定期間の上げ幅の合計} + \text{一定期間の下げ幅の合計}} \times 100
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">RS</span><span class="mord mathnormal" style="margin-right:0.07847em;">I</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.1297em;vertical-align:-0.7693em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3603em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord cjk_fallback">一定期間の上げ幅の合計</span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord text"><span class="mord cjk_fallback">一定期間の下げ幅の合計</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord text"><span class="mord cjk_fallback">一定期間の上げ幅の合計</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.7693em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">100</span></span></span></span></span></p>
+<p>具体例：</p>
+<p>10日間のうち、合計で100円上がり、合計で50円下がった場合<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>R</mi><mi>S</mi><mi>I</mi><mo>=</mo><mfrac><mn>100</mn><mrow><mn>100</mn><mo>+</mo><mn>50</mn></mrow></mfrac><mo>×</mo><mn>100</mn><mo>≈</mo><mn>66.7</mn><mi mathvariant="normal">%</mi></mrow><annotation encoding="application/x-tex">RSI = \frac{100}{100 + 50} \times 100 \approx 66.7\%</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">RS</span><span class="mord mathnormal" style="margin-right:0.07847em;">I</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.0908em;vertical-align:-0.7693em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">100</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord">50</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">100</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.7693em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">100</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">≈</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.8056em;vertical-align:-0.0556em;"></span><span class="mord">66.7%</span></span></span></span></span></p>
+となり、やや強気（買われ気味）な状態であることがわかります。</p>
+<img src="file:///c:\Users\yoshinaga\Documents\Python Scripts\hard-related\studies-implements\doc\stock\image\rsi\1766916941876.png" alt="代替テキスト" width="700" style="display: block; margin: 0 auto;">
+<p><strong>見方</strong></p>
+<ol>
+<li>70%以上（買われすぎ）： 相場が過熱しており、そろそろ下落に転じる可能性があるサイン（売り検討）。</li>
+<li>30%以下（売られすぎ）： 売られすぎており、そろそろ反発して上昇に転じる可能性があるサイン（買い検討）。</li>
+<li>50%（中立）： 強気と弱気が拮抗している状態。50%を上に抜けると上昇トレンド、下に抜けると下降トレンドへの転換と見ることもあります。</li>
+</ol>
+<h2 id="要注意なパターン">要注意なパターン</h2>
+<p>株式のトレードにおいて、RSI（相対力指数）が30%を下回る「売られすぎ」の状態になっても、株価が反発せず低い数値に張り付いてしまうことがあります。</p>
+<p>これは通常（レンジ相場）の反発とは異なり、  <strong>「強い下降トレンド」</strong> が発生している際に見られる現象です。通常の反発ケースと、戻らないケースの決定的な違いを解説します。</p>
+<h3 id="相場環境の違いレンジかトレンドか">相場環境の違い：レンジかトレンドか</h3>
+<p>RSIはもともと、一定の幅で株価が上下する「レンジ相場」で威力を発揮する指標です。</p>
+<ul>
+<li><strong>通常の反発（レンジ相場）：</strong>
+株価が一時的に売られすぎると、自律反発を狙った買いが入り、RSIは速やかに中央（50%）に向かって戻ります。</li>
+<li><strong>戻らない場合（強い下降トレンド）：</strong>
+株価の下げ足が速く、かつ継続的な売り圧力がかかっている状態です。RSIは計算式上、下落日の値幅が上昇日の値幅を圧倒し続けると、数値が低いまま推移（張り付き）します。これを**「RSIの張り付き」**と呼びます。</li>
+</ul>
+<h3 id="投資家心理とだまし">投資家心理と「だまし」</h3>
+<p>RSIが低いまま戻らない時は、投資家の心理状態が通常とは異なります。</p>
+<ul>
+<li><strong>通常：</strong> 「安くなったから買い場だ」という押し目買いの心理が働く。</li>
+<li><strong>戻らない場合：</strong> 「どこまで下がるかわからない」という<strong>恐怖による投げ売り（パニック売り）<strong>や、業績悪化などの</strong>悪材料の織り込み</strong>が続いています。</li>
+</ul>
+<blockquote>
+<p><strong>注意点：</strong> 逆張りの買いを入れると、さらなる下落に巻き込まれる「だまし」になりやすい局面です。</p>
+</blockquote>
+<h3 id="注目すべきサインダイバージェンス">注目すべきサイン：ダイバージェンス</h3>
+<p>RSIが低水準で推移していても、いずれ反発する際には「予兆」が出ることがあります。それが**ダイバージェンス（逆行現象）**です。</p>
+<table>
+<thead>
+<tr>
+<th>現象</th>
+<th>価格の動き</th>
+<th>RSIの動き</th>
+<th>意味</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>通常の下落</strong></td>
+<td>安値を更新する</td>
+<td>安値を更新する</td>
+<td>下落トレンドが継続中</td>
+</tr>
+<tr>
+<td><strong>強気のダイバージェンス</strong></td>
+<td><strong>安値を更新する</strong></td>
+<td><strong>安値を切り上げる</strong></td>
+<td>下落の勢いが弱まり、反発が近いサイン</td>
+</tr>
+</tbody>
+</table>
+<h2 id="チェックすべきポイント">チェックすべきポイント</h2>
+<p>RSIが戻らない時は、以下の要素を組み合わせて判断することをお勧めします。</p>
+<ul>
+<li><strong>トレンドライン：</strong> 下降トレンドラインを上に抜けるまでは「売られすぎ」でも買わない。</li>
+<li><strong>出来高：</strong> RSIが低い位置で出来高が急増（セリングクライマックス）すれば、反発の可能性が高まります。</li>
+<li><strong>期間設定：</strong> 標準の14日設定で張り付く場合、より長期（21日など）の設定でトレンドの強さを再確認する。</li>
+</ul>
+<p>RSIは「売られすぎ」を教えるだけで、<strong>「いつ反発するか」を保証するものではない</strong>という点が、通常時との最大の違いです。</p>
+<p>この動画では、RSIがなぜ「売られすぎ」で買っても機能しないことがあるのか、そしてダイバージェンスを使ってどのように精度の高いエントリーを行うかを解説しています。</p>
+<p><a href="https://www.youtube.com/watch?v=uB5fecSI1CU">RSIの正しい使い方とだましの回避方法</a></p>
+<p>RSIの「張り付き（低い数値に留まること）」や「だまし」は、多くのトレーダーが直面する課題です。これらを回避し、精度を高めるための具体的な手法を4つのステップに分けて解説します。</p>
+<h3 id="他のインジケーターとの組み合わせフィルターをかける">他のインジケーターとの組み合わせ（フィルターをかける）</h3>
+<p>RSI単体で判断せず、トレンドの有無を確認する指標を組み合わせるのが最も効果的です。</p>
+<ul>
+<li>
+<p><strong>ADX（平均方向性指数）の活用:</strong>
+ADXは「トレンドの強さ」を示す指標です。</p>
+</li>
+<li>
+<p><strong>ADXが高い（25〜30以上）:</strong> トレンドが非常に強いことを意味します。この時、RSIが30％以下になっても「単なる売られすぎ」ではなく「強い下降トレンド」なので、逆張りは避けます。</p>
+</li>
+<li>
+<p><strong>ADXが低い:</strong> レンジ相場である可能性が高いため、RSIの逆張りが機能しやすくなります。</p>
+</li>
+<li>
+<p><strong>移動平均線（MA）との位置関係:</strong>
+株価が長期移動平均線の下で推移している時は、RSIが低くても「戻り売り」の圧力が強いため、安易な買いは見送ります。</p>
+</li>
+</ul>
+<h3 id="ダイバージェンスをエントリーの必須条件にする">「ダイバージェンス」をエントリーの必須条件にする</h3>
+<p>RSIが30%を下回った瞬間に買うのではなく、**「ダイバージェンス（逆行現象）」**を確認してからエントリーすることで、だましを大幅に減らせます。</p>
+<ul>
+<li><strong>確認手順:</strong></li>
+</ul>
+<ol>
+<li>株価が前の安値を更新して下がっている。</li>
+<li>しかし、RSIのボトム（谷）は前の安値圏より切り上がっている。</li>
+</ol>
+<ul>
+<li><strong>意味:</strong> 下落の勢い（モメンタム）が衰えていることを示しており、張り付き状態から脱却する予兆となります。</li>
+</ul>
+<h3 id="時間軸を広げて確認するマルチタイムフレーム分析">時間軸を広げて確認する（マルチタイムフレーム分析）</h3>
+<p>5分足や15分足などの短い時間軸では、RSIは頻繁に張り付きます。</p>
+<ul>
+<li><strong>手法:</strong> 日足や4時間足などの「上位足」のRSIを確認します。</li>
+<li>上位足のRSIがまだ50%付近で下げ余地がある場合、下位足でRSIが30%以下になっても、それは単なる下落の始まりに過ぎない（＝張り付く）ことが多いです。</li>
+<li><strong>「上位足も売られすぎ」かつ「下位足でダイバージェンス発生」</strong> という条件が重なると、反発の確度は非常に高まります。</li>
+</ul>
+<h3 id="rsi自体のトレンドラインを引く">RSI自体の「トレンドライン」を引く</h3>
+<p>RSIのグラフ自体にトレンドラインを引く手法も有効です。</p>
+<ul>
+<li>RSIの山と山（あるいは谷と谷）を結んでラインを引きます。</li>
+<li>株価が横ばい、あるいは下落していても、<strong>RSIが自身の引いたトレンドラインを上に抜けた時</strong>を「だまし回避のエントリーポイント」とします。これは価格の動きに先行してモメンタムの変化を捉えるテクニックです。</li>
+</ul>
+<h3 id="まとめ実践的なルール作り">まとめ：実践的なルール作り</h3>
+<p>「だまし」を避けるためのシンプルなルール例です：</p>
+<ol>
+<li><strong>RSI 30%以下になってもすぐ買わない。</strong></li>
+<li><strong>RSIが30%を上に突き抜けて戻ってきたのを確認する。</strong>（あるいは20%から30%へ回復するタイミング）</li>
+<li><strong>その際、ADXが低下傾向にあるか、またはダイバージェンスが発生しているかを確認する。</strong></li>
+</ol>
+<p>RSIは「どこまで下がるか」ではなく「売りの勢いが弱まったか」を見るための道具と割り切ることが、トレードの安定につながります。</p>
+<p>まずは過去のチャートで、ADXが高い時のRSIと、低い時のRSIの動きを比較してみることから始めてみてはいかがでしょうか。</p>
+<h2 id="総括">総括</h2>
+<p>RSIは非常に役に立つ指標です。
+レンジの状態にあればかなり確度高く動向を見ることが出来ます。(アルゴやデイの人が参考にしているため)</p>
+<ol>
+<li>RSI単体でのトレードはしない方が良い</li>
+<li>ADXや、反発ラインを確認して現状を見定める</li>
+<li>RSIで突発的に飛びつかないように買っても良い銘柄は事前にリストアップしておく</li>
+</ol>
+
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+</script>
+
+            <script async src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+            
+        </body>
+        </html>

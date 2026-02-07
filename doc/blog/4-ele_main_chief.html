@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>1&period; &#x53d7;&#x3051;&#x3066;&#x307f;&#x305f;&#x611f;&#x60f3;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+/* 目次全体のコンテナ */
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+
+/* 記事タイトル (h1) */
+h1 {
+    font-size: 2rem;
+    color: #24292f;
+    line-height: 1.3;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 3px double #e1e4e8; /* 二重線で上品に */
+    text-align: center; /* タイトルを中央に寄せて特別感を出す */
+}
+
+/* セクション見出し (h2) */
+h2 {
+    font-size: 1.5rem;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(transparent 70%, #e8f0fe 70%); /* 下側に薄い色のアクセント */
+    border-left: 6px solid #0969da; /* 目次のテーマカラーと合わせる */
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* 強調文字 (strong) */
+strong {
+    font-weight: bold;
+    color: #cf222e; /* ホバー時の赤色と合わせて統一感を出す */
+    background: linear-gradient(transparent 60%, #fff2cc 60%); /* 黄色のマーカー風 */
+    padding: 0 2px;
+}
+
+/* 引用のコンテナ */
+blockquote {
+    position: relative;
+    padding: 20px 30px;
+    margin: 30px 0;
+    background-color: #f6f8fa; /* 目次の背景より少しだけ濃いグレー */
+    border-left: 5px solid #d0d7de; /* 落ち着いたグレーの境界線 */
+    color: #57606a; /* 文字色は少し薄くして引用らしさを出す */
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 引用符のアイコンを装飾として追加 */
+blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    font-size: 40px;
+    color: #d0d7de;
+    font-family: serif;
+    line-height: 1;
+}
+
+/* 読者になるボタンのデザイン */
+.btn-subscribe {
+    display: inline-block;
+    padding: 12px 35px; /* 横幅を広めにとって存在感を出します */
+    background-color: #383838; /* お好みの色に変更してください */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #555555;
+    text-decoration: none;
+}
+
+/* はてなブログで見えてしまう数式データを非表示にする */
+.katex-html {
+    display: none !important;
+}
+
+.katex-mathml {
+    display: inline !important;
+}
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+
+
+            <p>令和2年に電気通信主任技術者に合格しました。同資格の取得に向けた学習の方法について今回はお話させて頂きます。</p>
+<p><img src="file:///d:\PycharmProjects\ScienceCalculation\studies-implements\doc\blog\image.png" alt="alt text"></p>
+<p>2020年1月に受験した電気通信主任技術者ですが、なんとか合格しました。</p>
+<p>電気通信主任技術者の勉強法の体験記を書いていきたいと思います。</p>
+<h2 id="1-受けてみた感想">1. 受けてみた感想</h2>
+<p>受験範囲は広いため、勉強時間は結構かかりました。</p>
+<p>私の場合は2019年の7月くらいからぼちぼちと初めて、11月くらいからペースアップして、直前で何とか合格できるラインまでもっていった感じです。</p>
+<p>また、わたくし、電気通信のことは何も分かりませんという状態からのスタートだったので、初めの2か月は結構苦心しながらの勉強だったと思います。</p>
+<p>苦戦した理由がインターネットでお勧めされているテキストにあります。</p>
+<p>試験と関係ないことをかなり説明している。
+そもそもテキストがほとんどない。</p>
+<p>黄色い色の高額なテキストがおすすめになっていますが、全然別のテキストで勉強することをお勧めします。</p>
+<h2 id="2-勉強法">2. 勉強法</h2>
+<p>あくまで個人的なおすすめという感じで、人によってマッチする方法はあるでしょう。</p>
+<p>著者個人は、勉強開始時点では伝送を重点的に進めることをお勧めします。</p>
+<p>勉強のポイントをまとめると以下の点に集約されてきます。</p>
+<p><strong>a. 伝送はしっかりと勉強する</strong></p>
+<p>4つ科目がありますが、専門は他の科目に比べると伝送の知識をより深く問う問題が多いです。このため専門の勉強前に伝送をやっておく方が基礎が出来て、結果、相対的な勉強量を少なくすることが出来る。</p>
+<p><strong>b. 過去問の勉強をしっかりする</strong></p>
+<p>電気通信システムは過去問と同じ問題が出ます。過去5年の1回目、2回目を確実に解けるようになれば、絶対合格できます。問題自体も高校物理の電気程度の問題が出てくるくらいの難易度なので、それほど、勉強に時間をかけなくても大丈夫。→試験2か月前くらいからぼちぼち勉強しても多分受かります。</p>
+<p><strong>c. 法規は後回し</strong></p>
+<p>法規は暗記科目です。一つの問題集を3回くらい勉強すれば確実に合格できます。→試験1か月前から勉強しても間に合うと思います。</p>
+<h2 id="3-スケジュール">3. スケジュール</h2>
+<p>過去問を十分解くための時間を作る必要があります。
+この資格の特徴は試験範囲が広いことです。
+試験範囲が広いので、自分で勉強のペースを作る必要がありました。</p>
+<p>→スケジュールを立てて、どの程度のペースで勉強すれば過去問に時間を作れるかは逆算して取り組んでました。</p>
+<p><img src="file:///d:\PycharmProjects\ScienceCalculation\studies-implements\doc\blog\image\4-ele_main_chief\1768725559743.png" alt="1768725559743"></p>
+<p>私の場合は、こんな感じでスケジュール表作ってやってました。</p>
+<p>1月の試験めがけて7月から勉強開始しました。</p>
+<p>スケジュールの流れですが、教科書で勉強→見直し→過去問の流れに分けてます。</p>
+<p>スケジュールとは大分変ってしまったんですけど、立てたおかげで、継続的にコツコツできたと思います。</p>
+<p>因みに、2の勉強法で言っている電気システム、法規は直前から勉強で間に合うといっていることとは、全然異なり、全科目を7月ではじめてます。</p>
+<p>今振り返ると、もう少し効率よく勉強することも出来ました。
+(著者の場合、法規の勉強時間が空いてしまって、相当数忘れてました。直前でも覚えることが出来るなら、直前で良い。そっちの方が効率よいと思いました)</p>
+<h2 id="4-用語集を作ることのススメ">4. 用語集を作ることのススメ</h2>
+<p>用語集は(暗記が苦手な)著者に合ってたので勧めさせて頂きます。</p>
+<p>試験問題自体は選択肢、かつ、あんまり深く考えないといけない問題はそこまで多くありません。</p>
+<p>ただ、試験範囲が広いということがこの資格の特徴です。</p>
+<p>言葉の意味や、関係する言葉を沢山知っていることが重要です。</p>
+<p>なので、わからない言葉が出てくるたびに用語集に書き留めておいて、暇なときにパラパラ確認していました。</p>
+<p>用語集をつくるメリットは以下の通りです。</p>
+<ol>
+<li>「自分の弱点」だけが詰まった究極の効率本になる</li>
+</ol>
+<p>市販の単語帳には、すでに知っている単語も多く含まれています。自作の場合、「自分が間違えた単語」や「覚えにくい単語」だけを抽出できるため、開くたびに100%必要な学習ができます。</p>
+<p>英語: 模試や長文読解で出会った「文脈の中で分からなかった単語」をストックできる。</p>
+<p>古文: 助動詞の活用や、意味が複数あって混乱しやすい単語（例：「おどろく」など）に特化できる。</p>
+<ol start="2">
+<li>「エピソード記憶」で忘れにくくなる</li>
+</ol>
+<p>人間は、単なる記号よりも「体験」と結びついたものの方が記憶に定着しやすい性質を持っています。</p>
+<p>「あの長文の第3パラグラフに出てきた単語だ」</p>
+<p>「先生が授業でギャグを交えて説明してた古文単語だ」 といった背景（コンテキスト）と一緒に記録することで、思い出す手がかりが格段に増えます。</p>
+<h2 id="5-最後に">5. 最後に</h2>
+<p>電気主任技術者という資格に対する社会的なニーズは、今後も継続すると考えています。</p>
+<p>電気通信事業法第45条で定められた　「事業用の電気通信設備の工事と設備の維持・運用をするための監督者」 は通信のインフラ設備を意味します。</p>
+<p>同資格の取得に向けて勉強を始められる方の参考にして頂ければ幸いです。</p>
+<blockquote>
+<p>電気主任技術者が管轄する対象となる事業用電気通信設備とは、電気通信事業者が提供する通信サービス（インターネット、携帯電話、固定電話など）を実現するために、事業者が自ら設置・運用する設備一全般を指します。
+例えば以下が該当します。</p>
+<ol>
+<li>伝送交換設備（ネットワークの「核」となる部分）<br>
+主に情報の交換（ルーティング）や信号の処理、中継を行う設備です。</li>
+</ol>
+<ul>
+<li>交換機・ルーター: 通信の宛先を判別し、接続先を切り替える装置。</li>
+<li>伝送装置: データを長距離送るために信号を増幅・変換する装置。</li>
+<li>サーバー・蓄積設備: メールの送受信やデータの保存を行う設備。</li>
+<li>電源設備: これらの装置を24時間稼働させるための自家発電機や蓄電池。</li>
+</ul>
+<ol start="2">
+<li>線路設備（ネットワークの「道」となる部分）<br>
+情報を物理的に伝達するための通路となる設備です。</li>
+</ol>
+<ul>
+<li>通信回線: 光ファイバーケーブル、同軸ケーブル、電話線など。</li>
+<li>支持物: 電柱、鉄塔、マンホール、ハンドホール。</li>
+<li>海底ケーブル: 大陸間を繋ぐ大規模な回線。</li>
+<li>無線設備: 携帯電話の基地局やアンテナ。</li>
+</ul>
+</blockquote>
+
+<h2>最後に</h2>
+<p>記事を最後まで読んでくださってありがとうございます。<br />記事の内容を読んで頑張れと思っていただいた読者様、是非、読者になって今後も応援してください。</p>
+<iframe src="https://blog.hatena.ne.jp/yoshishinnze/yoshishinnze.hatenablog.com/subscribe/iframe" allowtransparency="true" frameborder="0" scrolling="no" width="150" height="28"></iframe>
+
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+</script>
+
+            
+        </body>
+        </html>
