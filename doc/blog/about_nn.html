@@ -1,0 +1,432 @@
+<style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+<style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+
+/* 記事タイトル (h1) */
+h1 {
+    font-size: 2rem;
+    color: #24292f;
+    line-height: 1.3;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 3px double #e1e4e8; /* 二重線で上品に */
+    text-align: center; /* タイトルを中央に寄せて特別感を出す */
+}
+
+/* セクション見出し (h2) */
+h2 {
+    font-size: 1.5rem;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(transparent 70%, #e8f0fe 70%); /* 下側に薄い色のアクセント */
+    border-left: 6px solid #0969da; /* 目次のテーマカラーと合わせる */
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* 強調文字 (strong) */
+strong {
+    font-weight: bold;
+    color: #cf222e; /* ホバー時の赤色と合わせて統一感を出す */
+    background: linear-gradient(transparent 60%, #fff2cc 60%); /* 黄色のマーカー風 */
+    padding: 0 2px;
+}
+
+/* 引用のコンテナ */
+blockquote {
+    position: relative;
+    padding: 20px 30px;
+    margin: 30px 0;
+    background-color: #f6f8fa; /* 目次の背景より少しだけ濃いグレー */
+    border-left: 5px solid #d0d7de; /* 落ち着いたグレーの境界線 */
+    color: #57606a; /* 文字色は少し薄くして引用らしさを出す */
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 引用符のアイコンを装飾として追加 */
+blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    font-size: 40px;
+    color: #d0d7de;
+    font-family: serif;
+    line-height: 1;
+}
+
+/* 読者になるボタンのデザイン */
+.btn-subscribe {
+    display: inline-block;
+    padding: 12px 35px; /* 横幅を広めにとって存在感を出します */
+    background-color: #383838; /* お好みの色に変更してください */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #555555;
+    text-decoration: none;
+}
+
+/* はてなブログで見えてしまう数式データを非表示にする */
+.katex-html {
+    display: none !important;
+}
+
+.katex-mathml {
+    display: inline !important;
+}
+
+</style>
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+
+<h1 id="ニューラルネットワークとは">ニューラルネットワークとは</h1>
+<p>今回は、LLMを理解するというか、近年のAIのベースとなったニューラルネットワークの概要や開発の歴史、計算の仕組みについてまとめてみます。</p>
+<p><img src="https://cdn-ak.f.st-hatena.com/images/fotolife/y/yoshishinnze/20251129/20251129182606.png" width="463" height="463" loading="lazy" title="" class="hatena-fotolife" itemprop="image" style="display: block; margin-left: auto; margin-right: auto;" /></p>
+<p> </p>
+<h2 id="llm理解の基礎-ニューラルネットワークの全体像">LLM理解の基礎: ニューラルネットワークの全体像</h2>
+<p>ニューラルネットワーク（NN）は、人間の脳の神経回路を模倣した計算モデルであり、AI（人工知能）の核となる技術です。その最大の役割は、大量のデータから<strong>自動的にパターンを学習</strong>し、分類や予測を行うことです。</p>
+<h2 id="1-ニューラルネットワークの基礎">1. ニューラルネットワークの基礎</h2>
+<h3 id="nnの歴史と発展">NNの歴史と発展</h3>
+<p>NNの研究は、幾度かの「冬の時代」を経て進化してきました。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">年代</th>
+<th style="text-align: left;">出来事</th>
+<th style="text-align: left;">意義</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>1940年代</strong></td>
+<td style="text-align: left;"><strong>M-Pモデル</strong>の提案</td>
+<td style="text-align: left;">ニューロン（計算単位）の<strong>数理モデル</strong>を確立。</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>1958年</strong></td>
+<td style="text-align: left;"><strong>パーセプトロン</strong>の登場</td>
+<td style="text-align: left;"><strong>学習</strong>という概念をNNに導入。単層では線形問題のみ解決可能。</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>1969年</strong></td>
+<td style="text-align: left;"><strong>第1次冬の時代</strong></td>
+<td style="text-align: left;">XOR問題など、非線形問題が解けないことが判明し、研究が停滞。</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>1986年</strong></td>
+<td style="text-align: left;"><strong>誤差逆伝播法 (<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Backpropagation</mtext></mrow><annotation encoding="application/x-tex">\text{Backpropagation}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="mord text"><span class="mord">Backpropagation</span></span></span></span></span>) の普及</strong></td>
+<td style="text-align: left;">多層NN（DNN）の学習を可能にし、非線形問題を解決。現在のディープラーニングの基礎技術。</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>2012年以降</strong></td>
+<td style="text-align: left;"><strong>深層学習ブーム</strong></td>
+<td style="text-align: left;">GPUと大規模データセットの登場により性能が飛躍的に向上。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="構造-ノードと層による情報の流れ">構造: ノードと層による情報の流れ</h3>
+<p>NNは、情報を処理する<strong>ノード（ニューロン）<strong>が</strong>重み付きの接続</strong>で結ばれ、以下の3つの層構造を持つことで情報を処理します</p>
+<p>[Image of a simple neural network architecture showing input, hidden, and output layers] :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">層の名称</th>
+<th style="text-align: left;">役割</th>
+<th style="text-align: left;">LLMにおける例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>入力層 (Input Layer)</strong></td>
+<td style="text-align: left;">外部データ（画像やテキスト）を受け取る入り口。</td>
+<td style="text-align: left;">文章中の<strong>単語</strong>や<strong>トークン</strong>を数値化したもの。</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>隠れ層 (Hidden Layers)</strong></td>
+<td style="text-align: left;">データの<strong>複雑なパターン</strong>や<strong>特徴</strong>を抽出・解釈する主要な処理部。層が多いほど、より深い特徴を学習できる（深層学習）。</td>
+<td style="text-align: left;">文章の<strong>文脈</strong>や<strong>文法構造</strong>を理解する部分。</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>出力層 (Output Layer)</strong></td>
+<td style="text-align: left;">ネットワークの最終的な<strong>予測</strong>や<strong>結果</strong>を出力する出口。</td>
+<td style="text-align: left;">次に来る<strong>単語の候補</strong>や、分類結果。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="2-仕組み計算と学習の完全な流れ">2. 仕組み：計算と学習の完全な流れ</h2>
+<p>NNの学習は、「<strong>順方向の予測</strong>」と「<strong>逆方向の修正</strong>」という2つのフェーズを繰り返すことで行われます。</p>
+<h3 id="順伝播-forward-propagation推論">順伝播 (Forward Propagation)：推論</h3>
+<p><strong>目的:</strong> 入力から予測を生成する。</p>
+<ol>
+<li><strong>積和とバイアス:</strong> 各ニューロンで、前の層からの入力に接続の<strong>重み (<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Weight</mtext></mrow><annotation encoding="application/x-tex">\text{Weight}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="mord text"><span class="mord">Weight</span></span></span></span></span>)</strong> を掛け合わせて合計し、<strong>バイアス (<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>Bias</mtext></mrow><annotation encoding="application/x-tex">\text{Bias}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="mord text"><span class="mord">Bias</span></span></span></span></span>)</strong> を加算する。</li>
+<li><strong>活性化関数:</strong> この結果を非線形な<strong>活性化関数 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mo stretchy="false">(</mo><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">f()</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="mord mathnormal" style="margin-right: 0.10764em;">f</span><span class="mopen">(</span><span class="mclose">)</span></span></span></span></strong> に通すことで、複雑なパターンを扱えるようにする。
+<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mtext>Output</mtext><mo>=</mo><mi>f</mi><mrow><mo fence="true">(</mo><munder><mo>∑</mo><mi>i</mi></munder><mo stretchy="false">(</mo><msub><mtext>Input</mtext><mi>i</mi></msub><mo>×</mo><msub><mtext>Weight</mtext><mi>i</mi></msub><mo stretchy="false">)</mo><mo>+</mo><mtext>Bias</mtext><mo fence="true">)</mo></mrow></mrow><annotation encoding="application/x-tex">\text{Output} = f\left(\sum_{i} (\text{Input}_i \times \text{Weight}_i) + \text{Bias}\right) </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="mord text"><span class="mord">Output</span></span><span class="mrel">=</span></span><span class="base"><span class="mord mathnormal" style="margin-right: 0.10764em;">f</span><span class="minner"><span class="mopen delimcenter" style="top: 0em;"><span class="delimsizing size4">(</span></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 1.05em;"><span style="top: -1.8723em; margin-left: 0em;"><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span style="top: -3.05em;"><span class="mop op-symbol large-op">∑</span></span></span><span class="vlist-s">​</span></span></span></span><span class="mopen">(</span><span class="mord"><span class="mord text"><span class="mord">Input</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.2175em;"><span style="top: -2.4559em; margin-right: 0.05em;"><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span></span></span></span><span class="mbin">×</span><span class="mord"><span class="mord text"><span class="mord">Weight</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.2175em;"><span style="top: -2.4559em; margin-right: 0.05em;"><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span></span></span></span><span class="mclose">)</span><span class="mbin">+</span><span class="mord text"><span class="mord">Bias</span></span><span class="mclose delimcenter" style="top: 0em;"><span class="delimsizing size4">)</span></span></span></span></span></span></span></p>
+</li>
+</ol>
+<h3 id="逆伝播-backpropagation学習重みの調整">逆伝播 (Backpropagation)：学習（重みの調整）</h3>
+<p><strong>目的:</strong> 予測誤差（損失）を最小化するように重みを効率的に修正する。</p>
+<ol>
+<li><strong>損失の計算:</strong> 予測値と<strong>正解ラベル</strong>のズレを<strong>損失関数</strong>で数値化する（これがモデルの間違いの大きさ）。</li>
+<li><strong>誤差の逆伝播:</strong> 損失を出発点とし、<strong>出力層から入力層へ逆方向</strong>に、各重みが損失にどれだけ影響したか（<strong>勾配</strong>）を計算し伝達する。</li>
+<li><strong>重みの更新 (勾配降下法):</strong> 計算された<strong>勾配と逆の方向</strong>へ、「<strong>学習率</strong>」分の歩幅で重みを更新し、損失を減らす。</li>
+</ol>
+<h2 id="3-llmへの接続時系列情報の扱いの重要性">3. LLMへの接続：時系列情報の扱いの重要性</h2>
+<p>LLMを学習する上で時系列情報が重要となるのは、<strong>文章データ自体が本質的に順番を持つ時系列データ</strong>だからです。</p>
+<h3 id="nnの種類と時系列処理">NNの種類と時系列処理</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">NNの種類</th>
+<th style="text-align: left;">主な応用分野</th>
+<th style="text-align: left;">LLMとの関係</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>RNN/LSTM</strong></td>
+<td style="text-align: left;"><strong>時系列データ</strong>（音声、テキスト）</td>
+<td style="text-align: left;">過去の情報を保持する<strong>再帰的な接続</strong>を持ち、文章の文脈を理解する初期の基礎となった。</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Transformer</strong></td>
+<td style="text-align: left;"><strong>LLMの基盤</strong></td>
+<td style="text-align: left;"><strong>自己注意機構</strong>により、遠く離れた単語間の依存関係（長距離依存性）を効率的に捉え、時系列処理を革新した。</td>
+</tr>
+</tbody>
+</table>
+<p>LLMは、Transformerという強力なNN構造を用い、文章という<strong>「単語の並び（時系列）」</strong>を扱うことで、文脈を理解し、<strong>次の単語を予測する</strong>生成能力を実現しています。</p>
+
+<p>
+<script async="" src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+</script>
+
+
+</p>

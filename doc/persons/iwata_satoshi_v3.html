@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&#x30cf;&#x30c3;&#x30d4;&#x30fc;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+
+            <p>今回で岩田聡のエピソード最終回です。</p>
+<p>最後は&quot;あなたはハッピーですか？&quot;です。</p>
+<h2 id="ハッピー">ハッピー</h2>
+<p>岩田聡はHAL研究所や任天堂にて、社長として社員とよく面談をしていたらしいです。
+面談中に必ず聞く言葉があって、&quot;今、あなたはハッピーですか？&quot;とのことです。
+なんてストレートなんでしょう。</p>
+<p>普段一緒に仕事しているわけでもない可能性がある社員に対して、仕事での成果や、どんなことを頑張っているかではなく、あなたは&quot;ハッピーですか?&quot;です。
+面接で聞かれるのも、&quot;成果上げたことは何？&quot;や&quot;考え方は何?&quot;ではないのです。</p>
+<p>社員がハッピーな状態かが、彼にとっては一番大事なことだったんだと思います。</p>
+<h2 id="私にとってのハッピー">私にとってのハッピー</h2>
+<p>著者は大学院卒の後、いろんなことがありました。ハッピーであったのは社会人になって5割くらいでしょうか。
+著者は自己肯定感がそれほど高くないので、ハッピーじゃない期間とハッピーな期間が半々くらいです。</p>
+<p>ハッピーな期間は、ほっといても上手くいく。
+仕事していると、ハッピーな感情で仕事が出来ていて、難しい問題や、難しい交渉もハッピーに対応して、なんとなく完了しているということが多かったです。</p>
+<p>ハッピーでない期間は、踏ん張ってやってもなかなか思い通りにはならない。
+ハッピーな時は、難しい問題や、難しい状況に出くわすと、本当にもうへろへろでした。
+へろへろになったかと言って、うまくいっているという気はしないんです。</p>
+<p>普段より頑張ってアイデア出しても、第3者からすると、それほど良いものではない、ということが多かったです。
+もがいても、なかなかうまくいかない。
+ハッピーじゃない期間はそんなことばかりでした。。。</p>
+<p>ハッピーであれば、普段の仕事や生活が勝手に好循環になっていく、そんな状態だったと思います。
+ハッピーというのは非常に重要なことです。</p>
+<h2 id="リーダがハッピーを気に掛ける意義">リーダがハッピーを気に掛ける意義</h2>
+<p>一杯意義があると思います。</p>
+<p>チームの成果を挙げるという目線であれば、メンバーを活躍してもらう必要がある。
+良い成果を挙げるのであれば、常に良い状態で仕事に取り組んでもらわないといけない。</p>
+<p>同じチームがハッピーであれば、チームの雰囲気が居心地よくなるでしょう。
+活気が出てきて、良いチームになるでしょう。</p>
+<p>ハッピーだと、自分以外の人に注意が行くようになるという面もあると思います。
+すると、仕事の結果を他者に対する貢献を動機とするようになるでしょうから、より他者にとって有意義な仕事が出来るようになると思います。</p>
+<p>リーダーが関係を持つメンバーのハッピーを気にかけて、ハッピーになるように努力することは、チーム外にまで影響を持つことが出来るはずです。</p>
+<h2 id="岩田聡がハッピーを気にした理由は">岩田聡がハッピーを気にした理由は？</h2>
+<p>ネットを探したんですが、その心をはっきりさせている情報は見つかりませんでした。</p>
+<p>単純に自分がハッピーだったから、関係者みんなもハッピーになって欲しかったのかもしれませんし、人とはハッピーになるべきなんだというような性善説的な形で信じていたのかもしれません。</p>
+<p>彼は面談しているときに、すぐにハッピーと即答できなかった社員に対しては、どうすればハッピーになれるか真剣に話をしたらしいです。
+かつ、ハッピーになるように行動にも移しました。</p>
+<p>著者が感動したのは、その度合いが行動を伴う本気だったということです。
+著者はこれまで何度も、上司にこの手を話す機会はあったと思います。
+上司が本気で幸せに、とか、悩みを解決したいと考え、行動してしまうリーダは、いたかしら・・・。
+というか。。。自分が果たしてそんな人かという気もします。</p>
+<p>彼が技術的に優れているだけであれば、合ったこともない人に対して、ここまで人に話ししてみたいとは思わない(笑)。
+人に対してハッピーになってほしいと真剣に考えていた人だったので、良いなと思いました。</p>
+<p>人がハッピーでいられるように努力する、というのは生きていて一番有意義な生き方たと思いました。</p>
+<p>ということで全４回ブログで書いていた岩田聡エピソード、おしまいです。</p>
+<h2 id="参考">参考</h2>
+<p>[岩田さん【グラブバッグ】]
+(<a href="https://www.youtube.com/watch?v=o2wYKkqhkG0">https://www.youtube.com/watch?v=o2wYKkqhkG0</a>)</p>
+<p>[岩田聡の名言50選！Nintendoを変えた男の名言”天職”も解説]
+(<a href="https://kabushikihakushi.com/2025/04/09/iwata-satoru-page-1/">https://kabushikihakushi.com/2025/04/09/iwata-satoru-page-1/</a>)</p>
+
+
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+</script>
+            
+        </body>
+        </html>

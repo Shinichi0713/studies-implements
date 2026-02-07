@@ -1,0 +1,684 @@
+<style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+<nav>
+<h3>目次</h3>
+<ul id="toc"></ul>
+</nav>
+<p>サーバで学習させたようなAIモデルを、エッジコンピュータと言われる限られたリソースの環境下で動作させたいようなことがままあります。</p>
+<p>そんな際によく利用される手法が知識蒸留と呼ばれる手法です。</p>
+<p>知識蒸留（Knowledge Distillation）とは、巨大で高性能なモデル（ <strong>教師モデル / Teacher Model</strong> ）の持つ知識を、より軽量でコンパクトなモデル（ <strong>生徒モデル / Student Model</strong> ）に継承させる手法のことです。</p>
+<p>「精度は高いが計算が重い」モデルの知能を、「軽量で高速に動く」モデルに凝縮することを目的としています。</p>
+<figure class="figure-image figure-image-fotolife mceNonEditable" title="knowledge_distillaiton">
+<p><img src="https://cdn-ak.f.st-hatena.com/images/fotolife/y/yoshishinnze/20251229/20251229152658.png" alt="" width="632" height="562" loading="lazy" title="" class="hatena-fotolife" itemprop="image" /></p>
+<figcaption class="mceEditable">knowledge_distillaiton</figcaption>
+</figure>
+<h2 id="知識蒸留の基本構造">知識蒸留の基本構造</h2>
+<p>通常の学習では、正解ラベル（Hard Target）のみを学習しますが、知識蒸留では教師モデルが出力する「予測の確率分布（Soft Target）」を利用します。</p>
+<ul>
+<li><strong>教師モデル（Teacher）</strong> : すでに学習済みの巨大なモデル（例：BERT-Large, GPT-3）。</li>
+<li><strong>生徒モデル（Student）</strong> : これから学習する軽量なモデル（例：DistilBERT, TinyBERT）。</li>
+<li><strong>Soft Targets</strong> : 教師モデルが各クラスに対して出力した確率値。</li>
+</ul>
+<h3 id="なぜsoft-targetが重要なのか">なぜ「Soft Target」が重要なのか？</h3>
+<p>例えば、画像認識で「犬」を分類する場合、教師モデルは以下のような確率を出力します。</p>
+<ul>
+<li>犬：90%</li>
+<li>猫：9%</li>
+<li>車：1%</li>
+</ul>
+<p>この「猫である確率が、車である確率よりも高い」という情報は、単なる正解ラベル（犬：100%）からは得られない、 <strong>「クラス間の類似性や概念的な距離」</strong> という重要な知識を含んでいます。生徒モデルはこの情報を手がかりにすることで、少ないパラメータ数でも効率的に学習できるのです。</p>
+<h3 id="主な手法の種類">主な手法の種類</h3>
+<p>知識をどの段階で取り出すかによって、いくつかの手法に分類されます。</p>
+<h4 id="-response-based-distillation-出力層の蒸留">① Response-Based Distillation (出力層の蒸留)</h4>
+<p>最も一般的な手法。教師モデルの最終的な予測値（ロジット）を真似るように学習します。この際、 <strong>Temperature（温度パラメータ）</strong> という変数を使用して確率分布を滑らかにし、小さな確率の差異を強調することが多いです。</p>
+<h4 id="-feature-based-distillation-中間層の蒸留">② Feature-Based Distillation (中間層の蒸留)</h4>
+<p>最終結果だけでなく、モデルの「考え方」の途中経過（中間層の出力）を真似させます。生徒モデルの各層が、教師モデルの対応する層と同じような特徴量を抽出できるようにガイドします。</p>
+<h4 id="-relation-based-distillation-関係性の蒸留">③ Relation-Based Distillation (関係性の蒸留)</h4>
+<p>個々のデータに対する出力ではなく、「データAとデータBの似ている度合い」といった、データ間の関係性を教師モデルから継承します。</p>
+<h3 id="4-知識蒸留のメリット">4. 知識蒸留のメリット</h3>
+<ol>
+<li><strong>軽量化・高速化</strong> : 推論速度が劇的に向上し、モバイルデバイスやエッジ端末でも動作可能になります。</li>
+<li><strong>精度の維持</strong> : 軽量モデルを一から学習させるよりも、蒸留を用いたほうが高い精度に到達します。</li>
+<li><strong>コスト削減</strong> : クラウドサーバーの計算コストや消費電力を抑えることができます。</li>
+</ol>
+<h3 id="5-代表的な活用例">5. 代表的な活用例</h3>
+<ul>
+<li><strong>DistilBERT / TinyBERT</strong> : BERTの性能を維持しつつ、サイズを大幅に削減したモデル。</li>
+<li><strong>LLMの蒸留</strong> : 巨大なLLM（Llama 3 70Bなど）が生成した高品質なデータを使い、より小さなモデル（Llama 3 8Bなど）を微調整する手法が広く使われています。</li>
+</ul>
+<h2 id="手法ごとの特徴">手法ごとの特徴</h2>
+<p>知識蒸留には、教師モデルの「どの段階の情報」に注目して学習させるかによって、大きく分けて**3つのパターン（Response-Based / Feature-Based / Relation-Based）**があります。</p>
+<p>それぞれの特徴、メリット、および学習の焦点を整理して解説します。</p>
+<h3 id="1-response-based-distillation-出力層の蒸留">1. Response-Based Distillation (出力層の蒸留)</h3>
+<p>最も一般的でシンプルな手法です。教師モデルが最終的に出した「予測結果（ロジット/確率分布）」を生徒が真似ます。</p>
+<ul>
+<li><strong>特徴</strong>: 教師モデルの最終出力（Soft Target）を教師データとして使います。</li>
+<li><strong>学習の焦点</strong>: 「この画像が犬である確率は90%だが、猫である確率も9%ある」といった、<strong>クラス間の類似度</strong>を学びます。</li>
+<li><strong>メリット</strong>:</li>
+<li>実装が非常に簡単。</li>
+<li>教師モデルの内部構造（中間層の数や次元）を知らなくても、出力さえあれば実行できる（ブラックボックスなモデルでも可能）。</li>
+<li><strong>デメリット</strong>: 中間層で行われている複雑な特徴抽出のプロセスは無視されるため、情報の継承に限界がある。</li>
+</ul>
+<h3 id="2-feature-based-distillation-中間層特徴量の蒸留">2. Feature-Based Distillation (中間層・特徴量の蒸留)</h3>
+<p>最終的な答えだけでなく、モデルが「途中で何を考えているか（特徴抽出のプロセス）」を真似させます。</p>
+<ul>
+<li><strong>特徴</strong>: 中間層（中間特徴マップ）の出力を比較します。</li>
+<li><strong>学習の焦点</strong>: 「どこにエッジがあるか」「どのようなテクスチャに注目しているか」といった、<strong>情報の処理プロセス</strong>そのものを学びます。</li>
+<li><strong>メリット</strong>:</li>
+<li>Response-Basedよりも深い知識の継承が可能。</li>
+<li>生徒モデルの精度がより教師に近づきやすい。</li>
+<li><strong>デメリット</strong>:</li>
+<li>教師と生徒で中間層の次元（チャンネル数など）が異なる場合、次元を合わせるための変換層（アダプター）が必要になり、計算が複雑になる。</li>
+</ul>
+<h3 id="3-relation-based-distillation-関係性の蒸留">3. Relation-Based Distillation (関係性の蒸留)</h3>
+<p>個々のデータに対する出力ではなく、「データ同士の関係性」を真似させます。</p>
+<ul>
+<li><strong>特徴</strong>: 複数のデータ（サンプルA、B、C...）を同時に入力し、教師モデルがそれらをどう関連付けたかを比較します。</li>
+<li><strong>学習の焦点</strong>: 「データAとデータBは非常に似ているが、Cとは遠い」といった、データの構造的な配置（類似性マップ）を学びます。</li>
+<li><strong>メリット</strong>:</li>
+<li>個別の値そのものを真似る必要がないため、モデルの構造的な制約を最も受けにくい。</li>
+<li>データの「意味的な空間」を効率的に構築できる。</li>
+<li><strong>デメリット</strong>:</li>
+<li>バッチ内のデータ間の関係を計算するため、計算コスト（メモリ消費）が高くなる傾向がある。</li>
+</ul>
+<h3 id="3つのパターンの比較まとめ">3つのパターンの比較まとめ</h3>
+<table>
+<thead>
+<tr>
+<th>手法</th>
+<th>注目する場所</th>
+<th>何を学ぶか</th>
+<th>実装の難易度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Response</strong></td>
+<td>最終出力層</td>
+<td><strong>答えの出し方</strong> (Soft Targets)</td>
+<td>低 (簡単)</td>
+</tr>
+<tr>
+<td><strong>Feature</strong></td>
+<td>中間層</td>
+<td><strong>情報の見方</strong> (Hidden Features)</td>
+<td>中 (次元合わせが必要)</td>
+</tr>
+<tr>
+<td><strong>Relation</strong></td>
+<td>データ間の関係</td>
+<td><strong>データの距離感</strong> (Sample Affinity)</td>
+<td>高 (行列計算が複雑)</td>
+</tr>
+</tbody>
+</table>
+<p>実際の開発現場では、これらを組み合わせて「Response-Based + Feature-Based」のように、複数の損失関数を混ぜて学習させることが一般的です。</p>
+<h2 id="実際の実装法">実際の実装法</h2>
+<p>上記のResponseの場合での実装法について説明します。 Response-Based Distillationは、知識蒸留の中で最も一般的かつ強力な手法です。 これは、教師モデルの最終出力である「ロジット（Softmax直前の値）」を生徒が模倣する方法です。</p>
+<h3 id="response-based-distillation-の実装手順">Response-Based Distillation の実装手順</h3>
+<h4 id="1-温度パラメータ--による確率分布の平滑化">1. 温度パラメータ による確率分布の平滑化</h4>
+<p>通常の学習では、Softmax関数によって正解クラスが 1.0 に近く、それ以外が 0 に近い「尖った分布」になります。Response-Basedでは、出力を （Temperature）で割ることで、分布をあえて「なだらか」にします。</p>
+<ul>
+<li><strong>理由</strong>: なだらかにすることで、教師モデルが持っている「正解以外のクラスとの類似性（例：猫は犬に似ているが、車には似ていない）」という微細な情報（ダークナレッジ）を生徒が受け取りやすくするためです。</li>
+</ul>
+<h4 id="2-ソフトターゲットとソフト予測の算出">2. ソフトターゲットとソフト予測の算出</h4>
+<p>実装コード内の以下の部分が該当します。</p>
+<pre><code class="language-python"><span class="hljs-comment"># 教師の出力をなだらかにする（ソフトターゲット）</span>
+soft_targets = F.softmax(teacher_logits / T, dim=<span class="hljs-number">1</span>)
+
+<span class="hljs-comment"># 生徒の出力をなだらかにする（ソフト予測）</span>
+student_log_soft = F.log_softmax(student_logits / T, dim=<span class="hljs-number">1</span>)
+
+</code></pre>
+<p>教師の知識を「正解（ターゲット）」とし、生徒がそれにどれだけ近いかを計算する準備をします。</p>
+<h4 id="3-klダイバージェンスkl散布度による誤差計算">3. KLダイバージェンス（KL散布度）による誤差計算</h4>
+<p>2つの確率分布がどれくらい似ているかを測る指標として <strong>KLDivLoss</strong> を使用します。</p>
+<pre><code class="language-python">distill_loss = nn.KLDivLoss(reduction=<span class="hljs-string">'batchmean'</span>)(student_log_soft, soft_targets) * (T * T)
+
+</code></pre>
+<ul>
+<li><strong>ポイント</strong>: を掛けるのは、Softmaxを で割ったことによって小さくなった勾配のスケールを元に戻し、学習を安定させるための数学的な調整です。</li>
+</ul>
+<h4 id="4-通常の学習ロスcross-entropyとの結合">4. 通常の学習ロス（Cross Entropy）との結合</h4>
+<p>教師の真似をするだけでは、本来の正解ラベル（Hard Target）を疎かにしてしまう可能性があります。そのため、通常のロスと合算します。</p>
+<pre><code class="language-python">loss = alpha * distill_loss + (<span class="hljs-number">1.</span> - alpha) * hard_loss
+
+</code></pre>
+<ul>
+<li><strong>alpha</strong>: このバランスを調整するハイパーパラメータです。</li>
+</ul>
+<h3 id="実装の全体像まとめ">実装の全体像まとめ</h3>
+<p>Response-Basedの実装手順を整理すると以下のようになります。</p>
+<ol>
+<li><strong>Teacherの固定</strong>: <code>teacher.eval()</code> で教師モデルを推論モードにする。</li>
+<li><strong>ロジットの抽出</strong>: 教師と生徒の両方から Softmax 前の値を取得する。</li>
+<li><strong>温度スケーリング</strong>: 両方のロジットを で割る。</li>
+<li><strong>分布の比較</strong>: KLダイバージェンスで「分布の形状の差」を計算。</li>
+<li><strong>総合ロスの最小化</strong>: 正解ラベルとの誤差も加えて逆伝播（<code>loss.backward()</code>）を行う。</li>
+</ol>
+<p>teacher_model, student_modelを事前に構築しておいた状態で、学習を行うコードを示します。</p>
+<pre><code class="language-python"><span class="hljs-keyword">import</span> torch.nn.functional <span class="hljs-keyword">as</span> F
+
+<span class="hljs-comment"># 知識蒸留用の損失関数（再掲・最適化版）</span>
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">distillation_loss_fn</span>(<span class="hljs-params">student_logits, teacher_logits, labels, T=<span class="hljs-number">3.0</span>, alpha=<span class="hljs-number">0.5</span></span>):
+    <span class="hljs-comment"># 1. Distillation Loss (教師の「振る舞い」を真似る)</span>
+    <span class="hljs-comment"># Tで割ることで確率分布を滑らかにし、小さな差異を強調する</span>
+    soft_targets = F.softmax(teacher_logits / T, dim=<span class="hljs-number">1</span>)
+    student_log_soft = F.log_softmax(student_logits / T, dim=<span class="hljs-number">1</span>)
+    distill_loss = nn.KLDivLoss(reduction=<span class="hljs-string">'batchmean'</span>)(student_log_soft, soft_targets) * (T * T)
+
+    <span class="hljs-comment"># 2. Student Loss (「正解」を当てる)</span>
+    hard_loss = F.cross_entropy(student_logits, labels)
+
+    <span class="hljs-comment"># 二つのロスの加重平均</span>
+    <span class="hljs-keyword">return</span> alpha * distill_loss + (<span class="hljs-number">1.</span> - alpha) * hard_loss
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">train_knowledge_distillation</span>(<span class="hljs-params">teacher, student, train_loader, test_loader, epochs=<span class="hljs-number">10</span>, T=<span class="hljs-number">3.0</span>, alpha=<span class="hljs-number">0.5</span></span>):
+    device = torch.device(<span class="hljs-string">"cuda"</span> <span class="hljs-keyword">if</span> torch.cuda.is_available() <span class="hljs-keyword">else</span> <span class="hljs-string">"cpu"</span>)
+    optimizer = torch.optim.Adam(student.parameters(), lr=<span class="hljs-number">1e-4</span>)
+    
+    <span class="hljs-keyword">for</span> epoch <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(epochs):
+        student.train()
+        teacher.<span class="hljs-built_in">eval</span>() <span class="hljs-comment"># 教師は常に評価モード</span>
+        
+        train_loss = <span class="hljs-number">0</span>
+        correct = <span class="hljs-number">0</span>
+        total = <span class="hljs-number">0</span>
+        
+        <span class="hljs-keyword">for</span> images, labels <span class="hljs-keyword">in</span> train_loader:
+            images, labels = images.to(device), labels.to(device)
+            
+            <span class="hljs-comment"># 教師モデルの予測（勾配計算不要）</span>
+            <span class="hljs-keyword">with</span> torch.no_grad():
+                teacher_logits = teacher(images)
+            
+            <span class="hljs-comment"># 生徒モデルの予測</span>
+            student_logits = student(images)
+            
+            <span class="hljs-comment"># ロスの計算</span>
+            loss = distillation_loss_fn(student_logits, teacher_logits, labels, T, alpha)
+            
+            <span class="hljs-comment"># バックプロパゲーション</span>
+            optimizer.zero_grad()
+            loss.backward()
+            optimizer.step()
+            
+            train_loss += loss.item()
+            _, predicted = student_logits.<span class="hljs-built_in">max</span>(<span class="hljs-number">1</span>)
+            total += labels.size(<span class="hljs-number">0</span>)
+            correct += predicted.eq(labels).<span class="hljs-built_in">sum</span>().item()
+
+        <span class="hljs-comment"># テスト精度検証</span>
+        val_acc = evaluate_model(student, test_loader, device)
+        
+        <span class="hljs-built_in">print</span>(<span class="hljs-string">f"Epoch [<span class="hljs-subst">{epoch+<span class="hljs-number">1</span>}</span>/<span class="hljs-subst">{epochs}</span>] "</span>
+              <span class="hljs-string">f"Loss: <span class="hljs-subst">{train_loss/<span class="hljs-built_in">len</span>(train_loader):<span class="hljs-number">.4</span>f}</span> | "</span>
+              <span class="hljs-string">f"Train Acc: <span class="hljs-subst">{<span class="hljs-number">100.</span>*correct/total:<span class="hljs-number">.2</span>f}</span>% | "</span>
+              <span class="hljs-string">f"Test Acc: <span class="hljs-subst">{val_acc:<span class="hljs-number">.2</span>f}</span>%"</span>)
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">evaluate_model</span>(<span class="hljs-params">model, loader, device</span>):
+    model.<span class="hljs-built_in">eval</span>()
+    correct = <span class="hljs-number">0</span>
+    total = <span class="hljs-number">0</span>
+    <span class="hljs-keyword">with</span> torch.no_grad():
+        <span class="hljs-keyword">for</span> images, labels <span class="hljs-keyword">in</span> loader:
+            images, labels = images.to(device), labels.to(device)
+            outputs = model(images)
+            _, predicted = outputs.<span class="hljs-built_in">max</span>(<span class="hljs-number">1</span>)
+            total += labels.size(<span class="hljs-number">0</span>)
+            correct += predicted.eq(labels).<span class="hljs-built_in">sum</span>().item()
+    <span class="hljs-keyword">return</span> <span class="hljs-number">100.</span> * correct / total
+
+
+
+<span class="hljs-comment"># 実行</span>
+train_knowledge_distillation(teacher_model, student_model, train_loader, test_loader)
+
+<span class="hljs-comment"># --- モデルの保存 ---</span>
+<span class="hljs-comment"># 保存先のパスを指定</span>
+TEACHER_SAVE_PATH = <span class="hljs-string">"teacher_resnet18_cifar10.pth"</span>
+STUDENT_SAVE_PATH = <span class="hljs-string">"student_custom_cnn_distilled.pth"</span>
+
+<span class="hljs-comment"># 教師モデルの保存（既に学習済みですが、セットで管理するために保存します）</span>
+torch.save(teacher_model.state_dict(), TEACHER_SAVE_PATH)
+<span class="hljs-built_in">print</span>(<span class="hljs-string">f"Teacher model saved to <span class="hljs-subst">{TEACHER_SAVE_PATH}</span>"</span>)
+
+<span class="hljs-comment"># 蒸留された生徒モデルの保存</span>
+torch.save(student_model.state_dict(), STUDENT_SAVE_PATH)
+<span class="hljs-built_in">print</span>(<span class="hljs-string">f"Distilled Student model saved to <span class="hljs-subst">{STUDENT_SAVE_PATH}</span>"</span>)
+</code></pre>
+<p>学習させた生徒モデルは以下の構成で、先生にはResNet50をチョイスしました。</p>
+<pre><code class="language-python"><span class="hljs-comment"># 生徒: さらに軽い「カスタムCNN」 (MobileNetV2よりもさらにシンプルに)</span>
+student = nn.Sequential(
+    nn.Conv2d(<span class="hljs-number">3</span>, <span class="hljs-number">16</span>, kernel_size=<span class="hljs-number">3</span>, padding=<span class="hljs-number">1</span>),
+    nn.ReLU(),
+    nn.MaxPool2d(<span class="hljs-number">2</span>),
+    nn.Conv2d(<span class="hljs-number">16</span>, <span class="hljs-number">32</span>, kernel_size=<span class="hljs-number">3</span>, padding=<span class="hljs-number">1</span>),
+    nn.ReLU(),
+    nn.MaxPool2d(<span class="hljs-number">2</span>),
+    nn.Flatten(),
+    nn.Linear(<span class="hljs-number">32</span> * <span class="hljs-number">8</span> * <span class="hljs-number">8</span>, <span class="hljs-number">10</span>)
+)
+</code></pre>
+<p>知識蒸留による学習の経過です。</p>
+<pre><code>Epoch [1/10] Loss: 2.7949 | Train Acc: 39.32% | Test Acc: 46.89%
+Epoch [2/10] Loss: 2.0894 | Train Acc: 50.08% | Test Acc: 51.71%
+Epoch [3/10] Loss: 1.8716 | Train Acc: 53.21% | Test Acc: 53.80%
+Epoch [4/10] Loss: 1.7370 | Train Acc: 55.53% | Test Acc: 55.51%
+Epoch [5/10] Loss: 1.6362 | Train Acc: 57.19% | Test Acc: 56.82%
+Epoch [6/10] Loss: 1.5552 | Train Acc: 58.76% | Test Acc: 58.04%
+Epoch [7/10] Loss: 1.4866 | Train Acc: 60.00% | Test Acc: 59.82%
+Epoch [8/10] Loss: 1.4295 | Train Acc: 61.14% | Test Acc: 60.66%
+Epoch [9/10] Loss: 1.3808 | Train Acc: 62.05% | Test Acc: 59.94%
+Epoch [10/10] Loss: 1.3385 | Train Acc: 62.99% | Test Acc: 61.51%
+</code></pre>
+<p>testで正解率が60%程度。 生徒モデルはかなり小さいCNNなので上出来ではないでしょうか。</p>
+<p>生徒モデルを先生を使って学習した結果の推論結果です。</p>
+<p><img src="https://cdn-ak.f.st-hatena.com/images/fotolife/y/yoshishinnze/20251229/20251229152514.png" width="513" height="250" loading="lazy" title="" class="hatena-fotolife" itemprop="image" style="display: block; margin-left: auto; margin-right: auto;" /></p>
+<p> </p>
+<p>ということで知識蒸留の有効性について確認する実験でした。</p>
+<p> </p>
+<p>[blog:g:4207112889963697807:banner]</p>
+<p>[blog:g:6653586347156353205:banner]</p>
+<p>[blog:g:6802418398338611273:banner]</p>
+<p>[blog:g:10328749687175353006:banner]</p>
+<p> </p>
+<p style="text-align: center;">
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+</script>
+
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+</script>
+
+
+</p>
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+<style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+/* 目次全体のコンテナ */
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+
+/* 記事タイトル (h1) */
+h1 {
+    font-size: 2rem;
+    color: #24292f;
+    line-height: 1.3;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 3px double #e1e4e8; /* 二重線で上品に */
+    text-align: center; /* タイトルを中央に寄せて特別感を出す */
+}
+
+/* セクション見出し (h2) */
+h2 {
+    font-size: 1.5rem;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(transparent 70%, #e8f0fe 70%); /* 下側に薄い色のアクセント */
+    border-left: 6px solid #0969da; /* 目次のテーマカラーと合わせる */
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* 強調文字 (strong) */
+strong {
+    font-weight: bold;
+    color: #cf222e; /* ホバー時の赤色と合わせて統一感を出す */
+    background: linear-gradient(transparent 60%, #fff2cc 60%); /* 黄色のマーカー風 */
+    padding: 0 2px;
+}
+
+/* 引用のコンテナ */
+blockquote {
+    position: relative;
+    padding: 20px 30px;
+    margin: 30px 0;
+    background-color: #f6f8fa; /* 目次の背景より少しだけ濃いグレー */
+    border-left: 5px solid #d0d7de; /* 落ち着いたグレーの境界線 */
+    color: #57606a; /* 文字色は少し薄くして引用らしさを出す */
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 引用符のアイコンを装飾として追加 */
+blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    font-size: 40px;
+    color: #d0d7de;
+    font-family: serif;
+    line-height: 1;
+}
+
+/* 読者になるボタンのデザイン */
+.btn-subscribe {
+    display: inline-block;
+    padding: 12px 35px; /* 横幅を広めにとって存在感を出します */
+    background-color: #383838; /* お好みの色に変更してください */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #555555;
+    text-decoration: none;
+}
+
+/* はてなブログで見えてしまう数式データを非表示にする */
+.katex-html {
+    display: none !important;
+}
+
+.katex-mathml {
+    display: inline !important;
+}
+</style>

@@ -1,0 +1,562 @@
+<style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+<style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+
+/* 記事タイトル (h1) */
+h1 {
+    font-size: 2rem;
+    color: #24292f;
+    line-height: 1.3;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 3px double #e1e4e8; /* 二重線で上品に */
+    text-align: center; /* タイトルを中央に寄せて特別感を出す */
+}
+
+/* セクション見出し (h2) */
+h2 {
+    font-size: 1.5rem;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(transparent 70%, #e8f0fe 70%); /* 下側に薄い色のアクセント */
+    border-left: 6px solid #0969da; /* 目次のテーマカラーと合わせる */
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* 強調文字 (strong) */
+strong {
+    font-weight: bold;
+    color: #cf222e; /* ホバー時の赤色と合わせて統一感を出す */
+    background: linear-gradient(transparent 60%, #fff2cc 60%); /* 黄色のマーカー風 */
+    padding: 0 2px;
+}
+
+/* 引用のコンテナ */
+blockquote {
+    position: relative;
+    padding: 20px 30px;
+    margin: 30px 0;
+    background-color: #f6f8fa; /* 目次の背景より少しだけ濃いグレー */
+    border-left: 5px solid #d0d7de; /* 落ち着いたグレーの境界線 */
+    color: #57606a; /* 文字色は少し薄くして引用らしさを出す */
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 引用符のアイコンを装飾として追加 */
+blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    font-size: 40px;
+    color: #d0d7de;
+    font-family: serif;
+    line-height: 1;
+}
+
+/* 読者になるボタンのデザイン */
+.btn-subscribe {
+    display: inline-block;
+    padding: 12px 35px; /* 横幅を広めにとって存在感を出します */
+    background-color: #383838; /* お好みの色に変更してください */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #555555;
+    text-decoration: none;
+}
+
+/* はてなブログで見えてしまう数式データを非表示にする */
+.katex-html {
+    display: none !important;
+}
+
+.katex-mathml {
+    display: inline !important;
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+
+
+<p>QMIXによる倉庫問題、学習コードがようやく完成しました。 結果は今一つでしたが。</p>
+<p>今後の改善点を整理していきます。</p>
+<h2 id="どんな実装を行ったか">どんな実装を行ったか</h2>
+<p>メインはQMIXです。</p>
+<p>→個々のエージェントと、集中管理のエージェントを用意して、強化学習。</p>
+<pre><code class="language-python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">RNNAgent</span>(nn.Module):
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, input_shape, hidden_dim, n_actions</span>):
+        <span class="hljs-built_in">super</span>().__init__()
+        self.hidden_dim = hidden_dim
+        self.n_actions = n_actions
+
+        <span class="hljs-comment"># 観測を入力とする線形層</span>
+        self.fc1 = nn.Linear(input_shape, hidden_dim)
+        <span class="hljs-comment"># 履歴を扱うGRUセル</span>
+        self.rnn = nn.GRUCell(hidden_dim, hidden_dim)
+        <span class="hljs-comment"># 隠れ状態から行動のQ値を出力する線形層</span>
+        self.fc2 = nn.Linear(hidden_dim, n_actions)
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">init_hidden</span>(<span class="hljs-params">self</span>):
+        <span class="hljs-comment"># 隠れ状態をゼロで初期化</span>
+        <span class="hljs-keyword">return</span> self.fc1.weight.new_zeros(<span class="hljs-number">1</span>, self.hidden_dim)
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params">self, inputs, hidden_state</span>):
+        <span class="hljs-comment"># inputs: 局所的な観測 (obs_i)</span>
+        <span class="hljs-comment"># hidden_state: 前ステップの隠れ状態 (h_t-1)</span>
+
+        x = F.relu(self.fc1(inputs))
+        <span class="hljs-comment"># GRUによる隠れ状態の更新</span>
+        h_in = hidden_state.reshape(-<span class="hljs-number">1</span>, self.hidden_dim)
+        h = self.rnn(x, h_in)
+        <span class="hljs-comment"># Q値の出力</span>
+        q = self.fc2(h)
+        <span class="hljs-keyword">return</span> q, h <span class="hljs-comment"># Q値と新しい隠れ状態を返す</span>
+</code></pre>
+<pre><code class="language-python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">QMixer</span>(nn.Module):
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, n_agents, state_shape, mixing_embed_dim, hypernet_embed_dim</span>):
+        <span class="hljs-built_in">super</span>().__init__()
+        self.n_agents = n_agents
+        self.mixing_embed_dim = mixing_embed_dim
+        <span class="hljs-comment"># 1. ハイパーネットワークの定義</span>
+        <span class="hljs-comment"># 環境状態 (state) を入力とし、Mixing Networkの重みW1を生成</span>
+        self.hyper_w1 = nn.Sequential(
+            nn.Linear(state_shape, hypernet_embed_dim),
+            nn.ReLU(),
+            nn.Linear(hypernet_embed_dim, mixing_embed_dim * n_agents)
+        )
+
+        <span class="hljs-comment"># バイアスb1も環境状態から生成</span>
+        self.hyper_b1 = nn.Linear(state_shape, mixing_embed_dim)
+
+        <span class="hljs-comment"># W2 (Mixing Networkの2層目の重み) を生成</span>
+        self.hyper_w2 = nn.Sequential(
+            nn.Linear(state_shape, hypernet_embed_dim),
+            nn.ReLU(),
+            nn.Linear(hypernet_embed_dim, mixing_embed_dim)
+        )
+
+        <span class="hljs-comment"># バイアスb2 (最終出力層のバイアス) を環境状態から生成</span>
+        self.hyper_b2 = nn.Sequential(
+            nn.Linear(state_shape, hypernet_embed_dim),
+            nn.ReLU(),
+            nn.Linear(hypernet_embed_dim, <span class="hljs-number">1</span>)
+        )
+
+        <span class="hljs-comment"># 2. 最終出力層（ダミー）</span>
+        <span class="hljs-comment"># 実際にはハイパーネットワークが生成した重みで演算するが、サイズ調整のために定義</span>
+        self.V = nn.Sequential(nn.Linear(state_shape, mixing_embed_dim), nn.ReLU(), nn.Linear(mixing_embed_dim, <span class="hljs-number">1</span>))
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params">self, agent_qs, states</span>):
+        <span class="hljs-comment"># agent_qs: 全エージェントのQ値 (batch_size, n_agents)</span>
+        <span class="hljs-comment"># states: 環境の全体状態 (batch_size, state_shape)</span>
+
+        bs = agent_qs.size(<span class="hljs-number">0</span>)
+
+        <span class="hljs-comment"># 1. 隠れ層 W1 の計算 (重みの生成と非負制約)</span>
+        W1 = self.hyper_w1(states).view(bs, self.n_agents, self.mixing_embed_dim)
+        <span class="hljs-comment"># 非負制約: 重みをReLUに通す</span>
+        W1 = F.relu(W1)
+
+        <span class="hljs-comment"># 2. 隠れ層 B1 (バイアス) の計算</span>
+        B1 = self.hyper_b1(states).view(bs, <span class="hljs-number">1</span>, self.mixing_embed_dim)
+
+        <span class="hljs-comment"># 3. 第1層の計算: (Q_i * W1) + B1</span>
+        <span class="hljs-comment"># agent_qs: (bs, 1, n_agents), W1: (bs, n_agents, mixing_embed_dim)</span>
+        hidden = torch.bmm(agent_qs.unsqueeze(<span class="hljs-number">1</span>), W1)
+        <span class="hljs-comment"># hidden: (bs, 1, mixing_embed_dim)</span>
+        hidden = F.relu(hidden + B1)
+
+        <span class="hljs-comment"># 4. 出力層 W2 の計算 (重みの生成と非負制約)</span>
+        W2 = self.hyper_w2(states).view(bs, self.mixing_embed_dim, <span class="hljs-number">1</span>)
+        <span class="hljs-comment"># 非負制約: 重みをReLUに通す</span>
+        W2 = F.relu(W2)
+
+        <span class="hljs-comment"># 5. 出力層 B2 (バイアス) の計算</span>
+        B2 = self.hyper_b2(states).view(bs, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>)
+
+        <span class="hljs-comment"># 6. 第2層の計算: (hidden * W2) + B2</span>
+        <span class="hljs-comment"># V(s)項 (全エージェントに共通のバイアス項)</span>
+        v = self.V(states).view(bs, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>)
+
+        <span class="hljs-comment"># 最終的なQ_totの出力</span>
+        q_tot = torch.bmm(hidden, W2) + B2 + v
+        <span class="hljs-comment"># q_tot: (batch_size, 1, 1)</span>
+        <span class="hljs-keyword">return</span> q_tot.squeeze()
+</code></pre>
+<pre><code class="language-python"><span class="hljs-comment"># QMixAgentの学習ロジックを統合するクラス</span>
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">IntegratedQMixAgent</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, env: WarehouseEnv, obs_shape: <span class="hljs-built_in">int</span>, state_shape: <span class="hljs-built_in">int</span>, n_actions: <span class="hljs-built_in">int</span>, lr=<span class="hljs-number">5e-4</span>, gamma=<span class="hljs-number">0.99</span>, mixing_embed_dim=<span class="hljs-number">32</span></span>):
+        self.env = env
+        self.n_agents = env.num_agents
+        self.n_actions = n_actions
+        self.gamma = gamma
+        self.device = torch.device(<span class="hljs-string">"cuda"</span> <span class="hljs-keyword">if</span> torch.cuda.is_available() <span class="hljs-keyword">else</span> <span class="hljs-string">"cpu"</span>)
+
+        <span class="hljs-comment"># RNNの隠れ状態をエージェントごとに保持</span>
+        self.hidden_states = {i: <span class="hljs-literal">None</span> <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(self.n_agents)}
+
+        <span class="hljs-comment"># ネットワークの初期化</span>
+        self.agent_net = RNNAgent(obs_shape, hidden_dim=<span class="hljs-number">64</span>, n_actions=n_actions).to(self.device)
+        self.mixer_net = QMixer(self.n_agents, state_shape, mixing_embed_dim, hypernet_embed_dim=<span class="hljs-number">64</span>).to(self.device)
+
+        self.target_agent_net = RNNAgent(obs_shape, hidden_dim=<span class="hljs-number">64</span>, n_actions=n_actions).to(self.device)
+        self.target_mixer_net = QMixer(self.n_agents, state_shape, mixing_embed_dim, hypernet_embed_dim=<span class="hljs-number">64</span>).to(self.device)
+
+        self.target_agent_net.load_state_dict(self.agent_net.state_dict())
+        self.target_mixer_net.load_state_dict(self.mixer_net.state_dict())
+
+        params = <span class="hljs-built_in">list</span>(self.agent_net.parameters()) + <span class="hljs-built_in">list</span>(self.mixer_net.parameters())
+        self.optimizer = torch.optim.Adam(params, lr=lr)
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">init_hidden</span>(<span class="hljs-params">self</span>):
+        <span class="hljs-string">"""エピソード開始時に隠れ状態を初期化"""</span>
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(self.n_agents):
+            self.hidden_states[i] = self.agent_net.init_hidden().to(self.device)
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">_obs_to_tensor</span>(<span class="hljs-params">self, obs: <span class="hljs-type">Dict</span>[<span class="hljs-built_in">int</span>, <span class="hljs-type">Tuple</span>], is_state: <span class="hljs-built_in">bool</span> = <span class="hljs-literal">False</span></span>):
+        <span class="hljs-string">"""環境の観測/状態をPyTorchテンソルに変換"""</span>
+        <span class="hljs-keyword">if</span> is_state:
+            <span class="hljs-comment"># 全体状態 (全エージェントの位置 + 残り注文)</span>
+            state_vec = []
+            <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(self.n_agents):
+                state_vec.extend(<span class="hljs-built_in">list</span>(obs[i][<span class="hljs-number">0</span>])) <span class="hljs-comment"># Agent i の位置 (x, y)</span>
+                state_vec.append(<span class="hljs-number">1.0</span> <span class="hljs-keyword">if</span> obs[i][<span class="hljs-number">1</span>] <span class="hljs-keyword">else</span> <span class="hljs-number">0.0</span>) <span class="hljs-comment"># Agent i が荷物を持っているか</span>
+
+            <span class="hljs-comment"># 残り注文のOne-Hotエンコーディング (簡略化)</span>
+            remaining_orders_set = <span class="hljs-built_in">set</span>(obs[<span class="hljs-number">0</span>][<span class="hljs-number">2</span>])
+            <span class="hljs-keyword">for</span> order_idx <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(NUM_ORDERS):
+                state_vec.append(<span class="hljs-number">1.0</span> <span class="hljs-keyword">if</span> order_idx <span class="hljs-keyword">in</span> remaining_orders_set <span class="hljs-keyword">else</span> <span class="hljs-number">0.0</span>)
+
+            <span class="hljs-keyword">return</span> torch.FloatTensor(state_vec).to(self.device).unsqueeze(<span class="hljs-number">0</span>)
+        <span class="hljs-keyword">else</span>:
+            <span class="hljs-comment"># 局所観測 (Agent i の位置, 荷物持ち)</span>
+            tensors = {}
+            <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(self.n_agents):
+                obs_i = <span class="hljs-built_in">list</span>(obs[i][<span class="hljs-number">0</span>]) <span class="hljs-comment"># 位置 (x, y)</span>
+                obs_i.append(<span class="hljs-number">1.0</span> <span class="hljs-keyword">if</span> obs[i][<span class="hljs-number">1</span>] <span class="hljs-keyword">else</span> <span class="hljs-number">0.0</span>) <span class="hljs-comment"># 荷物持ち</span>
+
+                <span class="hljs-comment"># 敵エージェントの位置や状態も観測に入れる場合はここで拡張するが、ここでは局所観測のみ</span>
+
+                tensors[i] = torch.FloatTensor(obs_i).to(self.device).unsqueeze(<span class="hljs-number">0</span>)
+            <span class="hljs-keyword">return</span> tensors
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">get_actions</span>(<span class="hljs-params">self, obs: <span class="hljs-type">Dict</span>[<span class="hljs-built_in">int</span>, <span class="hljs-type">Tuple</span>], epsilon: <span class="hljs-built_in">float</span></span>) -&gt; <span class="hljs-type">Dict</span>[<span class="hljs-built_in">int</span>, <span class="hljs-built_in">int</span>]:
+        <span class="hljs-string">"""epsilon-greedy法で行動を選択し、隠れ状態を更新"""</span>
+        actions = {}
+        <span class="hljs-keyword">if</span> random.random() &lt; epsilon:
+            <span class="hljs-comment"># 探索 (Exploration)</span>
+            <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(self.n_agents):
+                actions[i] = random.randint(<span class="hljs-number">0</span>, self.n_actions - <span class="hljs-number">1</span>)
+        <span class="hljs-keyword">else</span>:
+            <span class="hljs-comment"># 活用 (Exploitation)</span>
+            agent_obs_tensors = self._obs_to_tensor(obs, is_state=<span class="hljs-literal">False</span>)
+            <span class="hljs-keyword">with</span> torch.no_grad():
+                <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(self.n_agents):
+                    q_values, h_new = self.agent_net(agent_obs_tensors[i], self.hidden_states[i])
+                    self.hidden_states[i] = h_new <span class="hljs-comment"># 隠れ状態を更新</span>
+                    actions[i] = q_values.<span class="hljs-built_in">max</span>(dim=-<span class="hljs-number">1</span>)[<span class="hljs-number">1</span>].item()
+        <span class="hljs-keyword">return</span> actions
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">learn</span>(<span class="hljs-params">self, batch, target_update_interval</span>):
+        <span class="hljs-string">"""バッチからサンプリングし、QMIX損失で学習"""</span>
+
+        <span class="hljs-comment"># --- データ変換 ---</span>
+        <span class="hljs-comment"># <span class="hljs-doctag">NOTE:</span> 実際の学習では、リプレイバッファに格納する際にRNNの履歴（隠れ状態）も格納するのが一般的ですが、</span>
+        <span class="hljs-comment"># ここでは簡略化し、バッチ内の各ステップを独立したトランジションとして扱います。</span>
+
+        current_state = torch.cat([self._obs_to_tensor(t[<span class="hljs-number">0</span>], is_state=<span class="hljs-literal">True</span>) <span class="hljs-keyword">for</span> t <span class="hljs-keyword">in</span> batch], dim=<span class="hljs-number">0</span>)
+        next_state = torch.cat([self._obs_to_tensor(t[<span class="hljs-number">3</span>], is_state=<span class="hljs-literal">True</span>) <span class="hljs-keyword">for</span> t <span class="hljs-keyword">in</span> batch], dim=<span class="hljs-number">0</span>)
+        rewards = torch.FloatTensor([<span class="hljs-built_in">sum</span>(t[<span class="hljs-number">2</span>].values()) <span class="hljs-keyword">for</span> t <span class="hljs-keyword">in</span> batch]).to(self.device) <span class="hljs-comment"># チーム合計報酬</span>
+        terminated = torch.FloatTensor([<span class="hljs-built_in">all</span>(t[<span class="hljs-number">4</span>].values()) <span class="hljs-keyword">for</span> t <span class="hljs-keyword">in</span> batch]).to(self.device) <span class="hljs-comment"># 終了フラグ</span>
+
+        <span class="hljs-comment"># エージェントごとのアクション、観測をバッチ化</span>
+        actions_batch = torch.LongTensor([[t[<span class="hljs-number">1</span>][i] <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(self.n_agents)] <span class="hljs-keyword">for</span> t <span class="hljs-keyword">in</span> batch]).to(self.device)
+        obs_batch = [torch.cat([self._obs_to_tensor(t[<span class="hljs-number">0</span>], is_state=<span class="hljs-literal">False</span>)[i] <span class="hljs-keyword">for</span> t <span class="hljs-keyword">in</span> batch], dim=<span class="hljs-number">0</span>) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(self.n_agents)]
+        next_obs_batch = [torch.cat([self._obs_to_tensor(t[<span class="hljs-number">3</span>], is_state=<span class="hljs-literal">False</span>)[i] <span class="hljs-keyword">for</span> t <span class="hljs-keyword">in</span> batch], dim=<span class="hljs-number">0</span>) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(self.n_agents)]
+
+        <span class="hljs-comment"># 1. 現在のQ_totの計算 (Hidden Stateはここではゼロ初期化)</span>
+        agent_qs = []
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(self.n_agents):
+            <span class="hljs-comment"># Q値を計算</span>
+            q_vals, _ = self.agent_net(obs_batch[i], self.agent_net.init_hidden().expand(<span class="hljs-built_in">len</span>(batch), -<span class="hljs-number">1</span>))
+            <span class="hljs-comment"># 実行されたアクションのQ値を選択</span>
+            chosen_q = torch.gather(q_vals, dim=<span class="hljs-number">1</span>, index=actions_batch[:, i].unsqueeze(<span class="hljs-number">1</span>))
+            agent_qs.append(chosen_q)
+
+        agent_qs = torch.cat(agent_qs, dim=<span class="hljs-number">1</span>) <span class="hljs-comment"># (batch_size, n_agents)</span>
+        q_tot = self.mixer_net(agent_qs, current_state)
+
+        <span class="hljs-comment"># 2. TDターゲットの計算 (Target Q_tot)</span>
+        target_agent_qs = []
+        <span class="hljs-keyword">with</span> torch.no_grad():
+            <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(self.n_agents):
+                target_q_vals, _ = self.target_agent_net(next_obs_batch[i], self.target_agent_net.init_hidden().expand(<span class="hljs-built_in">len</span>(batch), -<span class="hljs-number">1</span>))
+                <span class="hljs-comment"># 最大Q値を選択</span>
+                target_max_q = target_q_vals.<span class="hljs-built_in">max</span>(dim=<span class="hljs-number">1</span>)[<span class="hljs-number">0</span>].unsqueeze(<span class="hljs-number">1</span>)
+                target_agent_qs.append(target_max_q)
+
+            target_agent_qs = torch.cat(target_agent_qs, dim=<span class="hljs-number">1</span>)
+            target_q_tot = self.target_mixer_net(target_agent_qs, next_state)
+
+        <span class="hljs-comment"># ターゲット値: R + gamma * max Q_next * (1 - done)</span>
+        td_target = rewards.unsqueeze(<span class="hljs-number">1</span>) + self.gamma * target_q_tot * (<span class="hljs-number">1</span> - terminated.unsqueeze(<span class="hljs-number">1</span>))
+
+        <span class="hljs-comment"># 3. 損失の計算と最適化</span>
+        loss = F.mse_loss(q_tot, td_target.detach())
+
+        self.optimizer.zero_grad()
+        loss.backward()
+        self.optimizer.step()
+
+        <span class="hljs-keyword">return</span> loss.item()
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">update_target_networks</span>(<span class="hljs-params">self</span>):
+        <span class="hljs-string">"""ターゲットネットワークの重みを更新"""</span>
+        self.target_agent_net.load_state_dict(self.agent_net.state_dict())
+        self.target_mixer_net.load_state_dict(self.mixer_net.state_dict())
+</code></pre>
+<p>エージェントは行動価値ではなく、行動をそのまま出力させています。 これ以外は通常のQMixに準拠で学習させました。</p>
+<p>エージェントは初期位置付近をうろうろしているパターンで方向性なく、という感じです。 報酬を得られなかったケースが考えられます。。。 この学習の難しい点です。。。</p>
+<p> </p>
+
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+</script>
+
+
+
+<p><img src="https://cdn-ak.f.st-hatena.com/images/fotolife/y/yoshishinnze/20251214/20251214113237.gif" width="600" height="600" loading="lazy" title="" class="hatena-fotolife" itemprop="image" /></p>
+<p>[blog:g:6653586347156353205:banner]</p>
+<p> </p>
+<p>[blog:g:4207112889963697807:banner]</p>
+<p> </p>
+<p>著者は暇があればgithubいじってます。 強化学習関係でしたら以下が作品です。 宜しければご覧ください。</p>
+<p> </p>
+<p><iframe src="https://hatenablog-parts.com/embed?url=https%3A%2F%2Fshinichi0713.github.io%2FReinforce-Learning-Study%2F" title="Reinforce Learning Study - Step By Step" class="embed-card embed-webcard" scrolling="no" frameborder="0" style="display: block; width: 100%; height: 155px; max-width: 500px; margin: 10px 0px;" loading="lazy"></iframe><cite class="hatena-citation"><a href="https://shinichi0713.github.io/Reinforce-Learning-Study/">shinichi0713.github.io</a></cite></p>

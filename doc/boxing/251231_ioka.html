@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&#x8a66;&#x5408;&#x306e;&#x6d41;&#x308c;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+/* 目次全体のコンテナ */
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+
+            <p>2025年末の井岡一翔のバンタム級の試合、いつも通りの井岡の名人芸で危なげない勝利でした。</p>
+<h2 id="試合の流れ">試合の流れ</h2>
+<p><strong>1R</strong></p>
+<p>立ち上がり。</p>
+<p>動きは軽いように見えます。</p>
+<p>パーリングは非常に有効で攻撃をことごとく外していきます。</p>
+<p>1Rの中盤いきなり左ボディでダウンをとりました。</p>
+<p>無理をせず、1R終了</p>
+<p><strong>2R</strong></p>
+<p>オルドスゴイティが自分から出てきます。</p>
+<p>ブロー、フックともに井岡はきれいに外していきます。</p>
+<p>上手さが光ったのはロープ際、攻撃を全てブロック、ダッキングで外して、カウンターを取り出します。</p>
+<p>ストレートで被弾はなかったように思います。</p>
+<p><strong>4R</strong></p>
+<p>井岡がプレッシャーを掛けます。</p>
+<p>ディフェンスが冴えわたりオルドスゴイティの攻撃の出鼻をことごとくつぶしていきました。</p>
+<p>対する井岡は上下にパンチを散らしながらボディ、アッパーに有効打を決めていきました。</p>
+<p>本当に練度の高いコンビネーションです。</p>
+<p><img src="file:///d:\PycharmProjects\ScienceCalculation\studies-implements\doc\boxing\image\251231_ioka\1767346936664.png" alt="1767346936664"></p>
+<p>最後は得意の左レバーブロー。</p>
+<p>オルドスゴイティが倒れる寸前の1コマ、、決まったところではないのですが。。。</p>
+<p>息が止まったでしょうね。。。</p>
+<p><img src="file:///d:\PycharmProjects\ScienceCalculation\studies-implements\doc\boxing\image\251231_ioka\1767347016045.png" alt="1767347016045"></p>
+<h3 id="総括">総括</h3>
+<p>井岡の名人芸が冴えわたった試合でした。ディフェンス、パンチは上の階級の強い相手でも十分に通用してるように見えます。</p>
+<p>ただし、軽量級の1階級のパワーは結構大きいはず。</p>
+<p>今回の相手では問題が見えませんでしたが、さらなる強敵と当たったときに、パワーが通用するかは流石に確信は持てません。</p>
+<p>思えば初めて見た東京農大のインカレ以来18年くらいでしたか。</p>
+<p>当時から足をしっかり付けた、叔父さん井岡とは全然違うファイトスタイルで印象的でした。</p>
+<p>著者の地元大阪出身だったこともあり、プロデビューから気になってた選手でした。</p>
+<p>デビュー当初から巧さが光っていましたが、こんな長くボクシングを続ける選手、なかなかいません。</p>
+<p>そして、この階級(バンタム級)で世界戦が多分キャリアのクライマックスになるような気がします。</p>
+
+
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+</script>
+            
+        </body>
+        </html>

@@ -1,0 +1,465 @@
+<style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+<style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+
+/* 記事タイトル (h1) */
+h1 {
+    font-size: 2rem;
+    color: #24292f;
+    line-height: 1.3;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 3px double #e1e4e8; /* 二重線で上品に */
+    text-align: center; /* タイトルを中央に寄せて特別感を出す */
+}
+
+/* セクション見出し (h2) */
+h2 {
+    font-size: 1.5rem;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(transparent 70%, #e8f0fe 70%); /* 下側に薄い色のアクセント */
+    border-left: 6px solid #0969da; /* 目次のテーマカラーと合わせる */
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* 強調文字 (strong) */
+strong {
+    font-weight: bold;
+    color: #cf222e; /* ホバー時の赤色と合わせて統一感を出す */
+    background: linear-gradient(transparent 60%, #fff2cc 60%); /* 黄色のマーカー風 */
+    padding: 0 2px;
+}
+
+/* 引用のコンテナ */
+blockquote {
+    position: relative;
+    padding: 20px 30px;
+    margin: 30px 0;
+    background-color: #f6f8fa; /* 目次の背景より少しだけ濃いグレー */
+    border-left: 5px solid #d0d7de; /* 落ち着いたグレーの境界線 */
+    color: #57606a; /* 文字色は少し薄くして引用らしさを出す */
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 引用符のアイコンを装飾として追加 */
+blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    font-size: 40px;
+    color: #d0d7de;
+    font-family: serif;
+    line-height: 1;
+}
+
+/* 読者になるボタンのデザイン */
+.btn-subscribe {
+    display: inline-block;
+    padding: 12px 35px; /* 横幅を広めにとって存在感を出します */
+    background-color: #383838; /* お好みの色に変更してください */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #555555;
+    text-decoration: none;
+}
+
+/* はてなブログで見えてしまう数式データを非表示にする */
+.katex-html {
+    display: none !important;
+}
+
+.katex-mathml {
+    display: inline !important;
+}
+</style>
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+<p>強化学習におけるロスは通常のニューラルネットワークと異なりわかりづらい印象です。 少し整理してみようと思います。</p>
+<p>強化学習における「ロス」は、教師あり学習のように一意の形があるわけではなく、 <strong>「何を最適化したいか（価値・方策・両方）」によって定義が変わる</strong> という点が最初の重要ポイントです。</p>
+<p><img src="https://cdn-ak.f.st-hatena.com/images/fotolife/y/yoshishinnze/20251221/20251221175709.png" width="464" height="464" loading="lazy" title="" class="hatena-fotolife" itemprop="image" style="display: block; margin-left: auto; margin-right: auto;" /></p>
+<p> </p>
+<h2 id="1-強化学習におけるロスの考え方全体像">1. 強化学習におけるロスの考え方（全体像）</h2>
+<h3 id="教師あり学習との違い">教師あり学習との違い</h3>
+<p>まずはここが一番重要なポイントです。</p>
+<ul>
+<li>
+<p>教師あり学習 → 正解ラベルがあり、 <code>予測 − 正解</code> の誤差を最小化する</p>
+</li>
+<li>
+<p>強化学習 → 正解行動は存在しない → <strong>将来の報酬が最大になるように振る舞いを学習する</strong></p>
+</li>
+</ul>
+<p>そのため強化学習では、</p>
+<blockquote>
+<p><strong>「報酬を最大化する」≒「ロスを最小化する」</strong></p>
+</blockquote>
+<p>ようにロスを設計します。</p>
+<h2 id="2-価値ベース手法のロスq-learning-系">2. 価値ベース手法のロス（Q-learning 系）</h2>
+<h3 id="目的">目的</h3>
+<p>状態 <code>s</code> で行動 <code>a</code> を選んだときの <strong>将来報酬の期待値（Q値）</strong> を正しく近似したい。</p>
+<h3 id="基本式td誤差">基本式（TD誤差）</h3>
+<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>δ</mi><mo>=</mo><mi>r</mi><mo>+</mo><mi>γ</mi><munder><mrow><mi>max</mi><mo>⁡</mo></mrow><msup><mi>a</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup></munder><mi>Q</mi><mo stretchy="false">(</mo><msup><mi>s</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mo separator="true">,</mo><msup><mi>a</mi><mo mathvariant="normal" lspace="0em" rspace="0em">′</mo></msup><mo stretchy="false">)</mo><mo>−</mo><mi>Q</mi><mo stretchy="false">(</mo><mi>s</mi><mo separator="true">,</mo><mi>a</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\delta = r + \gamma \max_{a'} Q(s', a') - Q(s, a) </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="mord mathnormal" style="margin-right: 0.03785em;">δ</span><span class="mrel">=</span></span><span class="base"><span class="mord mathnormal" style="margin-right: 0.02778em;">r</span><span class="mbin">+</span></span><span class="base"><span class="mord mathnormal" style="margin-right: 0.05556em;">γ</span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.4306em;"><span style="top: -2.356em; margin-left: 0em;"><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight">a</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height: 0.6828em;"><span style="top: -2.786em; margin-right: 0.0714em;"><span class="sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span></span></span></span><span style="top: -3em;"><span class="mop">max</span></span></span><span class="vlist-s">​</span></span></span></span><span class="mord mathnormal">Q</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">s</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height: 0.8019em;"><span style="top: -3.113em; margin-right: 0.05em;"><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mord"><span class="mord mathnormal">a</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height: 0.8019em;"><span style="top: -3.113em; margin-right: 0.05em;"><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mclose">)</span><span class="mbin">−</span></span><span class="base"><span class="mord mathnormal">Q</span><span class="mopen">(</span><span class="mord mathnormal">s</span><span class="mpunct">,</span><span class="mord mathnormal">a</span><span class="mclose">)</span></span></span></span></span></p>
+<h3 id="ロス関数mse">ロス関数（MSE）</h3>
+<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi mathvariant="script">L</mi><mi>Q</mi></msub><mo>=</mo><mi mathvariant="double-struck">E</mi><mo stretchy="false">[</mo><msup><mi>δ</mi><mn>2</mn></msup><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">\mathcal{L}_{Q} = \mathbb{E}[\delta^2] </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="mord"><span class="mord mathcal">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.3283em;"><span style="top: -2.55em; margin-left: 0em; margin-right: 0.05em;"><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">Q</span></span></span></span></span><span class="vlist-s">​</span></span></span></span></span><span class="mrel">=</span></span><span class="base"><span class="mord mathbb">E</span><span class="mopen">[</span><span class="mord"><span class="mord mathnormal" style="margin-right: 0.03785em;">δ</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height: 0.8641em;"><span style="top: -3.113em; margin-right: 0.05em;"><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">]</span></span></span></span></span></p>
+<h3 id="直感的な意味">直感的な意味</h3>
+<ul>
+<li>「今のQ予測」と</li>
+<li>「1ステップ先の予測＋報酬」 のズレを小さくする</li>
+</ul>
+<h3 id="実装イメージpytorch">実装イメージ（PyTorch）</h3>
+<pre><code class="language-python">loss = ((reward + gamma * next_q - q_value) ** <span class="hljs-number">2</span>).mean()
+</code></pre>
+<h2 id="3-方策勾配法のロスpolicy-gradient">3. 方策勾配法のロス（Policy Gradient）</h2>
+<h3 id="目的-1">目的</h3>
+<p>「良い結果をもたらした行動」を <strong>より選びやすくする確率分布（方策）</strong> を学習する。</p>
+<h3 id="基本式">基本式</h3>
+<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi mathvariant="script">L</mi><mrow><mi>p</mi><mi>o</mi><mi>l</mi><mi>i</mi><mi>c</mi><mi>y</mi></mrow></msub><mo>=</mo><mo>−</mo><mi mathvariant="double-struck">E</mi><mo stretchy="false">[</mo><mi>log</mi><mo>⁡</mo><mi>π</mi><mo stretchy="false">(</mo><mi>a</mi><mi mathvariant="normal">∣</mi><mi>s</mi><mo stretchy="false">)</mo><mo>⋅</mo><mi>R</mi><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">\mathcal{L}_{policy} = - \mathbb{E}[\log \pi(a|s) \cdot R] </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="mord"><span class="mord mathcal">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.3361em;"><span style="top: -2.55em; margin-left: 0em; margin-right: 0.05em;"><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">p</span><span class="mord mathnormal mtight">o</span><span class="mord mathnormal mtight" style="margin-right: 0.01968em;">l</span><span class="mord mathnormal mtight">i</span><span class="mord mathnormal mtight" style="margin-right: 0.03588em;">cy</span></span></span></span></span><span class="vlist-s">​</span></span></span></span></span><span class="mrel">=</span></span><span class="base"><span class="mord">−</span><span class="mord mathbb">E</span><span class="mopen">[</span><span class="mop">lo<span style="margin-right: 0.01389em;">g</span></span><span class="mord mathnormal" style="margin-right: 0.03588em;">π</span><span class="mopen">(</span><span class="mord mathnormal">a</span><span class="mord">∣</span><span class="mord mathnormal">s</span><span class="mclose">)</span><span class="mbin">⋅</span></span><span class="base"><span class="mord mathnormal" style="margin-right: 0.00773em;">R</span><span class="mclose">]</span></span></span></span></span></p>
+<h3 id="ポイント">ポイント</h3>
+<ul>
+<li>報酬が大きい行動 → 確率を上げる</li>
+<li>報酬が小さい行動 → 確率を下げる</li>
+</ul>
+<h3 id="なぜマイナス">なぜマイナス？</h3>
+<p>PyTorch は「最小化」しかできないため、 <strong>最大化したい目的関数に − を付ける</strong></p>
+<h3 id="実装イメージ">実装イメージ</h3>
+<pre><code class="language-python">loss = - (log_prob * reward).mean()
+</code></pre>
+<h2 id="4-分散を下げる工夫ベースライン--advantage">4. 分散を下げる工夫（ベースライン / Advantage）</h2>
+<h3 id="問題">問題</h3>
+<p>生の報酬を使うと学習が不安定。</p>
+<h3 id="解決策">解決策</h3>
+<p>平均との差分（Advantage）を使う。</p>
+<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>A</mi><mo stretchy="false">(</mo><mi>s</mi><mo separator="true">,</mo><mi>a</mi><mo stretchy="false">)</mo><mo>=</mo><mi>R</mi><mo>−</mo><mi>V</mi><mo stretchy="false">(</mo><mi>s</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">A(s,a) = R - V(s) </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="mord mathnormal">A</span><span class="mopen">(</span><span class="mord mathnormal">s</span><span class="mpunct">,</span><span class="mord mathnormal">a</span><span class="mclose">)</span><span class="mrel">=</span></span><span class="base"><span class="mord mathnormal" style="margin-right: 0.00773em;">R</span><span class="mbin">−</span></span><span class="base"><span class="mord mathnormal" style="margin-right: 0.22222em;">V</span><span class="mopen">(</span><span class="mord mathnormal">s</span><span class="mclose">)</span></span></span></span></span></p>
+<h3 id="ロス">ロス</h3>
+<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi mathvariant="script">L</mi><mrow><mi>p</mi><mi>o</mi><mi>l</mi><mi>i</mi><mi>c</mi><mi>y</mi></mrow></msub><mo>=</mo><mo>−</mo><mi>log</mi><mo>⁡</mo><mi>π</mi><mo stretchy="false">(</mo><mi>a</mi><mi mathvariant="normal">∣</mi><mi>s</mi><mo stretchy="false">)</mo><mo>⋅</mo><mi>A</mi><mo stretchy="false">(</mo><mi>s</mi><mo separator="true">,</mo><mi>a</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\mathcal{L}_{policy} = - \log \pi(a|s) \cdot A(s,a) </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="mord"><span class="mord mathcal">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.3361em;"><span style="top: -2.55em; margin-left: 0em; margin-right: 0.05em;"><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">p</span><span class="mord mathnormal mtight">o</span><span class="mord mathnormal mtight" style="margin-right: 0.01968em;">l</span><span class="mord mathnormal mtight">i</span><span class="mord mathnormal mtight" style="margin-right: 0.03588em;">cy</span></span></span></span></span><span class="vlist-s">​</span></span></span></span></span><span class="mrel">=</span></span><span class="base"><span class="mord">−</span><span class="mop">lo<span style="margin-right: 0.01389em;">g</span></span><span class="mord mathnormal" style="margin-right: 0.03588em;">π</span><span class="mopen">(</span><span class="mord mathnormal">a</span><span class="mord">∣</span><span class="mord mathnormal">s</span><span class="mclose">)</span><span class="mbin">⋅</span></span><span class="base"><span class="mord mathnormal">A</span><span class="mopen">(</span><span class="mord mathnormal">s</span><span class="mpunct">,</span><span class="mord mathnormal">a</span><span class="mclose">)</span></span></span></span></span></p>
+<h3 id="効果">効果</h3>
+<ul>
+<li>学習が安定</li>
+<li>収束が速くなる</li>
+</ul>
+<h2 id="5-actor-critic-のロス実用で最重要">5. Actor-Critic のロス（実用で最重要）</h2>
+<h3 id="構成">構成</h3>
+<ul>
+<li>Actor（方策）</li>
+<li>Critic（価値）</li>
+</ul>
+<h3 id="ロスは-足し算">ロスは <strong>足し算</strong></h3>
+<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi mathvariant="script">L</mi><mo>=</mo><msub><mi mathvariant="script">L</mi><mrow><mi>p</mi><mi>o</mi><mi>l</mi><mi>i</mi><mi>c</mi><mi>y</mi></mrow></msub><mo>+</mo><mi>λ</mi><msub><mi mathvariant="script">L</mi><mrow><mi>v</mi><mi>a</mi><mi>l</mi><mi>u</mi><mi>e</mi></mrow></msub></mrow><annotation encoding="application/x-tex">\mathcal{L} = \mathcal{L}_{policy} + \lambda \mathcal{L}_{value} </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="mord mathcal">L</span><span class="mrel">=</span></span><span class="base"><span class="mord"><span class="mord mathcal">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.3361em;"><span style="top: -2.55em; margin-left: 0em; margin-right: 0.05em;"><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">p</span><span class="mord mathnormal mtight">o</span><span class="mord mathnormal mtight" style="margin-right: 0.01968em;">l</span><span class="mord mathnormal mtight">i</span><span class="mord mathnormal mtight" style="margin-right: 0.03588em;">cy</span></span></span></span></span><span class="vlist-s">​</span></span></span></span></span><span class="mbin">+</span></span><span class="base"><span class="mord mathnormal">λ</span><span class="mord"><span class="mord mathcal">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.3361em;"><span style="top: -2.55em; margin-left: 0em; margin-right: 0.05em;"><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right: 0.03588em;">v</span><span class="mord mathnormal mtight">a</span><span class="mord mathnormal mtight" style="margin-right: 0.01968em;">l</span><span class="mord mathnormal mtight">u</span><span class="mord mathnormal mtight">e</span></span></span></span></span><span class="vlist-s">​</span></span></span></span></span></span></span></span></span></p>
+<h4 id="方策ロス">方策ロス</h4>
+<pre><code class="language-python">policy_loss = -(log_prob * advantage).mean()
+</code></pre>
+<h4 id="価値ロス">価値ロス</h4>
+<pre><code class="language-python">value_loss = ((V_pred - R) ** <span class="hljs-number">2</span>).mean()
+</code></pre>
+<h4 id="合成">合成</h4>
+<pre><code class="language-python">loss = policy_loss + <span class="hljs-number">0.5</span> * value_loss
+</code></pre>
+<h2 id="6-エントロピー正則化探索促進">6. エントロピー正則化（探索促進）</h2>
+<h3 id="目的-2">目的</h3>
+<ul>
+<li>行動が固定化しすぎるのを防ぐ</li>
+</ul>
+<h3 id="追加ロス">追加ロス</h3>
+<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mi mathvariant="script">L</mi><mrow><mi>e</mi><mi>n</mi><mi>t</mi><mi>r</mi><mi>o</mi><mi>p</mi><mi>y</mi></mrow></msub><mo>=</mo><mo>−</mo><mi>β</mi><mi>H</mi><mo stretchy="false">(</mo><mi>π</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\mathcal{L}_{entropy} = -\beta H(\pi) </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="mord"><span class="mord mathcal">L</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.2806em;"><span style="top: -2.55em; margin-left: 0em; margin-right: 0.05em;"><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">e</span><span class="mord mathnormal mtight">n</span><span class="mord mathnormal mtight">t</span><span class="mord mathnormal mtight">ro</span><span class="mord mathnormal mtight">p</span><span class="mord mathnormal mtight" style="margin-right: 0.03588em;">y</span></span></span></span></span><span class="vlist-s">​</span></span></span></span></span><span class="mrel">=</span></span><span class="base"><span class="mord">−</span><span class="mord mathnormal" style="margin-right: 0.05278em;">β</span><span class="mord mathnormal" style="margin-right: 0.08125em;">H</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right: 0.03588em;">π</span><span class="mclose">)</span></span></span></span></span></p>
+<h3 id="実装">実装</h3>
+<pre><code class="language-python">loss = policy_loss + value_loss - beta * entropy
+</code></pre>
+<h2 id="7-まとめ体系表">7. まとめ（体系表）</h2>
+<table>
+<thead>
+<tr>
+<th>手法</th>
+<th>ロスの意味</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Q-learning</td>
+<td>予測Q値とTDターゲットのズレ</td>
+</tr>
+<tr>
+<td>Policy Gradient</td>
+<td>良い行動の確率を上げる</td>
+</tr>
+<tr>
+<td>Actor-Critic</td>
+<td>方策 + 価値の同時最適化</td>
+</tr>
+<tr>
+<td>Entropy</td>
+<td>探索を維持</td>
+</tr>
+</tbody>
+</table>
+<h2 id="結論">結論</h2>
+<p>バッと説明した内容ですが、以下の通り結論とします。</p>
+<ul>
+<li>強化学習のロスは「誤差」ではない</li>
+<li><strong>目的関数（報酬最大化）を数学的に書き換えたもの</strong></li>
+<li>手法によってロスの定義が変わる</li>
+</ul>
+<p>[blog:g:4207112889963697807:banner]</p>
+<p>[blog:g:6653586347156353205:banner]</p>
+<p>[blog:g:6802418398338611273:banner]</p>
+<p>[blog:g:10328749687175353006:banner]</p>
+<p> </p>
+<p>著者は暇があればgithubいじってます。 強化学習関係でしたら以下が作品です。 宜しければご覧ください。</p>
+<p><iframe src="https://hatenablog-parts.com/embed?url=https%3A%2F%2Fshinichi0713.github.io%2FReinforce-Learning-Study%2F" title="Reinforce Learning Study - Step By Step" class="embed-card embed-webcard" scrolling="no" frameborder="0" style="display: block; width: 100%; height: 155px; max-width: 500px; margin: 10px 0px;" loading="lazy"></iframe><cite class="hatena-citation"><a href="https://shinichi0713.github.io/Reinforce-Learning-Study/">shinichi0713.github.io</a></cite></p>
+<p> </p>
+<p>
+<script async="" src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+<script>
+    // 全ての見出し（h2）を取得して目次を作る例
+const toc = document.getElementById('toc'); // 目次を表示する場所
+const headings = document.querySelectorAll('h2');
+
+headings.forEach((heading, i) => {
+    // 見出しにIDがなければ設定
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    // 目次用のリンクを作成
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    const li = document.createElement('li');
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+</script>
+
+
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+</script>
+
+
+</p>

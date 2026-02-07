@@ -1,0 +1,408 @@
+<style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+<style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+
+/* 記事タイトル (h1) */
+h1 {
+    font-size: 2rem;
+    color: #24292f;
+    line-height: 1.3;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 3px double #e1e4e8; /* 二重線で上品に */
+    text-align: center; /* タイトルを中央に寄せて特別感を出す */
+}
+
+/* セクション見出し (h2) */
+h2 {
+    font-size: 1.5rem;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(transparent 70%, #e8f0fe 70%); /* 下側に薄い色のアクセント */
+    border-left: 6px solid #0969da; /* 目次のテーマカラーと合わせる */
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* 強調文字 (strong) */
+strong {
+    font-weight: bold;
+    color: #cf222e; /* ホバー時の赤色と合わせて統一感を出す */
+    background: linear-gradient(transparent 60%, #fff2cc 60%); /* 黄色のマーカー風 */
+    padding: 0 2px;
+}
+
+/* 引用のコンテナ */
+blockquote {
+    position: relative;
+    padding: 20px 30px;
+    margin: 30px 0;
+    background-color: #f6f8fa; /* 目次の背景より少しだけ濃いグレー */
+    border-left: 5px solid #d0d7de; /* 落ち着いたグレーの境界線 */
+    color: #57606a; /* 文字色は少し薄くして引用らしさを出す */
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 引用符のアイコンを装飾として追加 */
+blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    font-size: 40px;
+    color: #d0d7de;
+    font-family: serif;
+    line-height: 1;
+}
+
+/* 読者になるボタンのデザイン */
+.btn-subscribe {
+    display: inline-block;
+    padding: 12px 35px; /* 横幅を広めにとって存在感を出します */
+    background-color: #383838; /* お好みの色に変更してください */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #555555;
+    text-decoration: none;
+}
+
+/* はてなブログで見えてしまう数式データを非表示にする */
+.katex-html {
+    display: none !important;
+}
+
+.katex-mathml {
+    display: inline !important;
+}
+
+</style>
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+
+
+<h1 id="google-colabのデバッグ">Google Colabのデバッグ</h1>
+<p>google colabでデバッグに困ったため、インターネットの情報を基に調べてみました。 個人的に感触が良かったものを記載します。</p>
+<h2 id="1-マジックコマンド-debug-を使う">1. マジックコマンド <code>%debug</code> を使う</h2>
+<p>コードがエラーで止まってしまった直後に、**「なぜ止まったのか」**を調べるのに最適です。</p>
+<ul>
+<li><strong>使い方:</strong></li>
+</ul>
+<ol>
+<li>
+<p>エラーが発生したセルの直後に、新しいセルを作り <strong><code>%debug</code></strong> とだけ入力して実行します。</p>
+<div class="separator" style="clear: both;"><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgk8OD0T9kUC8VyPk7C_RG7_4cw1d2i0iC_iQZh-QpFGJSUjA-l_DoAfAplzFn6NqPPosT5lTH1ODYQZl5gCKqBH1MV2asPitEFF9o3pYQJUJhwea8AE2R_wx6XsZMD5Qb6GM1IHNw0bdPCci7IpZeRzfEDxpfFKY402q25aVk-S6GNPfoXb4pYJK7kIT_p/s219/1766194152368.png" style="display: block; padding: 1em 0; text-align: center;"><img alt="" border="0" width="400" data-original-height="196" data-original-width="219" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgk8OD0T9kUC8VyPk7C_RG7_4cw1d2i0iC_iQZh-QpFGJSUjA-l_DoAfAplzFn6NqPPosT5lTH1ODYQZl5gCKqBH1MV2asPitEFF9o3pYQJUJhwea8AE2R_wx6XsZMD5Qb6GM1IHNw0bdPCci7IpZeRzfEDxpfFKY402q25aVk-S6GNPfoXb4pYJK7kIT_p/s400/1766194152368.png" /></a></div>
+</li>
+<li>
+<p>ipdbという対話型デバッガが起動します。</p>
+</li>
+<li>
+<p>入力欄に変数名を入れるとその時の値が表示され、<code>u</code>（上へ移動）や <code>d</code>（下へ移動）でエラー箇所の前後の状況を確認できます。</p>
+</li>
+</ol>
+<ul>
+<li><strong>終了方法:</strong> <code>q</code>（quit）を入力して実行します。</li>
+</ul>
+<p>デバッグ時のコマンドは以下を使います</p>
+<ul>
+<li>h [command]：ヘルプを出す</li>
+<li>p [expression]：式を評価して出力する</li>
+<li>n：次の行へ</li>
+<li>c：次のブレークポイントへ</li>
+<li>q：その場で終了する</li>
+</ul>
+<p>お試しで以下を実行してみます。 0除算があるためエラーとなり、デバッグが起動します。</p>
+<pre><code class="language-python">%pdb on
+
+a = <span class="hljs-number">9</span>
+b = <span class="hljs-number">3</span>
+c = <span class="hljs-number">0</span>
+
+result = a + b / c
+
+<span class="hljs-built_in">print</span>(result)
+</code></pre>
+<p>デバッグモードでaやcの値を確認して、cによる0除算を確認出来ます。</p>
+<div class="separator" style="clear: both;"><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg-Ec2gvqwdVYKtjsA4qU0_LSRTzOnywXlgLKMMhY5btvHE5zNAgP9LZ7Bk2a05jHinCKmonjVuG5crSCvfYpg9tcBUe8dHA0Kx2I5gi0dRs0pIt-oupbu_j0D0HdpWPK7dJsKG-P4E5WKH1jZWz8xl9vqYXeRvEfrPBwN_JDowEJ8X5CC3I2AN-h-B36lZ/s197/1766194392398.png" style="display: block; padding: 1em 0; text-align: center;"><img alt="" border="0" width="400" data-original-height="92" data-original-width="197" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg-Ec2gvqwdVYKtjsA4qU0_LSRTzOnywXlgLKMMhY5btvHE5zNAgP9LZ7Bk2a05jHinCKmonjVuG5crSCvfYpg9tcBUe8dHA0Kx2I5gi0dRs0pIt-oupbu_j0D0HdpWPK7dJsKG-P4E5WKH1jZWz8xl9vqYXeRvEfrPBwN_JDowEJ8X5CC3I2AN-h-B36lZ/s400/1766194392398.png" /></a></div>
+<h2 id="2-breakpoint-関数を使う標準的な方法">2. <code>breakpoint()</code> 関数を使う（標準的な方法）</h2>
+<p>特定の場所でプログラムを一時停止させたい時に便利です。Python 3.7以降の標準機能です。</p>
+<ul>
+<li>
+<p><strong>使い方:</strong> <strong>Python</strong></p>
+<pre><code>def calculate_sum(a, b):
+    result = a + b
+    breakpoint()  # ここで実行が止まり、デバッグモードに入る
+    return result
+</code></pre>
+</li>
+<li>
+<p><strong>実行:</strong> これを書いたセルを実行すると、その行で停止し、変数の値を確認できるプロンプトが表示されます。</p>
+</li>
+</ul>
+<pre><code class="language-python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">calculate_sum</span>(<span class="hljs-params">a, b</span>):
+    result = a + b
+    <span class="hljs-built_in">breakpoint</span>()  <span class="hljs-comment"># ここで実行が止まり、デバッグモードに入る</span>
+    <span class="hljs-keyword">return</span> result
+
+calculate_sum(<span class="hljs-number">4</span>, -<span class="hljs-number">5</span>)
+</code></pre>
+<div class="separator" style="clear: both;"><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi3xpRq_78-iFHGcn0keYzrgPJL2QLvbZ-aK3EKgeoxCU55yQuevAqq8xYfDH509S4qkQeEqwXs1riZXGpbNT1KbPThz-4dYMf3ZrY_3QSCkuyDTFnDcSFZ1s8oPcDxB7nsiwdzxMUOyF9La6HmuPGEO32ASjfGA_QjH4U-fdMsRWudMOB-mJVJOkZZ6DGb/s355/1766194469989.png" style="display: block; padding: 1em 0; text-align: center;"><img alt="" border="0" width="400" data-original-height="166" data-original-width="355" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi3xpRq_78-iFHGcn0keYzrgPJL2QLvbZ-aK3EKgeoxCU55yQuevAqq8xYfDH509S4qkQeEqwXs1riZXGpbNT1KbPThz-4dYMf3ZrY_3QSCkuyDTFnDcSFZ1s8oPcDxB7nsiwdzxMUOyF9La6HmuPGEO32ASjfGA_QjH4U-fdMsRWudMOB-mJVJOkZZ6DGb/s400/1766194469989.png" /></a></div>
+<p><img src="file:///d:\PycharmProjects\Reinforce-Learning-Study\docs\blog\image\8-debug_on_colba_v2\1766194469989.png" alt="jssp-3" width="500px" height="auto" /></p>
+<h2 id="3-変数インスペクタ">3. 変数インスペクタ</h2>
+<p>エラーが起きタイミングで現在の変数がどうなっているかを確認する方法です。</p>
+<ol>
+<li>画面下の"変数"を押す</li>
+</ol>
+<div class="separator" style="clear: both;"><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEga0Eh7SV0NZgFjzprbskvkxHH3d7O6xnr_yXU4FM5oh8dckngJhrQadXFc6c3siqTSNQTce4oIAqSF0hGMMOMtaT1hu-H1L_nEu6aD9MO7ZtpAOa3d3AujOKs55SubYvYtRC9R-ZEAPswBliqEfbYHK_ZOe1KyOh52FNHUPvoULSo7Lh_XbUntZlXzLBrM/s638/1766194560382.png" style="display: block; padding: 1em 0; text-align: center;"><img alt="" border="0" width="400" data-original-height="235" data-original-width="638" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEga0Eh7SV0NZgFjzprbskvkxHH3d7O6xnr_yXU4FM5oh8dckngJhrQadXFc6c3siqTSNQTce4oIAqSF0hGMMOMtaT1hu-H1L_nEu6aD9MO7ZtpAOa3d3AujOKs55SubYvYtRC9R-ZEAPswBliqEfbYHK_ZOe1KyOh52FNHUPvoULSo7Lh_XbUntZlXzLBrM/s400/1766194560382.png" /></a></div>
+<ol start="2">
+<li>変数インスペクタ画面で変数の値を確認する</li>
+</ol>
+<div class="separator" style="clear: both;"><a href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh4kABgUBCkXX148bLW4qpSdLAYm9nqt6DoUncM6sgfIBkp_S4qmil8jrnWjxfhHlpjYNaCrVG3yi9saT69mb1-xUqVOxkkeal7rfX6M8NoqKmESlaQXSGDzHOtfNwcnYH-UPjFYcTwMO1Ivra0HHddUjpKNARFlj2lBIbcmE-I6yPHwFd2-g5arRtLR4Kk/s684/1766194608487.png" style="display: block; padding: 1em 0; text-align: center;"><img alt="" border="0" width="400" data-original-height="289" data-original-width="684" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh4kABgUBCkXX148bLW4qpSdLAYm9nqt6DoUncM6sgfIBkp_S4qmil8jrnWjxfhHlpjYNaCrVG3yi9saT69mb1-xUqVOxkkeal7rfX6M8NoqKmESlaQXSGDzHOtfNwcnYH-UPjFYcTwMO1Ivra0HHddUjpKNARFlj2lBIbcmE-I6yPHwFd2-g5arRtLR4Kk/s400/1766194608487.png" /></a></div>
+<h2 id="4-ログ出力printデバッグの強化">4. ログ出力（printデバッグ）の強化</h2>
+<p>デバッガを使うまでもない時は、<code>print()</code> を使いますが、Colab（Jupyter）では以下のツールも便利です。</p>
+<ul>
+<li><strong><code>logging</code> モジュール:</strong> 処理の経過を記録する。</li>
+<li><strong><code>ic()</code> (icecream):</strong> <code>pip install icecream</code> で利用可能。<code>ic(variable)</code> と書くだけで、変数名と値を綺麗に表示してくれるので、<code>print</code> よりも効率的です。</li>
+</ul>
+<h2 id="おすすめの使い分け">おすすめの使い分け</h2>
+<p>デバッグは事件が起きたすぐに使えることが非常に重要です。</p>
+<p>そういう意味ではエラーが出た段階ですぐに、プログラムの状態が分かるものが良いと思います。</p>
+<p>結果、上記の中で特に有用と感じているのは以下の手法です。</p>
+<ul>
+<li><strong>「エラーが出た原因をすぐ見たい」</strong> → 1の <code>%debug</code>。</li>
+<li><strong>「特定のループの中を確認したい」</strong> → 2の <code>breakpoint()</code>。</li>
+<li><strong>「どこがおかしいか全く不明」</strong> → 3の変数インスペクタを使う。</li>
+</ul>
+<p> </p>
+<p> </p>
+<p>[blog:g:11696248318754550880:banner]</p>
+<p>[blog:g:11696248318754550877:banner]</p>
+
+
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+</script>

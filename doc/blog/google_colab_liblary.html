@@ -1,0 +1,452 @@
+<style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+<style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+
+/* 記事タイトル (h1) */
+h1 {
+    font-size: 2rem;
+    color: #24292f;
+    line-height: 1.3;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 3px double #e1e4e8; /* 二重線で上品に */
+    text-align: center; /* タイトルを中央に寄せて特別感を出す */
+}
+
+/* セクション見出し (h2) */
+h2 {
+    font-size: 1.5rem;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(transparent 70%, #e8f0fe 70%); /* 下側に薄い色のアクセント */
+    border-left: 6px solid #0969da; /* 目次のテーマカラーと合わせる */
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* 強調文字 (strong) */
+strong {
+    font-weight: bold;
+    color: #cf222e; /* ホバー時の赤色と合わせて統一感を出す */
+    background: linear-gradient(transparent 60%, #fff2cc 60%); /* 黄色のマーカー風 */
+    padding: 0 2px;
+}
+
+/* 引用のコンテナ */
+blockquote {
+    position: relative;
+    padding: 20px 30px;
+    margin: 30px 0;
+    background-color: #f6f8fa; /* 目次の背景より少しだけ濃いグレー */
+    border-left: 5px solid #d0d7de; /* 落ち着いたグレーの境界線 */
+    color: #57606a; /* 文字色は少し薄くして引用らしさを出す */
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 引用符のアイコンを装飾として追加 */
+blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    font-size: 40px;
+    color: #d0d7de;
+    font-family: serif;
+    line-height: 1;
+}
+
+/* 読者になるボタンのデザイン */
+.btn-subscribe {
+    display: inline-block;
+    padding: 12px 35px; /* 横幅を広めにとって存在感を出します */
+    background-color: #383838; /* お好みの色に変更してください */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #555555;
+    text-decoration: none;
+}
+
+/* はてなブログで見えてしまう数式データを非表示にする */
+.katex-html {
+    display: none !important;
+}
+
+.katex-mathml {
+    display: inline !important;
+}
+
+</style>
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+<p>Google Colabでインストールの待ち時間に悩まされるのは非常によくある課題です。Colabはセッションが切れるたびに環境がリセットされるため、重いライブラリ（特にCUDA関連やソースビルドが必要なもの）の再インストールは苦痛です。</p>
+<p>インストール時間を劇的に短縮、あるいは「ゼロ」にするための具体的な戦略を4つ紹介します。</p>
+<h3 id="google-driveを仮想的なインストール先にする">Google Driveを「仮想的なインストール先」にする</h3>
+<p>これが最も一般的で確実な方法です。Google Driveをマウントし、そこにライブラリをインストールしておきます。次回以降は、そのパスをPythonの検索パス（<code>sys.path</code>）に追加するだけで、<strong>インストール済みとして認識</strong>されます。</p>
+<p><strong>手順:</strong></p>
+<ol>
+<li>Google Driveをマウント</li>
+<li>特定のディレクトリにインストール（<code>--target</code> オプションを使用）</li>
+<li><code>sys.path</code> にそのディレクトリを追加</li>
+</ol>
+<p><strong>Python</strong></p>
+<pre><code>import os, sys
+from google.colab import drive
+drive.mount('/content/drive')
+
+# ライブラリの保存先を指定
+nb_path = '/content/drive/MyDrive/colab_packages'
+os.makedirs(nb_path, exist_ok=True)
+
+# インストール（初回のみ実行。次回からは不要）
+# !pip install --target=$nb_path some-heavy-library
+
+# パスを通す（これだけで次回から使える）
+sys.path.append(nb_path)
+</code></pre>
+<h3 id="事前にビルドされたwheelファイル-whlを活用する">事前にビルドされた「Wheelファイル (.whl)」を活用する</h3>
+<p>ソースコードからビルド（コンパイル）が必要なライブラリ（例：<code>detectron2</code> や <code>pycocotools</code> など）は時間がかかります。</p>
+<ul>
+<li><strong>対策</strong> : 自分の環境（Python 3.10/3.11など）に合った <code>.whl</code> ファイルを一度ダウンロードしてGoogle Driveに保存しておきます。</li>
+<li><strong>メリット</strong> : <code>pip install filename.whl</code> でインストールすると、ビルド工程がスキップされるため、数分かかるものが数秒で終わります。</li>
+</ul>
+<h3 id="conda-mamba-への切り替え">conda (Mamba) への切り替え</h3>
+<p><code>pip</code> よりも依存関係の解決が速く、バイナリ配布が充実している <code>conda</code>（特に高速版の <strong>Mamba</strong> ）を使うと、インストールが爆速になる場合があります。</p>
+<p><strong>Python</strong></p>
+<pre><code># condacolabを使用して環境を整える
+!pip install -q condacolab
+import condacolab
+condacolab.install()
+
+# 以降、mambaを使って高速インストール
+!mamba install -c conda-forge some-heavy-library
+</code></pre>
+<h3 id="カスタムランタイムgceインスタンスの利用">カスタムランタイム（GCEインスタンス）の利用</h3>
+<p>もし、毎日数時間の作業をするのであれば、前述した <strong>Google Compute Engine (GCE)</strong> のインスタンスをColabのバックエンドとして使うのが最強の解決策です。</p>
+<ul>
+<li><strong>仕組み</strong> : 自分で立てたGCEインスタンスは、インスタンスを停止してもディスク（OSの中身やライブラリ）が保持されます。</li>
+<li><strong>メリット</strong> : Colabを閉じて翌日開いても、<strong>ライブラリはすべてインストールされたまま</strong>です。インストールの待ち時間は文字通り「0秒」になります。</li>
+</ul>
+<h3 id="まとめどの方法を選ぶべき">まとめ：どの方法を選ぶべき？</h3>
+<table>
+<thead>
+<tr>
+<th><strong>状況</strong></th>
+<th><strong>推奨される方法</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>数個のライブラリが重いだけ</strong></td>
+<td><strong>1. Google Driveに保存</strong></td>
+</tr>
+<tr>
+<td><strong>ビルド（コンパイル）に時間がかかる</strong></td>
+<td><strong>2. Wheelファイルの使用</strong></td>
+</tr>
+<tr>
+<td><strong>依存関係が複雑でpipが遅い</strong></td>
+<td><strong>3. Mambaの使用</strong></td>
+</tr>
+<tr>
+<td><strong>毎日同じ環境で長時間作業する</strong></td>
+<td><strong>4. カスタムランタイム (GCE)</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>まずは「1. Google Driveを保存先にする方法」を試してみるのが最も手軽ですが、</strong></p>
+<h2 id="実践">実践</h2>
+<p>前回LLMのファインチューニングのためインストールした <code>unsloth[cuda-full]</code> は、依存関係（特に <code>triton</code>, <code>xformers</code>, <code>cutlass</code> など）が非常に多く、ビルドや依存解決に10分以上かかることもある非常に「重い」パッケージですね。</p>
+<p>Colabでこれを毎回インストールするのは非効率ですので、**「Google Driveにインストール済み環境を丸ごとキャッシュする」**方法が最も効果的です。</p>
+<p>以下の手順で、2回目以降のインストールを <strong>数秒〜数十秒</strong> に短縮できます。</p>
+<h3 id="短縮の手順初回のみ時間をかけて設定">短縮の手順（初回のみ時間をかけて設定）</h3>
+<h4 id="1-google-driveの準備">1. Google Driveの準備</h4>
+<p>まず、ドライブをマウントして保存先フォルダを作ります。</p>
+<p><strong>Python</strong></p>
+<pre><code>from google.colab import drive
+drive.mount('/content/drive')
+
+import os
+# 保存先：Google Drive内の 'unsloth_env' フォルダ
+SAVE_PATH = "/content/drive/MyDrive/unsloth_env"
+os.makedirs(SAVE_PATH, exist_ok=True)
+</code></pre>
+<h4 id="2-初回インストール保存先を指定">2. 初回インストール（保存先を指定）</h4>
+<p><code>--target</code> オプションを使って、ドライブ上のフォルダに直接インストールします。※初回だけ10〜15分ほどかかります。</p>
+<p><strong>Python</strong></p>
+<pre><code># 初回のみ実行（時間がかかります）
+!pip install --target=$SAVE_PATH "unsloth[cuda-full] @ git+https://github.com/unslothai/unsloth.git"
+</code></pre>
+<h4 id="3-2回目以降パスを通すだけで完了">3. 2回目以降：パスを通すだけで完了</h4>
+<p>次回からColabを開いた際は、インストールコマンドは不要です。以下のコードを実行するだけで <code>unsloth</code> が使えるようになります。</p>
+<p><strong>Python</strong></p>
+<pre><code>import sys
+from google.colab import drive
+drive.mount('/content/drive')
+
+# 保存したフォルダをPythonの検索パスの最優先に追加
+SAVE_PATH = "/content/drive/MyDrive/unsloth_env"
+sys.path.insert(0, SAVE_PATH)
+
+# 確認（エラーが出なければ成功）
+import unsloth
+print("Unsloth 読み込み成功！")
+</code></pre>
+<h3 id="注意点とコツ">注意点とコツ</h3>
+<ul>
+<li>CUDAバージョンの不一致: ColabのCUDAバージョンが更新された場合（例：12.1 → 12.2）、保存したバイナリが動かなくなることがあります。その場合は一度ドライブのフォルダを削除して、再インストール（手順2）を行ってください。</li>
+<li>シンボリックリンクのエラー: Google Driveの仕様上、一部のシンボリックリンクを含むファイルが正常に保存されないことがあります。その場合、手順2の前に一度 pip install unsloth 自体はColabローカルに行い、依存関係のキャッシュだけを利用する形に調整が必要です。</li>
+<li>高速版のインストールコマンド: Unsloth公式は、Colab向けに最適化されたインストールコマンドを提供しています。もし上記で動かない場合は、公式の「最速インストール手順」をDrive保存と組み合わせるのがベストです。</li>
+</ul>
+<h3 id="さらなる高速化pre-built-wheel-の利用">さらなる高速化：<code>pre-built wheel</code> の利用</h3>
+<p>もし手順2でもエラーが出る場合は、Unslothが公開しているColab専用の <code>wheel</code>（ビルド済みバイナリ）をGoogle Driveに <code>.whl</code> 形式でダウンロードしておき、それを <code>!pip install</code> するのが最もトラブルが少なく高速です。</p>
+<p> </p>
+<p>[blog:g:11696248318754550880:banner]</p>
+<p>[blog:g:11696248318754550877:banner]</p>
+<p>
+<script>
+const toc = document.getElementById('toc');
+const headings = document.querySelectorAll('h2');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    const li = document.createElement('li');
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+</script>
+<script async="" src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+</script>
+
+
+</p>

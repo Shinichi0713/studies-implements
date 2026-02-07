@@ -1,0 +1,468 @@
+<style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+<style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+
+/* 記事タイトル (h1) */
+h1 {
+    font-size: 2rem;
+    color: #24292f;
+    line-height: 1.3;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 3px double #e1e4e8; /* 二重線で上品に */
+    text-align: center; /* タイトルを中央に寄せて特別感を出す */
+}
+
+/* セクション見出し (h2) */
+h2 {
+    font-size: 1.5rem;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(transparent 70%, #e8f0fe 70%); /* 下側に薄い色のアクセント */
+    border-left: 6px solid #0969da; /* 目次のテーマカラーと合わせる */
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* 強調文字 (strong) */
+strong {
+    font-weight: bold;
+    color: #cf222e; /* ホバー時の赤色と合わせて統一感を出す */
+    background: linear-gradient(transparent 60%, #fff2cc 60%); /* 黄色のマーカー風 */
+    padding: 0 2px;
+}
+
+/* 引用のコンテナ */
+blockquote {
+    position: relative;
+    padding: 20px 30px;
+    margin: 30px 0;
+    background-color: #f6f8fa; /* 目次の背景より少しだけ濃いグレー */
+    border-left: 5px solid #d0d7de; /* 落ち着いたグレーの境界線 */
+    color: #57606a; /* 文字色は少し薄くして引用らしさを出す */
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 引用符のアイコンを装飾として追加 */
+blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    font-size: 40px;
+    color: #d0d7de;
+    font-family: serif;
+    line-height: 1;
+}
+
+/* 読者になるボタンのデザイン */
+.btn-subscribe {
+    display: inline-block;
+    padding: 12px 35px; /* 横幅を広めにとって存在感を出します */
+    background-color: #383838; /* お好みの色に変更してください */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #555555;
+    text-decoration: none;
+}
+
+/* はてなブログで見えてしまう数式データを非表示にする */
+.katex-html {
+    display: none !important;
+}
+
+.katex-mathml {
+    display: inline !important;
+}
+</style>
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+
+<h2 id="アテンションの計算の意味">アテンションの計算の意味</h2>
+<p>Attention機構の <strong>Q（Query：クエリ）</strong>、<strong>K（Key：キー）</strong>、<strong>V（Value：バリュー）</strong> は、よく <strong>「図書館での検索」</strong> や <strong>「YouTubeの動画検索」</strong> に例えられます。</p>
+<p>これらは、大量の情報の中から「今の文脈に最も関連する情報」を効率よく引き出すための仕組みです。それぞれの役割を初心者の方にもわかりやすく整理します。</p>
+<p> </p>
+<p><img src="https://cdn-ak.f.st-hatena.com/images/fotolife/y/yoshishinnze/20251220/20251220183403.png" width="407" height="407" loading="lazy" title="" class="hatena-fotolife" itemprop="image" style="display: block; margin-left: auto; margin-right: auto;" /></p>
+<p> </p>
+<h3 id="1-検索システムに例えると">1. 検索システムに例えると？</h3>
+<p>あなたがYouTubeで動画を探している場面を想像してください。</p>
+<ul>
+<li>
+<p><strong>Query (Q)：「あなたが今検索窓に打ち込んだキーワード」</strong></p>
+</li>
+<li>
+<p>例：「おいしいカレーの作り方」</p>
+</li>
+<li>
+<p>役割：いま自分が「知りたいこと・探しているもの」そのものです。</p>
+</li>
+<li>
+<p><strong>Key (K)：「動画のタイトルやタグ」</strong></p>
+</li>
+<li>
+<p>例：「スパイスから作る究極カレー」「時短！5分カレーレシピ」</p>
+</li>
+<li>
+<p>役割：Queryと照らし合わせるための「目印・索引」です。どれくらいQueryと一致するかを測るために使われます。</p>
+</li>
+<li>
+<p><strong>Value (V)：「動画のファイルそのもの（中身）」</strong></p>
+</li>
+<li>
+<p>役割：最終的にあなたが手に入れたい「情報の中身」です。</p>
+</li>
+</ul>
+<h3 id="2-llmの計算の中での動き">2. LLMの計算の中での動き</h3>
+<p>先ほどの実装コードの中でも、この3つは以下のようなステップで処理されていました。</p>
+<ol>
+<li><strong>QとKの類似度を測る（スコア計算）</strong> 「今の単語（Q）」が、周りの「どの単語（K）」と関係が深いかを計算します。</li>
+</ol>
+<ul>
+<li>例：「私は（Q）」にとって、周りの「学校」「へ」「行く」の中でどれが重要か？</li>
+</ul>
+<ol start="2">
+<li><strong>重み（注意の度合い）を決める</strong> QとKの相性が良いものほど、高いスコア（重み）が割り振られます。</li>
+<li><strong>Vを重み付けして集める</strong> 高い重みがついた単語の「情報（V）」をたくさん取り込みます。</li>
+</ol>
+<ul>
+<li>結果：「私」という単語のベクトルに、「行く」という動作の情報が強くミックスされます。</li>
+</ul>
+<h3 id="3-なぜ3つに分ける必要があるのか">3. なぜ3つに分ける必要があるのか？</h3>
+<p>「単語そのもの（1つのベクトル）」をそのまま使うのではなく、わざわざQ, K, Vの3つに変換して計算するのには理由があります。</p>
+<ul>
+<li><strong>役割の分担</strong>: 同じ単語でも、「誰かを探しに行くとき（Q）」と「誰かに見つけてもらうとき（K）」、そして「自分の情報を提供するとき（V）」では、注目すべき特徴が異なるからです。</li>
+<li><strong>柔軟な学習</strong>: Q, K, V を作るための「重み（行列 ）」を学習することで、モデルは「この文脈では、名詞ではなく動詞に注目すべきだ」といった高度な判断力を身につけることができます。</li>
+</ul>
+<h3 id="まとめ">まとめ</h3>
+<table>
+<thead>
+<tr>
+<th>要素</th>
+<th>意味</th>
+<th>役割</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Query (Q)</strong></td>
+<td>検索のリクエスト</td>
+<td>「いま注目している単語」が何を探しているか。</td>
+</tr>
+<tr>
+<td><strong>Key (K)</strong></td>
+<td>検索の対象（目印）</td>
+<td>周りの単語が「どんな情報を持っているか」のラベル。</td>
+</tr>
+<tr>
+<td><strong>Value (V)</strong></td>
+<td>情報の中身</td>
+<td>最終的に出力に混ぜ合わせる「知識の断片」。</td>
+</tr>
+</tbody>
+</table>
+<p><strong>「自分自身（Q）が、周りの誰（K）に注目し、その人のどんな情報（V）を取り込むか」</strong>。これがAttention機構の正体です。</p>
+<h2 id="アテンションが問題解決した理由">アテンションが問題解決した理由</h2>
+<p>アテンション（Attention）機構は、従来のRNN（LSTM/GRU）やCNNが自然言語処理において抱えていた <strong>「情報の劣化」「並列化の困難さ」「文脈の無視」</strong> という3つの大きな壁を、根本的な構造改革によって打破しました。</p>
+<p>どのように解決したのか、3つのポイントで解説します。</p>
+<h3 id="長距離依存の解決距離をゼロにした">「長距離依存」の解決：距離をゼロにした</h3>
+<p>従来のRNNは、文章を端から順番に読み、情報を「一つの記憶（隠れ状態）」に詰め込んで次へ渡していくバケツリレー方式でした。そのため、文頭の情報は文末にたどり着く頃には薄れてしまう（勾配消失問題）という致命的な欠陥がありました。</p>
+<ul>
+<li><strong>アテンションの解決策</strong>: アテンションは、<strong>文章内の全単語間に「直通の橋」を架けました。</strong> 10単語離れていようが1,000単語離れていようが、必要な単語へ直接アクセスして情報を取ってこれるため、距離による情報の劣化が物理的に起こらなくなりました。</li>
+</ul>
+<h3 id="並列処理の実現順番待ちをなくした">「並列処理」の実現：順番待ちをなくした</h3>
+<p>RNNは「前の単語の計算が終わらないと次の単語に進めない」という直列構造だったため、最新の強力なGPUを使っても計算スピードが上がらないという課題がありました。</p>
+<ul>
+<li><strong>アテンションの解決策</strong>: アテンション（特にTransformer）は、文章全体を**「一度に、一斉に」**処理します。全単語の相互関係を巨大な行列計算として同時に処理できるため、GPUのパワーをフルに発揮して、膨大なデータを高速に学習できるようになりました。これが、現在の巨大なLLM（大規模言語モデル）誕生の最大の要因です。</li>
+</ul>
+<h3 id="動的な文脈理解情報の重要度を選別した">「動的な文脈理解」：情報の重要度を選別した</h3>
+<p>CNNは「隣り合った数単語のパターン」を見るのは得意ですが、文脈に応じて「どの言葉が今重要か」を判断する柔軟性がありませんでした。</p>
+<ul>
+<li><strong>アテンションの解決策</strong>: アテンションは、入力された文章の内容に応じて**「どこに注目（Attention）すべきか」をその都度計算**します。</li>
+<li>例：「その<strong>銀行</strong>でお金を下ろす」と「川の<strong>銀行</strong>（土手）に座る」 アテンションは、「お金」や「川」という周りの単語に高い重みを付けることで、「銀行」という言葉の適切な意味をその場で動的に判断します。</li>
+</ul>
+<h3 id="比較まとめ">比較まとめ</h3>
+<table>
+<thead>
+<tr>
+<th>課題</th>
+<th>従来の手法 (RNN/CNN)</th>
+<th>アテンションの解決</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>長文の理解</strong></td>
+<td>遠くの情報を忘れる（バケツリレー）</td>
+<td><strong>全単語に直接アクセス（直通の橋）</strong></td>
+</tr>
+<tr>
+<td><strong>処理スピード</strong></td>
+<td>1つずつ処理（並列化不可）</td>
+<td><strong>全単語を一斉に計算（超並列処理）</strong></td>
+</tr>
+<tr>
+<td><strong>文脈の柔軟性</strong></td>
+<td>決まったルールで見る</td>
+<td><strong>重要な単語を自分で選ぶ（動的重み付け）</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="結論">結論</h3>
+<p>アテンションは、情報を「圧縮して運ぶ」のではなく、**「必要なときに、必要な場所から、必要なだけ取ってくる」**という検索エンジンのような仕組みを導入しました。</p>
+<p>これにより、人間が長い小説の伏線を理解したり、複雑な論文の文脈を読み解いたりするのと近い処理を、コンピュータ上で効率的に再現できるようになったのです。</p>
+<p> </p>
+<p>[blog:g:4207112889963697807:banner]</p>
+<p>[blog:g:6653586347156353205:banner]</p>
+<p>[blog:g:6802418398338611273:banner]</p>
+<p> </p>
+<p>
+<script>
+const toc = document.getElementById('toc');
+const headings = document.querySelectorAll('h2');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    const li = document.createElement('li');
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+</script>
+
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+</script>
+
+
+
+</p>
+<p>著者は暇があればgithubいじってます。 LLM関係でしたら以下が作品です。 宜しければご覧ください。</p>
+<p><iframe src="https://hatenablog-parts.com/embed?url=https%3A%2F%2Fshinichi0713.github.io%2FLLM-fundamental-study%2F" title="Roadmap of Implementation of LLM - step by step" class="embed-card embed-webcard" scrolling="no" frameborder="0" style="display: block; width: 100%; height: 155px; max-width: 500px; margin: 10px 0px;" loading="lazy"></iframe><cite class="hatena-citation"><a href="https://shinichi0713.github.io/LLM-fundamental-study/">shinichi0713.github.io</a></cite></p>
+<p> </p>

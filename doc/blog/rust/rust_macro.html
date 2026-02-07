@@ -1,0 +1,529 @@
+<style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+<style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+/* 目次全体のコンテナ */
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+
+/* 記事タイトル (h1) */
+h1 {
+    font-size: 2rem;
+    color: #24292f;
+    line-height: 1.3;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 3px double #e1e4e8; /* 二重線で上品に */
+    text-align: center; /* タイトルを中央に寄せて特別感を出す */
+}
+
+/* セクション見出し (h2) */
+h2 {
+    font-size: 1.5rem;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(transparent 70%, #e8f0fe 70%); /* 下側に薄い色のアクセント */
+    border-left: 6px solid #0969da; /* 目次のテーマカラーと合わせる */
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* 強調文字 (strong) */
+strong {
+    font-weight: bold;
+    color: #cf222e; /* ホバー時の赤色と合わせて統一感を出す */
+    background: linear-gradient(transparent 60%, #fff2cc 60%); /* 黄色のマーカー風 */
+    padding: 0 2px;
+}
+
+/* 引用のコンテナ */
+blockquote {
+    position: relative;
+    padding: 20px 30px;
+    margin: 30px 0;
+    background-color: #f6f8fa; /* 目次の背景より少しだけ濃いグレー */
+    border-left: 5px solid #d0d7de; /* 落ち着いたグレーの境界線 */
+    color: #57606a; /* 文字色は少し薄くして引用らしさを出す */
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 引用符のアイコンを装飾として追加 */
+blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    font-size: 40px;
+    color: #d0d7de;
+    font-family: serif;
+    line-height: 1;
+}
+
+/* 読者になるボタンのデザイン */
+.btn-subscribe {
+    display: inline-block;
+    padding: 12px 35px; /* 横幅を広めにとって存在感を出します */
+    background-color: #383838; /* お好みの色に変更してください */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #555555;
+    text-decoration: none;
+}
+
+/* はてなブログで見えてしまう数式データを非表示にする */
+.katex-html {
+    display: none !important;
+}
+
+.katex-mathml {
+    display: inline !important;
+}
+
+</style>
+
+
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+
+<h1 id="rustにおけるマクロ">Rustにおけるマクロ</h1>
+<h2 id="まずマクロという言葉">まずマクロという言葉</h2>
+<p>「マクロ（Macro）」という言葉は、ギリシャ語の <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>μ</mi><mi>α</mi><mi>κ</mi><mi>ρ</mi><mover accent="true"><mi>o</mi><mo>ˊ</mo></mover><mi>ς</mi></mrow><annotation encoding="application/x-tex">\mu\alpha\kappa\rho\acute{o}\varsigma</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="mord mathnormal" style="margin-right: 0.0037em;">μα</span><span class="mord mathnormal">κ</span><span class="mord mathnormal">ρ</span><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height: 0.6944em;"><span style="top: -3em;"><span class="mord mathnormal">o</span></span><span style="top: -3em;"><span class="accent-body" style="left: -0.1944em;"><span class="mord">ˊ</span></span></span></span></span></span></span><span class="mord mathnormal" style="margin-right: 0.07986em;">ς</span></span></span></span>（<em>makros</em>、「大きい」「長い」の意味）に由来し、主に「巨視的な」「包括的な」「大規模な」といった意味合いで用いられます。</p>
+<p>文脈によって具体的な意味が異なりますが、最も一般的な2つの分野での意味を解説します。</p>
+<p><img src="https://cdn-ak.f.st-hatena.com/images/fotolife/y/yoshishinnze/20251206/20251206203411.png" width="354" height="354" loading="lazy" title="" class="hatena-fotolife" itemprop="image" /></p>
+<h2 id="コンピュータサイエンスプログラミングにおけるマクロ">コンピュータサイエンス・プログラミングにおけるマクロ</h2>
+<p>コンピュータの文脈では、マクロは「一連の操作を自動化するための小さなプログラム」を意味します。</p>
+<h3 id="定義">定義</h3>
+<ul>
+<li><strong>操作の記録と再現:</strong> ユーザーが一連のキーボード操作やマウスクリックなどの手順を実行し、それを記録（定義）します。</li>
+<li><strong>自動化:</strong> 記録された手順全体を、たった一つのコマンド（キーボードショートカットなど）で<strong>一括実行</strong>できるようにしたものです。</li>
+<li><strong>用途:</strong> <strong>繰り返しの多い定型作業</strong>（例: テキストの置換、データの整形、レポートの自動作成）を効率化するために用いられます。</li>
+</ul>
+<h3 id="具体例">具体例</h3>
+<ul>
+<li><strong>Microsoft Excel/Word (VBA):</strong> 最も一般的な例です。VBA（Visual Basic for Applications）を用いて、セル操作や文書作成を自動化します。</li>
+<li><strong>C言語のマクロ:</strong> プリプロセッサ（コンパイル前の処理系）によって、コード中の特定の文字列を別の文字列に置換する機能です。これは主に定数定義や簡単な関数置換に使われます。</li>
+</ul>
+<h2 id="rustマクロの基本概念">Rustマクロの基本概念</h2>
+<p>Rustにおける「マクロ」は、プログラミング言語Rustに特有の<strong>コード生成</strong>メカニズムであり、<strong>メタプログラミング</strong>を実現するための強力な機能です。 これは、C言語のシンプルなテキスト置換マクロよりもはるかに強力で、言語の構文レベルで動作し、<strong>コンパイル時</strong>にコードを生成・変更します。</p>
+<h3 id="1-構文拡張としてのマクロ">1. 構文拡張としてのマクロ</h3>
+<p>Rustのマクロは、既存のRustの構文を拡張し、新しい構文構造を定義する能力を持っています。マクロ呼び出しは、他の関数呼び出しと区別するために、関数名（マクロ名）の後に<strong>感嘆符 (<code>!</code>)</strong> を付けて記述します。</p>
+<ul>
+<li><strong>例:</strong> <code>println!("Hello!");</code>, <code>vec![1, 2, 3]</code></li>
+</ul>
+<h3 id="2-衛生的マクロ-vs-非衛生的マクロ">2. 衛生的マクロ vs 非衛生的マクロ</h3>
+<p>Rustのマクロは、その動作原理から大きく二つのカテゴリに分類されます。</p>
+<h4 id="-衛生的マクロ-macro_rules">🔹 衛生的マクロ (<code>macro_rules!</code>)</h4>
+<p>これがRustで最も一般的に使用されるマクロです。</p>
+<ul>
+<li><strong>特徴:</strong> マクロ内で定義された変数が、マクロの呼び出し元のスコープと<strong>衝突しない</strong>ように保証されます（衛生的）。安全性が高く、予測可能なコード生成が可能です。</li>
+<li><strong>用途:</strong> 繰り返し処理の簡略化や、特定のパターンを持つコードブロックの生成。</li>
+<li><strong>例:</strong> <code>vec!</code> マクロ（要素のリストから <code>Vec&lt;T&gt;</code> を構築）</li>
+</ul>
+<h4 id="-手続きマクロ-procedural-macros">🔹 手続きマクロ (Procedural Macros)</h4>
+<p>より複雑なコード生成や、言語の属性（アトリビュート）を操作するために使用されます。Rustコード自体を操作するRustコードを書く必要があります。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">種類</th>
+<th style="text-align: left;">記述方法</th>
+<th style="text-align: left;">用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>カスタム <code>derive</code></strong></td>
+<td style="text-align: left;"><code>#[derive(MyTrait)]</code></td>
+<td style="text-align: left;">構造体や列挙型に対して、自動的にトレイト（Trait）を実装するコードを生成します。最も一般的。</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>属性マクロ</strong></td>
+<td style="text-align: left;"><code>#[route("/")]</code></td>
+<td style="text-align: left;">関数やモジュール全体にカスタムの属性を適用し、それらのコードを変更します。（例：Webフレームワークのルーティング設定）</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>関数状マクロ</strong></td>
+<td style="text-align: left;"><code>my_macro!(...)</code></td>
+<td style="text-align: left;">呼び出し元がどのような引数を渡しても、それに基づいてカスタムなコードを生成します。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="マクロを使うメリット">マクロを使うメリット</h2>
+<ol>
+<li><strong>DRY (Don't Repeat Yourself) 原則の遵守:</strong> 似たような構造のコードを何度も手書きする代わりに、マクロで抽象化し、コードの重複を防ぎます。</li>
+<li><strong>型安全性:</strong> マクロの展開（コード生成）はコンパイル時に行われるため、生成されたコードの型エラーもコンパイル時に検出されます。C言語のような実行時エラーのリスクが低いです。</li>
+<li><strong>ドメイン固有言語 (DSL) の構築:</strong> 言語の構文を拡張し、特定の用途に特化した、より直感的で読みやすい独自の構文を定義できます。</li>
+</ol>
+<h3 id="マクロと関数の違い">マクロと関数の違い</h3>
+<p>マクロと関数は似ていますが、決定的な違いがあります。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">特徴</th>
+<th style="text-align: left;">マクロ</th>
+<th style="text-align: left;">関数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>実行タイミング</strong></td>
+<td style="text-align: left;"><strong>コンパイル時</strong>にコード生成/置換</td>
+<td style="text-align: left;"><strong>実行時</strong>に処理</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>引数</strong></td>
+<td style="text-align: left;">トークンツリー（抽象的なコード片）</td>
+<td style="text-align: left;">値、参照、型</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>多重定義</strong></td>
+<td style="text-align: left;">構文パターンマッチングで実現</td>
+<td style="text-align: left;">シグネチャ（引数の型と数）で実現</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>型情報</strong></td>
+<td style="text-align: left;">処理する段階では<strong>限定的</strong></td>
+<td style="text-align: left;">厳密な型チェックが行われる</td>
+</tr>
+</tbody>
+</table>
+<h2 id="マクロの実装">マクロの実装</h2>
+<p>Rustのマクロには、主に<strong>衛生的マクロ (<code>macro_rules!</code>)</strong> と<strong>手続きマクロ (Procedural Macros)</strong> の2種類があります。</p>
+<p>最も基本的な衛生的マクロの例と、広く使われる手続きマクロ（<code>derive</code>）の使用例を以下に示します。</p>
+<h3 id="1-衛生的マクロ-macro_rules-の実装例">1. 衛生的マクロ (<code>macro_rules!</code>) の実装例</h3>
+<p>衛生的マクロは、指定された<strong>パターン</strong>に一致する構文を受け取り、それを別のRustコードに展開します。</p>
+<p><strong>例: <code>vec!</code> マクロの単純化版</strong></p>
+<p>要素を列挙するだけで新しい <code>Vec</code> を生成するマクロを実装します。</p>
+<pre><code class="language-rust"><span class="hljs-comment">// macro_rules! でマクロを定義し、マクロ名に感嘆符(!)を付けます。</span>
+<span class="hljs-built_in">macro_rules!</span> easy_vec {
+    <span class="hljs-comment">// パターン: () -&gt; 空のベクタを生成</span>
+    () =&gt; {
+        Vec::<span class="hljs-title function_ invoke__">new</span>()
+    };
+
+    <span class="hljs-comment">// パターン: ($x:expr) -&gt; 要素を一つ持つベクタを生成</span>
+    <span class="hljs-comment">// $x:expr は「任意のRustの式」をキャプチャすることを意味します。</span>
+    ($x:expr) =&gt; {
+        {
+            <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">temp_vec</span> = Vec::<span class="hljs-title function_ invoke__">new</span>();
+            temp_vec.<span class="hljs-title function_ invoke__">push</span>($x);
+            temp_vec
+        }
+    };
+
+    <span class="hljs-comment">// パターン: ($x:expr, $y:expr, ...) -&gt; 複数の要素を持つベクタを生成</span>
+    <span class="hljs-comment">// $x:expr の後に ,$y:expr とカンマ区切りで0回以上繰り返すことを意味します。</span>
+    ($($element:expr),*) =&gt; {
+        {
+            <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">temp_vec</span> = Vec::<span class="hljs-title function_ invoke__">new</span>();
+            <span class="hljs-comment">// 繰り返し (Repetition) の構文</span>
+            $(
+                temp_vec.<span class="hljs-title function_ invoke__">push</span>($element);
+            )*
+            temp_vec
+        }
+    };
+}
+
+<span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>() {
+    <span class="hljs-comment">// 呼び出し例 1: 空のベクタ</span>
+    <span class="hljs-keyword">let</span> <span class="hljs-variable">v1</span>: <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">i32</span>&gt; = easy_vec!();
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">"v1: {:?}"</span>, v1); <span class="hljs-comment">// 出力: v1: []</span>
+
+    <span class="hljs-comment">// 呼び出し例 2: 要素を一つ</span>
+    <span class="hljs-keyword">let</span> <span class="hljs-variable">v2</span> = easy_vec!(<span class="hljs-number">10</span>);
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">"v2: {:?}"</span>, v2); <span class="hljs-comment">// 出力: v2: [10]</span>
+
+    <span class="hljs-comment">// 呼び出し例 3: 複数の要素 (マクロ展開後のコードが実行される)</span>
+    <span class="hljs-comment">// 展開後: let v3 = { let mut temp_vec = Vec::new(); temp_vec.push(1); temp_vec.push(2); temp_vec };</span>
+    <span class="hljs-keyword">let</span> <span class="hljs-variable">v3</span> = easy_vec!(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span> + <span class="hljs-number">4</span>, <span class="hljs-number">8</span>);
+    <span class="hljs-built_in">println!</span>(<span class="hljs-string">"v3: {:?}"</span>, v3); <span class="hljs-comment">// 出力: v3: [1, 2, 7, 8]</span>
+}
+</code></pre>
+<p><strong>動作のポイント</strong></p>
+<ul>
+<li><strong>パターンマッチング:</strong> マクロは渡された引数（トークン）のパターンを上から順に照合し、最初の一致したパターンに対応するコードを生成します。</li>
+<li><strong>マクロ変数:</strong> <code>$x:expr</code> のように、<code>$</code> を付けた識別子で引数をキャプチャし、その後にコロンで<strong>フラグメント識別子</strong>（この例では <code>expr</code> = 式）を指定します。</li>
+<li><strong>繰り返し (<code>$()</code>):</strong> <code>$($element:expr),*</code> の構文は、要素がカンマ区切り (<code>,</code>) で0回以上 (<code>*</code>) 繰り返されるパターンに一致することを示します。</li>
+</ul>
+<h3 id="2-手続きマクロ-derive-の実装例使用方法">2. 手続きマクロ (<code>derive</code>) の実装例（使用方法）</h3>
+<p>手続きマクロはより複雑ですが、Rustのエコシステムでは、<strong>カスタム <code>derive</code></strong> の形で最も頻繁に使用されます。これは、トレイトの実装を自動化するために使われます。</p>
+<p><strong>例: <code>Serialize</code> トレイトの自動実装</strong></p>
+<p>Web APIや設定ファイルでよく使われるデータ構造を扱うために、<code>serde</code> クレートの <code>Serialize</code> トレイトを自動実装する例です。</p>
+<p><strong>前提:</strong> このコードを実行するには、<code>Cargo.toml</code> に以下の依存関係を追加する必要があります。</p>
+<pre><code class="language-toml"><span class="hljs-section">[dependencies]</span>
+<span class="hljs-comment"># データ構造をシリアライズ/デシリアライズするために必要</span>
+<span class="hljs-attr">serde</span> = { version = <span class="hljs-string">"1.0"</span>, features = [<span class="hljs-string">"derive"</span>] } 
+<span class="hljs-attr">serde_json</span> = <span class="hljs-string">"1.0"</span> <span class="hljs-comment"># JSON形式に変換するために使用</span>
+</code></pre>
+<p><strong>Rustコード:</strong></p>
+<pre><code class="language-rust"><span class="hljs-keyword">use</span> serde::Serialize;
+<span class="hljs-keyword">use</span> serde_json; <span class="hljs-comment">// JSON形式に変換するライブラリ</span>
+
+<span class="hljs-comment">// 構造体に対して、#[derive(Serialize)] を付けるだけで</span>
+<span class="hljs-comment">// Serializeトレイトの必要なメソッドが自動で実装されます。</span>
+<span class="hljs-meta">#[derive(Serialize, Debug)]</span>
+<span class="hljs-keyword">struct</span> <span class="hljs-title class_">User</span> {
+    id: <span class="hljs-type">u32</span>,
+    username: <span class="hljs-type">String</span>,
+    is_active: <span class="hljs-type">bool</span>,
+}
+
+<span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>() {
+    <span class="hljs-keyword">let</span> <span class="hljs-variable">user</span> = User {
+        id: <span class="hljs-number">101</span>,
+        username: String::<span class="hljs-title function_ invoke__">from</span>(<span class="hljs-string">"Rustacean"</span>),
+        is_active: <span class="hljs-literal">true</span>,
+    };
+
+    <span class="hljs-comment">// Serializeマクロによって自動実装された to_string メソッドを使用して</span>
+    <span class="hljs-comment">// 構造体をJSON形式の文字列に変換できます。</span>
+    <span class="hljs-keyword">match</span> serde_json::<span class="hljs-title function_ invoke__">to_string</span>(&amp;user) {
+        <span class="hljs-title function_ invoke__">Ok</span>(json_string) =&gt; {
+            <span class="hljs-built_in">println!</span>(<span class="hljs-string">"User JSON: {}"</span>, json_string);
+            <span class="hljs-comment">// 出力: User JSON: {"id":101,"username":"Rustacean","is_active":true}</span>
+        }
+        <span class="hljs-title function_ invoke__">Err</span>(e) =&gt; {
+            eprintln!(<span class="hljs-string">"JSON変換エラー: {}"</span>, e);
+        }
+    }
+}
+</code></pre>
+<h3 id="動作のポイント">動作のポイント</h3>
+<ul>
+<li><code>#[derive(Serialize)]</code> が手続きマクロです。</li>
+<li>コンパイラは <code>#[derive(Serialize)]</code> を見つけると、<code>User</code> 構造体の定義を読み込み、<strong>コンパイル時</strong>に <code>Serialize</code> トレイトのコードブロックを自動で生成し、構造体に注入します。</li>
+<li>ユーザーは煩雑なトレイト実装コードを手書きする必要がなく、コードが大幅に簡潔になります。</li>
+</ul>
+<p>[blog:g:11696248318754550880:banner]</p>
+<p>[blog:g:11696248318754550877:banner]</p>
+<p>
+    
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+</script>
+
+
+<script async="" src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+</p>
