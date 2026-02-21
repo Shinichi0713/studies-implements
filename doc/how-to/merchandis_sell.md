@@ -52,4 +52,6 @@ https://and-yuki.com/blog-merchandise/
 このような工夫が収益アップにつながる可能性を広げてくれます。
 
 
-![1770776910807](image/merchandis_sell/1770776910807.png)
+
+
+

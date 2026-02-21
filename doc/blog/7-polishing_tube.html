@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&#x554f;&#x984c;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+
+/* 記事タイトル (h1) */
+h1 {
+    font-size: 2rem;
+    color: #24292f;
+    line-height: 1.3;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 3px double #e1e4e8; /* 二重線で上品に */
+    text-align: center; /* タイトルを中央に寄せて特別感を出す */
+}
+
+/* セクション見出し (h2) */
+h2 {
+    font-size: 1.5rem;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(transparent 70%, #e8f0fe 70%); /* 下側に薄い色のアクセント */
+    border-left: 6px solid #0969da; /* 目次のテーマカラーと合わせる */
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* 強調文字 (strong) */
+strong {
+    font-weight: bold;
+    color: #cf222e; /* ホバー時の赤色と合わせて統一感を出す */
+    background: linear-gradient(transparent 60%, #fff2cc 60%); /* 黄色のマーカー風 */
+    padding: 0 2px;
+}
+
+/* 引用のコンテナ */
+blockquote {
+    position: relative;
+    padding: 20px 30px;
+    margin: 30px 0;
+    background-color: #f6f8fa; /* 目次の背景より少しだけ濃いグレー */
+    border-left: 5px solid #d0d7de; /* 落ち着いたグレーの境界線 */
+    color: #57606a; /* 文字色は少し薄くして引用らしさを出す */
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 引用符のアイコンを装飾として追加 */
+blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    font-size: 40px;
+    color: #d0d7de;
+    font-family: serif;
+    line-height: 1;
+}
+
+/* 読者になるボタンのデザイン */
+.btn-subscribe {
+    display: inline-block;
+    padding: 12px 35px; /* 横幅を広めにとって存在感を出します */
+    background-color: #383838; /* お好みの色に変更してください */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #555555;
+    text-decoration: none;
+}
+
+/* はてなブログで見えてしまう数式データを非表示にする */
+.katex-html {
+    display: none !important;
+}
+
+.katex-mathml {
+    display: inline !important;
+}
+/* Amazonカード型のオシャレなデザイン */
+.shop-card {
+    display: flex;
+    max-width: 500px;
+    margin: 20px auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* マウスホップした時の動き */
+.shop-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.shop-card-image {
+    width: 150px;
+    min-width: 150px;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shop-card-image img {
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+}
+
+.shop-card-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.shop-card-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.shop-card-description {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+/* Amazonらしいオレンジボタン */
+.shop-card-link a {
+    display: inline-block;
+    background-color: #ff9900;
+    color: #fff !important;
+    text-decoration: none !important;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.shop-card-link a:hover {
+    background-color: #e68a00;
+}
+
+/* スマホ対応：縦並びにする */
+@media (max-width: 480px) {
+    .shop-card {
+        flex-direction: column;
+        max-width: 100%;
+    }
+    .shop-card-image {
+        width: 100%;
+        height: 200px;
+    }
+}
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+
+            <p>子供が<strong>歯磨きを嫌がって</strong>嫌がって、歯磨きするというと追いかけっこになってしまうようになってました。</p>
+<p>最近導入してこの問題を解決するようになったきっかけをブログにしようと思います。</p>
+<h2 id="問題">問題</h2>
+<p>昨年あたりから、うちの双子の子供が歯磨きを嫌がってしまいました。</p>
+<p>親に拘束されたり、歯を触られるのが嫌なのかということが原因と思っています。</p>
+<p>&quot;歯磨きしようよ！&quot;とミッキーマウス調で呼びかけると、わらわらと逃げてしまい、著者が追いかけっこの末、捕まえて抱きしめながら歯磨きをするという体裁になりました。
+そんな状態になったとして、彼らが暴れて安定的な歯磨きが出来ないというような塩梅でした。</p>
+<p><img src="file:///d:\PycharmProjects\ScienceCalculation\studies-implements\doc\blog\image\7-polishing_tube\1770778598412.png" alt="1770778598412"></p>
+<p>親、子供両方の問題として以下が問題になりました。</p>
+<ul>
+<li>時間がかかる</li>
+<li>歯磨き時に暴れて機嫌を損ねる</li>
+<li>歯の形成期に清潔な口内環境を維持できない。</li>
+</ul>
+<p>上記問題を解決するため<strong>歯磨きを安定化させる</strong>必要が出てきました。</p>
+<h2 id="原因と考えたこと">原因と考えたこと</h2>
+<h3 id="意思決定権がないのが嫌">意思決定権がないのが嫌？</h3>
+<p>いやいや期の一環かしらと考え、</p>
+<ul>
+<li>本人に歯磨きいつしよっか？</li>
+<li>歯磨き粉を選択できるようにする</li>
+<li>パパとママどちらと歯磨きさせうようか選択してもらう</li>
+</ul>
+<p>歯磨きをさせたいという軸での選択肢の幅をもたせてみました。</p>
+<p>結果は惨敗。
+<strong>意思決定権がないことが嫌</strong>が原因ではないみたいでした。</p>
+<h3 id="歯磨きがつまらない">歯磨きがつまらない</h3>
+<p>つまらない、というより自由を拘束されるが原因かもしれません。</p>
+<p>自由を拘束しない程度に歯磨きをしてもらおうということで、</p>
+<ul>
+<li>軽く抱っこ</li>
+<li>テレビは見てよい</li>
+</ul>
+<p>と条件を緩和して歯磨きをしてみました。
+ところが歯磨きを始めるとみるみる顔色が曇っていき、彼らが好きなYouTubeでも嫌がるようになってしましました。</p>
+<p>この時の感触は抱っこまではおとなしかったので、あとは歯磨きだけか、というようなところまで来ました。</p>
+<p><strong>歯磨きで磨かれる時間を、彼らにとって好感を持ってもらえば解決</strong>するのではと仮説を持ちました。</p>
+<h2 id="打ち手">打ち手</h2>
+<h3 id="打ち手案検討">打ち手案検討</h3>
+<p>歯磨きの時間を好意的にとってもらうにはどうすべきかで対応を考えました。
+検討の末、以下の2案を考え出しました。</p>
+<p><strong>1. 「成功報酬」と「進捗の可視化」</strong></p>
+<p>達成感を数値化・視覚化して、ドーパミンを出させます。</p>
+<ul>
+<li>シールチャート（フィジカルなダッシュボード）: 歯磨きが終わったら、彼ら自身に「好きなシール」をカレンダーに貼らせます。シールのコレクションが増える喜びが、継続の動機になります。</li>
+<li>限定コスチューム: 「歯磨きのときだけ被れるかっこいい帽子（またはマント）」を用意します。そのアイテムを身に着けることで「歯磨きヒーロー」に変身する演出です。</li>
+</ul>
+<p><strong>2. フレーバーの「テイスティング」</strong></p>
+<p>味覚は2歳児にとって非常に強い報酬系です。</p>
+<p>歯磨き粉ビュッフェ: 2〜3種類の異なる味（ぶどう、メロン、いちごなど）を用意し、「今日はどの味で冒険する？」と毎晩選ばせます。これは「選択の自由（オートノミー）」を満たす強力な手法です。</p>
+<p>シールや限定コスチュームは生活で有意な期間が限られます。
+また、歯磨きヒーロという面で、彼らは最近アンパンマンから関心をなくし、心のヒーロをなくしています。</p>
+<p>案1は継続性に問題を感じました。</p>
+<p>案2 <strong>歯磨きのフレーバーを彼らの喜ぶものにする</strong> が現実解になりそうです。</p>
+<h3 id="歯磨き粉の選定">歯磨き粉の選定</h3>
+<p>彼らはフルーツが大好きです。</p>
+<p>フレーバーに甘未、特にフルーツ系の味覚があり、歯垢除去に効果があるものを調べてみました。
+特徴的だったものは以下の５種類です。</p>
+<p><strong>1. クリニカKid's (キッズ) 薬用ハミガキ (ライオン)</strong></p>
+<ul>
+<li>フッ素と酵素 (デキストラナーゼ) の働きで、歯質を強化し、歯垢を分解・除去することで虫歯を予防します。</li>
+<li>イチゴ味とグレープ味があり、子供に人気の香味です。</li>
+</ul>
+<p><strong>2. ライオンこどもハミガキ (ライオン)</strong></p>
+<ul>
+<li>こちらもフッ素配合で虫歯予防を助けます。</li>
+<li>メロン味やイチゴ味などの香味があり、アンパンマンのパッケージデザインでお子さまの歯磨きタイムを楽しくサポートします。</li>
+</ul>
+<p><strong>3. ガム デンタルペースト こども (サンスター)</strong></p>
+<ul>
+<li>歯周プラーク（歯垢）を除去し、虫歯を予防します。</li>
+<li>フルーツミント味などの香味があります。</li>
+</ul>
+<p><strong>4.ソダテコこどもハミガキ (サンスター)</strong></p>
+<ul>
+<li>フッ素950ppm配合で、こどもの将来のお口のリスクを防ぐことを目的としています。</li>
+<li>いちご味、ぶどう味、ソフトミント味があります。</li>
+</ul>
+<p><strong>5. クリニカKid's (キッズ) 薬用ハミガキ</strong></p>
+<ul>
+<li>香味： 「イチゴ」と「グレープ」の2種類があり、子供が嫌がらない味に調整されています。</li>
+<li>形状： ペーストタイプですが、再石灰化を促進し、フッ素が歯に残りやすい組成になっています。</li>
+</ul>
+<h2 id="こども用ハミガキ粉-比較表">こども用ハミガキ粉 比較表</h2>
+<p>この5種類の中から以下の要件を評価しました</p>
+<ul>
+<li>幼児の歯の歯垢除去に有効で、歯を傷つけない</li>
+<li>幼児の口内を刺激や、口内に圧迫感を与えない(子供が嫌がらない環境を作るため)</li>
+<li>口をゆすぐ際に、歯磨き粉がすぐに洗い落とされる(ジェル状歯磨き粉が有利)</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>製品名</th>
+<th>フッ素濃度</th>
+<th>研磨剤</th>
+<th>発泡性</th>
+<th>形状・味</th>
+<th>実売価格例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>クリニカKid's 薬用ハミガキ</strong> (ライオン)</td>
+<td>不明 (低濃度)</td>
+<td>あり</td>
+<td>あり</td>
+<td>ペースト状 (イチゴ、グレープ)</td>
+<td>200円台〜</td>
+</tr>
+<tr>
+<td><strong>ライオンこどもハミガキ</strong> (ライオン)</td>
+<td>不明 (低濃度)</td>
+<td>あり</td>
+<td>あり</td>
+<td>ペースト状 (メロン、イチゴなど)</td>
+<td>200円台〜</td>
+</tr>
+<tr>
+<td><strong>ガム デンタルペースト こども</strong> (サンスター)</td>
+<td>不明 (低濃度)</td>
+<td>あり</td>
+<td>あり</td>
+<td>ペースト状 (フルーツミント)</td>
+<td>200円台〜</td>
+</tr>
+<tr>
+<td><strong>ソダテコ こどもハミガキ</strong> (サンスター)</td>
+<td>950ppm※</td>
+<td>低研磨</td>
+<td>低発泡</td>
+<td>ペースト状 (いちご、ぶどう、ミント)</td>
+<td>200円台〜</td>
+</tr>
+<tr>
+<td><strong>ピジョン ジェル状歯みがき ぷちキッズ</strong></td>
+<td>無配合※</td>
+<td>なし</td>
+<td>低/無発泡</td>
+<td>ジェル状 (ブドウ味など)</td>
+<td>300円台〜</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>※ <strong>ソダテコ</strong>：1450ppmの高濃度製品もラインナップにあります。
+※ <strong>ピジョン</strong>：製品ラインナップによってはフッ素配合のものもあります。</p>
+</blockquote>
+<p>値段が若干かかりますが、<strong>子供の清潔な歯を維持する</strong>、<strong>歯磨きの時間の不快感を抑える</strong>という面では多くの優位性があった<strong>ピジョン ジェル状歯みがき ぷちキッズ</strong>が効果が高いと考えられました。</p>
+<h2 id="導入の効果">導入の効果</h2>
+<p><strong>ピジョン ジェル状歯みがき ぷちキッズ</strong>を導入直後は歯磨きへの嫌々はありましたが、徐々に逃げ回ることがなくなりました。
+また、歯磨き時に嫌がることもなくなり、テレビがなくても歯磨きをしてくるようになりました。</p>
+<p>今回導入した<strong>ピジョン ジェル状歯みがき ぷちキッズ</strong>は味だけでなく、口をゆすぐ際も非常に有効で、軽く口をゆすいだだけでほとんど歯磨き粉が落ちています。</p>
+<p>導入してから3カ月経過しましたが子供の歯磨き嫌々は、ほぼ完全に解消されました。</p>
+<p>この辺りから以下が成果となりそうです。</p>
+<ul>
+<li>歯磨きの時間が短くなった</li>
+<li>歯磨き粉のねばねば感がなくなり、<strong>味が改善</strong>されたため、子供の好みにあった歯磨きができるようになった</li>
+</ul>
+<p>当初想定していた問題も改善されました。</p>
+<h2 id="対策の恒久化">対策の恒久化</h2>
+<p>効果は非常に高かったですが、コストが若干割高でした。
+大容量になると同じ重量で1.2倍程度廉価になります。
+ということで、以下の歯磨きを本採用しました。</p>
+<p>読者の皆様もお子さんが歯磨き嫌がるようになった場合、是非お試しくださいませ。</p>
+<div class="shop-card">
+    <div class="shop-card-image">
+        <img src="https://m.media-amazon.com/images/I/61jV2Zni81L._AC_SL1000_.jpg" alt="商品画像">
+    </div>
+    <div class="shop-card-content">
+        <div class="shop-card-title">PIGEON ピジョン【大容量】ジェル状歯みがきぷちキッズ いちご味 110g</div>
+        <div class="shop-card-description">「歯磨き剤」の「ジェル状歯みがき ぷちキッズ」は、1 才6ヵ月頃からのお子さまの乳歯の性質を考えてつくられた、虫歯の発生と進行を予防する薬用歯みがきです。 ＜ジェル状歯みがき ぷちキッズ　いちご味の特長＞ ●「歯磨き剤」の「ジェル状歯みがき ぷちキッズ」は、歯の再石灰化を促進し歯質を強化する、有効成分フッ素（フッ化ナトリウム）配合しており、虫歯の発生と進行を予防します。</div>
+        <div class="shop-card-link">
+            <a href="https://www.amazon.co.jp/%E3%83%94%E3%82%B8%E3%83%A7%E3%83%B3-%E3%83%94%E3%82%B8%E3%83%A7%E3%83%B3%E3%80%90%E5%A4%A7%E5%AE%B9%E9%87%8F%E3%80%91%E3%82%B8%E3%82%A7%E3%83%AB%E7%8A%B6%E6%AD%AF%E3%81%BF%E3%81%8C%E3%81%8D%E3%81%B7%E3%81%A1%E3%82%AD%E3%83%83%E3%82%BA-%E3%81%84%E3%81%A1%E3%81%94%E5%91%B3-110g-%E3%80%90Amazon-co-jp%E9%99%90%E5%AE%9A%E3%80%91/dp/B0DLGSMFDW?__mk_ja_JP=%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A&crid=2RMYGCTJU6BIW&dib=eyJ2IjoiMSJ9.EEN9E-_qvdt6-ZQocvBZzhPumChyCT6juqvx3iIl-zLa7XKhTpHvHlLKuixBiAy4LuOT7uw2pYxWrydE6N9UiJuCBMaMtIs6-bbXtZXVYQ9D7vpRFZ6l6XZh9FzrbUOh2XT-Jqb9oMVTtF2iBVCz8wCzOnt_0tlL34RmYlju7wVy3MEbNg9Z4brp3b2C_Y52aTmhmSij-MqWrKqU5KvCuvxWXSi68yeQ8FtjMCLxzjNcOjazs8Hm2ROQ-v2ELia43VlO4umMcsjL2ApsnOCXKtAro7Xizp3UkeIUy-Ikvpo.4ubco1J0ALnqkEdK3hRHLRUVi-heTZJ8tn8mufHwg8Q&dib_tag=se&keywords=%E3%83%94%E3%82%B8%E3%83%A7%E3%83%B3%2B%E3%82%B8%E3%82%A7%E3%83%AB%E7%8A%B6%E6%AD%AF%E3%81%BF%E3%81%8C%E3%81%8D%2B%E3%81%B7%E3%81%A1%E3%82%AD%E3%83%83%E3%82%BA&qid=1770783376&sprefix=%E3%83%94%E3%82%B8%E3%83%A7%E3%83%B3%2B%E3%82%B8%E3%82%A7%E3%83%AB%E7%8A%B6%E6%AD%AF%E3%81%BF%E3%81%8C%E3%81%8D%2B%E3%81%B7%E3%81%A1%E3%82%AD%E3%83%83%E3%82%BA%2Caps%2C190&sr=8-1-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&th=1&linkCode=ll2&tag=yoshishinnze-22&linkId=6e98d54f5128a8bc72161d5e0240cee5&ref_=as_li_ss_tl" target="_blank" rel="noopener">Amazonで詳細を見る</a>
+        </div>
+    </div>
+</div>
+
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+</script>
+
+
+            
+        </body>
+        </html>
