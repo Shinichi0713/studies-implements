@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&#x514d;&#x8cac;&#x4e8b;&#x9805;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+
+/* 記事タイトル (h1) */
+h1 {
+    font-size: 2rem;
+    color: #24292f;
+    line-height: 1.3;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 3px double #e1e4e8; /* 二重線で上品に */
+    text-align: center; /* タイトルを中央に寄せて特別感を出す */
+}
+
+/* セクション見出し (h2) */
+h2 {
+    font-size: 1.5rem;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(transparent 70%, #e8f0fe 70%); /* 下側に薄い色のアクセント */
+    border-left: 6px solid #0969da; /* 目次のテーマカラーと合わせる */
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* 強調文字 (strong) */
+strong {
+    font-weight: bold;
+    color: #cf222e; /* ホバー時の赤色と合わせて統一感を出す */
+    background: linear-gradient(transparent 60%, #fff2cc 60%); /* 黄色のマーカー風 */
+    padding: 0 2px;
+}
+
+/* 引用のコンテナ */
+blockquote {
+    position: relative;
+    padding: 20px 30px;
+    margin: 30px 0;
+    background-color: #f6f8fa; /* 目次の背景より少しだけ濃いグレー */
+    border-left: 5px solid #d0d7de; /* 落ち着いたグレーの境界線 */
+    color: #57606a; /* 文字色は少し薄くして引用らしさを出す */
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 引用符のアイコンを装飾として追加 */
+blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    font-size: 40px;
+    color: #d0d7de;
+    font-family: serif;
+    line-height: 1;
+}
+
+/* 読者になるボタンのデザイン */
+.btn-subscribe {
+    display: inline-block;
+    padding: 12px 35px; /* 横幅を広めにとって存在感を出します */
+    background-color: #383838; /* お好みの色に変更してください */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #555555;
+    text-decoration: none;
+}
+
+/* はてなブログで見えてしまう数式データを非表示にする */
+.katex-html {
+    display: none !important;
+}
+
+.katex-mathml {
+    display: inline !important;
+}
+/* Amazonカード型のオシャレなデザイン */
+.shop-card {
+    display: flex;
+    max-width: 500px;
+    margin: 20px auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* マウスホップした時の動き */
+.shop-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.shop-card-image {
+    width: 150px;
+    min-width: 150px;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shop-card-image img {
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+}
+
+.shop-card-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.shop-card-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.shop-card-description {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+/* Amazonらしいオレンジボタン */
+.shop-card-link a {
+    display: inline-block;
+    background-color: #ff9900;
+    color: #fff !important;
+    text-decoration: none !important;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.shop-card-link a:hover {
+    background-color: #e68a00;
+}
+
+/* スマホ対応：縦並びにする */
+@media (max-width: 480px) {
+    .shop-card {
+        flex-direction: column;
+        max-width: 100%;
+    }
+    .shop-card-image {
+        width: 100%;
+        height: 200px;
+    }
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+
+            <p>本日は秋山真之についてです。</p>
+<p>これまでのブログからは、伏線らしき全くなきですが。
+著者は参謀の中でも、</p>
+<ul>
+<li>帷幄にありて1000里先の勝負を決すタイプの神算鬼謀型</li>
+<li>研究心に富み、分析を多用し、多数の手を打っていく戦史オタク型
+の2派が好きです。
+(といいつつ上記が参謀の6割くらいを占めそうなので、職業参謀の過半は好きですと言ってるようなものですが)</li>
+</ul>
+<p>秋山は後者側で、近代日本史では屈指といってよい参謀らしい参謀です。</p>
+<p><img src="https://www.ndl.go.jp/portrait/img/portrait/0222_1.jpg" alt="秋山真之"></p>
+<p>※本画像は<a href="https://www.ndl.go.jp/portrait/datas/222">秋山真之｜近代日本人の肖像</a>のものです。
+※画像の転載なきようお願いいたします。</p>
+<h2 id="免責事項">免責事項</h2>
+<p>今回ブログで記載することはあくまで、120年前の事実を書いたものです。
+記事に記載の国に対する特別な感情に基づいて記載したものではありません。</p>
+<p>当ブログの内容に、ご意見ある方は問合せフォームよりご連絡下さい。</p>
+<h2 id="生い立ち">生い立ち</h2>
+<h3 id="松山での誕生とガキ大将時代">松山での誕生と「ガキ大将」時代</h3>
+<p>1868年（慶応4年）、現在の愛媛県松山市で、伊予松山藩の下級武士・秋山久敬の5男として生まれました。
+幼名は淳五郎（じゅんごろう）。
+幼少期は非常に腕白なガキ大将で、近所の子供たちを率いて暴れ回るほど元気な少年だったと伝えられています。</p>
+<h3 id="正岡子規との友情と文学への志">正岡子規との友情と文学への志</h3>
+<p>松山中学校時代からの親友に、後に俳句・短歌の革新者となる正岡子規がいました。
+真之は子規と共に文学や政治を志し、子規を追うようにして松山中学を中退して上京。東京大学予備門（現在の東京大学教養学部の前身）に入学します。この予備門時代には、夏目漱石らとも同級生として学んでいました。</p>
+<p>このままいけば軍人ではなく、文学者になっていてもおかしくありませんでした。</p>
+<h3 id="海軍へ">海軍へ</h3>
+<p>当初は文学や政治の道を考えていた真之ですが、経済的な理由や、陸軍軍人となっていた兄・秋山好古（よしふる）の勧めもあり、1886年（明治19年）に海軍兵学校へと進路を転換します。
+(学費がかからず生活費も支給される軍学校への入学は、貧しい士族の家庭にとって現実的な選択でもありました。)</p>
+<p>海軍兵学校に入学の後、1890年に首席で卒業。
+1897年にアメリカ留学。留学時はアメリカ海軍大学で海軍戦術を学びました。
+帰国後に海岸大学の教官として海軍戦術の体系化を行いました。</p>
+<h2 id="エピソード">エピソード</h2>
+<p>彼を彼たら占めたのは、<strong>実行力</strong>、<strong>好奇心</strong>、<strong>研究心</strong>だと思います。</p>
+<h3 id="手作り花火で警察沙汰">手作り花火で警察沙汰</h3>
+<p>12歳の時、真之は近所の年下の子分の家で火薬の調合法を見つけます。さっそく子分たちを指揮して自家製の打ち上げ花火を作りましたが、火力が強すぎて騒動になり、お巡りさんに厳しく叱られてしまいました。</p>
+<p>好奇心から実行していく力が並外れていたことがうかがえるエピソードですよね。</p>
+<p>因みに、日本に野球を導入したのは正岡子規とされていますが、実は秋山も一枚かんでいます。
+幼少期に近所の少年を集めて野球のルールを伝道し、どこからか調達したバットやボールで野球に熱中していたらしいです。</p>
+<p>(因みに、花火事件の後は、真之のお母さんからこっぴどく叱られました。)</p>
+<p>思い立ってから実行することが出来る実行力がなければ、天才も自分の力を表現することが出来ません。</p>
+<h3 id="海軍戦術だけにあらじ">海軍戦術だけにあらじ</h3>
+<p>真之の関心は軍事学だけに留まりませんでした。</p>
+<ul>
+<li>東大予備門での多様な学び: 東京大学予備門（現・東大）時代は、文学や哲学、政治学など、西洋の新しい学問に幅広く触れていました。この時期に培われた教養が、軍人としては異例なほどの深い思索や、部下への的確な指導力に繋がっています。</li>
+<li>漢詩の素養: 軍人になってからも漢詩を嗜み、日露戦争の激戦の最中にも、故郷の友人に漢詩を送ったりしていました。生涯を通じて、知的好奇心の対象は多岐にわたっていました。</li>
+</ul>
+<p>後年、バルチック艦隊との戦闘前に過不足なく、簡明に状況を伝えた報告電報
+<strong>&quot;本日天気晴朗ナレドモ浪高シ&quot;</strong></p>
+<p>彼はもともと漢詩で鍛えた文才がありました。
+この名文がパッと浮かんだことも、彼の文才であれば納得です。</p>
+<p>この文に限らず、彼のレポートは要点がまとまり、きれいな文章だったと思われます。
+秋山真之を、海軍きっての参謀足りえたのは、こんな好奇心旺盛で、多様な素養があればこそだったと思います。</p>
+<h3 id="変人研究家">変人研究家</h3>
+<p>1897年から始まったアメリカ留学時代。秋山は海軍研究に明け暮れます。</p>
+<ul>
+<li>独学での研究: 米海軍大学校で学んだ後も、彼は卒業論文のテーマ「海軍用兵論」を極めるため、ニューヨークに居を移して独学で研究を続けました。</li>
+<li>生活の破綻: あまりにも研究に没頭したため、食事も睡眠も不規則になり、下宿の大家が心配するほど生活が乱れていました。風呂にも入らず、髭も剃らず、ただひたすら兵学書を読み漁り、思索にふける日々を送っていたそうです。</li>
+<li>「変人」扱い: この時の真之は、その鬼気迫る風貌から、周囲のアメリカ人たちに「東洋から来た奇妙な男（変人）」と見なされていたようです。</li>
+</ul>
+<p>研究心は一心に考える力が重要です。
+秋山は周りから見ても、ちょっと見ないくらいに熱中する研究心がありました。</p>
+<p>後年、日本海海戦を勝利に導いた丁型先方も、どういう陣形が有利かつ自軍の強味を出せるかを探究したから案出することが出来たと思います。</p>
+<h2 id="日本海海戦">日本海海戦</h2>
+<p>日露戦時、真之は東郷平八郎司令長官率いる連合艦隊の先任参謀として、作戦立案のすべてを担いました。</p>
+<p>戦時の主な実績は以下です。</p>
+<ul>
+<li><strong>「七段構えの策」の立案</strong> ： 敵艦隊を一度の海戦で全滅させるのではなく、昼夜を分かたず7段階にわたって波状攻撃を仕掛ける緻密な作戦を編み出しました。</li>
+<li><strong>「丁字戦法」の完成</strong> ： 敵の先頭艦に味方の全火力を集中させる「丁字（ていじ）戦法」を理論化し、実戦に落とし込みました。</li>
+<li><strong>情報分析の徹底</strong> ： バルチック艦隊がどのルートを通って来るかを予測するため、海流、気象、敵船の速度、燃料消費まで計算し尽くし、対馬海峡を通ると確信しました。</li>
+</ul>
+<h3 id="日本海軍と秋山にとっての幸運">日本海軍と秋山にとっての幸運</h3>
+<p>上記のいずれかが欠けても、海戦での決定的な結果は得られなかったでしょう。</p>
+<p>また、この実績を上げることが出来たのも、彼一人の力ではないかもしれません。</p>
+<p>東郷は仕事を任せることが出来る人物でした。
+当時の日本は工業力も小規模な、アジアに位置する中流国です。
+なけなしの国家予算で作った戦隊でしたが、ロスをすると、もはや2度と戦機を掴むことはできない。
+それ位、東郷は負けることができない立場にありました。</p>
+<p>人によってはマイクロマネジメントに走りそうですが、東郷は戦術は参謀に任せた、と一任することが出来ました。</p>
+<p>また、直属の上司にも恵まれました。
+上司は島村速雄です。島村も非常に優れた人物です。</p>
+<p>秋山真之は天才ゆえに、作戦に没頭すると周囲が見えなくなったり、上官に対しても歯に衣着せぬ発言をしたりする「扱いづらい部下」でもありました。
+島村は連合艦隊参謀長として、真之が立案する奇抜で緻密な作戦を「それは面白い、やってみろ」と受け入れ、東郷平八郎司令長官との間をうまく取り持つ役割を果たしました。
+(真之が海軍大学校の教官として日本の海軍戦術を体系化できたのは、その前任者であった島村の土台があったからです。島村は、真之の独創的な発想を高く評価し、彼を軍政（事務）ではなく軍令（作戦立案）のスペシャリストとして育てる環境を整えました。)</p>
+<p>この環境があったおかげで、秋山が考えたアイデアを実行に移すことができました。</p>
+<h3 id="運命の決戦">運命の決戦</h3>
+<p>バルチック艦隊が対馬海峡に現れたその日から、戦いは始まりました。</p>
+<ul>
+<li>04:45｜哨戒艦「信濃丸」が敵艦隊を発見</li>
+</ul>
+<p>「敵艦見ゆ」の電報が三笠に届く。秋山真之は直ちに「本日天気晴朗なれども波高し」を含む電文を大本営へ打電。</p>
+<ul>
+<li>13:39｜両艦隊が視界に捉え合う</li>
+</ul>
+<p>連合艦隊は対馬沖でバルチック艦隊を視認。三笠の「Z旗」が掲げられる。</p>
+<ul>
+<li>14:05｜伝説の「東郷ターン（丁字戦法）」</li>
+</ul>
+<p>東郷長官が左に大きく舵を切る決断を下す。敵前での大回頭という極めて危険な賭けでしたが、これにより敵艦隊の先頭を抑えることに成功。</p>
+<ul>
+<li>14:10｜砲戦開始</li>
+</ul>
+<p>激しい砲撃戦が開始。わずか30分ほどで敵の旗艦「クニャージ・スヴォーロフ」が炎上し、戦列を離脱。敵の指揮系統が崩壊します。</p>
+<ul>
+<li>19:12｜日没（昼戦終了）</li>
+</ul>
+<p>バルチック艦隊の主力艦が次々と沈没・大破し、勝敗はほぼ決しました。</p>
+<p>敵の通路にあたる海路は秋山が読んだ方でした。
+ここで外すと、ロシアは陸と海が連携できる状態になり、日本陸軍の不利を覆うことが出来なくなります。
+また、日本陸軍の補給路も抑えられることになり、実質的な戦争継続能力はなくしたでしょう。</p>
+<p>また、日本海海戦は撃滅が目的です。
+広い海域を、少数船団でも動けるようにすることで、日本陸軍を支える補給路にダメージを及ぼすことになります。</p>
+<p>秋山が案出した <strong>丁字戦法</strong>により長期に渡り、戦線を作ったことが目的達成には重要でした。</p>
+<p>結果は歴史の教科書が示すような結果となりました。</p>
+<h2 id="その後">その後</h2>
+<p>日露戦争後秋山は海軍中将に昇進しました。</p>
+<p>が、彼の参謀としての仕事は日本海戦がクライマックスとなりました。</p>
+<p>その後は大きな仕事はあまりしていないかもしれません。</p>
+<p>少し彼らしいエピソードとしては。
+1914年（大正3年）に第一次世界大戦が勃発すると、真之は軍令部次長としてヨーロッパ視察に赴きます。</p>
+<p>その際に戦争の体裁の変容に対して、少なからず彼の得意としていた戦術が変わったことを認識したかもしれません。
+戦争時に目にした航空機や潜水艦に対して、新しい兵器として見出し、報告していたようです。
+また、地形を利用するや、認知を上手に読み切るような戦術から、物量や科学力が支配的になったことと感じたことでしょう。</p>
+<p>秋山はその5年後に50歳で亡くなります。</p>
+<h2 id="総括">総括</h2>
+<p>参謀とは、天才性を秘めた人物であり、運に恵まれることが重要です。
+天才性とは素養に対して、努力が伴い開花していきます。</p>
+<p>秋山は双方そなわり、活躍する場を得る運に恵まれました。</p>
+<p>そんな理想的な参謀像を持つ彼は、もちろん私が好きな参謀の一人です。</p>
+<p>著者が秋山を初めて読んだのはPHP文庫でした。</p>
+<p>坂の上の雲も良いですが、PHPはコンパクトに人物を振り返るにはもってこいです。</p>
+<p>是非ご一読下さい。</p>
+<div class="shop-card">
+    <div class="shop-card-image">
+        <img src="https://m.media-amazon.com/images/I/81eOWh0wDzL._SL1500_.jpg" alt="商品画像">
+    </div>
+    <div class="shop-card-content">
+        <div class="shop-card-title">秋山真之: 伝説の名参謀</div>
+        <div class="shop-card-description">明治日本が、その存亡をかけて臨んだ日本海海戦において、智謀をいかんなく発揮し、勝利の道を拓いた男の生涯を描く、長編歴史小説。
+無敵と謳われたバルチック艦隊がやって来る。東郷平八郎を司令長官とする、日本海軍の連合艦隊は、これをうち破ることができるのか??。これが、苦戦この上なかった日露戦争の、勝敗を決する、最も大きな分水嶺であった。国家存亡の危機に立った明治日本が、まさに背水の陣で戦った、「日本海海戦」。未だ伝説の如く語り継がれるその勝利に、日本を導いたのが、参謀・秋山真之である。彼は、ロシアを仮想敵国とした軍事情勢のもと、海外留学で見聞を広め、万巻の古書から、外国の書物までを読破し、壮烈な姿勢で、対露の海軍戦略を考案して行った。「日露戦争における海上作戦を通じて、さまざまに錯綜する状況を、その都度総合して行く才能にいたっては、実に驚くべきものがあった。彼はその頭に湧いて尽きざる天才の泉を持っていた」と、名参謀であった島村速雄も舌を巻いた。この一戦を戦うためにあったような、勇壮な生涯を描く長編歴史小説。</div>
+        <div class="shop-card-link">
+            <a href="https://www.amazon.co.jp/%E7%9F%A5%E5%B0%86%E7%A7%8B%E5%B1%B1%E7%9C%9F%E4%B9%8B%E2%80%95%E3%81%82%E3%82%8B%E5%85%88%E4%BB%BB%E5%8F%82%E8%AC%80%E3%81%AE%E7%94%9F%E6%B6%AF-%E5%85%89%E4%BA%BA%E7%A4%BENF%E6%96%87%E5%BA%AB-%E7%94%9F%E5%87%BA-%E5%AF%BF/dp/4769826249?__mk_ja_JP=%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A&crid=2SVPELYT31N1&dib=eyJ2IjoiMSJ9.XXluFsGPZ9CEYnvlFjNAOqai4lVrnvwmyEUuKlSEJioI38G-IZdqytHaK9SK8-QI6aiMwMHTfsF2qJh_jBGcAdJFgfUND5rnOkidLTTr3X86akTi8NGf0WyPnukdm2P561mvdybnoqgJ3bnS_5DLqdGZiz0KFsfFXiTg2dIoCRfWzRRTEBXvMm-eHSx3qmKkBGwD5scx7t5nhgOKstA3CEXXeX5iq14y5r8PjnycQVKkybLEnfm7CCEZrWgxhlOQV3NYVSghlxd6BZBg2z8ICy5AaeMI9WayGqwv1R5EGxA.CcLDFc0OCsL6fj6L3RYSteWSx_N6ez4iFJE-bLikWlI&dib_tag=se&keywords=%E7%A7%8B%E5%B1%B1%E7%9C%9F%E4%B9%8B&qid=1770898949&sprefix=%E7%A7%8B%E5%B1%B1%E7%9C%9F%E4%B9%8B%2Caps%2C174&sr=8-6&linkCode=ll2&tag=yoshishinnze-22&linkId=20247b317329b9a1f3b2843e91e5672e&ref_=as_li_ss_tl" target="_blank" rel="noopener">Amazonで詳細を見る</a>
+        </div>
+    </div>
+</div>
+<h2 id="引用">引用</h2>
+<p>本ページは以下を引用しています。</p>
+<p><a href="https://www.ndl.go.jp/portrait/datas/222">秋山真之｜近代日本人の肖像</a></p>
+<p><a href="https://www.ishiryoku.co.jp/user/cgi_user/s01/s0101120.pl?a1_key_sanpo=902">実り多き米国留学三年－秋山真之海軍大尉の気迫</a></p>
+
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+</script>
+
+            
+        </body>
+        </html>
