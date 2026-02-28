@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&#x751f;&#x3044;&#x7acb;&#x3061;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+
+/* 記事タイトル (h1) */
+h1 {
+    font-size: 2rem;
+    color: #24292f;
+    line-height: 1.3;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 3px double #e1e4e8; /* 二重線で上品に */
+    text-align: center; /* タイトルを中央に寄せて特別感を出す */
+}
+
+/* セクション見出し (h2) */
+h2 {
+    font-size: 1.5rem;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(transparent 70%, #e8f0fe 70%); /* 下側に薄い色のアクセント */
+    border-left: 6px solid #0969da; /* 目次のテーマカラーと合わせる */
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* 強調文字 (strong) */
+strong {
+    font-weight: bold;
+    color: #cf222e; /* ホバー時の赤色と合わせて統一感を出す */
+    background: linear-gradient(transparent 60%, #fff2cc 60%); /* 黄色のマーカー風 */
+    padding: 0 2px;
+}
+
+/* 引用のコンテナ */
+blockquote {
+    position: relative;
+    padding: 20px 30px;
+    margin: 30px 0;
+    background-color: #f6f8fa; /* 目次の背景より少しだけ濃いグレー */
+    border-left: 5px solid #d0d7de; /* 落ち着いたグレーの境界線 */
+    color: #57606a; /* 文字色は少し薄くして引用らしさを出す */
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 引用符のアイコンを装飾として追加 */
+blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    font-size: 40px;
+    color: #d0d7de;
+    font-family: serif;
+    line-height: 1;
+}
+
+/* 読者になるボタンのデザイン */
+.btn-subscribe {
+    display: inline-block;
+    padding: 12px 35px; /* 横幅を広めにとって存在感を出します */
+    background-color: #383838; /* お好みの色に変更してください */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #555555;
+    text-decoration: none;
+}
+
+/* はてなブログで見えてしまう数式データを非表示にする */
+.katex-html {
+    display: none !important;
+}
+
+.katex-mathml {
+    display: inline !important;
+}
+/* Amazonカード型のオシャレなデザイン */
+.shop-card {
+    display: flex;
+    max-width: 500px;
+    margin: 20px auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* マウスホップした時の動き */
+.shop-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.shop-card-image {
+    width: 150px;
+    min-width: 150px;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shop-card-image img {
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+}
+
+.shop-card-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.shop-card-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.shop-card-description {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+/* Amazonらしいオレンジボタン */
+.shop-card-link a {
+    display: inline-block;
+    background-color: #ff9900;
+    color: #fff !important;
+    text-decoration: none !important;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.shop-card-link a:hover {
+    background-color: #e68a00;
+}
+
+/* スマホ対応：縦並びにする */
+@media (max-width: 480px) {
+    .shop-card {
+        flex-direction: column;
+        max-width: 100%;
+    }
+    .shop-card-image {
+        width: 100%;
+        height: 200px;
+    }
+}
+
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+        <body class="vscode-body vscode-light">
+            <p>本日は織田の部将時代の(豊臣)秀吉を支えた参謀の中でも、著名な人物のうち一人である竹中重治についてです。</p>
+<p>竹中重治は、戦国時代を代表する「天才軍師」として名高い武将です。豊臣秀吉の天下取りを影から支え、同じく軍師の黒田孝高とともに「両兵衛（二兵衛）」と並び称されました。</p>
+<img src="https://upload.wikimedia.org/wikipedia/commons/6/6e/Takenaka_Shigeharu.jpg" width="500" style="display: block; margin: 0 auto;">
+<h2 id="生い立ち">生い立ち</h2>
+<p>重治の生まれは美濃の土豪の嫡男としてでした。
+そんな彼の生い立ちについて資料から確認できることを示します。</p>
+<p><strong>1. 美濃国の「土豪」の嫡男として</strong></p>
+<p>重治は天文13年（1544年）、美濃国（現在の岐阜県）の大御堂城（あるいは岩手城）で生まれました。
+父・竹中重元： 当時の北伊勢から美濃にかけて勢力を持っていた土豪（地域密着型の武士）でした。
+家柄： 決して名門の巨大大名ではありませんでしたが、地域の拠点を守る実力派の国人領主という立ち位置です。</p>
+<p>因みに、重治が生誕の2年前に斎藤道三が美濃を、守護・土岐頼芸より奪取し、名実ともに美濃の支配者となりました。
+竹中家は、道三が美濃を乗っ取っていく過程で、重元は道三側につき、敵対勢力の城を攻略するなどの軍功を挙げました。</p>
+<p><strong>2. 戦争の多い国での少年時代</strong></p>
+<p>1540年代の美濃国は、斎藤道三による国内統一の最終段階にあり、隣国である尾張国（愛知県）の織田信秀（信長の父）と激しい戦争を繰り広げていました。
+この時期、美濃を追放された旧守護・土岐頼芸を支援する形で、織田信秀が何度も美濃へ侵攻しました。</p>
+<p><strong>加納口の戦い（1544年または1547年）</strong></p>
+<p>織田信秀が大規模な軍勢で斎藤道三の居城・稲葉山城下に迫りました。しかし、道三は稲葉山城（岐阜城）に籠城すると見せかけて反撃に転じ、油断していた織田軍を強襲して大勝しました。この戦いで織田方は数千人の犠牲者を出し、一時的に美濃侵攻を断念することになります。</p>
+<p>重治の父・重元は道三の美濃国取りにおいて軍事的な功績を挙げており、織田軍との戦いでも斎藤方の将として防衛や反撃に加わっていたと考えられます。
+重元の1540年代の戦功により、竹中家は美濃国内での地位を固め、後に半兵衛が城主となる菩提山城（ぼだいさんじょう）などの領地を安堵・拡大させていきました。</p>
+<p>平和な国で戦争なく育ったことに比べて、多感な時代を戦争が多い国で育ったことから、軍略の重要性を意識するような環境で育つことになったかもしれません。</p>
+<p><strong>3. 文武両道の教育</strong></p>
+<p>軟弱な美男子と評されることもあった重治ですが、その教育環境は極めて質が高いものでした。
+幼い頃から武芸よりも兵法書や古典を好んだといわれています。
+同年代の少年たちが力自慢に明け暮れる中、半兵衛は机に向かい、過去の合戦図を分析したり、地形を利用した策略を練ったりすることに没頭していました。
+この時期に培われた知識が、後の「今孔明」と呼ばれる知略の礎となったかもしれません。</p>
+<p>因みに、この時代、秀吉のもう一人の軍師・黒田孝高も軍略の勉強に明け暮れていたようです。
+青年期に興味を持ったことは、その後の人生にかなり大きい影響があることを感じさせます。</p>
+<p>重治の知性はこの時にベースはできたのではというのが著者が考えているところです。</p>
+<p><strong>4. 初陣</strong></p>
+<p>美濃の国主だった斎藤家は親子で内戦をしています。
+1556年（弘治2年）に起きた長良川の戦いは、美濃の国主・斎藤道三とその嫡男・義龍が親子で戦闘をすることになりました。</p>
+<p>竹中家はこの戦いでは、義龍を支持し、「義龍派」として参戦します。これは「道三を見限った」というより、美濃の国人衆としての生き残りをかけた現実的な選択であり、同時に道三の強引な政治手法が限界に来ていたことを示しています。</p>
+<p>道三には美濃の中から2,700人ほどの軍勢しか集まりませんでした。
+対する義龍は美濃の大半17,000人程度を集めました。</p>
+<p>義龍も非凡な将ではなく、集めた軍をしっかり掌握して、歴戦の道三を破り、父に代わる美濃の守護となりました。</p>
+<p>重治はこの戦いを、14歳の時に初陣として出陣していました。</p>
+<p><strong>5. 家督の相続</strong></p>
+<p>重治が家督を継いだのは、父・竹中重元の死去に伴う1560年（永禄3年）、あるいは1562年（永禄5年）とされています。
+17歳で父が築いた菩提山城（ぼだいさんじょう）の城主となり、美濃の斎藤氏（義龍・龍興）に仕える有力な家臣としての立場を引き継ぎました。</p>
+<p>ほぼ同時期に、斎藤義龍が棒没し、義龍の息子・龍興が継いでいます。
+また、やはりこのころ(1560年（永禄3年）5月19日)に戦国期きっての大事件・桶狭間の戦いが起きています。</p>
+<p>尾張で起きた桶狭間の戦いで、鮮やかな戦いが起こったわけです。
+重治にとって、軍略の重要さを身近に感じる出来事だったのではないかと想像しています。</p>
+<h2 id="軍略家としての仕事">軍略家としての仕事</h2>
+<h3 id="十面埋伏の計">十面埋伏の計</h3>
+<p>重治が明確に軍略家としての仕事をしたのは1561年です。</p>
+<p>桶狭間の戦いの翌年に、義龍の死後を狙った織田信長が、美濃に侵攻してきました。
+重治は斎藤家の部将として美濃国境の防衛線に参加しています。</p>
+<p>どういう立ち位置での参加だったかは不明ですが、この時に重治が献策し、実行した十面埋伏の計により、織田方を破りました。</p>
+<blockquote>
+<p>十面埋伏の計<br>
+三国志の曹操が袁氏に対して実行した作戦として有名です。
+実態は、幾重にも伏兵を置いておき、敵を狭隘部に誘い込んで、何度も伏兵による攻撃を与えて、敵に包囲されている、敵がどんどん増えていくという恐慌において、有利に作戦を進める計略です。
+作戦は伏兵を何重にも隠して置ける地形に、敵を誘い込む必要があり、敵が油断していることが前提条件になります。</p>
+</blockquote>
+<p>織田方が勝てると踏んで、警戒を薄くしていたとは言え、高い確率で計略にかかると判断できたのは、重治が高い戦略眼を持っていたことの証拠になると思われます。</p>
+<h3 id="稲葉山城の奪取">稲葉山城の奪取</h3>
+<p>重治が行った作戦で有名なものに1564年の稲葉山城奪取があります。</p>
+<p>稲葉山城奪取は、わずか16人（あるいは17人）の手勢で難攻不落の巨城を乗っ取った、日本戦国史上でも稀に見る鮮やかなクーデターです。</p>
+<p>このクーデターのきっかけは、国主龍興の怠慢にありました。
+国政を怠り、遊びに興じる国主をいさめるために計画を行いました。</p>
+<ol>
+<li>準備</li>
+</ol>
+<p>半兵衛は正面から攻めるのではなく、「人質」と「病気見舞い」を口実に城内へ潜り込みました。</p>
+<ul>
+<li>弟・重矩（しげのり）の利用： 当時、半兵衛の弟・重矩は主君・斎藤龍興の人質として城内にいました。半兵衛は「弟が病気になったので、見舞いの品（薬など）を届けたい」と偽り、城門を通過しました。</li>
+<li>長持（ながもち）に隠した武器： 持ち込んだ大きな荷物箱（長持）の中には、衣類や薬ではなく、分解した鎧や武器を隠し持っていました。</li>
+</ul>
+<p>結果、城の中に武器を気づかれることなく運び入れることに成功しました。</p>
+<ol start="2">
+<li>深夜の急襲と「心理戦」
+城内に潜入した半兵衛らは、夜が更けるのを待って行動を開始しました。</li>
+</ol>
+<ul>
+<li>側近の殺害： 龍興の側近で、日頃から半兵衛を侮辱していた斎藤飛騨守を殺害。</li>
+<li>パニックの創出： 城内のあちこちで火を放ち、大声で叫び声を上げることで、城兵たちに「織田軍の数千の大軍が攻め込んできた」と錯覚させました。</li>
+<li>主君・龍興の逃亡： 突然の事態にパニックに陥った龍興は、ろくに抵抗もできず、下着同然の姿で命からがら城を脱出しました。</li>
+</ul>
+<p>稲葉山城は道三が気づいた山城で、規模や防御力から、正攻法での奪取は非常に困難と直感的にわかる城でした。
+あまりに鮮やかな奪取劇に、近隣諸国は驚いたでしょう。</p>
+<p>織田信長はこの知らせを聞くや、すぐに重治に使者を送り、投降を促しました。
+しかし、半兵衛は信長の誘いを一蹴。半年ほど城を占拠して政務を執った後、「自分は私欲で城を奪ったのではない。主君の不甲斐なさを諫めるためだ」として、再び龍興に城を返して自らは美濃・岩手へと隠遁してしまいました。</p>
+<h2 id="織田の部将として">織田の部将として</h2>
+<p>その後、美濃は織田信長の侵攻をうけることになります。
+その過程で重治は、織田の部将として、実質は秀吉の参謀として復帰します。</p>
+<p>当時の秀吉軍は、ブレーンとなる人材は蜂須賀正勝や前野長康、木下秀長などでした。
+作戦というよりは交渉事に長けたり、戦時の実務に長けた人材が多く、軍略を立てるようなタイプが少なかった状態でした。
+そんな中に重治が参加したことになります。</p>
+<p>その後の重治の主な仕事は以下のようなことが知られています。</p>
+<ol>
+<li>織田軍の美濃攻略（1567年）</li>
+</ol>
+<p>かつての主君・斎藤龍興が籠もる稲葉山城を、今度は攻める側として攻略を支えました。
+国力に優れる美濃を、敵の多い織田が攻めるのは難しいという中で、南美濃～西美濃一帯の美濃の士族を織田方に引き入れていく中で、知略を発揮していたと思われます。
+(残念ながら具体的な資料が見当たらなかったですが、この間に秀吉の部隊が美濃で活躍していたのは確実のようです)</p>
+<ol start="2">
+<li>姉川の戦いと近江攻略（1570年〜）</li>
+</ol>
+<p>浅井・朝倉連合軍との戦いでは、調略（引き抜き）で大きな成果を挙げました。
+横山城の守備： 最前線の拠点となった横山城の守備を秀吉とともに担当し、浅井方の武将を次々と織田方に寝返らせる工作を成功させました。</p>
+<p>姉川の戦いにも重治は参陣していました。
+敵のおとりの動作に秀吉が慌てる中で、おとりだから、特別な対応は必要ないと正確に洞察していたとの話が伝わってます。</p>
+<p>浅井・朝倉連合の戦闘時は織田が最も苦しいときで、この間に織田の中で武将として秀吉が活躍した中には重治の影響があったと考えられます。
+また、この間、秀吉が武将として自立した仕事をしたことが、のちの秀吉にも大きく道を開くことになりました。
+もともとは機転が利く、裏方仕事で活躍していた秀吉が戦争もできると認知されたのですから。</p>
+<p>秀吉自体、戦術を考えられるようになったのも、この間の経験が大きな財産となったでしょう。</p>
+<ol start="3">
+<li>中国極めと「三木の干し殺し」（1577年〜）</li>
+</ol>
+<p>織田は浅井・朝倉を破った辺りから、各方面に自立した仕事が可能な将軍を立てて攻略していくようになります。
+この間に、方面将軍として立てられたのは柴田勝家、佐久間信盛、滝川一益あたりでしょう。
+そして、この一連に明智光秀とともに秀吉も立てられました。</p>
+<p>秀吉が、ただ、機転の利く、仕事が出来る奴で認知されていたら、方面将軍にはなれなかったでしょう。
+戦争で活躍したことは、秀吉の運命を変えることになったと思います。
+そして、この間に勉強中の秀吉を支えた重治は、非常に大きな存在だったと思います。</p>
+<p>重治は、秀吉の中国地方攻略に従軍し、播磨（兵庫県）の平定に尽力しました。</p>
+<ul>
+<li>「兵糧攻め」の立案： 無謀な突撃を避け、敵を包囲して食糧を断つ戦術を提案。特に三木城攻略（三木の干し殺し）では、凄惨な戦いを避けつつ敵を降伏させるグランドデザインを描きました。</li>
+</ul>
+<h2 id="重治のエピソード">重治のエピソード</h2>
+<p>無欲で超越したような人というイメージがついてますが、具体的な発言があんまり残ってません。
+少ないエピソードですが、先を見通す力に長けていたり、温情を示すようなエピソードが残っています。</p>
+<p><strong>1. 恩賞の誓紙</strong></p>
+<p>黒田孝高が秀吉から与えられた「恩賞の約束（誓紙）」について不満を漏らし、それを竹中半兵衛が鮮やかにたしなめたという有名な逸話が存在します。</p>
+<p>ある時、黒田孝高が半兵衛のもとを訪れ、次のように愚痴をこぼしました。</p>
+<p>「秀吉公は以前、私が立身出世したあかつきには多大な領地（高禄）を与えると約束し、その証拠として誓紙（書状）までくださった。しかし、いまだにその約束を果たしてくれない」</p>
+<p>孝高がその大事な誓紙を肌身離さず持っていることを知ると、半兵衛は「ちょっと見せてくれ」と言ってそれを受け取り、いきなり破り捨てて火鉢の中に投げ込んで燃やしてしまいました。</p>
+<p>驚き怒る孝高に対し、半兵衛は静かにこう諭しました。</p>
+<p>「このような紙切れを頼りにしているから、心に不満が溜まり、働きも鈍くなるのだ。そんなものに執着せず、ただひたすら忠義を尽くして働けば、恩賞など自ずとついてくるものだ」</p>
+<p>恩賞のことをとやかく言ってもどうしようもないことです。
+また、不満を感じていると、仕事に集中できなくなるでしょう。
+そんなことより、秀吉がより大きく勢力を付ければ、自然と恩賞がついてくるはず。
+というような見通しを示したわけです。</p>
+<p><strong>2. 黒田の倅を救う</strong></p>
+<p>中国攻略の際に、織田の荒木村重が謀反を起こしました。
+謀反自体も、周りから裏切るのではと明らかなうわさが立っていたので、非常に杜撰な謀反だったかもしれません。</p>
+<p>黒田孝高が翻意を促すために、荒木村重の説得に向かい、悲しいことにそのまま捕まってしまいました。
+ですが、織田には捕まったとは伝わらず、黒田孝高までが寝返ったというように伝わってしまいました。</p>
+<p>そして、この話が信長に伝わり、信長は織田に人質となっていた孝高の息子（松寿丸）の殺害を命じました。
+秀吉は孝高のことを理解していたので、この命令に困り果ててしまいました。</p>
+<p>そんな時に、重治は&quot;私が処刑します&quot;と名乗りを上げます。
+そして、松寿丸を預かり、密かに松寿丸を自分の領地に隠して命を救いました。後に官兵衛の潔白が証明された際、この行動に官兵衛は涙を流して感謝したと伝えられています。</p>
+<p>因みに、この時重治は結核を患い、余命が少ないことを悟ってました。
+どうせ先のない人生だし、友の倅と自分の命が引き換えになったところで問題ないと考えたのかもしれません。</p>
+<h2 id="重治の最期">重治の最期</h2>
+<p>1579年（天正7年）、播磨の三木城を包囲する「三木合戦」の最中、重治は持病の肺病を悪化させました。
+秀吉は彼の命を惜しみ、京都での療養を命じます。一度は京へ向かった重治でしたが、「武士ならば戦場で死ぬのが本懐」と主君の制止を振り切り、平井山の陣所へ戻りました。
+秀吉に対し、自分の死後は黒田官兵衛を重用するよう言い残し、36歳の若さで息を引き取りました。</p>
+<div class="shop-card">
+    <div class="shop-card-image">
+        <img src="https://m.media-amazon.com/images/I/51jKWB5P3aL.jpg" alt="商品画像">
+    </div>
+    <div class="shop-card-content">
+        <div class="shop-card-title">小説集 竹中半兵衛</div>
+        <div class="shop-card-description">わずか十七名の手勢で、主君斎藤龍興より稲葉山城を奪取。羽柴秀吉に迎えられ、その参謀として浅井攻略、中国地方侵出に随身。黒田官兵衛とともに秀吉を支えながら、三十六歳の若さで病に斃れた稀代の天才軍師の生涯</div>
+        <div class="shop-card-link">
+            <a href="https://www.amazon.co.jp/%E5%B0%8F%E8%AA%AC%E9%9B%86-%E7%AB%B9%E4%B8%AD%E5%8D%8A%E5%85%B5%E8%A1%9B-%E6%B5%B7%E9%9F%B3%E5%AF%BA-%E6%BD%AE%E4%BA%94%E9%83%8E/dp/4861824745?__mk_ja_JP=%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A&crid=1WNCHYGOW5BMS&dib=eyJ2IjoiMSJ9.iuQzFQ6OWfROah8hQZsgLzuQ4VMKv7-QGV6wjBwI-Rt3OQUUSJZnswHTP9wKvk2rdPtxgOyIm40ashIHFQmpX6PWey0SEFao-AFHDqq_Hm4pKcFO2hXXu5rgHkm09s92GRIoCpB8akewzAi3SHDY-HxH5-yqwplMzzMvtLFvb3VZw38P4zC5QnedhpgEqCMbYNxJtnmU6_aDGVc07Pn8IwrSkwfQ2ldLx04h6yEDuHBYxMLT0nyctMfv0lkeL3yjEckaVBMYTeqSRjgsOcGVtyAeTM0CuS2rhPbbDKzDkHs.rkpzRc25R880fP_jzr7Rx1LcaHJ-SHnni1wAEYU-BPk&dib_tag=se&keywords=%E7%AB%B9%E4%B8%AD%E5%8D%8A%E5%85%B5%E8%A1%9B&qid=1771658494&sprefix=%E7%AB%B9%E4%B8%AD%E5%8D%8A%E5%85%B5%E8%A1%9B%2Caps%2C167&sr=8-4&linkCode=ll2&tag=yoshishinnze-22&linkId=4b381468617266fef93606dd48e403a2&ref_=as_li_ss_tl" target="_blank" rel="noopener">Amazonで詳細を見る</a>
+        </div>
+    </div>
+</div>
+
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+</script>
+
+
+            
+        </body>
+        </html>
