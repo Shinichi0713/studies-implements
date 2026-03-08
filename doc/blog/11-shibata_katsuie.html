@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&#x751f;&#x3044;&#x7acb;&#x3061;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+
+/* 記事タイトル (h1) */
+h1 {
+    font-size: 2rem;
+    color: #24292f;
+    line-height: 1.3;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 3px double #e1e4e8; /* 二重線で上品に */
+    text-align: center; /* タイトルを中央に寄せて特別感を出す */
+}
+
+/* セクション見出し (h2) */
+h2 {
+    font-size: 1.5rem;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(transparent 70%, #e8f0fe 70%); /* 下側に薄い色のアクセント */
+    border-left: 6px solid #0969da; /* 目次のテーマカラーと合わせる */
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* 強調文字 (strong) */
+strong {
+    font-weight: bold;
+    color: #cf222e; /* ホバー時の赤色と合わせて統一感を出す */
+    background: linear-gradient(transparent 60%, #fff2cc 60%); /* 黄色のマーカー風 */
+    padding: 0 2px;
+}
+
+/* 引用のコンテナ */
+blockquote {
+    position: relative;
+    padding: 20px 30px;
+    margin: 30px 0;
+    background-color: #f6f8fa; /* 目次の背景より少しだけ濃いグレー */
+    border-left: 5px solid #d0d7de; /* 落ち着いたグレーの境界線 */
+    color: #57606a; /* 文字色は少し薄くして引用らしさを出す */
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 引用符のアイコンを装飾として追加 */
+blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    font-size: 40px;
+    color: #d0d7de;
+    font-family: serif;
+    line-height: 1;
+}
+
+/* 読者になるボタンのデザイン */
+.btn-subscribe {
+    display: inline-block;
+    padding: 12px 35px; /* 横幅を広めにとって存在感を出します */
+    background-color: #383838; /* お好みの色に変更してください */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #555555;
+    text-decoration: none;
+}
+
+/* はてなブログで見えてしまう数式データを非表示にする */
+.katex-html {
+    display: none !important;
+}
+
+.katex-mathml {
+    display: inline !important;
+}
+/* Amazonカード型のオシャレなデザイン */
+.shop-card {
+    display: flex;
+    max-width: 500px;
+    margin: 20px auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* マウスホップした時の動き */
+.shop-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.shop-card-image {
+    width: 150px;
+    min-width: 150px;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shop-card-image img {
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+}
+
+.shop-card-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.shop-card-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.shop-card-description {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+/* Amazonらしいオレンジボタン */
+.shop-card-link a {
+    display: inline-block;
+    background-color: #ff9900;
+    color: #fff !important;
+    text-decoration: none !important;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.shop-card-link a:hover {
+    background-color: #e68a00;
+}
+
+/* スマホ対応：縦並びにする */
+@media (max-width: 480px) {
+    .shop-card {
+        flex-direction: column;
+        max-width: 100%;
+    }
+    .shop-card-image {
+        width: 100%;
+        height: 200px;
+    }
+}
+
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+
+            <p>柴田勝家（しばた かついえ）は、戦国時代から安土桃山時代にかけて活躍した武将で、織田信長の家臣団における筆頭格（宿老）として知られています。その勇猛さから「鬼柴田」や「かかれ柴田」といった異名を持ちました。</p>
+<p>今日は大河の秀吉、秀長にとって怖い怖い柴田勝家について説明していきます。</p>
+<h2 id="生い立ち">生い立ち</h2>
+<p>柴田勝家の生い立ちについては、戦国時代の武将の例に漏れず、前半生に関する確実な史料は限られています。一般的に知られている説をまとめると以下の通りです。</p>
+<img src="https://upload.wikimedia.org/wikipedia/commons/0/0c/Shibata_Katsuie_large.jpg" width="500" style="display: block; margin: 0 auto;">
+<h3 id="1-出自と家系">1. 出自と家系</h3>
+<ul>
+<li>家系: 柴田氏は清和源氏の流れを汲む斯波（しば）氏の支流と言われていますが、勝家より前の世代については不明な点が多いです。</li>
+<li>父: 柴田勝義（または土佐守を称した人物）と伝えられています。</li>
+<li>生年: 大永2年（1522年）説と、享禄3年（1530年）説があります。</li>
+</ul>
+<h3 id="2-出生地と幼名">2. 出生地と幼名</h3>
+<ul>
+<li>出身地: 尾張国愛知郡上社村（現在の名古屋市名東区）と言われています。現在、名東区の「明徳寺」が勝家の生誕地（下社城址）として知られています。</li>
+<li>幼名: 権六（ごんろく）。後年になっても通称としてこの名で呼ばれることがありました。</li>
+</ul>
+<p>幼名は元服と同時に、別の名前にすることが通常だったのですが、この辺はなんでか分かりません。</p>
+<h3 id="3-織田信秀信勝への出仕">3. 織田信秀・信勝への出仕</h3>
+<p>織田には信長の父親　信秀の時代に出仕するようになりました。</p>
+<ul>
+<li>信秀時代: 若い頃から信長の父・織田信秀に仕え、武勇に優れた若手将校として頭角を現しました。</li>
+<li>信勝の補佐: 信秀の死後は、信長の弟・織田信勝（信勝）の家老（宿老）として彼を支えました。当時は品行方正な信勝こそが家督にふさわしいと考えられており、勝家も当初は信長と敵対していました。</li>
+</ul>
+<h3 id="4-信長への帰順">4. 信長への帰順</h3>
+<p>信長の部将として有名な勝家ですが、当初は信長の弟の信勝に仕えていました。
+何事もなければこのまま信勝の配下だったはずですが、1556年（弘治2年）に信長 VS 信勝であった稲生の戦いが運命の転機となりました。
+勝家が信長の配下となるまでの経緯は以下のようなものです。</p>
+<p><strong>1. 背景：織田家の内紛</strong></p>
+<ul>
+<li>家督争い: 父・信秀の死後、嫡男である信長が家督を継ぎましたが、その奇行（うつけ）から、品行方正な弟・信勝を支持する家臣が多く現れました。</li>
+<li>挙兵: 1556年、信勝側は信長を廃するために末森城から挙兵し、清州城に迫りました。</li>
+</ul>
+<p><strong>2. 戦闘の経過</strong></p>
+<p>1556年8月24日、名古屋市西区の稲生原にて両軍が激突しました。</p>
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th>織田信長軍（兄）</th>
+<th>織田信勝軍（弟）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>兵力</td>
+<td>約700人</td>
+<td>約1,700人</td>
+</tr>
+<tr>
+<td>主な将</td>
+<td>織田信長、森可成、佐々孫介</td>
+<td>柴田勝家（1,000人）、林美作守（700人）</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>緒戦の激闘: 当初、数で勝る信勝軍が優勢で、信長方の佐々孫介らが討ち死にするなど激しい白兵戦が展開されました。</li>
+<li>信長の直接の指揮: 劣勢の中、信長が自ら先頭に立ち大声で一喝の上、直接陣頭指揮を取り出し、形勢が変わっていきました。信勝軍は、柴田勝家隊と林美作守（はやし みまさかのかみ）隊の二段構えでした。
+信長はまず柴田隊を退けると、そのまま林隊へ突入。乱戦の中で、信長自身（あるいは信長の至近にいた者）が敵の副将格である林美作守を討ち取りました。有力な指揮官を失ったことで、数で勝っていた信勝軍は一気に組織崩壊を起こし、敗走を始めました。</li>
+</ul>
+<p><strong>3. 戦後の影響</strong></p>
+<ul>
+<li>助命と降伏: 敗れた信勝と柴田勝家らは、生母・土田御前の取りなしにより一度は許されました。</li>
+<li>勝家の心境の変化: この戦いでの信長の勇猛さを目の当たりにした勝家は、後に信勝が再び謀反を企てた際、それを信長に密告します。これにより信勝は謀殺され、勝家は以後、信長の忠実な重臣へと変わっていきました。</li>
+</ul>
+<h2 id="織田の有力部将として">織田の有力部将として</h2>
+<p>稲生の戦いで敗れた後、信長に赦免された勝家は、それまでの「反逆者」から一転して「織田軍の主力」として、信長の天下布武を支える獅子奮迅の働きを見せます。
+主な活躍は以下の通りです。</p>
+<h3 id="1-織田勃興期">1. 織田勃興期</h3>
+<p>稲生の戦い（1556年）から上洛（1568年）までの約12年間、勝家は「反逆者」という汚名を雪ぐかのように、信長の尾張統一と美濃攻略において織田軍の中心的役割を果たしました。</p>
+<p>この期間の戦いは織田もそこまで大きな勢力ではなく、常にベストの将軍で戦いたいという時期です。
+勝家は戦闘指揮官の中心人物として認知されるようになりました。</p>
+<ul>
+<li>桶狭間の戦い（1560年）</li>
+</ul>
+<p>今川義元との決戦において、勝家も参戦していました。</p>
+<ul>
+<li>美濃攻略（斎藤氏との戦い 1561年〜1567年）</li>
+</ul>
+<p>信長の悲願であった美濃（現在の岐阜県）平定戦において、勝家は常に最前線で戦いました。</p>
+<p>主力としての地位: 木下藤吉郎（秀吉）や丹羽長秀らが頭角を現す中、勝家はすでに熟練の宿老として、合戦の現場を支える大黒柱となっていました。</p>
+<p>森部・十四条の戦い: こうした一連の美濃攻めにおいて武功を積み重ね、織田家臣団の中での地位を盤石にしました。</p>
+<h3 id="2-上洛戦と畿内の平定">2. 上洛戦と畿内の平定</h3>
+<p>1568年の足利義昭を奉じた上洛戦では、先鋒を務めました。</p>
+<ul>
+<li>勝龍寺城の戦い: 岩成友通（三好三人衆）を破るなどの武功を挙げました。</li>
+<li>京都支配: 上洛後は、木下藤吉郎（後の秀吉）や丹羽長秀らと共に、京都の政務を担当する「京都奉行」の一人に名を連ねました。</li>
+</ul>
+<h3 id="3-機内の守備長光寺城の戦い">3. 機内の守備（長光寺城の戦い）</h3>
+<p>1570年、六角承禎（ろっかく じょうてい）に包囲され、城内の水が絶たれた際の逸話です。
+残されたわずかな水が入った瓶（かめ）を自ら割り、「水がないなら、死ぬ気で突っ込むのみ」と将兵を鼓舞して出撃。見事逆転勝利を収めました。この勇猛さから「瓶割り柴田」の異名が定着しました。</p>
+<h3 id="4-北陸方面軍の総司令官へ">4. 北陸方面軍の総司令官へ</h3>
+<p>1575年、越前一向一揆を平定した後、信長から越前国（福井県）を与えられ、織田家で初めての「国持ち大名」となります。同時に、北陸地方の攻略を任される方面軍の軍団長に任命されました。
+勝家は、単なる武骨な将軍としてだけでなく、政治能力も備えた「信長が最も頼りにした男」として階段を駆け上がっていきました。</p>
+<h2 id="勝家の器量">勝家の器量</h2>
+<p>勇猛な「鬼柴田」のイメージとは裏腹に、勝家の政治家としての先進性や、部下・領民への誠実さが伝わるエピソードをいくつか紹介します。</p>
+<h3 id="1-領民に愛された合理的な統治">1. 領民に愛された「合理的」な統治</h3>
+<p>勝家が北陸（越前）を治めた際、単なる武力支配ではなく、民政に極めて熱心でした。
+「足羽川（あすがわ）の九十九橋」: 福井城下の大きな川に、半分が石造り、半分が木造という非常に珍しい橋を架けました。「石は洪水に強く、木は修理しやすい」という合理的な維持管理を重視した設計で、勝家の実務能力の高さを示しています。
+越前和紙の保護: 現在の伝統工芸である「越前和紙」の生産を奨励し、職人たちを優遇しました。これにより地域の産業を振興し、経済を安定させました。</p>
+<h3 id="2-徹底したフェアな姿勢検地と刀狩">2. 徹底した「フェア」な姿勢（検地と刀狩）</h3>
+<p>秀吉の刀狩が有名ですが、実は勝家も北陸で先んじてこれを行っています。
+「農民の安全保障」: 武器を没収する代わりに、農民を不当な搾取から守り、年貢の基準を明確にするための「検地」を厳格に行いました。これは力で押さえつけるのではなく、「ルールに基づく支配」を目指した証拠です。</p>
+<h3 id="3-敗北の際に見せた部下への慈しみ">3. 敗北の際に見せた「部下への慈しみ」</h3>
+<p>最期となった「賤ヶ岳の戦い」で敗北し、北庄城に追い詰められた際、勝家の器量の大きさが最も現れました。
+「逃亡を許す」: 勝家は、降伏する者や城を去る者を決して責めませんでした。それどころか、長年仕えた家臣たちに対し、「お前たちはまだ若い。秀吉のもとで出世し、お家を再興せよ」と諭して生き延びるよう促しました。
+「一揆勢への配慮」: 以前、激しく敵対した一向一揆の信徒たちに対しても、平定後は寛容な処置を施したため、彼が自害する際には多くの領民がその死を悼んだと伝えられています。</p>
+<h3 id="4-外国文化への深い理解">4. 外国文化への深い理解</h3>
+<p>宣教師ルイス・フロイスは、勝家のことを「信長の次に力があり、キリスト教に対して極めて寛容で、礼儀正しい人物」と記しています。
+勝家はキリシタンではありませんでしたが、新しい文化や宗教を頭ごなしに否定せず、その価値を認める柔軟で広い視野を持っていました。
+勝家は、信長の「革新性」を理解しつつも、それを「誠実な統治」として形にできる、非常にバランス感覚に優れた行政官でもありました。</p>
+<h3 id="5-前田利家との信頼関係">5. 前田利家との信頼関係</h3>
+<p>利家が若い頃、信長の同朋衆（茶坊主）を斬り殺して出仕停止処分を受けた際、勝家は利家の復帰のために信長へ何度も熱心に執り成しを行ったと言われています。利家にとって勝家は、自身の窮地を救ってくれた「恩人」でした。</p>
+<p>勝家は利家よりも15歳前後年上で、子供のいなかった勝家は、利家を我が子のように可愛がりました。利家も勝家を「親父殿（おやじどの）」と呼び慕っていました。また、利家の妻・まつ（芳春院）も勝家を深く尊敬しており、家族ぐるみの付き合いがあったとされています。</p>
+<h2 id="勝家の最期">勝家の最期</h2>
+<p>1582年の「本能寺の変」で織田信長が急逝した後、筆頭家老であった柴田勝家は、急速に台頭する羽柴（豊臣）秀吉と激しく対立することになります。</p>
+<p>これは力量のある家老が、統治のなくなった組織で台頭していく上で仕方のないことでした。</p>
+<h3 id="1-本能寺の変直後の足止め">1. 本能寺の変直後の足止め</h3>
+<p>信長が討たれた際、勝家は北陸で上杉景勝の軍と対峙（魚津城の戦い）していました。このため、京都へ急行して明智光秀を討つことができず、その功績を秀吉（山崎の戦い）に譲る形となりました。</p>
+<h3 id="2-清洲会議での敗北1582年6月">2. 清洲会議での敗北（1582年6月）</h3>
+<p>織田家の後継者と領地分配を決める「清洲会議」が開かれ、勝家は宿老として出席しました。</p>
+<ul>
+<li>後継者争い: 勝家は信長の三男・織田信孝を推しましたが、山崎の戦いの功績を背景に主導権を握った秀吉は、信長の嫡孫・三法師（秀信）を擁立しました。</li>
+<li>結果: 会議の結果、秀吉の提案が通り、勝家は織田家内での影響力を相対的に低下させることになりました。</li>
+</ul>
+<h3 id="3-お市の方との再婚">3. お市の方との再婚</h3>
+<p>会議の後、勝家は信長の妹であるお市の方と結婚しました。</p>
+<p>この再婚は、織田家との繋がりを強化し、秀吉に対抗するための政略的な側面がありました。
+また、この動きは秀吉と対抗する勢力であった、勝家、織田信孝、滝川一益の連携強化の中でのことだったと思われます。</p>
+<h3 id="4-賤ヶ岳の戦い1583年4月">4. 賤ヶ岳の戦い（1583年4月）</h3>
+<p>秀吉との対立は決定的となり、ついに近江（滋賀県）の賤ヶ岳で決戦が行われました。</p>
+<ul>
+<li>
+<p>孤立と敗因: 冬の間、北陸の豪雪により勝家の軍は動きが制限されました。また、戦いの最中に盟友であった前田利家が戦線を離脱（事実上の秀吉への降伏）したことが大きな打撃となりました。</p>
+</li>
+<li>
+<p>敗走: 秀吉の「美濃大返し」と呼ばれる迅速な進軍の前に勝家軍は総崩れとなり、居城の北庄城へと退却しました。</p>
+</li>
+</ul>
+<h3 id="5-北庄城での最期1583年4月24日">5. 北庄城での最期（1583年4月24日）</h3>
+<p>秀吉軍に包囲された北庄城で、勝家はお市の方と共に自害しました。</p>
+<p>最期まで付き従おうとした部下たちには生き延びるよう命じ、潔く城に火を放ちました。これにより、織田家筆頭家老としての波乱に満ちた生涯を閉じました。</p>
+<h2 id="総括">総括</h2>
+<p>勝家は前線指揮官として有能だったことから、勢力拡大期の織田の主要な戦いに参加していました。</p>
+<p>大河では怖い、いかついイメージで演じられることが多いですが、性格は公明で、慈悲深い性格が伝わるようなエピソードが伝わっています。</p>
+<p>組織の運営者としても有能でしたが、独立した勢力としては、機転が利き、目端のある秀吉に後れを取ることになりました。</p>
+<p>これからも大河で何度となく登場するであろう勝家の話についてでした。</p>
+<div class="shop-card">
+    <div class="shop-card-image">
+        <img src="https://m.media-amazon.com/images/I/81TipZQfqjL._SL1500_.jpg" alt="商品画像">
+    </div>
+    <div class="shop-card-content">
+        <div class="shop-card-title">柴田勝家-織田軍の「総司令官」</div>
+        <div class="shop-card-description">織田家きっての重鎮ながら、信長没後の争いで秀吉に出し抜かれた敗者のイメージが強い柴田勝家。良質な史料から名将の実像に迫る。</div>
+        <div class="shop-card-link">
+            <a href="https://www.amazon.co.jp/%E6%9F%B4%E7%94%B0%E5%8B%9D%E5%AE%B6-%E7%B9%94%E7%94%B0%E8%BB%8D%E3%81%AE%E3%80%8C%E7%B7%8F%E5%8F%B8%E4%BB%A4%E5%AE%98%E3%80%8D-%E4%B8%AD%E5%85%AC%E6%96%B0%E6%9B%B8-2758-%E5%92%8C%E7%94%B0-%E8%A3%95%E5%BC%98/dp/4121027582?__mk_ja_JP=%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A&crid=31QBHMFHF9SO&dib=eyJ2IjoiMSJ9.mb0iXM5mtlMeBz4pRRIlp0hza5tX_XIejfWNsFb7jR5zVbcFSD9h3QMOCQV3gop2QcQmcG3DQUb5NdNYKiFa3A5wHhDddQrlHx5AQbsJ2JkRCV3FCT4FrKjEQFWQxEqELpYE4qrDayJhYis3BA2lYgD0RghWgUtzP4wmLiuQjtwUfWy5Na5dUhYFaJz87C4o3Adlb-UZDWx3UAcLCc6h3q21QGKvhn35Ry9q1mwldSG5fuj2iZHaGRICyTqb7rB8xXTVwctfvvg0oldHNapU8I38JrVmSzcpSK0q3eyk33Q.KFOQ4teqaHoZy_9-Y5GqtTsgHMOcobzy1HLY5Hm42yQ&dib_tag=se&keywords=%E6%9F%B4%E7%94%B0%E5%8B%9D%E5%AE%B6&qid=1772947407&sprefix=%E6%9F%B4%E7%94%B0%E5%8B%9D%E5%AE%B6%2Caps%2C200&sr=8-2&linkCode=ll2&tag=yoshishinnze-22&linkId=2d27139552356856bfb4f925fb436f1c&ref_=as_li_ss_tl" target="_blank" rel="noopener">Amazonで詳細を見る</a>
+        </div>
+    </div>
+</div>
+
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+</script>
+
+
+            
+        </body>
+        </html>
