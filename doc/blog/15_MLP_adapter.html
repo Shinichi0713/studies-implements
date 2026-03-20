@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>VLM&#x306e;&#x30a2;&#x30fc;&#x30ad;&#x30c6;&#x30af;&#x30c1;&#x30e3;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+
+/* 記事タイトル (h1) */
+h1 {
+    font-size: 2rem;
+    color: #24292f;
+    line-height: 1.3;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 3px double #e1e4e8; /* 二重線で上品に */
+    text-align: center; /* タイトルを中央に寄せて特別感を出す */
+}
+
+/* セクション見出し (h2) */
+h2 {
+    font-size: 1.5rem;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(transparent 70%, #e8f0fe 70%); /* 下側に薄い色のアクセント */
+    border-left: 6px solid #0969da; /* 目次のテーマカラーと合わせる */
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* 強調文字 (strong) */
+strong {
+    font-weight: bold;
+    color: #cf222e; /* ホバー時の赤色と合わせて統一感を出す */
+    background: linear-gradient(transparent 60%, #fff2cc 60%); /* 黄色のマーカー風 */
+    padding: 0 2px;
+}
+
+/* 引用のコンテナ */
+blockquote {
+    position: relative;
+    padding: 20px 30px;
+    margin: 30px 0;
+    background-color: #f6f8fa; /* 目次の背景より少しだけ濃いグレー */
+    border-left: 5px solid #d0d7de; /* 落ち着いたグレーの境界線 */
+    color: #57606a; /* 文字色は少し薄くして引用らしさを出す */
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 引用符のアイコンを装飾として追加 */
+blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    font-size: 40px;
+    color: #d0d7de;
+    font-family: serif;
+    line-height: 1;
+}
+
+/* 読者になるボタンのデザイン */
+.btn-subscribe {
+    display: inline-block;
+    padding: 12px 35px; /* 横幅を広めにとって存在感を出します */
+    background-color: #383838; /* お好みの色に変更してください */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #555555;
+    text-decoration: none;
+}
+
+/* はてなブログで見えてしまう数式データを非表示にする */
+.katex-html {
+    display: none !important;
+}
+
+.katex-mathml {
+    display: inline !important;
+}
+/* Amazonカード型のオシャレなデザイン */
+.shop-card {
+    display: flex;
+    max-width: 500px;
+    margin: 20px auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* マウスホップした時の動き */
+.shop-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.shop-card-image {
+    width: 150px;
+    min-width: 150px;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shop-card-image img {
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+}
+
+.shop-card-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.shop-card-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.shop-card-description {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+/* Amazonらしいオレンジボタン */
+.shop-card-link a {
+    display: inline-block;
+    background-color: #ff9900;
+    color: #fff !important;
+    text-decoration: none !important;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.shop-card-link a:hover {
+    background-color: #e68a00;
+}
+
+/* スマホ対応：縦並びにする */
+@media (max-width: 480px) {
+    .shop-card {
+        flex-direction: column;
+        max-width: 100%;
+    }
+    .shop-card-image {
+        width: 100%;
+        height: 200px;
+    }
+}
+</style>
+        
+        </head>
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+
+        <body class="vscode-body vscode-light">
+            <p>今回はVLM（Vision-Language Model）のアーキテクチャの中で有力なMLP Adapterについて説明の上、実装の手順について説明していきます。</p>
+<h2 id="vlmのアーキテクチャ">VLMのアーキテクチャ</h2>
+<p>VLMのアーキテクチャにおいて、視覚エンコーダ（Vision Encoder）とLLMを接続する「コネクタ（Adapter）」の役割は非常に重要です。Q-Former以外にも、モデルの設計思想や計算コストの要件に応じて、いくつか有力なアーキテクチャが存在します。</p>
+<p>主な有力手法を分類して解説します。</p>
+<h3 id="1-mlp-adapter単純な射影層">1. MLP Adapter（単純な射影層）</h3>
+<p>最もシンプルかつ強力な手法で、近年のオープンソースモデルで主流となっています。</p>
+<ul>
+<li><strong>仕組み:</strong> Vision Encoderから出力された特徴量を、単層または2層の多層パーセプトロン（MLP）に通して、LLMの埋め込み空間に線形変換します。</li>
+<li><strong>代表モデル:</strong> <strong>LLaVA</strong> シリーズ。</li>
+<li><strong>メリット:</strong> 構造が極めて単純で実装コストが低い。また、モデル全体の学習効率が高く、計算資源を節約できます。</li>
+<li><strong>適した用途:</strong> 軽量かつ高速な推論が求められる環境。</li>
+</ul>
+<h3 id="2-perceiver-resampler">2. Perceiver Resampler</h3>
+<p>可変長の視覚特徴を、固定数の「視覚トークン」に圧縮してLLMに渡す手法です。</p>
+<ul>
+<li><strong>仕組み:</strong> 学習可能な「潜在クエリ（Latent Queries）」を定義し、画像特徴量に対してクロスアテンションを行うことで、情報を凝縮します。</li>
+<li><strong>代表モデル:</strong> <strong>Flamingo</strong>。</li>
+<li><strong>メリット:</strong> 入力画像がどれだけ大きくても、LLMに入力するトークン数を一定に抑えられるため、長文脈の処理や動画処理において計算量を効率的に制御できます。</li>
+<li><strong>適した用途:</strong> 動画入力や、高解像度の画像入力を前提とするモデル。</li>
+</ul>
+<h3 id="3-cross-attention-adapter">3. Cross-Attention Adapter</h3>
+<p>LLMの中間層に対して、視覚情報を直接注入する方式です。</p>
+<ul>
+<li><strong>仕組み:</strong> LLaVAのような「入力の先頭にトークンを追加する」方式とは異なり、LLMの各トランスフォーマーブロックの間にクロスアテンション層を挿入し、視覚情報を条件付けとして与えます。</li>
+<li><strong>代表モデル:</strong> <strong>Flamingo</strong>（LLM層間への挿入）、その他多くの独自アーキテクチャ。</li>
+<li><strong>メリット:</strong> LLMが言語処理の過程で常に視覚情報を参照できるため、画像とテキストの一貫した推論能力が高いとされます。</li>
+<li><strong>適した用途:</strong> 深い推論や複雑なマルチモーダル理解が必要な場合。</li>
+</ul>
+<h3 id="まとめ選択の指針">まとめ：選択の指針</h3>
+<table>
+<thead>
+<tr>
+<th>アーキテクチャ</th>
+<th>視覚情報の処理法</th>
+<th>主な特徴</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Q-Former</strong></td>
+<td>クロスアテンションによるフィルタリング</td>
+<td>画像の「要約」に長けている。学習難易度は高い。</td>
+</tr>
+<tr>
+<td><strong>MLP Adapter</strong></td>
+<td>線形変換（単純射影）</td>
+<td>高速・軽量。現在のオープンソースモデルの主流。</td>
+</tr>
+<tr>
+<td><strong>Perceiver Resampler</strong></td>
+<td>潜在クエリへのクロスアテンション</td>
+<td>トークン数の固定が可能。動画・高解像度向け。</td>
+</tr>
+<tr>
+<td><strong>Cross-Attention</strong></td>
+<td>LLM内部への直接注入</td>
+<td>視覚情報の保持力が高い。設計が複雑。</td>
+</tr>
+</tbody>
+</table>
+<p>Q-Formerは「情報を要約する」という明確な目的がある一方で、最近のトレンドとしては<strong>MLP Adapterのように「学習の簡略化」を重視する方向</strong>へ大きくシフトしています。特に「どれだけ効率的にLLMの能力を損なわずに視覚情報と統合するか」という観点から、ご自身のプロジェクトの目的（推論速度重視か、理解の質重視かなど）に合わせて選択するのが良いでしょう。</p>
+<h2 id="mlp-adapter">MLP Adapter</h2>
+<p>現在、VLM（マルチモーダルLLM）の開発において圧倒的に主流であり、最も好まれているのは <strong>MLP Adapter</strong> をベースにしたアーキテクチャです。</p>
+<p>特に、<strong>LLaVA</strong> シリーズが先駆けとなり、現在多くのオープンソースモデル（Qwen-VL, Llama-3-Visionなど）がこの設計を採用しています。</p>
+<h3 id="なぜ-mlp-adapter-が選ばれるのか3つの理由">なぜ MLP Adapter が選ばれるのか？（3つの理由）</h3>
+<h4 id="1-学習と実装の圧倒的なシンプルさ">1. 学習と実装の「圧倒的なシンプルさ」</h4>
+<p>Q-FormerやPerceiver Resamplerは、それ自体を訓練するための複雑なステージや、ハイパーパラメータの微調整が必要です。一方、MLP Adapterは単なる「行列演算（線形変換）」であるため、 <strong>「視覚エンコーダの出力を、LLMの埋め込み空間に合わせる」</strong> という目的を、最小限の計算リソースで達成できます。</p>
+<h4 id="2-llmの能力を損なわない柔軟性">2. LLMの能力を損なわない「柔軟性」</h4>
+<p>Q-Formerのような複雑な層を介すと、視覚情報が過度に圧縮・変換されてしまい、LLMが元来持っている「論理的思考能力」が阻害されるリスクがあります。MLP Adapterは情報の損失を最小限に抑え、Vision Encoderから得られた生の特徴量をLLMに直接渡すことができるため、<strong>LLMの性能を最大化しやすい</strong>という利点があります。</p>
+<h4 id="3-エンドツーエンドでの高速な収束">3. 「エンドツーエンド」での高速な収束</h4>
+<p>MLP Adapterは、学習の初期段階から視覚情報とテキスト情報を一気にモデル全体で整合させることができます。計算リソースが限られている環境（Colabや個人のGPUサーバなど）でも、<strong>短期間の学習で「そこそこ賢いVLM」が作れる</strong>ため、研究開発のサイクルを高速化したい現代のトレンドに非常にマッチしています。</p>
+<h3 id="近年のトレンドの結論">近年のトレンドの結論</h3>
+<p>かつては「いかに情報を凝縮するか（Q-Formerなど）」に知恵が絞られていましたが、現在は <strong>「いかにLLMをマルチモーダルにするか」</strong> という視点へ完全にシフトしています。</p>
+<ul>
+<li><strong>トレンドの要約:</strong> 視覚情報を複雑なアダプターで「整形」するのではなく、 <strong>「視覚情報を、言語と同じトークン形式に単に変換して流し込む」</strong> という、極めて素直な設計が勝っています。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>設計のトレンド</th>
+<th>以前の主流 (〜2023)</th>
+<th>現在の主流 (2024〜)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>重視ポイント</strong></td>
+<td>視覚情報の高度な圧縮</td>
+<td>LLMの汎用性と学習効率</td>
+</tr>
+<tr>
+<td><strong>アダプター</strong></td>
+<td>Q-Former, Perceiver</td>
+<td>MLP Adapter, Linear Projection</td>
+</tr>
+<tr>
+<td><strong>学習コスト</strong></td>
+<td>高い</td>
+<td>低い</td>
+</tr>
+</tbody>
+</table>
+<h2 id="mlp-adapterの構成">MLP Adapterの構成</h2>
+<p>MLP Adapterの構成は、非常にシンプルです。概念的には「視覚エンコーダの出力ベクトルを、LLMのトークン埋め込み（Embedding）次元に変換する」だけの線形層です。</p>
+<p>具体的に、実装レベルで何が起きているのかをコードと図解で整理します。</p>
+<h3 id="1-概念的なデータフロー">1. 概念的なデータフロー</h3>
+<p>Vision Encoder（例：CLIPのViT）から出てくる特徴量を、行列演算によってLLMが「理解できる言葉の次元」に写像（Mapping）します。</p>
+<h3 id="2-pytorchによる実装の骨格">2. PyTorchによる実装の骨格</h3>
+<p>多くのVLMでは、以下のような単純な <code>nn.Sequential</code> をアダプターとして定義しています。</p>
+<pre><code class="language-python"><span class="hljs-keyword">import</span> torch
+<span class="hljs-keyword">import</span> torch.nn <span class="hljs-keyword">as</span> nn
+<span class="hljs-keyword">from</span> transformers <span class="hljs-keyword">import</span> AutoModel, AutoModelForCausalLM
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">SimpleVLM</span>(nn.Module):
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, vision_model_name, llm_model_name, vision_dim, llm_dim</span>):
+        <span class="hljs-built_in">super</span>().__init__()
+        
+        <span class="hljs-comment"># 1. Vision Encoder (例: CLIP-ViT)</span>
+        self.vision_encoder = AutoModel.from_pretrained(vision_model_name)
+        
+        <span class="hljs-comment"># 2. MLP Adapter</span>
+        self.adapter = nn.Sequential(
+            nn.Linear(vision_dim, llm_dim),
+            nn.GELU(),
+            nn.Linear(llm_dim, llm_dim)
+        )
+        
+        <span class="hljs-comment"># 3. LLM (Frozen)</span>
+        self.llm = AutoModelForCausalLM.from_pretrained(llm_model_name)
+        
+        <span class="hljs-comment"># モデルの凍結（Warm-up用）</span>
+        <span class="hljs-keyword">for</span> param <span class="hljs-keyword">in</span> self.vision_encoder.parameters(): param.requires_grad = <span class="hljs-literal">False</span>
+        <span class="hljs-keyword">for</span> param <span class="hljs-keyword">in</span> self.llm.parameters(): param.requires_grad = <span class="hljs-literal">False</span>
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params">self, pixel_values, input_ids</span>):
+        <span class="hljs-comment"># A. 画像を特徴量に変換</span>
+        <span class="hljs-comment"># vision_outputs.last_hidden_state: [batch, num_patches, vision_dim]</span>
+        vision_outputs = self.vision_encoder.vision_model(pixel_values)
+        image_features = vision_outputs.last_hidden_state
+        
+        <span class="hljs-comment"># B. アダプターで次元変換</span>
+        <span class="hljs-comment"># image_features: [batch, num_patches, llm_dim]</span>
+        image_embeddings = self.adapter(image_features)
+        
+        <span class="hljs-comment"># C. LLMの入力埋め込みを取得</span>
+        text_embeddings = self.llm.get_input_embeddings()(input_ids)
+        
+        <span class="hljs-comment"># D. 画像とテキストを結合 (画像トークンを前方に配置)</span>
+        inputs_embeds = torch.cat([image_embeddings, text_embeddings], dim=<span class="hljs-number">1</span>)
+        
+        <span class="hljs-comment"># E. LLMによる推論</span>
+        <span class="hljs-keyword">return</span> self.llm(inputs_embeds=inputs_embeds)
+</code></pre>
+<h3 id="3-この構成が選ばれる理由数値計算の観点">3. この構成が選ばれる理由：数値計算の観点</h3>
+<p>なぜこれでうまくいくのかポイントを挙げます。</p>
+<ul>
+<li><strong>トークン化の統一:</strong> 視覚特徴量を <code>[num_patches, llm_dim]</code> という形式に変換することで、LLMにとっては「特殊な単語（特殊トークン）」が並んでいるのと全く同じ扱いになります。これにより、既存のLLMのアーキテクチャを一切変更せずに接続可能です。</li>
+<li><strong>次元の整合:</strong> 例えばCLIPのViT-L/14であれば <code>vision_dim=1024</code> ですが、これをLlama-3の <code>llm_dim=4096</code> に射影します。この行列変換が、視覚概念と言語概念を橋渡しする「翻訳辞書」の役割を果たします。</li>
+<li><strong>学習効率:</strong> 更新すべきパラメータ数が少ないため、アダプターのみを学習させる「Frozen LLM」の手法が非常に安定します。</li>
+</ul>
+<h3 id="4-実装のコツ">4. 実装のコツ</h3>
+<p>以下の順序で進めるのが最も効率的です。</p>
+<ol>
+<li>Frozen: Vision EncoderとLLMの両方を凍結（Freeze）します。</li>
+<li>Warm-up: このアダプター層だけを数エポック学習させ、LLMが視覚入力を「意味のある入力」として受け取れるようにします。</li>
+<li>Fine-tuning: その後、必要に応じてLLMの一部を解凍（Unfreeze）して、より細かいニュアンスを調整します。</li>
+</ol>
+<p>非常にシンプルですが、現在の最高性能のVLMも基本はこの構造を拡張したものです。</p>
+<p><img src="file:///d:\PycharmProjects\ScienceCalculation\studies-implements\doc\blog\image\10_MLP_adapter\1773534294468.png" alt="1773534294468"></p>
+<h2 id="本日まとめ">本日まとめ</h2>
+<p>現在のVLMはLLMの構造をいかにそのままに、ビジョンをLLMに取り込むか、ということが重要とされています。</p>
+<p>この場合、LLMはそのままで、画像から得た情報をLLMのトークン情報に変換するかということにフォーカスされています。</p>
+<p>現状これで精度が出るようになっているので、それ以上の複雑な仕組みはトレンドにはありません。</p>
+<p>LLMが視覚を得るということは、現状そこまで複雑に考えるフェーズではなくなった、と言えるのかもしれません。</p>
+
+            
+            
+        </body>
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+</script>
+
+        </html>
