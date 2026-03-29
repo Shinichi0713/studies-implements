@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&#x6982;&#x8981;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+
+/* 記事タイトル (h1) */
+h1 {
+    font-size: 2rem;
+    color: #24292f;
+    line-height: 1.3;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 3px double #e1e4e8; /* 二重線で上品に */
+    text-align: center; /* タイトルを中央に寄せて特別感を出す */
+}
+
+/* セクション見出し (h2) */
+h2 {
+    font-size: 1.5rem;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(transparent 70%, #e8f0fe 70%); /* 下側に薄い色のアクセント */
+    border-left: 6px solid #0969da; /* 目次のテーマカラーと合わせる */
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* 強調文字 (strong) */
+strong {
+    font-weight: bold;
+    color: #cf222e; /* ホバー時の赤色と合わせて統一感を出す */
+    background: linear-gradient(transparent 60%, #fff2cc 60%); /* 黄色のマーカー風 */
+    padding: 0 2px;
+}
+
+/* 引用のコンテナ */
+blockquote {
+    position: relative;
+    padding: 20px 30px;
+    margin: 30px 0;
+    background-color: #f6f8fa; /* 目次の背景より少しだけ濃いグレー */
+    border-left: 5px solid #d0d7de; /* 落ち着いたグレーの境界線 */
+    color: #57606a; /* 文字色は少し薄くして引用らしさを出す */
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 引用符のアイコンを装飾として追加 */
+blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    font-size: 40px;
+    color: #d0d7de;
+    font-family: serif;
+    line-height: 1;
+}
+
+/* 読者になるボタンのデザイン */
+.btn-subscribe {
+    display: inline-block;
+    padding: 12px 35px; /* 横幅を広めにとって存在感を出します */
+    background-color: #383838; /* お好みの色に変更してください */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #555555;
+    text-decoration: none;
+}
+
+/* はてなブログで見えてしまう数式データを非表示にする */
+.katex-html {
+    display: none !important;
+}
+
+.katex-mathml {
+    display: inline !important;
+}
+/* Amazonカード型のオシャレなデザイン */
+.shop-card {
+    display: flex;
+    max-width: 500px;
+    margin: 20px auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* マウスホップした時の動き */
+.shop-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.shop-card-image {
+    width: 150px;
+    min-width: 150px;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shop-card-image img {
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+}
+
+.shop-card-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.shop-card-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.shop-card-description {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+/* Amazonらしいオレンジボタン */
+.shop-card-link a {
+    display: inline-block;
+    background-color: #ff9900;
+    color: #fff !important;
+    text-decoration: none !important;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.shop-card-link a:hover {
+    background-color: #e68a00;
+}
+
+/* スマホ対応：縦並びにする */
+@media (max-width: 480px) {
+    .shop-card {
+        flex-direction: column;
+        max-width: 100%;
+    }
+    .shop-card-image {
+        width: 100%;
+        height: 200px;
+    }
+}
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+
+            <p>畿内の三好の宰相として辣腕を振るった松永久秀、前回の秀吉兄弟に登場しました。
+彼は一体どんな人だったのでしょうか、ということについて語りたいと思います。</p>
+<h2 id="概要">概要</h2>
+<p>松永久秀は、戦国時代の武将で、主に畿内（京都・大坂周辺）で活動した人物です。三好長慶の重臣として頭角を現し、のちに独立した大名として勢力を伸ばしました。</p>
+<p><strong>主な特徴</strong></p>
+<ul>
+<li>
+<p><strong>三好政権での台頭</strong><br>
+三好長慶に仕え、その側近として信頼され、摂津・大和などで勢力を拡大しました。長慶の死後は、三好家の実権を握るようになります。</p>
+</li>
+<li>
+<p><strong>「悪名」と逸話</strong><br>
+歴史書や伝承では、主君・三好長慶の嫡男・義興の死や、将軍・足利義輝の暗殺（永禄の変）に関与したとされ、また東大寺大仏殿を焼き討ちで焼失させたとも伝えられています。<br>
+これらの行為から「梟雄（きゆう）」、つまり非常に強かで非情な人物として語られることが多いです。</p>
+</li>
+<li>
+<p><strong>織田信長との関係</strong><br>
+織田信長の上洛後は、いったんは信長に従いますが、後に反旗を翻します。二度にわたる反乱の末、信長に攻められ、最後は自害したとされます。<br>
+有名な逸話として、自らの愛蔵の茶器「平蜘蛛（ひらぐも）」を信長に差し出すことを拒み、その茶器とともに爆死（爆薬による自害）したという話が伝わっています。</p>
+</li>
+<li>
+<p><strong>文化人としての側面</strong><br>
+一方で、茶の湯や連歌などに通じた文化人でもあり、信長とのやりとりにも茶器が関わる逸話が残っていることから、戦国武将としてだけでなく、文化・教養にも通じた人物だったことがうかがえます。</p>
+</li>
+</ul>
+<p><strong>まとめ</strong></p>
+<p>松永久秀は、戦国時代の畿内で大きな影響力を持ち、主家や将軍家への反逆、東大寺大仏殿焼失など、多くの「悪行」で語られる一方、茶の湯など文化的な素養も持つ複雑な人物として知られています。<br>
+信長に二度も背いた末に自害したという生涯から、その強かさと非情さが強調されることが多い武将です。</p>
+<h2 id="生い立ち">生い立ち</h2>
+<p>松永久秀の生い立ちは、史料が少なく、かなり不明瞭な部分が多い人物です。代表的な説を整理すると、以下のようになります。</p>
+<h3 id="生年について">生年について</h3>
+<ul>
+<li>
+<p><strong>1510年ごろ生まれ説</strong><br>
+多くの辞典・武将解説サイトで採用されている説です。<a href="https://ja.wikipedia.org/wiki/%E6%9D%BE%E6%B0%B8%E4%B9%85%E7%A7%80">松永久秀 - Wikipedia</a></p>
+</li>
+<li>
+<p><strong>1508年ごろ生まれ説</strong><br>
+一部の研究や解説では、もう少し早い生年を想定する見方もあります。<a href="https://sengoku.club/archives/category/%E4%B8%89%E5%A5%BD%E9%95%B7%E6%85%B6">戦国倶楽部 つわものどもの館</a></p>
+</li>
+</ul>
+<p><strong>結論としては、生年は確定しておらず、「1508年〜1510年ごろ」と幅を持って語られることが多い</strong>です。</p>
+<h3 id="出身地出自について">出身地・出自について</h3>
+<p>出身地も諸説あり、代表的なものは次の通りです。</p>
+<ol>
+<li>
+<p><strong>阿波国（現在の徳島県）出身説</strong><br>
+三好長慶の本拠地が阿波だったことから、同じ阿波の出身とする説です。<a href="https://ja.wikipedia.org/wiki/%E6%9D%BE%E6%B0%B8%E4%B9%85%E7%A7%80">松永久秀 - Wikipedia</a></p>
+</li>
+<li>
+<p><strong>山城国西岡（現在の京都府西京区）出身説</strong><br>
+京都西岡の出身で、商人の子だったとする説もあります。<br>
+研究者・長江正一が「西岡出身の商人で、斎藤道三と同郷」という見解を示したことで知られています。<a href="https://ja.wikipedia.org/wiki/%E6%9D%BE%E6%B0%B8%E4%B9%85%E7%A7%80">松永久秀 - Wikipedia</a></p>
+</li>
+<li>
+<p><strong>摂津国五百住（現在の大阪府高槻市）出身説</strong><br>
+摂津の土豪の出身とする説もあり、こちらも有力な候補地の一つです。<a href="https://ja.wikipedia.org/wiki/%E6%9D%BE%E6%B0%B8%E4%B9%85%E7%A7%80">松永久秀 - Wikipedia</a></p>
+</li>
+<li>
+<p><strong>そのほか</strong><br>
+一部の解説では、若い頃に山賊に加わっていたという伝承もあり、出自がはっきりしない人物として語られることが多いです。<a href="https://senjp.com/matsunaga/">戦国武将解説サイト</a></p>
+</li>
+</ol>
+<h3 id="若年期の伝承">若年期の伝承</h3>
+<ul>
+<li>
+<p>若い頃に山賊まがいの活動をしていたという話が伝わっていますが、確かな史料はなく、あくまで伝承の域を出ません。<a href="https://senjp.com/matsunaga/">戦国武将解説サイト</a></p>
+</li>
+<li>
+<p>その後、三好長慶に仕えて頭角を現し、三好政権の重臣として出世していくことになります。</p>
+</li>
+</ul>
+<h2 id="三好家で頭角を示す">三好家で頭角を示す</h2>
+<p>松永久秀が三好家の中で頭角を現したのは、<strong>天文年間の後半（1540年代後半〜1550年代）</strong> と考えられています。主に京都・畿内での軍事・政治活動を通じて、三好長慶の有力部将としての地位を固めていきました。</p>
+<h3 id="頭角を現した時期と主な活動">頭角を現した時期と主な活動</h3>
+<h4 id="1-天文20年1551年ごろ京都防衛と軍事行動">1. 天文20年（1551年）ごろ：京都防衛と軍事行動</h4>
+<ul>
+<li>
+<p><strong>京都防衛と外敵掃討</strong><br>
+三好長慶が京都を掌握したあと、久秀は他の有力部将とともに<strong>京都防衛と外敵掃討の役目</strong>を任されました。<a href="https://ja.wikipedia.org/wiki/%E6%9D%BE%E6%B0%B8%E4%B9%85%E7%A7%80">松永久秀 - Wikipedia</a></p>
+</li>
+<li>
+<p><strong>相国寺の戦い（1551年）</strong><br>
+天文20年（1551年）7月14日、細川晴元方の三好政勝・香西元成らが等持院に攻め込んできた際、久秀は弟・松永長頼とともにこれを迎撃し、撃破しています。<br>
+この戦いで相国寺の塔頭や伽藍が焼失するなど、京都での軍事行動の中心人物として活動していたことが分かります。<a href="https://ja.wikipedia.org/wiki/%E6%9D%BE%E6%B0%B8%E4%B9%85%E7%A7%80">松永久秀 - Wikipedia</a></p>
+</li>
+</ul>
+<h4 id="2-弘治年間15551558年ごろ大和国への進出と信貴山城入城">2. 弘治年間（1555〜1558年）ごろ：大和国への進出と信貴山城入城</h4>
+<ul>
+<li>
+<p><strong>大和国への進出</strong><br>
+弘治元年（1555年）5月の河内遠征に従軍した後、長慶の命令で「残党狩り」を名目に大和国へ入り、</p>
+<ul>
+<li>筒井順慶の本拠・筒井城を1日で落とし、順慶を追い払う</li>
+<li>平群谷を焼き討ち</li>
+<li>筒井方の十市氏を破る<br>
+といった軍事行動を展開しています。<a href="https://ja.wikipedia.org/wiki/%E6%9D%BE%E6%B0%B8%E4%B9%85%E7%A7%80">松永久秀 - Wikipedia</a></li>
+</ul>
+</li>
+<li>
+<p><strong>信貴山城の修築と入城</strong><br>
+同じく弘治元年8月8日には、<strong>信貴山城を修築してここに入城</strong>し、大和国における拠点としました。<br>
+これにより、久秀は京都周辺だけでなく、<strong>大和一国を支配する戦国大名としての基盤</strong>を築き始めます。<a href="https://ja.wikipedia.org/wiki/%E6%9D%BE%E6%B0%B8%E4%B9%85%E7%A7%80">松永久秀 - Wikipedia</a></p>
+</li>
+</ul>
+<h4 id="3-永禄年間1560年代ごろ三好家の実力者として">3. 永禄年間（1560年代）ごろ：三好家の実力者として</h4>
+<ul>
+<li>
+<p><strong>三好長慶の死と三好家の実権</strong><br>
+永禄7年（1564年）5月、長慶の弟・安宅冬康が死去すると、三好家の中で久秀に並ぶ実力者は阿波の篠原長房のみとなり、久秀の地位はさらに高まります。<a href="https://ja.wikipedia.org/wiki/%E6%9D%BE%E6%B0%B8%E4%B9%85%E7%A7%80">松永久秀 - Wikipedia</a></p>
+</li>
+<li>
+<p><strong>長慶死後の三好家運営</strong><br>
+永禄7年7月に三好長慶が死去すると、久秀はしばらくは三好三人衆（三好長逸・三好宗渭・岩成友通）らとともに、長慶の甥・三好義継を担いで三好家を支えました。<a href="https://ja.wikipedia.org/wiki/%E6%9D%BE%E6%B0%B8%E4%B9%85%E7%A7%80">松永久秀 - Wikipedia</a></p>
+</li>
+</ul>
+<p>このように、松永久秀は<strong>1550年代を通じて京都・大和での軍事・政治活動を担い、三好長慶の重臣から大和の戦国大名へと成長していった</strong>と考えられます。<a href="https://ja.wikipedia.org/wiki/%E6%9D%BE%E6%B0%B8%E4%B9%85%E7%A7%80">松永久秀 - Wikipedia</a></p>
+<h2 id="織田家へ">織田家へ</h2>
+<p>松永久秀が三好家から織田家へ「鞍替え」するまでの流れは、おおむね次のような経過です。</p>
+<h3 id="1-1568年織田信長の上洛と久秀の降伏">1. 1568年：織田信長の上洛と久秀の降伏</h3>
+<ul>
+<li>
+<p><strong>永禄11年（1568年）9月</strong>、織田信長が足利義昭を奉じて上洛します。<a href="https://sengokumap.net/history/1568/">1568年 – 69年 信長が上洛、今川家が滅亡</a></p>
+</li>
+<li>
+<p>この時点で、久秀は三好三人衆と対立し、畿内で孤立気味でした。<br>
+信長の大軍が京都に迫る中、久秀は<strong>いち早く降伏を申し出て、織田方に服属</strong>します。<a href="https://bushoojapan.com/bushoo/miyoshi/2026/03/25/210293">なぜ松永久秀は二度も織田信長を裏切ったのか？</a></p>
+</li>
+<li>
+<p>信長は久秀の降伏を受け入れ、<strong>大和一国の支配を認める</strong>ことで、久秀を織田政権の一員として取り込みました。<a href="https://www.rekishijin.com/20864">己の力量を過信し自滅した松永久秀の野心</a></p>
+</li>
+<li>
+<p>久秀は、娘を人質として差し出すとともに、名物茶器「九十九髪茄子」を献上するなど、政治的・文化的な貢献も行っています。<a href="https://bushoojapan.com/bushoo/miyoshi/2026/03/25/210293">なぜ松永久秀は二度も織田信長を裏切ったのか？</a></p>
+</li>
+</ul>
+<p>これが、いわゆる「三好家から織田家への鞍替え」の起点です。</p>
+<h3 id="2-15681570年織田家臣としての活動">2. 1568〜1570年：織田家臣としての活動</h3>
+<ul>
+<li>
+<p>信長の上洛後、久秀は<strong>大和国を任された織田方の大名</strong>として、大和の平定や京都周辺の軍事行動に参加します。<a href="https://sengokumap.net/history/1568/">1568年 – 69年 信長が上洛、今川家が滅亡</a></p>
+</li>
+<li>
+<p>**元亀元年（1570年）**には、信長が浅井・朝倉連合軍に敗れた「金ヶ崎の退き口」で、朽木元綱を説得して信長の退路を確保するなど、外交・軍事的な手腕を発揮しています。<a href="https://bushoojapan.com/bushoo/miyoshi/2026/03/25/210293">なぜ松永久秀は二度も織田信長を裏切ったのか？</a></p>
+</li>
+</ul>
+<p>この時期、久秀は表向きは織田家の有力部将として活動していました。</p>
+<h3 id="3-1570年1573年一度目の離反と再降伏">3. 1570年〜1573年：一度目の離反と再降伏</h3>
+<ul>
+<li>
+<p><strong>元亀元年（1570年）7月</strong>、久秀は信貴山城に入り、三好三人衆の来襲に備えます。<br>
+同年11月には、信長と三好三人衆の和睦交渉を主導し、娘を信長の養女として三好家に嫁がせる約束を取り付けるなど、外交的な役割も果たします。<a href="https://bushoojapan.com/bushoo/miyoshi/2026/03/25/210293">なぜ松永久秀は二度も織田信長を裏切ったのか？</a></p>
+</li>
+<li>
+<p>しかし、<strong>元亀4年（1573年）<strong>頃から、将軍・足利義昭が信長包囲網を形成し、久秀もその「御一味」に加わります。<br>
+義昭と信長の対立が深まる中で、久秀は</strong>織田家から離反</strong>し、義昭側に与したとされます。<a href="https://bushoojapan.com/bushoo/miyoshi/2026/03/25/210293">なぜ松永久秀は二度も織田信長を裏切ったのか？</a></p>
+</li>
+<li>
+<p>天正元年（1573年）7月、義昭は槇島城の戦いで信長に敗れ、追放されます。<br>
+同年11月には、三好義継も敗れ、久秀は孤立します。<a href="https://bushoojapan.com/bushoo/miyoshi/2026/03/25/210293">なぜ松永久秀は二度も織田信長を裏切ったのか？</a></p>
+</li>
+<li>
+<p><strong>天正元年12月</strong>、久秀は信長に<strong>再び降伏</strong>し、<br>
+**天正2年（1574年）**の年始には自ら岐阜へ赴いて赦免の礼を述べています。<a href="https://bushoojapan.com/bushoo/miyoshi/2026/03/25/210293">なぜ松永久秀は二度も織田信長を裏切ったのか？</a></p>
+</li>
+</ul>
+<h2 id="秀久の最期">秀久の最期</h2>
+<p>松永久秀が織田信長に<strong>二度目の謀反</strong>を起こしてから最期を迎えるまでの流れは、おおむね次のようになります。</p>
+<h3 id="1-二度目の謀反のきっかけ天正5年1577年">1. 二度目の謀反のきっかけ（天正5年＝1577年）</h3>
+<ul>
+<li>
+<p>天正5年（1577年）、信長は<strong>石山本願寺攻め</strong>を進めていました。<a href="https://toyokeizai.net/articles/-/938383?display=b">東洋経済オンライン</a></p>
+</li>
+<li>
+<p>ところが、この戦線の最中、久秀は<strong>突然戦線を離脱し、居城の信貴山城に立てこもってしまいます</strong>。<a href="https://toyokeizai.net/articles/-/938383?display=b">東洋経済オンライン</a></p>
+</li>
+<li>
+<p>信長はこれを「二度目の裏切り」と見なし、激怒。<br>
+信長の嫡男・織田信忠を総大将とする<strong>約4万の大軍</strong>を大和に差し向け、信貴山城を包囲させます。<a href="https://toyokeizai.net/articles/-/938383?display=b">東洋経済オンライン</a></p>
+</li>
+</ul>
+<h3 id="2-信貴山城の戦いと籠城">2. 信貴山城の戦いと籠城</h3>
+<ul>
+<li>
+<p>信貴山城に籠もった久秀の軍勢は、<strong>約8,000</strong>と伝えられ、兵力差は歴然としていました。<a href="https://topics.smt.docomo.ne.jp/article/president/bizskills/president_110973?page=4">PRESIDENT Online</a></p>
+</li>
+<li>
+<p>久秀は劣勢を挽回するため、石山本願寺に援軍を要請するなど、抵抗を試みますが、織田軍の包囲は厳しく、城は次第に追い詰められていきます。<a href="https://topics.smt.docomo.ne.jp/article/president/bizskills/president_110973?page=4">PRESIDENT Online</a></p>
+</li>
+<li>
+<p>信長側は、<strong>降伏を勧告</strong>し、久秀が名物茶器「平蜘蛛（ひらぐも）」を差し出せば助命する、という条件を提示したとも伝えられています。<a href="https://ameblo.jp/0123gogogo/entry-12702926125.html">城館談義［10月10日］信貴山城の戦い</a></p>
+</li>
+</ul>
+<h3 id="3-最期自害と爆死の伝承">3. 最期：自害と「爆死」の伝承</h3>
+<ul>
+<li>
+<p>久秀はこの降伏勧告を拒否し、<strong>天正5年10月10日（1577年11月19日）</strong>、信貴山城で自害したとされます。<a href="https://ja.wikipedia.org/wiki/%E6%9D%BE%E6%B0%B8%E4%B9%85%E7%A7%80">松永久秀 - Wikipedia</a></p>
+</li>
+<li>
+<p>有名な逸話として、</p>
+<ul>
+<li>愛蔵の茶器「平蜘蛛」を信長に渡すことを拒み、</li>
+<li>その茶器に<strong>爆薬を仕込んで自らもろとも爆死した</strong><br>
+という「爆死」伝承が残っています。<a href="https://satoyamashikoku.web.fc2.com/matsunaga2106.pdf">松永弾正 戦国を上り詰めた男 その気骨と反逆</a></li>
+</ul>
+</li>
+<li>
+<p>実際の史料では「自害」と記されることが多いですが、この「爆死」の話は、久秀の強かさと非情さを象徴するエピソードとして広く知られています。<a href="https://ja.wikipedia.org/wiki/%E6%9D%BE%E6%B0%B8%E4%B9%85%E7%A7%80">松永久秀 - Wikipedia</a></p>
+</li>
+</ul>
+<h3 id="4-信貴山城のその後">4. 信貴山城のその後</h3>
+<ul>
+<li>信貴山城はこの戦いの後、<strong>廃城</strong>となり、以降は使用されなくなったとされます。<a href="https://www.osaka-touken-world.jp/kansai-warlords/kansai-hisahide/">松永久秀 奈良の武将／ホームメイト - 刀剣ワールド大阪</a></li>
+</ul>
+<h2 id="なんで謀反を">なんで謀反を？</h2>
+<p>松永久秀がなぜ二度も織田信長に謀反したのかは、史料が乏しく、<strong>確定的な理由は分かっていません</strong>。<br>
+ただし、研究者や歴史解説者の間では、いくつかの「動機の候補」が挙げられています。代表的な説を整理すると、次のようになります。</p>
+<h3 id="1-大和国支配への強い執念">1. 大和国支配への強い執念</h3>
+<ul>
+<li>
+<p>久秀は、三好長慶の時代から<strong>大和国を自分の領国として支配</strong>することを目指してきました。<br>
+信貴山城・多聞山城を拠点に、筒井順慶らと戦い、大和をほぼ手中に収めていた時期もあります。<a href="https://ja.wikipedia.org/wiki/%E6%9D%BE%E6%B0%B8%E4%B9%85%E7%A7%80">松永久秀 - Wikipedia</a></p>
+</li>
+<li>
+<p>ところが、信長政権下では、<strong>大和一国を完全に自由に支配できるわけではなく、信長の意向に従う必要</strong>がありました。<br>
+特に、信長が大和の寺社勢力や筒井氏を保護・利用する方針をとると、久秀の「大和の独裁者」としての立場は揺らぎます。</p>
+</li>
+<li>
+<p>このため、<strong>「大和を自分の思い通りに支配したい」という執念</strong>が、信長への不満や反発につながった、という見方があります。<a href="https://bushoojapan.com/bushoo/miyoshi/2026/03/25/210293">なぜ松永久秀は二度も織田信長を裏切ったのか？</a></p>
+</li>
+</ul>
+<h3 id="2-信長との権力関係への不満不信">2. 信長との権力関係への不満・不信</h3>
+<ul>
+<li>
+<p>久秀は、三好長慶の重臣として畿内政治の中心にいた人物です。<br>
+信長に降伏した後も、名物茶器を献上したり、外交・軍事で貢献したりしていますが、<strong>「信長の家臣の一人」として扱われることに納得していなかった</strong>可能性があります。</p>
+</li>
+<li>
+<p>一度目の離反（足利義昭の信長包囲網への参加）は、<strong>信長の権力が強まりすぎることへの警戒</strong>や、<strong>自分が単なる一武将に落とされることへの不満</strong>が背景にあったと指摘されています。<a href="https://bushoojapan.com/bushoo/miyoshi/2026/03/25/210293">なぜ松永久秀は二度も織田信長を裏切ったのか？</a></p>
+</li>
+<li>
+<p>一度は赦免されたものの、信長の支配体制がさらに強化されると、久秀の立場はますます不安定になります。<br>
+この「信長の下では自分の将来が保証されない」という不信感が、二度目の離反につながった、という解釈もあります。<a href="https://toyokeizai.net/articles/-/938383?display=b">東洋経済オンライン</a></p>
+</li>
+</ul>
+<h3 id="3-信長包囲網への期待と誤算">3. 信長包囲網への期待と誤算</h3>
+<ul>
+<li>
+<p>一度目の離反は、<strong>足利義昭が形成した信長包囲網</strong>に久秀が加わったことがきっかけです。<a href="https://bushoojapan.com/bushoo/miyoshi/2026/03/25/210293">なぜ松永久秀は二度も織田信長を裏切ったのか？</a></p>
+</li>
+<li>
+<p>義昭・浅井・朝倉・本願寺など、有力勢力が連携すれば信長を倒せる、と久秀が判断した可能性があります。<br>
+しかし、義昭は槇島城の戦いで敗れ、三好義継も滅ぼされ、<strong>包囲網は崩壊</strong>します。<a href="https://bushoojapan.com/bushoo/miyoshi/2026/03/25/210293">なぜ松永久秀は二度も織田信長を裏切ったのか？</a></p>
+</li>
+<li>
+<p>二度目の離反（天正5年）も、<strong>石山本願寺や上杉謙信など、信長包囲網の再形成に期待</strong>し、それに乗じようとした可能性があります。<br>
+しかし、実際には織田軍の圧倒的な兵力差の前に、信貴山城は孤立し、久秀は敗北します。<a href="https://topics.smt.docomo.ne.jp/article/president/bizskills/president_110973?page=4">PRESIDENT Online</a></p>
+</li>
+</ul>
+<h3 id="4-年齢立場からの最後の賭け">4. 年齢・立場からの「最後の賭け」</h3>
+<ul>
+<li>
+<p>久秀は、二度目の離反時には<strong>70歳前後</strong>とされています。<a href="https://ja.wikipedia.org/wiki/%E6%9D%BE%E6%B0%B8%E4%B9%85%E7%A7%80">松永久秀 - Wikipedia</a></p>
+</li>
+<li>
+<p>一度目の離反で一度は赦免されたものの、その後の信長政権下では、<strong>自分の領国や権限が徐々に削られていく</strong>状況にあったと考えられます。</p>
+</li>
+<li>
+<p>このため、**「このままでは自分の存在意義が消えてしまう。ならば、最後に大きな賭けに出るしかない」**という、老境に差し掛かった武将としての決断だった、という見方もあります。<a href="https://toyokeizai.net/articles/-/938383?display=b">東洋経済オンライン</a></p>
+</li>
+</ul>
+<h3 id="5-性格価値観の問題">5. 性格・価値観の問題</h3>
+<ul>
+<li>
+<p>久秀は「梟雄（きょうゆう）」と呼ばれ、<strong>強かで非情、自分の意志を貫くタイプ</strong>として描かれることが多いです。<a href="https://ja.wikipedia.org/wiki/%E6%9D%BE%E6%B0%B8%E4%B9%85%E7%A7%80">松永久秀 - Wikipedia</a></p>
+</li>
+<li>
+<p>茶の湯や連歌など、文化的な素養もあり、**「自分の美意識や価値観を曲げたくない」**という側面もあったかもしれません。<br>
+有名な「平蜘蛛の茶釜とともに爆死した」という逸話は、<strong>信長に屈するより、自分の美学を貫いて死ぬことを選んだ</strong>、という物語として語られることがあります。<a href="https://satoyamashikoku.web.fc2.com/matsunaga2106.pdf">松永弾正 戦国を上り詰めた男 その気骨と反逆</a></p>
+</li>
+</ul>
+<h2 id="久秀のエピソード">久秀のエピソード</h2>
+<p>松永久秀には、史実かどうかはっきりしないものの、戦国時代を代表する「梟雄（きょうゆう）」らしい、強かでドラマチックなエピソードがいくつか伝わっています。代表的なものを挙げます。</p>
+<h3 id="1-東大寺大仏殿を焼いた男">1. 東大寺大仏殿を焼いた男？</h3>
+<ul>
+<li>
+<p>永禄10年（1567年）、三好三人衆との戦いの最中、久秀が立てこもる東大寺大仏殿に敵が侵入し、戦闘の混乱で<strong>大仏殿が焼失した</strong>と伝えられています。<a href="https://ja.wikipedia.org/wiki/%E6%9D%BE%E6%B0%B8%E4%B9%85%E7%A7%80">松永久秀 - Wikipedia</a></p>
+</li>
+<li>
+<p>この出来事は、後世「久秀が大仏殿を焼いた」と語られ、<strong>「人がなせぬ大悪を一生の内に三つもやってのけた」</strong> と信長に言わしめた、という逸話の一つになっています（ほかは将軍暗殺・主家乗っ取りなど）。</p>
+</li>
+<li>
+<p>実際には、久秀単独の責任かどうかは不明ですが、<strong>「大仏殿を焼いた悪人」</strong> というイメージが定着し、久秀の「悪名」を決定づけたエピソードです。</p>
+</li>
+</ul>
+<h3 id="2-茶器平蜘蛛とともに爆死した">2. 茶器「平蜘蛛」とともに爆死した？</h3>
+<ul>
+<li>
+<p>天正5年（1577年）、信貴山城で織田軍に包囲された久秀は、信長から<strong>名物茶器「平蜘蛛（ひらぐも）」を差し出せば助命する</strong>という降伏勧告を受けたと伝えられます。</p>
+</li>
+<li>
+<p>しかし久秀はこれを拒否し、<strong>「平蜘蛛」に爆薬を仕込み、自分もろとも爆死した</strong>という、非常にドラマチックな最期の話が残っています。<a href="https://satoyamashikoku.web.fc2.com/matsunaga2106.pdf">松永弾正 戦国を上り詰めた男 その気骨と反逆</a></p>
+</li>
+<li>
+<p>実際の史料では「自害」と記されることが多いですが、この「爆死」伝承は、<strong>信長に屈するより、自分の美意識と茶器を守って死ぬことを選んだ</strong>という、久秀の強かさと美学を象徴する話として広く知られています。</p>
+</li>
+</ul>
+<h3 id="3-名物茶器九十九髪茄子を信長に献上">3. 名物茶器「九十九髪茄子」を信長に献上</h3>
+<ul>
+<li>
+<p>久秀は茶の湯に通じた文化人でもあり、<strong>名物茶器「九十九髪茄子（つくもかみなす）」</strong> を所持していました。</p>
+</li>
+<li>
+<p>信長の上洛後、久秀はこの茶器を信長に献上し、その見返りとして大和一国の支配を認められた、とされています。<a href="https://bushoojapan.com/bushoo/miyoshi/2026/03/25/210293">なぜ松永久秀は二度も織田信長を裏切ったのか？</a></p>
+</li>
+<li>
+<p>信長の「名物狩り（名物茶器の収集）」のきっかけの一つになったとも言われ、<strong>茶器を通じた政治的な駆け引き</strong>がうかがえるエピソードです。</p>
+</li>
+</ul>
+<h3 id="4-金ヶ崎の退き口で信長の退路を確保">4. 金ヶ崎の退き口で信長の退路を確保</h3>
+<ul>
+<li>
+<p>元亀元年（1570年）、浅井・朝倉連合軍に敗れた信長が「金ヶ崎の退き口」で命からがら京都へ逃げ帰る際、久秀は<strong>朽木元綱を説得して信長の退路を確保した</strong>と伝えられます。<a href="https://bushoojapan.com/bushoo/miyoshi/2026/03/25/210293">なぜ松永久秀は二度も織田信長を裏切ったのか？</a></p>
+</li>
+<li>
+<p>この時、久秀はまだ織田家臣として活動しており、<strong>外交・軍事的な手腕で信長を救った</strong>という点で、単なる「悪人」ではなく、<strong>有能な武将</strong>としての一面も見せています。</p>
+</li>
+</ul>
+<h3 id="5-多聞山城と多聞櫓の由来">5. 多聞山城と「多聞櫓」の由来？</h3>
+<ul>
+<li>
+<p>久秀が大和に築いた<strong>多聞山城（多聞城）</strong> は、当時としては先進的な城郭で、天守に近い高層の櫓が連なっていたとされます。</p>
+</li>
+<li>
+<p>この構造が「多聞櫓（たもんやぐら）」という言葉の由来になった、という説があります。<a href="https://ja.wikipedia.org/wiki/%E6%9D%BE%E6%B0%B8%E4%B9%85%E7%A7%80">松永久秀 - Wikipedia</a></p>
+</li>
+<li>
+<p>真偽は定かではありませんが、<strong>城郭建築にも影響を与えた可能性がある</strong>という点で、久秀の「技術的・文化的な側面」をうかがわせるエピソードです。</p>
+</li>
+</ul>
+<h3 id="6-信長に人がなせぬ大悪を三つもやったと言わしめた">6. 信長に「人がなせぬ大悪を三つもやった」と言わしめた？</h3>
+<ul>
+<li>
+<p>前述の通り、久秀は</p>
+<ul>
+<li>将軍・足利義輝の暗殺（永禄の変）</li>
+<li>主家・三好家の乗っ取り</li>
+<li>東大寺大仏殿焼失<br>
+の三つを「人がなせぬ大悪」として、信長に評された、という話が伝わっています。</li>
+</ul>
+</li>
+<li>
+<p>実際には、義輝暗殺への関与は不明で、三好家の実権掌握も単純な「乗っ取り」とは言い切れませんが、<strong>「梟雄」としてのイメージを決定づけた</strong> 代表的な逸話です。<a href="https://ja.wikipedia.org/wiki/%E6%9D%BE%E6%B0%B8%E4%B9%85%E7%A7%80">松永久秀 - Wikipedia</a></p>
+</li>
+</ul>
+<h2 id="総括">総括</h2>
+<p>松永久秀は信長の野望ではいかにも悪人の顔をしています。
+実際はなんと以下のような役人の肖像画が残されています。</p>
+<img src="https://www.city.takatsuki.osaka.jp/uploaded/image/12301.JPG" width="500" style="display: block; margin: 0 auto;">
+<p>前半生は不明な点が多い(代替みんなそうですが)ですが、力を持つようになった点、大仏を焼いたり、主筋を何度も裏切ったことは間違いありません。
+正真正銘の梟雄です。</p>
+<p>後年関ヶ原の時も島勝猛に近年の部将は久秀ほどのものはいないと言わしめるくらい凄腕、やりてだったことは確かだったようです。
+大河をご覧になるときは、そんな彼の一生を描きつつ、梟雄が描かれているか見てください。</p>
+<div class="shop-card">
+    <div class="shop-card-image">
+        <img src="https://m.media-amazon.com/images/I/71+5yi7RUDL._SL1400_.jpg" alt="商品画像">
+    </div>
+    <div class="shop-card-content">
+        <div class="shop-card-title">じんかん</div>
+        <div class="shop-card-description">第163回直木賞候補、第11回山田風太郎賞受賞作。今村翔吾の「じんかん」は、従来の悪人像を逆転させ、理想の世を求めて苦悩する一人の人間としての久秀を描いており、現代の読者から非常に高い支持を得ています。</div>
+        <div class="shop-card-link">
+            <a href="https://www.amazon.co.jp/%E3%81%98%E3%82%93%E3%81%8B%E3%82%93-%E8%AC%9B%E8%AB%87%E7%A4%BE%E6%96%87%E5%BA%AB-148-3-%E4%BB%8A%E6%9D%91-%E7%BF%94%E5%90%BE/dp/4065350158?__mk_ja_JP=%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A&crid=EK80P89HHBK6&dib=eyJ2IjoiMSJ9.HdQn6A54IRlVxjFGQ4ZYfF0_R74HrXUDlmzJZaglV040f9ffsix2I4zZzqs-RkuRrpdcWpVqYumVF5DOx_UFUoR2JoQHxyWCsWXwxX02B4nV2qExNhkZl1F9FzTCHxlL6h6rxhq2-zFMt6_o8sv2lwiznZfFCTDqe9ufI_tsPIRbv1QnvFIo1UbmLFvC7nkFVGsRrzVPByQyhqgFMjUpnjTLZuonou3OMMryMFPZVTTMfdlwIMGYbVS6TwWiHjoXxFf1q9djQXEe5MmkBN5LXxljyVznUo6Cf54eBc3u1_M.1W7sDqpURGSxTqx_nrT9OVy5eRxSrJyTe7WZRW2uFGU&dib_tag=se&keywords=%E3%80%8E%E3%81%98%E3%82%93%E3%81%8B%E3%82%93%E3%80%8F%E4%BB%8A%E6%9D%91+%E7%BF%94%E5%90%BE&qid=1774750153&sprefix=%E3%81%98%E3%82%93%E3%81%8B%E3%82%93+%E4%BB%8A%E6%9D%91+%E7%BF%94%E5%90%BE%2Caps%2C192&sr=8-1&linkCode=ll2&tag=yoshishinnze-22&linkId=34f295507be29f2c3e4b84d1048af864&ref_=as_li_ss_tl" target="_blank" rel="noopener">Amazonで詳細を見る</a>
+        </div>
+    </div>
+</div>
+
+
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+</script>
+
+
+            
+        </body>
+        </html>
