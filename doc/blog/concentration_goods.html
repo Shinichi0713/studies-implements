@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&#x96c6;&#x4e2d;&#x3067;&#x304d;&#x306a;&#x3044; &sol; &#x5bdd;&#x308c;&#x306a;&#x3044;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+
+/* 記事タイトル (h1) */
+h1 {
+    font-size: 2rem;
+    color: #24292f;
+    line-height: 1.3;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 3px double #e1e4e8; /* 二重線で上品に */
+    text-align: center; /* タイトルを中央に寄せて特別感を出す */
+}
+
+/* セクション見出し (h2) */
+h2 {
+    font-size: 1.5rem;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(transparent 70%, #e8f0fe 70%); /* 下側に薄い色のアクセント */
+    border-left: 6px solid #0969da; /* 目次のテーマカラーと合わせる */
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* 強調文字 (strong) */
+strong {
+    font-weight: bold;
+    color: #cf222e; /* ホバー時の赤色と合わせて統一感を出す */
+    background: linear-gradient(transparent 60%, #fff2cc 60%); /* 黄色のマーカー風 */
+    padding: 0 2px;
+}
+
+/* 引用のコンテナ */
+blockquote {
+    position: relative;
+    padding: 20px 30px;
+    margin: 30px 0;
+    background-color: #f6f8fa; /* 目次の背景より少しだけ濃いグレー */
+    border-left: 5px solid #d0d7de; /* 落ち着いたグレーの境界線 */
+    color: #57606a; /* 文字色は少し薄くして引用らしさを出す */
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 引用符のアイコンを装飾として追加 */
+blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    font-size: 40px;
+    color: #d0d7de;
+    font-family: serif;
+    line-height: 1;
+}
+
+/* 読者になるボタンのデザイン */
+.btn-subscribe {
+    display: inline-block;
+    padding: 12px 35px; /* 横幅を広めにとって存在感を出します */
+    background-color: #383838; /* お好みの色に変更してください */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #555555;
+    text-decoration: none;
+}
+
+/* はてなブログで見えてしまう数式データを非表示にする */
+.katex-html {
+    display: none !important;
+}
+
+.katex-mathml {
+    display: inline !important;
+}
+/* Amazonカード型のオシャレなデザイン */
+.shop-card {
+    display: flex;
+    max-width: 500px;
+    margin: 20px auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* マウスホップした時の動き */
+.shop-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.shop-card-image {
+    width: 150px;
+    min-width: 150px;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shop-card-image img {
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+}
+
+.shop-card-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.shop-card-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.shop-card-description {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+/* Amazonらしいオレンジボタン */
+.shop-card-link a {
+    display: inline-block;
+    background-color: #ff9900;
+    color: #fff !important;
+    text-decoration: none !important;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.shop-card-link a:hover {
+    background-color: #e68a00;
+}
+
+/* スマホ対応：縦並びにする */
+@media (max-width: 480px) {
+    .shop-card {
+        flex-direction: column;
+        max-width: 100%;
+    }
+    .shop-card-image {
+        width: 100%;
+        height: 200px;
+    }
+}
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+
+            <p>今回は出張や、外出して勉強などのシチュエーションに関するお話です。
+著者はホテルや外出先で枕が変わると寝れなくなってしまう人です。
+そんな時に寝る一番の良薬は何も考えないこと。
+無心の境地になることが重要です。
+今日はそんな無心の境地に、入るようなデバイスについての説明です。</p>
+<h2 id="集中できない--寝れない">集中できない / 寝れない</h2>
+<p>旅先で寝れない・集中できない理由は、大きく分けて<strong>環境の変化</strong>と<strong>心身の状態の変化</strong>の2つに分けられます。</p>
+<h3 id="1-音環境の違い騒音音の種類">(1) 音環境の違い（騒音・音の種類）</h3>
+<ul>
+<li>自宅では慣れた「生活音」や「静けさ」がある一方、旅先では
+<ul>
+<li>ホテルの廊下の足音・話し声</li>
+<li>隣室のテレビやシャワー音</li>
+<li>外の車の音・救急車のサイレン<br>
+など、<strong>普段と違う音</strong>が入ってきます。</li>
+</ul>
+</li>
+<li>特に**意味のある音（話し声・テレビ音声）**は、脳が無意識に「聞き取ろう」としてしまい、<strong>集中や睡眠を妨げやすい</strong>ことが知られています。</li>
+</ul>
+<h3 id="2-光環境の違い明るさ色温度">(2) 光環境の違い（明るさ・色温度）</h3>
+<ul>
+<li>自宅では遮光カーテンや間接照明など、<strong>自分好みの光環境</strong>を整えていることが多いですが、旅先では
+<ul>
+<li>部屋の照明が明るすぎる／暗すぎる</li>
+<li>窓からの光が強くて眠りが浅い</li>
+<li>夜間の街灯やネオンが気になる<br>
+といったことが起こります。</li>
+</ul>
+</li>
+<li>特に**青みがかった光（スマホやテレビ、LED照明）**はメラトニン分泌を抑制し、<strong>寝付きを悪くする</strong>ことが知られています。</li>
+</ul>
+<h3 id="3-温度湿度空気の違い">(3) 温度・湿度・空気の違い</h3>
+<ul>
+<li>自宅ではエアコンや加湿器で<strong>快適な温湿度</strong>を保てますが、旅先では
+<ul>
+<li>エアコンの設定が合わない</li>
+<li>乾燥しすぎ／湿気が強すぎる</li>
+<li>部屋の換気が悪く、空気がこもる<br>
+といったことがあります。</li>
+</ul>
+</li>
+<li>温度・湿度・空気の質は、<strong>睡眠の質や集中力に大きく影響</strong>します。</li>
+</ul>
+<h3 id="4-寝具姿勢の違い">(4) 寝具・姿勢の違い</h3>
+<ul>
+<li>自宅のマットレス・枕・布団に慣れていると、旅先のベッドは
+<ul>
+<li>硬さ・高さが合わない</li>
+<li>シーツの肌触りが違う</li>
+<li>枕の高さが合わず首が痛い<br>
+といった不具合が生じます。</li>
+</ul>
+</li>
+<li>寝具の違和感は、<strong>寝返りのしにくさ・体の痛み</strong>につながり、睡眠の質を下げます。</li>
+</ul>
+<h2 id="2-心身の状態の変化による理由">2. 心身の状態の変化による理由</h2>
+<h3 id="1-緊張不安初めての場所ストレス">(1) 緊張・不安（「初めての場所」ストレス）</h3>
+<ul>
+<li>旅先は「知らない場所」であり、脳は無意識に<strong>警戒モード</strong>になりがちです。
+<ul>
+<li>防犯面への不安</li>
+<li>翌日の予定への心配</li>
+<li>環境の変化によるストレス<br>
+などが、交感神経を優位にし、<strong>リラックスしにくい状態</strong>を作ります。</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-生活リズムの乱れ時差スケジュール">(2) 生活リズムの乱れ（時差・スケジュール）</h3>
+<ul>
+<li>時差がある地域への移動や、スケジュールが詰まった旅行では
+<ul>
+<li>就寝時間がずれる</li>
+<li>朝が早い／夜更かしになる</li>
+<li>体内時計（概日リズム）が乱れる<br>
+といったことが起こります。</li>
+</ul>
+</li>
+<li>体内時計が乱れると、<strong>メラトニンの分泌タイミングがずれ</strong>、寝付き・目覚めが悪くなります。</li>
+</ul>
+<h3 id="3-脳の慣れの問題first-night-effect">(3) 脳の「慣れ」の問題（First-Night Effect）</h3>
+<ul>
+<li>初めての場所で眠る際、<strong>脳の片側が浅く眠って警戒を続ける</strong>という現象（First-Night Effect）が知られています。</li>
+<li>これは進化的に「危険な場所では深く眠らない」という仕組みの名残とされ、<strong>旅先1日目の睡眠が浅くなりやすい</strong>原因の一つです。</li>
+</ul>
+<h3 id="4-疲労運動不足食事の変化">(4) 疲労・運動不足・食事の変化</h3>
+<ul>
+<li>旅行中は
+<ul>
+<li>移動で疲れているのに、デスクワークのような「集中作業」をしようとする</li>
+<li>歩き回って筋肉は疲れているが、頭は興奮している</li>
+<li>食事の時間や内容が変わり、消化に負担がかかる<br>
+といったことがあります。</li>
+</ul>
+</li>
+<li>身体的な疲労と脳の興奮のバランスが崩れると、<strong>寝付けない・集中できない</strong>状態になりやすくなります。</li>
+</ul>
+<h2 id="3-ホワイトノイズとは">3. ホワイトノイズとは</h2>
+<h3 id="定義">定義</h3>
+<ul>
+<li>ホワイトノイズは、<strong>すべての周波数成分をほぼ均等に含む音</strong>で、<br>
+例えるなら「テレビの砂嵐音」や「強い風の音」に近い、<strong>一定の「ザー」という音</strong>です。</li>
+<li>特徴として、
+<ul>
+<li>周波数ごとのエネルギーがほぼ一定</li>
+<li>時間的にも一定で、<strong>予測可能な音</strong><br>
+であるため、**「意味を持たない背景音」**として機能します。</li>
+</ul>
+</li>
+</ul>
+<h3 id="ホワイトノイズマシンの役割">ホワイトノイズマシンの役割</h3>
+<ul>
+<li>Sleep Foundationは、ホワイトノイズマシンについて
+<blockquote>
+<p>「ホワイトノイズマシンは、騒音汚染（noise pollution）をブロックし、望ましくない音をかき消すことで、騒音環境下での睡眠を改善する」<br>
+と説明しています<a href="https://www.sleepfoundation.org/best-sleep-products/best-white-noise-machines">Sleep Foundation</a>。</p>
+</blockquote>
+</li>
+<li>つまり、ホワイトノイズは**周囲の音をマスキングする「音のココーン（sound cocoon）」**として機能します。</li>
+</ul>
+<h2 id="4-ホワイトノイズの効果">4. ホワイトノイズの効果</h2>
+<h3 id="1-騒音マスキング効果環境音を覆い隠す">(1) 騒音マスキング効果（環境音を覆い隠す）</h3>
+<h4 id="ホワイトノイズの役割">ホワイトノイズの役割</h4>
+<ul>
+<li>ホワイトノイズは、<strong>一定の「ザー」という音</strong>で周囲の音を覆い隠し、
+<ul>
+<li>話し声</li>
+<li>テレビ音声</li>
+<li>廊下の足音<br>
+など、<strong>意味のある音をマスキング</strong>します。</li>
+</ul>
+</li>
+</ul>
+<h4 id="科学的根拠騒音マスキング">科学的根拠（騒音マスキング）</h4>
+<ul>
+<li>Sleep Foundationは、ホワイトノイズマシンについて
+<blockquote>
+<p>「ホワイトノイズマシンは騒音汚染をブロックし、望ましくない音をかき消すことで、騒音環境下での睡眠を改善する」<br>
+と説明しています<a href="https://www.sleepfoundation.org/best-sleep-products/best-white-noise-machines">Sleep Foundation</a>。</p>
+</blockquote>
+</li>
+<li>特に<strong>騒音の多い環境</strong>では、ホワイトノイズが<strong>睡眠の質を改善する</strong>ことが示されています<a href="https://www.sleepfoundation.org/best-sleep-products/best-white-noise-machines">Sleep Foundation</a>。</li>
+</ul>
+<p>→ 旅先で「隣の部屋の音が気になる」「外の音がうるさい」といった状況では、ホワイトノイズが<strong>環境音をマスキングし、睡眠や集中を妨げる音を減らす</strong>ことで効果を発揮します。</p>
+<h3 id="2-脳のリラックス促進安心感ルーティン効果">(2) 脳のリラックス促進（安心感・ルーティン効果）</h3>
+<h4 id="旅先特有の緊張不安">旅先特有の緊張・不安</h4>
+<ul>
+<li>初めての場所では、脳が無意識に<strong>警戒モード</strong>になり、
+<ul>
+<li>防犯面への不安</li>
+<li>翌日の予定への心配</li>
+<li>環境の変化によるストレス<br>
+などから、交感神経が優位になりやすいです。</li>
+</ul>
+</li>
+</ul>
+<h4 id="ホワイトノイズの音のココーン効果">ホワイトノイズの「音のココーン」効果</h4>
+<ul>
+<li>ホワイトノイズは、<strong>一定で予測可能な音</strong>であるため、
+<ul>
+<li>「自分の空間」を作る</li>
+<li>安心感のある背景音として機能する<br>
+という <strong>「音のココーン（sound cocoon）」</strong> 効果があるとされています<a href="https://www.sleepfoundation.org/best-sleep-products/best-white-noise-machines">Sleep Foundation</a>。</li>
+</ul>
+</li>
+</ul>
+<h4 id="科学的根拠リラックス入眠促進">科学的根拠（リラックス・入眠促進）</h4>
+<ul>
+<li>Sleep Foundationは、ホワイトノイズマシンについて
+<blockquote>
+<p>「ホワイトノイズは騒音環境下での睡眠を改善し、特に乳児の入眠に有効である。ある研究では、ホワイトノイズ使用で80%の乳児が5分以内に入眠したのに対し、非使用では25%にとどまった」<br>
+と紹介しています<a href="https://www.sleepfoundation.org/best-sleep-products/best-white-noise-machines">Sleep Foundation</a>。</p>
+</blockquote>
+</li>
+<li>これは、<strong>ホワイトノイズが「安心感のある音環境」を作り、入眠を促す</strong>ことを示しています。</li>
+</ul>
+<p>→ 旅先で「初めての場所で緊張して眠れない」「落ち着かない」という場合、ホワイトノイズが<strong>一定の音で安心感を与え、リラックス状態を作る</strong>ことで効果を発揮します。</p>
+<h2 id="5-ホワイトノイズ生成デバイス">5. ホワイトノイズ生成デバイス</h2>
+<p>先程の旅先や外出先で、安眠出来ない、集中できないを解決するためホワイトノイズが効果あると説明しました。
+では、先程の旅先や外出先で、ホワイトノイズを作り出すことはできないでしょうか。
+実は、デバイスがあります。スマホとは違い、専用デバイスなので音声調整などにメリットがあり、今回のような特定用途では効き目が期待できます。
+そんなホワイトノイズ生成デバイスを、Amazonで購入可能なホワイトノイズマシンを、以下の5項目で整理します。</p>
+<ul>
+<li>持ち運びのしやすさ（サイズ・重量・電源）</li>
+<li>音量調整（段階数・細かさ）</li>
+<li>無線利用（USB給電・バッテリー内蔵）</li>
+<li>アプリケーションによる制御性（スマホ連携の有無）</li>
+<li>価格（目安）</li>
+</ul>
+<h3 id="1-magicteam-sound-white-noise-machineマジックチーム">1. Magicteam Sound White Noise Machine（マジックチーム）</h3>
+<p><strong>基本情報</strong></p>
+<ul>
+<li>音の種類：20〜26種類（ホワイトノイズ、自然音、ファン音など）</li>
+<li>電源：ACアダプタ or USB給電</li>
+<li>価格帯：4,000〜6,000円前後（Amazon US経由）<a href="https://www.amazon.com/-/zh_TW/plplaaoo/dp/B0BNVRN5WQ">Amazon</a></li>
+</ul>
+<p><strong>評価項目</strong></p>
+<ul>
+<li><strong>持ち運びのしやすさ</strong>：
+<ul>
+<li>コンパクトで軽量。USB給電対応のため、モバイルバッテリーやPCからも給電可能。</li>
+<li>ホテル・出張・旅行先への持ち運びに適したポータブル性。</li>
+</ul>
+</li>
+<li><strong>音量調整</strong>：
+<ul>
+<li>32段階の音量調整が可能で、<strong>かすかに聞こえる程度からしっかりマスキングできる音量まで細かく調整</strong>できます<a href="https://www.facebook.com/TommyLeeDeals/posts/%E5%8A%A9%E7%9C%A0%E6%B3%95%E5%AF%B6magicteam-sound-machine-%E7%99%BD%E5%99%AA%E9%9F%B3%E6%A9%9F-1994hey-%E4%BD%A0%E4%BB%8A%E5%A4%A9%E7%9D%A1%E5%BE%97%E5%A5%BD%E5%97%8Ebest-seller-60000-%E8%A9%95%E8%AB%96%E5%A5%BD%E8%A9%95%E6%AC%BE%E9%BB%91%E6%A8%99%E7%94%A2%E5%93%81%E5%85%89%E6%98%AF%E4%B8%8A%E5%80%8B%E6%9C%88/620206153676872/">Facebook紹介記事</a>。</li>
+</ul>
+</li>
+<li><strong>無線利用</strong>：
+<ul>
+<li>USB給電対応のため、<strong>モバイルバッテリーやPCのUSBポートから無線利用可能</strong>。</li>
+<li>ただしバッテリー内蔵ではないため、<strong>電源が必要</strong>です。</li>
+</ul>
+</li>
+<li><strong>アプリケーションによる制御性</strong>：
+<ul>
+<li>専用アプリはなく、<strong>本体ボタン操作のみ</strong>。</li>
+<li>音の種類・音量・タイマーは本体で設定します。</li>
+</ul>
+</li>
+<li><strong>価格</strong>：
+<ul>
+<li>4,000〜6,000円前後前後と、<strong>コスパの高い中価格帯</strong>。</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-dreamegg-ホワイトノイズマシンd3-pro--d16-max-など">2. Dreamegg ホワイトノイズマシン（D3 Pro / D16 Max など）</h3>
+<p><strong>基本情報</strong></p>
+<ul>
+<li>音の種類：20〜30種類以上（ホワイトノイズ、自然音、ファン音など）</li>
+<li>電源：USB充電式（バッテリー内蔵）</li>
+<li>価格帯：3,000〜6,000円前後（Amazon JP）<a href="https://www.amazon.co.jp/Dreamegg-%E3%83%9B%E3%83%AF%E3%82%A4%E3%83%88%E3%83%8E%E3%82%A4%E3%82%BA%E3%83%9E%E3%82%B7%E3%83%B3-%E5%AD%90%E3%81%A9%E3%82%82%E7%94%A8%E3%83%8A%E3%82%A4%E3%83%88%E3%83%A9%E3%82%A4%E3%83%88-2025%E5%B9%B4%E3%82%A2%E3%83%83%E3%83%97%E3%82%B0%E3%83%AC%E3%83%BC%E3%83%89%E7%89%88-D16Max%EF%BC%88%E3%82%A2%E3%83%83%E3%83%97%E3%82%B0%E3%83%AC%E3%83%BC%E3%83%89%E7%89%88%EF%BC%89/dp/B0FH599QQ3">Amazon</a></li>
+</ul>
+<p><strong>評価項目</strong></p>
+<ul>
+<li><strong>持ち運びのしやすさ</strong>：
+<ul>
+<li>バッテリー内蔵でUSB充電式のため、<strong>電源がなくても数時間〜12時間程度連続再生可能</strong>。</li>
+<li>コンパクトで、<strong>完全なポータブル機</strong>として旅行・出張に最適。</li>
+</ul>
+</li>
+<li><strong>音量調整</strong>：
+<ul>
+<li>段階的な音量調整が可能（モデルにより10〜32段階程度）。</li>
+<li>D3 Proは12時間連続再生・29種サウンドなど、<strong>高機能な音量・タイマー設定</strong>が特徴です<a href="https://review.rakuten.co.jp/review/item/1/396594_10000002/1.0/">楽天レビュー</a>。</li>
+</ul>
+</li>
+<li><strong>無線利用</strong>：
+<ul>
+<li><strong>バッテリー内蔵のため、完全な無線利用が可能</strong>。</li>
+<li>充電後はコードレスで使えます。</li>
+</ul>
+</li>
+<li><strong>アプリケーションによる制御性</strong>：
+<ul>
+<li>専用アプリはなく、<strong>本体ボタン操作のみ</strong>。</li>
+<li>一部モデルはライト機能（調光調色）も本体で操作します。</li>
+</ul>
+</li>
+<li><strong>価格</strong>：
+<ul>
+<li>3,000〜6,000円前後と、<strong>ホワイトノイズ+ライト調整の機能があります</strong>。</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-lectrofan-evoレクトロファン">3. LectroFan EVO（レクトロファン）</h3>
+<p><strong>基本情報</strong></p>
+<ul>
+<li>音の種類：20種類以上（ホワイトノイズ、ピンクノイズ、ブラウンノイズ、ファン音など）</li>
+<li>電源：ACアダプタ（一部モデルはUSB給電対応）</li>
+<li>価格帯：8,000〜12,000円前後（Amazon US経由）<a href="https://www.nytimes.com/wirecutter/reviews/best-white-noise-machine/">Wirecutter</a></li>
+</ul>
+<p><strong>評価項目</strong></p>
+<ul>
+<li><strong>持ち運びのしやすさ</strong>：
+<ul>
+<li>サイズはコンパクトですが、<strong>主にAC電源利用を想定</strong>した設計。</li>
+<li>USB給電対応モデルもありますが、<strong>バッテリー内蔵ではない</strong>ため、完全な無線利用はできません。</li>
+</ul>
+</li>
+<li><strong>音量調整</strong>：
+<ul>
+<li>細かい段階調整が可能で、<strong>クリアな電子ノイズ</strong>が特徴。</li>
+<li>Wirecutterレビューでは「<strong>最も効果的なノイズマスキング性能</strong>」と評価されています<a href="https://www.nytimes.com/wirecutter/reviews/best-white-noise-machine/">Wirecutter</a>。</li>
+</ul>
+</li>
+<li><strong>無線利用</strong>：
+<ul>
+<li>USB給電対応モデルであればモバイルバッテリーから利用可能ですが、<strong>基本的には有線利用が前提</strong>です。</li>
+</ul>
+</li>
+<li><strong>アプリケーションによる制御性</strong>：
+<ul>
+<li>専用アプリはなく、<strong>本体ボタン操作のみ</strong>。</li>
+<li>音質・マスキング性能に特化した「音専門」のデバイスです。</li>
+</ul>
+</li>
+<li><strong>価格</strong>：
+<ul>
+<li>8,000〜12,000円前後と、<strong>高価格帯だが音質・マスキング性能が高い</strong>。</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-hatch-restore-3ハッチ">4. Hatch Restore 3（ハッチ）</h3>
+<p><strong>基本情報</strong></p>
+<ul>
+<li>音の種類：21種類（ホワイトノイズ、自然音など）</li>
+<li>光機能：サンライズアラーム、夜間モード（色温度・明るさ調整）</li>
+<li>電源：ACアダプタ</li>
+<li>価格帯：20,000〜30,000円前後（Sleep Foundation経由）<a href="https://www.sleepfoundation.org/best-sleep-products/best-white-noise-machines">Sleep Foundation</a></li>
+</ul>
+<p><strong>評価項目</strong></p>
+<ul>
+<li><strong>持ち運びのしやすさ</strong>：
+<ul>
+<li>サイズはやや大きめで、<strong>AC電源必須</strong>のため、<strong>自宅・オフィス向け</strong>。</li>
+<li>旅行への持ち運びには不向きです。</li>
+</ul>
+</li>
+<li><strong>音量調整</strong>：
+<ul>
+<li>アプリで音の種類・音量を細かく調整可能。</li>
+<li>光の明るさ・色温度もアプリで設定できます<a href="https://www.sleepfoundation.org/best-sleep-products/best-white-noise-machines">Sleep Foundation</a>。</li>
+</ul>
+</li>
+<li><strong>無線利用</strong>：
+<ul>
+<li>AC電源必須のため、<strong>無線利用は不可</strong>。</li>
+<li>Wi-Fi接続はありますが、電源は有線です。</li>
+</ul>
+</li>
+<li><strong>アプリケーションによる制御性</strong>：
+<ul>
+<li><strong>専用アプリで音・光・ルーティンをプログラム可能</strong>。</li>
+<li>就寝前・起床時の設定をアプリで細かくカスタマイズできます<a href="https://www.sleepfoundation.org/best-sleep-products/best-white-noise-machines">Sleep Foundation</a>。</li>
+</ul>
+</li>
+<li><strong>価格</strong>：
+<ul>
+<li>20,000〜30,000円前後と、<strong>高価格帯だが「音＋光＋アプリ連携」の高機能デバイス</strong>。</li>
+</ul>
+</li>
+</ul>
+<h3 id="5-スマートスピーカーamazon-echo--google-nest-など">5. スマートスピーカー（Amazon Echo / Google Nest など）</h3>
+<p><strong>基本情報</strong></p>
+<ul>
+<li>音の種類：ホワイトノイズ・自然音スキル（アプリ）で豊富に選択可能</li>
+<li>電源：ACアダプタ（一部ポータブルモデルはバッテリー内蔵）</li>
+<li>価格帯：5,000〜20,000円（モデルによる）</li>
+</ul>
+<p><strong>評価項目</strong></p>
+<ul>
+<li><strong>持ち運びのしやすさ</strong>：
+<ul>
+<li>通常モデルはAC電源必須で<strong>自宅向け</strong>。</li>
+<li>Echo DotやNest Miniなど小型モデルは比較的コンパクトですが、<strong>完全なポータブル機ではない</strong>。</li>
+</ul>
+</li>
+<li><strong>音量調整</strong>：
+<ul>
+<li>音声コマンドで「音量を上げて」「音量10%」など、<strong>細かく調整可能</strong>。</li>
+</ul>
+</li>
+<li><strong>無線利用</strong>：
+<ul>
+<li>AC電源必須のため、<strong>基本的には有線利用</strong>。</li>
+<li>ポータブルモデル（Echo Show 15など）はバッテリー内蔵の場合もあります。</li>
+</ul>
+</li>
+<li><strong>アプリケーションによる制御性</strong>：
+<ul>
+<li><strong>専用アプリ（Alexaアプリ／Google Homeアプリ）で音の種類・ルーティンを設定可能</strong>。</li>
+<li>「就寝ルーティン」「起床ルーティン」を音声・アプリで設定できます。</li>
+</ul>
+</li>
+<li><strong>価格</strong>：
+<ul>
+<li>5,000〜20,000円と幅広く、<strong>既に持っている場合は追加コスト不要</strong>。</li>
+</ul>
+</li>
+</ul>
+<h3 id="6-まとめ比較表">6. まとめ（比較表）</h3>
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th>Magicteam</th>
+<th>Dreamegg</th>
+<th>LectroFan EVO</th>
+<th>Hatch Restore 3</th>
+<th>スマートスピーカー</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>持ち運び</td>
+<td>◎（USB給電・コンパクト）</td>
+<td>◎（バッテリー内蔵・完全ポータブル）</td>
+<td>△（AC前提・USB可）</td>
+<td>×（AC必須・大型）</td>
+<td>△（AC前提・小型モデルあり）</td>
+</tr>
+<tr>
+<td>音量調整</td>
+<td>◎（32段階）</td>
+<td>◎（10〜32段階）</td>
+<td>◎（細かく調整可）</td>
+<td>◎（アプリで細かく）</td>
+<td>◎（音声・アプリで細かく）</td>
+</tr>
+<tr>
+<td>無線利用</td>
+<td>○（USB給電可）</td>
+<td>△（バッテリー内蔵）</td>
+<td>△（USB可だが有線前提）</td>
+<td>×（AC必須）</td>
+<td>△（AC必須・ポータブルモデルは例外）</td>
+</tr>
+<tr>
+<td>アプリ制御</td>
+<td>×（本体操作のみ）</td>
+<td>×（本体操作のみ）</td>
+<td>×（本体操作のみ）</td>
+<td>◎（専用アプリで音・光・ルーティン設定）</td>
+<td>◎（Alexa／Google Homeアプリ）</td>
+</tr>
+<tr>
+<td>価格帯</td>
+<td>4,000〜6,000円</td>
+<td>3,000〜6,000円</td>
+<td>8,000〜12,000円</td>
+<td>20,000〜30,000円</td>
+<td>5,000〜20,000円</td>
+</tr>
+</tbody>
+</table>
+<p><strong>選び方の目安</strong></p>
+<ul>
+<li><strong>旅先・出張で使いたい</strong>：Magicteam or Dreamegg（特にDreameggはバッテリー内蔵で完全ポータブル）</li>
+<li><strong>音質・マスキング性能を最重視</strong>：LectroFan EVO</li>
+<li><strong>自宅で音＋光＋ルーティン管理までしたい</strong>：Hatch Restore 3</li>
+<li><strong>既にスマートスピーカーを持っている</strong>：スマートスピーカー＋ホワイトノイズスキルで十分</li>
+</ul>
+<h2 id="総括">総括</h2>
+<p>前節より、お試しで購入してみて効果を確認するならば <strong>Magicteam</strong> or <strong>Dreamegg</strong>。</p>
+<p>スマホと連携して制御性でも利便性を求める場合は <strong>スマートスピーカー</strong>をお勧めします。</p>
+<p>ホテルで安眠したい。
+外出先で音楽より、無我の境地で没入したい。
+という用途がある場合、是非ご利用下さい。</p>
+<div class="shop-card">
+    <div class="shop-card-image">
+        <img src="https://m.media-amazon.com/images/I/71V+ufVRWQL._AC_SL1500_.jpg" alt="商品画像">
+    </div>
+    <div class="shop-card-content">
+        <div class="shop-card-title">Magicteam</div>
+        <div class="shop-card-description">Magicteam Sound White Noise Machine は、ホワイトノイズや自然音で周囲の騒音をマスキングし、睡眠や集中をサポートする音響デバイスです。「シンプルでコスパの良いホワイトノイズマシンが欲しい」「旅先でも使いたい」という人向けの、実用的な音響デバイスという位置づけです。</div>
+        <div class="shop-card-link">
+            <a href="https://www.amazon.co.jp/Magicteam-Machines-Machine-Soothing-Function/dp/B07RWRJ4XW?__mk_ja_JP=%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A&crid=3B56P486C6YY7&dib=eyJ2IjoiMSJ9._R822Wb5q91blbILXzyOL6MqP368mntxay4SSfV1XgGrw8bnjuOmLiH5h3x6hlzjm6bPyIuIGf0K-RSi2duq5T4Ihm_T3RM7Cw3O0oOYbh2F31SIB3KKrgDPUjhqmydStNhjU1qRBW9U5MXQBRjk0q4927C9flrQdlpea8uS8N9tVCOHtghBdMIMjPqNih9eFX4Z986JhGUuyuPe6gzhx9L09X2zb-NGNhtafbQQvs1AkxdHcRbnQ4pLsXPhyX--taVr7Q5xiI_HOkC8SJN0st2NeKmd4llFiY_527QmoPQ.qNUOMTbqOBWHF3xxMcAQv6BS0vw5a-LG-bF9tacIkrs&dib_tag=se&keywords=Magicteam+Sound+White+Noise+Machine&qid=1774872190&sprefix=magicteam+sound+white+noise+machine%2Caps%2C199&sr=8-2&linkCode=ll2&tag=yoshishinnze-22&linkId=854875286cfd48a4f5fbd89c697968c0&ref_=as_li_ss_tl" target="_blank" rel="noopener">Amazonで詳細を見る</a>
+        </div>
+    </div>
+</div>
+<div class="shop-card">
+    <div class="shop-card-image">
+        <img src="https://m.media-amazon.com/images/I/61iL9xYiuZL._AC_SL1500_.jpg" alt="商品画像">
+    </div>
+    <div class="shop-card-content">
+        <div class="shop-card-title">Dreamegg</div>
+        <div class="shop-card-description">Dreamegg ホワイトノイズマシンは、ホワイトノイズや自然音で睡眠・集中をサポートする、バッテリー内蔵のポータブル音響デバイスです。赤ちゃんの寝かしつけ、大人の安眠、ホテルでの騒音対策として利用されています。</div>
+        <div class="shop-card-link">
+            <a href="https://www.amazon.co.jp/Dreamegg-%E3%83%9B%E3%83%AF%E3%82%A4%E3%83%88%E3%83%8E%E3%82%A4%E3%82%BA%E3%83%9E%E3%82%B7%E3%83%B3-%E5%AD%90%E3%81%A9%E3%82%82%E7%94%A8%E3%83%8A%E3%82%A4%E3%83%88%E3%83%A9%E3%82%A4%E3%83%88-2025%E5%B9%B4%E3%82%A2%E3%83%83%E3%83%97%E3%82%B0%E3%83%AC%E3%83%BC%E3%83%89%E7%89%88-D16Max%EF%BC%88%E3%82%A2%E3%83%83%E3%83%97%E3%82%B0%E3%83%AC%E3%83%BC%E3%83%89%E7%89%88%EF%BC%89/dp/B0FH599QQ3?th=1&linkCode=ll2&tag=yoshishinnze-22&linkId=f5f1970e8ae35866711e446d74ca8a9b&ref_=as_li_ss_tl">Amazonで詳細を見る</a>
+        </div>
+    </div>
+</div>
+
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+</script>
+            
+        </body>
+        </html>
