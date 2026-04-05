@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&#x6982;&#x8981;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+
+/* 記事タイトル (h1) */
+h1 {
+    font-size: 2rem;
+    color: #24292f;
+    line-height: 1.3;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 3px double #e1e4e8; /* 二重線で上品に */
+    text-align: center; /* タイトルを中央に寄せて特別感を出す */
+}
+
+/* セクション見出し (h2) */
+h2 {
+    font-size: 1.5rem;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(transparent 70%, #e8f0fe 70%); /* 下側に薄い色のアクセント */
+    border-left: 6px solid #0969da; /* 目次のテーマカラーと合わせる */
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* 強調文字 (strong) */
+strong {
+    font-weight: bold;
+    color: #cf222e; /* ホバー時の赤色と合わせて統一感を出す */
+    background: linear-gradient(transparent 60%, #fff2cc 60%); /* 黄色のマーカー風 */
+    padding: 0 2px;
+}
+
+/* 引用のコンテナ */
+blockquote {
+    position: relative;
+    padding: 20px 30px;
+    margin: 30px 0;
+    background-color: #f6f8fa; /* 目次の背景より少しだけ濃いグレー */
+    border-left: 5px solid #d0d7de; /* 落ち着いたグレーの境界線 */
+    color: #57606a; /* 文字色は少し薄くして引用らしさを出す */
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 引用符のアイコンを装飾として追加 */
+blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    font-size: 40px;
+    color: #d0d7de;
+    font-family: serif;
+    line-height: 1;
+}
+
+/* 読者になるボタンのデザイン */
+.btn-subscribe {
+    display: inline-block;
+    padding: 12px 35px; /* 横幅を広めにとって存在感を出します */
+    background-color: #383838; /* お好みの色に変更してください */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #555555;
+    text-decoration: none;
+}
+
+/* はてなブログで見えてしまう数式データを非表示にする */
+.katex-html {
+    display: none !important;
+}
+
+.katex-mathml {
+    display: inline !important;
+}
+/* Amazonカード型のオシャレなデザイン */
+.shop-card {
+    display: flex;
+    max-width: 500px;
+    margin: 20px auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* マウスホップした時の動き */
+.shop-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.shop-card-image {
+    width: 150px;
+    min-width: 150px;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shop-card-image img {
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+}
+
+.shop-card-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.shop-card-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.shop-card-description {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+/* Amazonらしいオレンジボタン */
+.shop-card-link a {
+    display: inline-block;
+    background-color: #ff9900;
+    color: #fff !important;
+    text-decoration: none !important;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.shop-card-link a:hover {
+    background-color: #e68a00;
+}
+
+/* スマホ対応：縦並びにする */
+@media (max-width: 480px) {
+    .shop-card {
+        flex-direction: column;
+        max-width: 100%;
+    }
+    .shop-card-image {
+        width: 100%;
+        height: 200px;
+    }
+}
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+
+            <p>本日は戦国時代の北近江の大名・浅井家の当主だった浅井長政（あざい ながまさ）です。
+アサイではなく、アザイです。
+結構読みづらいです。</p>
+<p>長政の肖像画は高野山持明院所蔵肖像画の以下が有名です。</p>
+<img src="https://upload.wikimedia.org/wikipedia/commons/6/6d/Azai_nagamasa.jpg" width="500" style="display: block; margin: 0 auto;">
+<h2 id="概要">概要</h2>
+<p>浅井長政は、戦国時代の北近江（現在の滋賀県北部）を支配した戦国大名です。一般的には「浅井長政」の名で知られていますが、正式な諱（いみな）は「賢政（かさまさ）」とされます。</p>
+<p>主なポイントを整理すると、以下のような人物像になります。</p>
+<h3 id="1-生涯の概要">1. 生涯の概要</h3>
+<ul>
+<li>生年：1545年（天文14年）頃とされます。</li>
+<li>没年：1573年（天正元年）、享年28～29歳。</li>
+<li>出身：近江国・小谷城（おだにじょう）を本拠とする浅井氏の嫡男として生まれました。</li>
+<li>父は浅井久政、母は井口経元の娘と伝わります。</li>
+</ul>
+<h3 id="2-家督継承と織田信長との関係">2. 家督継承と織田信長との関係</h3>
+<ul>
+<li>浅井氏はもともと京極氏の被官でしたが、長政の祖父・浅井亮政の代に北近江で勢力を伸ばし、戦国大名化しました。</li>
+<li>長政は若くして家督を継ぎ、当初は尾張の織田信長と同盟関係を結びます。</li>
+<li>その証として、信長の妹・お市（おいち）を正室に迎え、政略結婚によって織田・浅井同盟が成立しました。</li>
+</ul>
+<h3 id="3-信長との決裂と姉川の戦い">3. 信長との決裂と「姉川の戦い」</h3>
+<ul>
+<li>織田信長が越前の朝倉義景を攻めた際、浅井氏は長年朝倉氏と友好関係にありました。</li>
+<li>長政は「朝倉攻めには加担できない」と判断し、信長の背後を突く形で織田軍と敵対します。</li>
+<li>1570年、織田・徳川連合軍と浅井・朝倉連合軍が姉川で激突（姉川の戦い）。浅井・朝倉軍は敗北し、浅井氏は徐々に追い詰められていきます。</li>
+</ul>
+<h3 id="4-小谷城落城と最期">4. 小谷城落城と最期</h3>
+<ul>
+<li>1573年、織田軍の総攻撃により小谷城は落城。</li>
+<li>長政は城内で自害し、浅井氏は滅亡しました。</li>
+<li>妻のお市と三人の娘（茶々・初・江）は織田方に保護され、のちに豊臣秀吉や徳川秀忠に嫁ぐなど、戦国史に大きな影響を与えることになります。</li>
+</ul>
+<h3 id="5-人物像評価">5. 人物像・評価</h3>
+<ul>
+<li>若くして家督を継ぎ、北近江をまとめ上げた有能な武将として知られます。</li>
+<li>義理を重んじ、朝倉氏との旧恩を捨てられなかったことが、信長との決裂の大きな要因となりました。</li>
+<li>そのため「義に厚い武将」として後世に語られることが多く、悲劇的な最期もあいまって、小説やドラマなどで人気の高い人物です。</li>
+</ul>
+<h3 id="6-歴史的な影響">6. 歴史的な影響</h3>
+<ul>
+<li>長政の娘たちは、それぞれ豊臣秀吉の側室（茶々＝淀殿）、京極高次正室（初）、徳川秀忠正室（江）となり、戦国末期から江戸初期の政治史に大きな影響を与えました。</li>
+<li>特に江の子が徳川家光であり、浅井長政は徳川将軍家の外戚にあたる人物でもあります。</li>
+</ul>
+<h2 id="生い立ち">生い立ち</h2>
+<p>浅井長政の生い立ちは、北近江の戦国大名・浅井家の苦しい立場と、若くして家を立て直したエピソードが特徴的です。</p>
+<h3 id="生年と幼名">生年と幼名</h3>
+<ul>
+<li>生年：1545年（天文14年）頃とされます。</li>
+<li>幼名：<strong>猿夜叉丸（さるやしゃまる）</strong><a href="https://www.touken-world.jp/tips/7483/">刀剣ワールド</a>。</li>
+</ul>
+<h3 id="父浅井久政の時代と家の状況">父・浅井久政の時代と家の状況</h3>
+<ul>
+<li>父・浅井久政は、祖父・浅井亮政の代に北近江をほぼ支配下に置いたものの、その後は南近江の六角氏に従属する立場に追い込まれていました。</li>
+<li>久政は武勇に乏しく、六角氏に対して従属的な外交を続けていたため、家臣たちの不満が高まっていたとされます<a href="https://www.touken-world.jp/tips/7483/">刀剣ワールド</a>。</li>
+</ul>
+<h3 id="元服と六角氏からの圧力">元服と六角氏からの圧力</h3>
+<ul>
+<li>長政は<strong>15歳で元服</strong>しました。</li>
+<li>六角氏当主・六角義賢から「賢」の字を譲り受け、<strong>浅井賢政（あざい かたまさ）</strong> と名乗らされます。</li>
+<li>さらに、六角氏家臣の娘との政略結婚を強要され、完全に六角氏の支配下に置かれる形となりました<a href="https://www.touken-world.jp/tips/7483/">刀剣ワールド</a>。</li>
+</ul>
+<h3 id="野良田の戦いと家督継承">野良田の戦いと家督継承</h3>
+<ul>
+<li>1560年（永禄3年）、長政は<strong>野良田の戦い</strong>で六角軍と戦い、兵力差を覆して勝利します。</li>
+<li>この勝利により、家臣たちは長政の武勇と指導力に心酔し、弱腰な父・久政への不満が一気に噴出しました。</li>
+<li>その結果、長政は父・久政を竹生島へ追放・隠居させ、<strong>15歳で家督を相続</strong>します<a href="https://www.touken-world.jp/tips/7483/">刀剣ワールド</a>。</li>
+</ul>
+<h3 id="独立への道">独立への道</h3>
+<ul>
+<li>家督を継いだ長政は、六角氏から強要された妻を実家に送り返し、名を<strong>新九郎</strong>と改めます。</li>
+<li>これにより、六角氏への従属から脱却し、浅井家を独立した戦国大名として再建する道を歩み始めました<a href="https://www.touken-world.jp/tips/7483/">刀剣ワールド</a>。</li>
+</ul>
+<h2 id="武勇に優れた御曹司">武勇に優れた御曹司</h2>
+<p>浅井長政は武勇に優れていた武将であったと思われます。
+また、家臣の統制もおおらかな性格(っぽい)の一面が垣間見えます。</p>
+<h3 id="武勇について">武勇について</h3>
+<p>少ない兵力でもうまく統率して、戦うことに長けていたようなエピソードがあります。
+残念ながら、吉川元春や長尾景虎程に自分から戦争を仕掛けることがなかったので、数は少ないですが、武勇が優れていたと考えてよさそうです。</p>
+<p><strong>1. 野良田の戦いでの圧倒的勝利</strong></p>
+<ul>
+<li>1560年（永禄3年）、長政は<strong>野良田の戦い</strong>で南近江の六角氏と戦い、兵力差を覆して勝利しました。</li>
+<li>この戦いは、若い長政が自ら陣頭に立って指揮し、六角軍を撃破したことで知られています<a href="https://www.touken-world.jp/tips/7483/">刀剣ワールド</a>。</li>
+<li>この勝利により、長政の武勇は北近江一帯に轟き、家臣たちの信頼を一気に集めるきっかけとなりました<a href="https://www.touken-world.jp/tips/7483/">刀剣ワールド</a>。</li>
+</ul>
+<p><strong>3. 織田信長との戦いでも健闘</strong></p>
+<ul>
+<li>姉川の戦い（1570年）では、織田・徳川連合軍と浅井・朝倉連合軍が激突し、浅井・朝倉側は敗北しますが、浅井軍は織田軍の側面を突くなど、戦術的に優れた動きを見せています。</li>
+<li>その後も小谷城の戦い（1573年）まで、織田軍の侵攻を何度も撃退し、信長を苦しめました。</li>
+<li>信長が「長政はなかなかの器量」と評価したという伝承もあり、敵方からも武勇と統率力が認められていたことがうかがえます。</li>
+</ul>
+<h3 id="家臣の統率">家臣の統率</h3>
+<p>浅井長政自身の「発言」が直接録音されているわけではありませんが、古文書として残された<strong>書状</strong>の中に、彼の言葉や判断が記録されています。
+代表的なものとして、永禄4年（1561年）6月20日付の家臣・垣見助左衛門尉宛て書状がよく知られています。</p>
+<p><strong>書状の背景</strong></p>
+<ul>
+<li>時期：永禄4年（1561年）6月20日</li>
+<li>宛先：家臣・垣見助左衛門尉</li>
+<li>状況：家臣団内で、有力家臣・赤尾清冬（赤尾新兵衛尉）と垣見家の間で、与力（家臣）の垣見新次郎の帰属をめぐる争いが起きていました。</li>
+<li>長政は若くして家督を継いだばかりで、家臣団の統制に苦慮していた時期です。</li>
+</ul>
+<p><strong>書状に記された主な文言と意味</strong></p>
+<p>（現代語訳・要約）</p>
+<ol>
+<li>
+<p><strong>「御同名新次郎殿進退之儀…誠明鏡之子細候」</strong></p>
+<ul>
+<li>「垣見新次郎の去就については、証拠書類によって垣見家に帰属するものだと、はっきり理解した」という意味。</li>
+<li>長政はまず、垣見側の主張が正当であることを認めています。</li>
+</ul>
+</li>
+<li>
+<p><strong>「然処赤尾新兵衛尉方、何歟被相抱儀、無是非存候」</strong></p>
+<ul>
+<li>「しかし現状、赤尾新兵衛が新次郎を抱え込んでいることは、やむを得ないと考えている」。</li>
+<li>戦の最中で家臣団の混乱を避けるため、一時的に赤尾側の現状を容認する姿勢を示します。</li>
+</ul>
+</li>
+<li>
+<p><strong>「此表一途之間、拙者江被預置候者、別而可為祝着候」</strong></p>
+<ul>
+<li>「今の戦（太尾合戦と推測）が重大な局面にあるので、この件は自分（長政）に預けてほしい」。</li>
+<li>戦を優先し、問題の最終判断を「主君である自分に委ねてほしい」と、家臣に妥協を求めています。</li>
+</ul>
+</li>
+<li>
+<p><strong>「不及申、此一陣相済候者、如前々可返進之候」</strong></p>
+<ul>
+<li>「言うまでもなく、この戦が終われば、以前のように身柄を返す」。</li>
+<li>戦後には垣見側に新次郎を返すことを約束し、垣見家の面目を立てています。</li>
+</ul>
+</li>
+<li>
+<p><strong>「尚以何江同道にて縦忠節候共、一切不可能許容候」</strong></p>
+<ul>
+<li>「赤尾が新次郎をどこへ連れて行こうと、たとえ戦功（忠節）を挙げたとしても、引き続き召し抱えることは一切許さない」。</li>
+<li>ここで長政は、<strong>「一切許容能うべからず候（断固として許さない）」</strong> と強い言葉で、赤尾側の横取りを最終的に認めない姿勢を明確にしています<a href="https://raisoku.com/7240">古文書解読初級</a>。</li>
+</ul>
+</li>
+</ol>
+<p><strong>この書状から見える「長政の発言」の特徴</strong></p>
+<ul>
+<li><strong>家臣の顔を立てつつ、主君としての裁定を貫こうとする姿勢</strong>
+<ul>
+<li>垣見側の正当性を認めつつ、戦の最中という事情を説明し、最終的には「自分が責任を持って裁く」と宣言しています。</li>
+</ul>
+</li>
+<li><strong>若い当主ながら、家臣団の統制に苦慮しつつも、強い意志を示す言葉</strong>
+<ul>
+<li>「一切不可能許容候」という表現は、家臣の横暴を許さないという強い意思表明です。</li>
+</ul>
+</li>
+<li><strong>戦況を優先する現実的な判断</strong>
+<ul>
+<li>戦の最中に家臣同士の争いを激化させないよう、一時的な妥協案を提示しつつ、戦後に正しい裁定を約束しています。</li>
+</ul>
+</li>
+</ul>
+<p>この発言をしたのは17歳くらいの少年～青年の時です。
+カッと切れて、話を聞かない人も多いと考えられるくらいの年齢かもしれませんが、発言自体は相手の立場を配慮するような発言に見えます。
+著者はおおらかな性格だったのかと考えました。</p>
+<h2 id="信長との対決まで">信長との対決まで</h2>
+<p>浅井長政と織田信長の関係は、大きく分けて<br>
+<strong>①同盟成立 → ②金ヶ崎での離反 → ③姉川・志賀の陣での対決 → ④小谷城の戦いと自害</strong><br>
+という流れで進みます。</p>
+<h3 id="1-同盟成立1567年頃">1. 同盟成立（1567年頃）</h3>
+<ul>
+<li>永禄10年（1567年）頃、織田信長は上洛ルートを確保するため、北近江の浅井長政と同盟を結びます。</li>
+<li>その証として、信長の妹・<strong>お市の方</strong>を長政の正室として嫁がせました<a href="https://www.touken-world.jp/tips/7483/">刀剣ワールド</a>。</li>
+<li>この同盟により、信長は近江経由で京へ進軍する道を確保し、浅井氏も織田の後ろ盾を得て北近江での地位を安定させました。</li>
+</ul>
+<h3 id="2-金ヶ崎の戦いと浅井の離反1570年4月">2. 金ヶ崎の戦いと浅井の離反（1570年4月）</h3>
+<ul>
+<li>元亀元年（1570年）4月、信長は越前の朝倉義景を攻めるため、<strong>金ヶ崎の戦い</strong>を開始します。</li>
+<li>浅井氏はもともと朝倉氏と深い友好関係にあり、長政は「朝倉とは戦わない」という条件で織田と同盟を結んでいたとされます<a href="https://www.touken-world.jp/tips/7483/">刀剣ワールド</a>。</li>
+<li>しかし信長はその約束を破り、朝倉攻めを強行。これに対し、長政は<strong>朝倉側に味方して織田軍の背後を突く</strong>形で離反しました<a href="https://www.touken-world.jp/tips/11097/">刀剣ワールド</a>。</li>
+<li>この裏切りにより、信長は「金ヶ崎の退き口」と呼ばれる撤退戦を強いられ、命からがら京へ逃げ帰ることになります。</li>
+</ul>
+<h3 id="3-姉川の戦い1570年6月">3. 姉川の戦い（1570年6月）</h3>
+<ul>
+<li>同年6月、信長は徳川家康と連合し、浅井・朝倉連合軍と<strong>姉川の戦い</strong>で対決します。</li>
+<li>当初は浅井軍が優勢でしたが、徳川軍の活躍により朝倉軍が敗走し、浅井軍も敗北しました<a href="https://www.touken-world.jp/tips/11097/">刀剣ワールド</a>。</li>
+<li>長政は居城・<strong>小谷城</strong>へ撤退し、ここから織田軍との長期戦が始まります。</li>
+</ul>
+<h3 id="4-志賀の陣と和睦1570年9月12月">4. 志賀の陣と和睦（1570年9月～12月）</h3>
+<ul>
+<li>同年9月～12月、信長は浅井・朝倉連合と再び対峙し、<strong>志賀の陣</strong>と呼ばれる一連の戦いが行われます。</li>
+<li>浅井方の兵は比叡山延暦寺に逃げ込み、信長はこれを攻撃しますが、戦いは長期化しました。</li>
+<li>同年12月、正親町天皇の勅命による講和が成立し、一時的に和睦が結ばれます<a href="https://www.touken-world.jp/tips/11097/">刀剣ワールド</a>。</li>
+<li>しかし、この講和はあくまで時間稼ぎに過ぎず、信長は翌年（1571年）に比叡山延暦寺を焼き討ちし、浅井・朝倉包囲網を強化していきます。</li>
+</ul>
+<h3 id="5-小谷城の戦いと長政の自害1573年">5. 小谷城の戦いと長政の自害（1573年）</h3>
+<p><strong>5-1. 朝倉氏滅亡（一乗谷の戦い）</strong></p>
+<ul>
+<li>天正元年（1573年）8月、信長は浅井方に離反者が出たのをきっかけに、朝倉義景の本拠・一乗谷城を攻撃。</li>
+<li>朝倉軍は敗北し、義景は自害。朝倉氏は滅亡します<a href="https://www.touken-world.jp/tips/11097/">刀剣ワールド</a>。</li>
+</ul>
+<p><strong>5-2. 小谷城包囲と羽柴秀吉の奇襲</strong></p>
+<ul>
+<li>朝倉を滅ぼした信長は、すぐに小谷城へ転進し、城を包囲します。</li>
+<li>小谷城は本丸（長政）、小丸（父・久政）など複数の曲輪からなる山城で、父子が連携して守っていました。</li>
+<li>8月27日夜、羽柴秀吉軍が本丸と小丸の間にある<strong>京極丸</strong>を奇襲し、占領。これにより浅井父子の連携が断たれます<a href="https://www.touken-world.jp/tips/11097/">刀剣ワールド</a>。</li>
+</ul>
+<p><strong>5-3. 長政の自害と浅井氏滅亡</strong></p>
+<ul>
+<li>京極丸を失った浅井軍は孤立し、9月1日、長政は小谷城本丸で自害しました<a href="https://www.touken-world.jp/tips/11097/">刀剣ワールド</a>。</li>
+<li>父・久政も自害し、長政の嫡男も処刑され、戦国大名としての浅井氏は滅亡します。</li>
+<li>妻・お市の方と三姉妹（茶々・初・江）は織田方に保護され、のちに豊臣秀吉や徳川秀忠に嫁ぐなど、戦国末期の政治史に大きな影響を与えることになります<a href="https://www.touken-world.jp/tips/11097/">刀剣ワール드</a>。</li>
+</ul>
+<h3 id="まとめ">まとめ</h3>
+<ul>
+<li><strong>同盟成立</strong>：お市を嫁がせて織田・浅井同盟が成立。</li>
+<li><strong>離反</strong>：朝倉攻めを機に、長政は朝倉側に味方し、信長を裏切る。</li>
+<li><strong>対決</strong>：姉川・志賀の陣で織田軍と激突するも、決定的勝利は得られず。</li>
+<li><strong>滅亡</strong>：朝倉滅亡後、小谷城が包囲され、長政は自害。浅井氏は滅亡。</li>
+</ul>
+<p>このように、浅井長政は「朝倉との義理」を重んじた結果、織田信長と対立し、最終的には自害に追い込まれることになりました。</p>
+<h2 id="お市の方との関係">お市の方との関係</h2>
+<p>浅井長政の奥さんは先述の通り、信長の妹・お市の方です。
+浅井長政とお市の方の夫婦関係については、政略結婚でありながら「仲睦まじい夫婦」として語られることが多く、いくつかのエピソードが伝わっています。</p>
+<h3 id="1-政略結婚ながらの良好な夫婦仲">1. 政略結婚ながらの良好な夫婦仲</h3>
+<ul>
+<li>お市は織田信長の妹として、北近江の浅井長政に嫁ぎました。これは織田・浅井同盟の証でしたが、夫婦仲は良好だったと伝えられます。</li>
+<li>お市は小谷城で「小谷の方（おだにのかた）」と呼ばれ、穏やかな日々を送っていたとされます<a href="https://kusanomido.com/study/history/japan/azuchi/96962/">戦国時代の歴史解説サイト</a>。</li>
+<li>二人の間には、茶々・初・江の三姉妹のほか、男子も含め少なくとも5人の子が生まれており、そのことからも夫婦仲の良さがうかがえるとされています<a href="https://nekorekisi.blogspot.com/2020/07/blog-post_3.html">歴史解説サイト</a>。</li>
+</ul>
+<h3 id="2-織田と浅井が敵対してもお市が長政のもとに残った">2. 織田と浅井が敵対してもお市が長政のもとに残った</h3>
+<ul>
+<li>
+<p>1570年の金ヶ崎の戦いで長政が信長を裏切り、織田と浅井が敵対関係になると、お市は織田家に戻らず、<strong>小谷城で長政とともに暮らし続けた</strong>とされます<a href="https://nekorekisi.blogspot.com/2020/07/blog-post_3.html">歴史解説サイト</a>。</p>
+</li>
+<li>
+<p>これは政略結婚でありながら、お市が長政を夫として選び、信長の妹でありながら浅井家に忠実であり続けたことを示すエピソードとして語られています。</p>
+</li>
+<li>
+<p>歴史的な史料そのものには、夫婦の具体的な会話や日常の様子はほとんど残っていませんが、軍記物や後世の伝承では「仲睦まじい夫婦」として描かれることが多いです。</p>
+</li>
+<li>
+<p>政略結婚でありながら、お市が長政とともに小谷城で暮らし続け、5人の子をもうけたことから、少なくとも表面的には良好な関係だったと考えられています<a href="https://nekorekisi.blogspot.com/2020/07/blog-post_3.html">歴史解説サイト</a>。</p>
+</li>
+</ul>
+<p>長政は自害に当たりお市の方を織田に引き渡して、割腹しました。</p>
+<h2 id="総括">総括</h2>
+<p>若き長政は六角氏の呪縛を自らの武勇で断ち切り、北近江の地を治めました。
+信長と一時同盟関係になりますが、結局、敵対することとなりました。
+織田相手に善戦したものの、流石に信長に敵するまでは出来ませんでした。
+彼の血筋はその後、秀吉政権、徳川政権でも残り続けることになります。</p>
+
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+</script>
+
+            
+        </body>
+        </html>
