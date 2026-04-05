@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&#x6982;&#x8981;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+
+/* 記事タイトル (h1) */
+h1 {
+    font-size: 2rem;
+    color: #24292f;
+    line-height: 1.3;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 3px double #e1e4e8; /* 二重線で上品に */
+    text-align: center; /* タイトルを中央に寄せて特別感を出す */
+}
+
+/* セクション見出し (h2) */
+h2 {
+    font-size: 1.5rem;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(transparent 70%, #e8f0fe 70%); /* 下側に薄い色のアクセント */
+    border-left: 6px solid #0969da; /* 目次のテーマカラーと合わせる */
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* 強調文字 (strong) */
+strong {
+    font-weight: bold;
+    color: #cf222e; /* ホバー時の赤色と合わせて統一感を出す */
+    background: linear-gradient(transparent 60%, #fff2cc 60%); /* 黄色のマーカー風 */
+    padding: 0 2px;
+}
+
+/* 引用のコンテナ */
+blockquote {
+    position: relative;
+    padding: 20px 30px;
+    margin: 30px 0;
+    background-color: #f6f8fa; /* 目次の背景より少しだけ濃いグレー */
+    border-left: 5px solid #d0d7de; /* 落ち着いたグレーの境界線 */
+    color: #57606a; /* 文字色は少し薄くして引用らしさを出す */
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 引用符のアイコンを装飾として追加 */
+blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    font-size: 40px;
+    color: #d0d7de;
+    font-family: serif;
+    line-height: 1;
+}
+
+/* 読者になるボタンのデザイン */
+.btn-subscribe {
+    display: inline-block;
+    padding: 12px 35px; /* 横幅を広めにとって存在感を出します */
+    background-color: #383838; /* お好みの色に変更してください */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #555555;
+    text-decoration: none;
+}
+
+/* はてなブログで見えてしまう数式データを非表示にする */
+.katex-html {
+    display: none !important;
+}
+
+.katex-mathml {
+    display: inline !important;
+}
+/* Amazonカード型のオシャレなデザイン */
+.shop-card {
+    display: flex;
+    max-width: 500px;
+    margin: 20px auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* マウスホップした時の動き */
+.shop-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.shop-card-image {
+    width: 150px;
+    min-width: 150px;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shop-card-image img {
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+}
+
+.shop-card-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.shop-card-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.shop-card-description {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+/* Amazonらしいオレンジボタン */
+.shop-card-link a {
+    display: inline-block;
+    background-color: #ff9900;
+    color: #fff !important;
+    text-decoration: none !important;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.shop-card-link a:hover {
+    background-color: #e68a00;
+}
+
+/* スマホ対応：縦並びにする */
+@media (max-width: 480px) {
+    .shop-card {
+        flex-direction: column;
+        max-width: 100%;
+    }
+    .shop-card-image {
+        width: 100%;
+        height: 200px;
+    }
+}
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+
+            <p>GANやMAVENを学習すると <strong>潜在空間（latent space）</strong> という言葉がキーワードになります。
+初めての場合、とっつきづらい言葉です。今日はそんなとっつきづらさを解消したいと思います。</p>
+<h2 id="概要">概要</h2>
+<p>潜在空間とは、<strong>観測データの背後にある「本質的な構造」を表す低次元の空間</strong>のことです。</p>
+<h3 id="1-潜在空間の直感的なイメージ">1. 潜在空間の直感的なイメージ</h3>
+<p>例えば「人の顔写真」を考えます。</p>
+<ul>
+<li>生データ（ピクセル）の次元はとても大きい（例：100×100×3 = 30,000次元）</li>
+<li>しかし、顔の本質的な特徴は
+<ul>
+<li>性別</li>
+<li>年齢</li>
+<li>髪の色</li>
+<li>表情</li>
+<li>顔の輪郭
+など、<strong>もっと少ないパラメータ</strong>で表せます。</li>
+</ul>
+</li>
+</ul>
+<p>この「本質的なパラメータの集合」が張る空間が<strong>潜在空間</strong>です。</p>
+<ul>
+<li>生データ空間：高次元で冗長（似た顔でもピクセルは大きく違う）</li>
+<li>潜在空間：低次元で意味的（似た顔は近いベクトルになる）</li>
+</ul>
+<h3 id="2-潜在空間の利用例">2. 潜在空間の利用例</h3>
+<img src="file:///d:\PycharmProjects\ScienceCalculation\studies-implements\doc\blog\image\README\marl_agent_adventure.gif" alt="jssp-3" width="500px" height="auto">
+<ol>
+<li>
+<p><strong>次元削減（圧縮）</strong></p>
+<ul>
+<li>高次元データを低次元で表現できるため、計算コストやメモリを節約できます。</li>
+<li>例：PCA（主成分分析）は、データを「分散が大きい方向」に射影した低次元空間を作ります。</li>
+</ul>
+</li>
+<li>
+<p><strong>意味的な表現</strong></p>
+<ul>
+<li>潜在空間上の近さが「意味的な近さ」に対応するように学習できます。</li>
+<li>例：顔画像の潜在空間では、「笑顔の顔」同士が近くに集まる。</li>
+</ul>
+</li>
+<li>
+<p><strong>生成モデルでの利用</strong></p>
+<ul>
+<li>潜在変数 <code>z</code> をサンプリングし、デコーダで画像を生成する（VAE, GAN など）。</li>
+<li>潜在空間上を移動すると、生成される画像が滑らかに変化します。</li>
+</ul>
+</li>
+<li>
+<p><strong>強化学習での探索の多様化（MAVENなど）</strong></p>
+<ul>
+<li>潜在変数 <code>z</code> を変えることで、エージェントの探索方略（ポリシー）を多様化できます。</li>
+<li>異なる <code>z</code> が「異なる探索モード」に対応し、協調パターンなどを見つけやすくします。</li>
+</ul>
+</li>
+</ol>
+<h3 id="3-具体例">3. 具体例</h3>
+<h4 id="例1pca主成分分析">例1：PCA（主成分分析）</h4>
+<ul>
+<li>データを「分散が大きい方向」に射影した低次元空間が潜在空間です。</li>
+<li>この空間上でデータを表現すると、元の情報をできるだけ保ちつつ次元を減らせます。</li>
+</ul>
+<h4 id="例2オートエンコーダautoencoder">例2：オートエンコーダ（Autoencoder）</h4>
+<ul>
+<li>エンコーダ：入力 <code>x</code> → 潜在表現 <code>z</code></li>
+<li>デコーダ：潜在表現 <code>z</code> → 再構成 <code>x'</code></li>
+<li><code>z</code> が潜在空間上の点で、<code>x</code> の「要約」になっています。</li>
+</ul>
+<h4 id="例3vaevariational-autoencoder">例3：VAE（Variational Autoencoder）</h4>
+<ul>
+<li>潜在変数 <code>z</code> を確率分布（通常はガウス分布）からサンプリング</li>
+<li>潜在空間上を少し動かすと、生成される画像が連続的に変化（例：笑顔→無表情→怒り顔）</li>
+</ul>
+<h4 id="例4mavenmulti-agent-variational-exploration">例4：MAVEN（Multi-Agent Variational Exploration）</h4>
+<ul>
+<li>各エピソードやタイムステップごとに潜在変数 <code>z</code> をサンプリング</li>
+<li><code>z</code> が「どのような探索方略を取るか」を決める役割を果たし、探索の多様性を高める</li>
+</ul>
+<h2 id="なぜ潜在空間が必要">なぜ潜在空間が必要?</h2>
+<p>潜在空間が MAVEN や GAN で使われる理由は、<strong>「探索や生成の多様性を、低次元で制御しやすくするため」</strong> です。</p>
+<h3 id="1-潜在空間の基本的な役割">1. 潜在空間の基本的な役割</h3>
+<ul>
+<li>生データ（画像のピクセル、エージェントの観測など）は高次元で冗長</li>
+<li>潜在空間は、その背後にある<strong>本質的なパラメータ</strong>を低次元で表現した空間</li>
+<li>潜在変数 <code>z</code> を少し動かすと、生成されるもの（画像・方略）が滑らかに変化</li>
+</ul>
+<p>→ 潜在空間を使うと、<strong>「何を変えるか」を低次元でコントロールできる</strong>という利点があります。</p>
+<h3 id="2-maven-で潜在空間を使う理由">2. MAVEN で潜在空間を使う理由</h3>
+<p>MAVEN（Multi-Agent Variational Exploration）は、<strong>マルチエージェント強化学習における探索の多様化</strong>を目的とした手法です<a href="https://arxiv.org/abs/1910.07483">NeurIPS 2019</a>。</p>
+<p><strong>なぜ潜在空間を使うか</strong></p>
+<ol>
+<li>
+<p><strong>探索方略の多様化</strong></p>
+<ul>
+<li>各エピソードやタイムステップごとに潜在変数 <code>z</code> をサンプリング</li>
+<li><code>z</code> が「どのような探索方略を取るか」を決める</li>
+<li>例：
+<ul>
+<li><code>z1</code> が大きい → 積極的に未知の行動を試す</li>
+<li><code>z2</code> が大きい → 協調行動を重視する</li>
+</ul>
+</li>
+<li>異なる <code>z</code> が<strong>異なる探索モード</strong>に対応し、協調パターンなどを見つけやすくなる</li>
+</ul>
+</li>
+<li>
+<p><strong>連続的で滑らかな探索</strong></p>
+<ul>
+<li><code>z</code> を連続空間からサンプリングするため、探索方略が滑らかに変化</li>
+<li>ランダム行動だけでは見逃しがちな「中間的な探索パターン」も試せる</li>
+</ul>
+</li>
+<li>
+<p><strong>集中学習・分散実行（CTDE）との相性</strong></p>
+<ul>
+<li>学習時は全エージェントの情報を使って潜在空間を学習</li>
+<li>実行時は各エージェントが自分の観測と共有された <code>z</code> に基づいて行動</li>
+<li>これにより、<strong>協調的な探索</strong>を実現しつつ、実行は分散的に行える</li>
+</ul>
+</li>
+</ol>
+<p>→ MAVEN では、潜在空間を使って**「探索の仕方そのもの」を多様化し、協調タスクを効率的に解く**ために使われます。</p>
+<h3 id="3-gan-で潜在空間を使う理由">3. GAN で潜在空間を使う理由</h3>
+<p>GAN（Generative Adversarial Network）は、<strong>生成モデル</strong>として潜在空間をよく使います。</p>
+<p><strong>なぜ潜在空間を使うか</strong></p>
+<ol>
+<li>
+<p><strong>生成の制御性</strong></p>
+<ul>
+<li>潜在変数 <code>z</code> を入力として、ジェネレータが画像を生成</li>
+<li><code>z</code> を少し変えると、生成される画像が滑らかに変化（例：笑顔→無表情→怒り顔）</li>
+<li>これにより、<strong>「どのような画像を生成したいか」を潜在空間上で指定</strong>できる</li>
+</ul>
+</li>
+<li>
+<p><strong>多様なサンプルの生成</strong></p>
+<ul>
+<li>潜在空間からランダムに <code>z</code> をサンプリングすることで、多様な画像を生成可能</li>
+<li>潜在空間が「データ分布の本質的な構造」を捉えていれば、そこからサンプリングするだけで自然な画像が得られる</li>
+</ul>
+</li>
+<li>
+<p><strong>潜在空間の操作（StyleGAN など）</strong></p>
+<ul>
+<li>より高度な GAN（例：StyleGAN）では、潜在空間をさらに分解し、
+<ul>
+<li>顔の向き</li>
+<li>髪の色</li>
+<li>表情
+など、<strong>意味的な属性ごとに制御</strong>できるようにする</li>
+</ul>
+</li>
+<li>これにより、「この顔を笑顔にしたい」といった編集が可能になる</li>
+</ul>
+</li>
+</ol>
+<p>→ GAN では、潜在空間を使って**「生成の多様性と制御性」を実現する**ために使われます。</p>
+<h3 id="4-maven-と-gan-の共通点違い">4. MAVEN と GAN の共通点・違い</h3>
+<p><strong>共通点</strong></p>
+<ul>
+<li><strong>低次元での制御</strong>：高次元の出力（画像・方略）を、低次元の潜在変数でコントロール</li>
+<li><strong>多様性の確保</strong>：潜在変数を変えることで、出力のバリエーションを生み出す</li>
+<li><strong>連続的な変化</strong>：潜在空間上を滑らかに動かすと、出力も滑らかに変化</li>
+</ul>
+<p><strong>違い</strong></p>
+<ul>
+<li><strong>MAVEN</strong>：探索方略（ポリシー）の多様化 → 「どう探索するか」を潜在空間で制御</li>
+<li><strong>GAN</strong>：生成画像の多様化 → 「どんな画像を生成するか」を潜在空間で制御</li>
+</ul>
+<h3 id="5-まとめ">5. まとめ</h3>
+<ul>
+<li><strong>潜在空間</strong>は、高次元データの背後にある「本質的な構造」を低次元で表現した空間</li>
+<li><strong>MAVEN</strong>では、潜在空間を使って<strong>探索方略を多様化</strong>し、協調タスクを効率的に解く</li>
+<li><strong>GAN</strong>では、潜在空間を使って<strong>生成画像の多様性と制御性</strong>を実現する</li>
+</ul>
+<p>どちらも、「潜在空間という低次元のハンドルを回すことで、高次元の複雑な振る舞い（探索・生成）を制御する」という発想で設計されています。</p>
+<h2 id="実験">実験</h2>
+<p>以下は、<strong>2次元潜在空間から画像を生成する簡易デコーダ</strong>を作り、潜在空間上の点 <code>z=(z1, z2)</code> を動かしたときに画像がどう変わるかを可視化する Python コードです。</p>
+<ul>
+<li>潜在空間：2次元（<code>z1, z2</code>）</li>
+<li>デコーダ：<code>z</code> から「色付き円」の画像を生成</li>
+<li>可視化：潜在空間をグリッド状にスキャンし、各点に対応する画像を並べて表示</li>
+</ul>
+<p><strong>実装コード（潜在空間の可視化）</strong></p>
+<pre><code class="language-python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt
+<span class="hljs-keyword">from</span> matplotlib.animation <span class="hljs-keyword">import</span> FuncAnimation
+<span class="hljs-keyword">from</span> IPython.display <span class="hljs-keyword">import</span> HTML
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">decoder</span>(<span class="hljs-params">z</span>):
+    <span class="hljs-string">&quot;&quot;&quot;
+    簡易デコーダ：潜在変数 z=(z1, z2) から「色付き円」の画像を生成
+    - z1: 円の中心x座標（-1〜1 → 0〜画像幅）
+    - z2: 円の中心y座標（-1〜1 → 0〜画像高）
+    - 色: z1, z2 から計算（R,G,B）
+    &quot;&quot;&quot;</span>
+    img_size = <span class="hljs-number">64</span>
+    img = np.zeros((img_size, img_size, <span class="hljs-number">3</span>))  <span class="hljs-comment"># RGB画像</span>
+
+    <span class="hljs-comment"># zを画像座標にマッピング</span>
+    cx = <span class="hljs-built_in">int</span>((z[<span class="hljs-number">0</span>] + <span class="hljs-number">1</span>) / <span class="hljs-number">2</span> * img_size)
+    cy = <span class="hljs-built_in">int</span>((z[<span class="hljs-number">1</span>] + <span class="hljs-number">1</span>) / <span class="hljs-number">2</span> * img_size)
+    radius = <span class="hljs-number">10</span>
+
+    <span class="hljs-comment"># 色をzから決める（簡易的に）</span>
+    r = (z[<span class="hljs-number">0</span>] + <span class="hljs-number">1</span>) / <span class="hljs-number">2</span>  <span class="hljs-comment"># 0〜1</span>
+    g = (z[<span class="hljs-number">1</span>] + <span class="hljs-number">1</span>) / <span class="hljs-number">2</span>
+    b = <span class="hljs-number">1.0</span> - (r + g) / <span class="hljs-number">2</span>
+    color = np.clip([r, g, b], <span class="hljs-number">0</span>, <span class="hljs-number">1</span>)
+
+    <span class="hljs-comment"># 円を描画（簡易版：ピクセル単位）</span>
+    <span class="hljs-keyword">for</span> y <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(img_size):
+        <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(img_size):
+            <span class="hljs-keyword">if</span> (x - cx)**<span class="hljs-number">2</span> + (y - cy)**<span class="hljs-number">2</span> &lt;= radius**<span class="hljs-number">2</span>:
+                img[y, x] = color
+
+    <span class="hljs-keyword">return</span> img
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">plot_latent_space_grid</span>(<span class="hljs-params">n_samples=<span class="hljs-number">10</span></span>):
+    <span class="hljs-string">&quot;&quot;&quot;
+    潜在空間をグリッド状にスキャンし、各点の画像を並べて表示
+    &quot;&quot;&quot;</span>
+    z1_range = np.linspace(-<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, n_samples)
+    z2_range = np.linspace(-<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, n_samples)
+
+    fig, axes = plt.subplots(n_samples, n_samples, figsize=(<span class="hljs-number">12</span>, <span class="hljs-number">12</span>))
+    <span class="hljs-keyword">for</span> i, z2 <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(z2_range):
+        <span class="hljs-keyword">for</span> j, z1 <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(z1_range):
+            z = np.array([z1, z2])
+            img = decoder(z)
+
+            ax = axes[i, j]
+            ax.imshow(img)
+            ax.set_xticks([])
+            ax.set_yticks([])
+            <span class="hljs-keyword">if</span> i == n_samples-<span class="hljs-number">1</span>:
+                ax.set_xlabel(<span class="hljs-string">f&quot;z1=<span class="hljs-subst">{z1:<span class="hljs-number">.1</span>f}</span>&quot;</span>, fontsize=<span class="hljs-number">8</span>)
+            <span class="hljs-keyword">if</span> j == <span class="hljs-number">0</span>:
+                ax.set_ylabel(<span class="hljs-string">f&quot;z2=<span class="hljs-subst">{z2:<span class="hljs-number">.1</span>f}</span>&quot;</span>, fontsize=<span class="hljs-number">8</span>)
+
+    plt.suptitle(<span class="hljs-string">&quot;潜在空間 z=(z1, z2) をグリッド状に動かしたときの画像変化&quot;</span>, fontsize=<span class="hljs-number">16</span>)
+    plt.tight_layout()
+    plt.show()
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">animate_latent_walk</span>():
+    <span class="hljs-string">&quot;&quot;&quot;
+    潜在空間上を円運動する点 z の軌跡と、そのときの画像をアニメーション表示
+    &quot;&quot;&quot;</span>
+    fig, (ax1, ax2) = plt.subplots(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, figsize=(<span class="hljs-number">10</span>, <span class="hljs-number">5</span>))
+
+    <span class="hljs-comment"># 潜在空間のプロット用</span>
+    ax1.set_xlim(-<span class="hljs-number">1.2</span>, <span class="hljs-number">1.2</span>)
+    ax1.set_ylim(-<span class="hljs-number">1.2</span>, <span class="hljs-number">1.2</span>)
+    ax1.set_xlabel(<span class="hljs-string">&quot;z1&quot;</span>)
+    ax1.set_ylabel(<span class="hljs-string">&quot;z2&quot;</span>)
+    ax1.set_title(<span class="hljs-string">&quot;潜在空間上の点 z の軌跡&quot;</span>)
+    ax1.grid(<span class="hljs-literal">True</span>)
+
+    <span class="hljs-comment"># 画像表示用</span>
+    ax2.set_title(<span class="hljs-string">&quot;デコーダが生成する画像&quot;</span>)
+    ax2.set_xticks([])
+    ax2.set_yticks([])
+
+    <span class="hljs-comment"># アニメーション用のフレーム数</span>
+    n_frames = <span class="hljs-number">100</span>
+    theta = np.linspace(<span class="hljs-number">0</span>, <span class="hljs-number">2</span>*np.pi, n_frames)
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">update</span>(<span class="hljs-params">frame</span>):
+        ax1.clear()
+        ax2.clear()
+
+        <span class="hljs-comment"># 潜在空間上の点 z を円運動させる</span>
+        t = theta[frame]
+        z1 = np.cos(t)
+        z2 = np.sin(t)
+        z = np.array([z1, z2])
+
+        <span class="hljs-comment"># 潜在空間上に点と軌跡を描画</span>
+        ax1.set_xlim(-<span class="hljs-number">1.2</span>, <span class="hljs-number">1.2</span>)
+        ax1.set_ylim(-<span class="hljs-number">1.2</span>, <span class="hljs-number">1.2</span>)
+        ax1.set_xlabel(<span class="hljs-string">&quot;z1&quot;</span>)
+        ax1.set_ylabel(<span class="hljs-string">&quot;z2&quot;</span>)
+        ax1.set_title(<span class="hljs-string">&quot;潜在空間上の点 z の軌跡&quot;</span>)
+        ax1.grid(<span class="hljs-literal">True</span>)
+
+        <span class="hljs-comment"># 過去の軌跡を薄く表示</span>
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(frame):
+            t_prev = theta[i]
+            z1_prev = np.cos(t_prev)
+            z2_prev = np.sin(t_prev)
+            ax1.plot(z1_prev, z2_prev, <span class="hljs-string">&#x27;o&#x27;</span>, markersize=<span class="hljs-number">3</span>, color=<span class="hljs-string">&#x27;blue&#x27;</span>, alpha=<span class="hljs-number">0.3</span>)
+
+        <span class="hljs-comment"># 現在の点を強調</span>
+        ax1.plot(z1, z2, <span class="hljs-string">&#x27;ro&#x27;</span>, markersize=<span class="hljs-number">8</span>)
+        ax1.text(z1+<span class="hljs-number">0.1</span>, z2+<span class="hljs-number">0.1</span>, <span class="hljs-string">f&quot;z=(<span class="hljs-subst">{z1:<span class="hljs-number">.2</span>f}</span>,<span class="hljs-subst">{z2:<span class="hljs-number">.2</span>f}</span>)&quot;</span>, fontsize=<span class="hljs-number">10</span>)
+
+        <span class="hljs-comment"># デコーダで画像を生成して表示</span>
+        img = decoder(z)
+        ax2.imshow(img)
+        ax2.set_title(<span class="hljs-string">&quot;デコーダが生成する画像&quot;</span>)
+        ax2.set_xticks([])
+        ax2.set_yticks([])
+
+    anim = FuncAnimation(fig, update, frames=n_frames, interval=<span class="hljs-number">200</span>, repeat=<span class="hljs-literal">True</span>)
+    plt.close(fig)
+    <span class="hljs-keyword">return</span> HTML(anim.to_jshtml())
+
+<span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:
+    <span class="hljs-comment"># 1. 潜在空間グリッドの可視化</span>
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;潜在空間グリッドの可視化（z1, z2 を動かしたときの画像変化）&quot;</span>)
+    plot_latent_space_grid(n_samples=<span class="hljs-number">8</span>)
+
+    <span class="hljs-comment"># 2. 潜在空間上を動く点のアニメーション（Colabで表示）</span>
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;潜在空間上を円運動する点 z のアニメーション&quot;</span>)
+    anim_html = animate_latent_walk()
+    display(anim_html)
+</code></pre>
+<p><strong>コードのポイント</strong></p>
+<ol>
+<li>
+<p><strong>簡易デコーダ <code>decoder(z)</code></strong></p>
+<ul>
+<li>入力：2次元潜在変数 <code>z = (z1, z2)</code>（各要素はおおよそ -1〜1）</li>
+<li>出力：64×64 の RGB 画像</li>
+<li><code>z1, z2</code> から
+<ul>
+<li>円の中心座標</li>
+<li>円の色（R,G,B）
+を決め、画像上に円を描画します。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>潜在空間グリッドの可視化 <code>plot_latent_space_grid</code></strong></p>
+<ul>
+<li><code>z1</code> と <code>z2</code> を -1〜1 の範囲で均等にサンプリング</li>
+<li>各 <code>(z1, z2)</code> に対応する画像を格子状に並べて表示</li>
+<li>潜在空間上の位置が少し変わるだけで、画像（円の位置・色）が滑らかに変化する様子がわかります。</li>
+</ul>
+</li>
+<li>
+<p><strong>潜在空間上の動きのアニメーション <code>animate_latent_walk</code></strong></p>
+<ul>
+<li>潜在空間上で点 <code>z</code> を円運動させ、その軌跡と対応する画像をリアルタイムに表示</li>
+<li>潜在空間上を滑らかに動くと、生成される画像も連続的に変化することを視覚的に確認できます。</li>
+</ul>
+</li>
+</ol>
+<p><strong>実行イメージ（Google Colab）</strong></p>
+<ol>
+<li>上記コードをセルに貼り付け実行</li>
+<li>まずグリッド状の画像が表示され、「z1, z2 を変えると画像がどう変わるか」が一目でわかる</li>
+<li>次にアニメーションが表示され、潜在空間上を動く点 <code>z</code> に応じて画像が変化する様子を確認できる</li>
+</ol>
+<p>この例では「色付き円」という単純な画像ですが、</p>
+<ul>
+<li>VAE や GAN では、潜在空間から「顔画像」や「風景画像」を生成</li>
+<li>MAVEN では、潜在空間から「探索方略（ポリシー）」を生成</li>
+</ul>
+<p>というように、<strong>潜在空間が「本質的なパラメータの空間」として機能している</strong>ことをイメージする助けになります。</p>
+<h2 id="総括">総括</h2>
+<p>本説明を総括すると以下となります。</p>
+<ul>
+<li>潜在空間は複数のパラメータを別の空間にマッピングして、本質的な情報に絞るという意味を持つ</li>
+<li>本質空間は、実空間の中の特徴的な除法を有していて、本質空間の変化でアウトプットを制御できる</li>
+<li>用途は様々(MAVENとGANでは異なる)</li>
+</ul>
+
+
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+</script>
+
+
+            
+        </body>
+        </html>
