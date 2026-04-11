@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&#x6982;&#x8981;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+/* 目次全体のコンテナ */
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+
+/* 記事タイトル (h1) */
+h1 {
+    font-size: 2rem;
+    color: #24292f;
+    line-height: 1.3;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 3px double #e1e4e8; /* 二重線で上品に */
+    text-align: center; /* タイトルを中央に寄せて特別感を出す */
+}
+
+/* セクション見出し (h2) */
+h2 {
+    font-size: 1.5rem;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(transparent 70%, #e8f0fe 70%); /* 下側に薄い色のアクセント */
+    border-left: 6px solid #0969da; /* 目次のテーマカラーと合わせる */
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* 強調文字 (strong) */
+strong {
+    font-weight: bold;
+    color: #cf222e; /* ホバー時の赤色と合わせて統一感を出す */
+    background: linear-gradient(transparent 60%, #fff2cc 60%); /* 黄色のマーカー風 */
+    padding: 0 2px;
+}
+
+/* 引用のコンテナ */
+blockquote {
+    position: relative;
+    padding: 20px 30px;
+    margin: 30px 0;
+    background-color: #f6f8fa; /* 目次の背景より少しだけ濃いグレー */
+    border-left: 5px solid #d0d7de; /* 落ち着いたグレーの境界線 */
+    color: #57606a; /* 文字色は少し薄くして引用らしさを出す */
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 引用符のアイコンを装飾として追加 */
+blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    font-size: 40px;
+    color: #d0d7de;
+    font-family: serif;
+    line-height: 1;
+}
+
+/* 読者になるボタンのデザイン */
+.btn-subscribe {
+    display: inline-block;
+    padding: 12px 35px; /* 横幅を広めにとって存在感を出します */
+    background-color: #383838; /* お好みの色に変更してください */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #555555;
+    text-decoration: none;
+}
+
+/* はてなブログで見えてしまう数式データを非表示にする */
+.katex-html {
+    display: none !important;
+}
+
+.katex-mathml {
+    display: inline !important;
+}
+/* Amazonカード型のオシャレなデザイン */
+.shop-card {
+    display: flex;
+    max-width: 500px;
+    margin: 20px auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* マウスホップした時の動き */
+.shop-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.shop-card-image {
+    width: 150px;
+    min-width: 150px;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shop-card-image img {
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+}
+
+.shop-card-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.shop-card-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.shop-card-description {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+/* Amazonらしいオレンジボタン */
+.shop-card-link a {
+    display: inline-block;
+    background-color: #ff9900;
+    color: #fff !important;
+    text-decoration: none !important;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.shop-card-link a:hover {
+    background-color: #e68a00;
+}
+
+/* スマホ対応：縦並びにする */
+@media (max-width: 480px) {
+    .shop-card {
+        flex-direction: column;
+        max-width: 100%;
+    }
+    .shop-card-image {
+        width: 100%;
+        height: 200px;
+    }
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+
+
+            <p>大河で活躍中の豊臣秀長ですが、彼は秀吉の弟で、彼の家臣がそこまで有名になることはありません。
+彼の家臣で有名だったのは藤堂高虎くらいかもしれません。
+そんな彼の家臣の中でも超有名な横浜良慶（よこはまりょうけい）について説明します。</p>
+<h2 id="概要">概要</h2>
+<p>横浜良慶は、豊臣秀長の重臣で、<strong>横浜一庵（よこはま いちあん）</strong> という名でも知られる人物です。</p>
+<h3 id="基本情報">基本情報</h3>
+<ul>
+<li>生没年：1549年～1596年頃（諸説あり）</li>
+<li>主君：豊臣秀長（豊臣大納言家）</li>
+<li>別名：横浜一庵、俗名「良慶」、誤伝で「光慶」と表記されることもある<a href="https://ja.wikipedia.org/wiki/%E6%A8%AA%E6%B5%9C%E4%B8%80%E5%BA%B5">Wikipedia（横浜一庵）</a>。</li>
+</ul>
+<h3 id="秀長家臣としての役割">秀長家臣としての役割</h3>
+<ul>
+<li>秀長が大和国（現在の奈良県）を支配するようになってから史料に登場し、<strong>大和国の内政を担当</strong>した重臣とされています<a href="https://taigadramas.com/toyotomihidenaga/toyotomihidenaga_kashin/">豊臣秀長の家臣たち</a>。</li>
+<li>秀長家中では<strong>三家老の一人</strong>（横浜一庵・羽田正親・小川下野守）とされ、領国経営の中心的存在でした<a href="https://taigadramas.com/toyotomihidenaga/toyotomihidenaga_kashin/">豊臣秀長の家臣たち</a>。</li>
+<li>家臣団の中では<strong>最高額の5万石</strong>を領したとされ、その実務能力と信頼の厚さがうかがえます<a href="https://taigadramas.com/toyotomihidenaga/toyotomihidenaga_kashin/">豊臣秀長の家臣たち</a>。</li>
+</ul>
+<h3 id="秀長没後の動向">秀長没後の動向</h3>
+<ul>
+<li>秀長の死後は、その養子・<strong>豊臣秀保（ひでやす）の後見人</strong>を務めたとされます<a href="https://taigadramas.com/toyotomihidenaga/toyotomihidenaga_kashin/">豊臣秀長の家臣たち</a>。</li>
+<li>秀保が早世した後は、豊臣政権内での横浜家の影響力は徐々に低下していったとされています。</li>
+</ul>
+<h3 id="後世の評価エピソード">後世の評価・エピソード</h3>
+<ul>
+<li>大和郡山城では、横浜良慶の名にちなんで <strong>「法印曲輪」「一庵丸」</strong> と呼ばれる曲輪が残っており、郡山の統治に深く関わった人物として地元で記憶されています<a href="https://www.nara-np.co.jp/news/20260108205938.html">奈良新聞</a>。</li>
+<li>近年、秀長の大和支配を示す<strong>横浜良慶（一庵）の書状</strong>が公開されるなど、史料研究の面でも注目されています<a href="https://www.tenri-u.ac.jp/news/62893/">天理大学ニュース</a>。</li>
+</ul>
+<h2 id="生い立ち">生い立ち</h2>
+<p>はっきりと言って未知です。
+横浜良慶は、秀長の大和支配が始まってから史料に登場する人物であり、それ以前の出自や若年期の経歴は、現状ではほとんど不明です。
+史料に名が見え始めるのは、 豊臣秀長が大和国に入ってからで、その家臣（家老）として内政を担当するようになって以降です。</p>
+<h2 id="実際に行ったこと">実際に行ったこと</h2>
+<p>横浜良慶が具体的に関わった史跡として、現在も名前が残っているのは<strong>大和郡山城（奈良県大和郡山市）</strong> です。</p>
+<h3 id="1-郡山城の法印曲輪一庵丸">1. 郡山城の「法印曲輪（一庵丸）」</h3>
+<ul>
+<li>郡山城には、<strong>法印曲輪（一庵丸）</strong> と呼ばれる曲輪（くるわ）があります。</li>
+<li>この名称は、<strong>横浜一庵法印良慶</strong>の屋敷があったことに由来するとされています<a href="http://www4.kcn.ne.jp/~suizan21/page013.html">郡山城百話【城郭】下</a>。</li>
+<li>「法印」は一庵が持っていた僧位で、その通称が曲輪名に定着したと説明されています<a href="http://www4.kcn.ne.jp/~suizan21/page013.html">郡山城百話【城郭】下</a>。</li>
+<li>古記録（『本多忠平公御一代記』など）には「一庵丸（横浜一庵法印良慶）」といった呼称も見られ、彼の名が城の縄張りに刻まれていることが分かります<a href="http://www4.kcn.ne.jp/~suizan21/page013.html">郡山城百話【城郭】下</a>。</li>
+</ul>
+<h3 id="2-現在の痕跡">2. 現在の痕跡</h3>
+<ul>
+<li>現在の郡山城跡（城山公園）では、当時の面影は薄れているものの、<strong>「一庵丸跡」の碑</strong>が残っており、横浜一庵（良慶）の名を留める物証となっています<a href="http://www4.kcn.ne.jp/~suizan21/page013.html">郡山城百話【城郭】下</a>。</li>
+<li>この碑は、彼が秀長の家老として郡山城の内政・城郭整備に関わったことを示す、具体的な史跡と言えます。</li>
+</ul>
+<h2 id="秀長とのやり取り">秀長とのやり取り</h2>
+<p>横浜良慶と秀長のやり取りを示す史料としては、<strong>秀長の命を受けて横浜良慶が出した書状</strong>や、<strong>秀長あての報告書状</strong>が確認されています。</p>
+<h3 id="1-秀長の命を受けた横浜良慶の書状興福寺衆徒あて">1. 秀長の命を受けた横浜良慶の書状（興福寺衆徒あて）</h3>
+<ul>
+<li>天理大学が奈良市の旧家「菊岡家」の文書調査で発見した書状は、<strong>秀長の家臣・横浜良慶が、秀長の命を受けて興福寺の衆徒（僧侶兼武士）に送ったもの</strong>です<a href="https://news.yahoo.co.jp/articles/23db408acb5d31cd0cfa441b7865fc4f0410d481">Yahoo!ニュース</a>。</li>
+<li>内容は、<strong>伝統的な祭礼を執行するよう命じる</strong>もので、秀長が大和国を拝領して郡山城に入った1585年頃の統治実態を示すものとされています<a href="https://news.yahoo.co.jp/articles/23db408acb5d31cd0cfa441b7865fc4f0410d481">Yahoo!ニュース</a>。</li>
+<li>この書状は、<strong>秀長が宗教勢力を掌握しながら大和を統治していたこと</strong>を具体的に示す史料として注目されています。</li>
+</ul>
+<h3 id="2-秀長あての報告書状横浜良慶が仲介したもの">2. 秀長あての報告書状（横浜良慶が仲介したもの）</h3>
+<ul>
+<li>同じく天理大学の「菊岡家文書」の中間報告会では、<strong>横浜良慶書状</strong>として、興福寺の衆徒が慣例行事である「蜂起始（ほうきはじめ）」の完了を<strong>秀長に報告している書状</strong>が紹介されています<a href="https://www.instagram.com/p/DU9axT_DH5D/">天理大学歴史文化学科（Instagram）</a>。</li>
+<li>これは、衆徒側が秀長に直接（あるいは横浜良慶を介して）報告している形で、<strong>秀長が大和支配の中心（棟梁）として位置づけられている</strong>ことを示す内容とされています<a href="https://www.instagram.com/p/DU9axT_DH5D/">天理大学歴史文化学科（Instagram）</a>。</li>
+</ul>
+<h3 id="3-まとめ">3. まとめ</h3>
+<ul>
+<li>現時点で確認できる「横浜良慶と秀長のやり取り」を示す史料は、主に<strong>秀長の命を受けた横浜良慶の書状</strong>と、<strong>秀長あての報告書状</strong>です。</li>
+<li>これらは、秀長が大和国を統治する際に、<strong>横浜良慶を実務担当者として宗教勢力（興福寺）との調整を任せていた</strong>ことを具体的に示す資料と言えます。</li>
+</ul>
+<p>したがって、「秀長と横浜良慶のやり取り」そのものを直接記した書状は限られていますが、<strong>秀長の命を受けて横浜良慶が出した書状や、秀長あての報告書状を通じて、両者の役割分担と統治の実態が読み取れる</strong>史料が残っています。</p>
+<h2 id="想像される横井とは">想像される横井とは</h2>
+<p>ここまで資料が少ないとは当初思いもしなかったですが、秀長が重用したのは確からしいです。</p>
+<ul>
+<li>内政・行政能力の高さ</li>
+</ul>
+<p>大和国という寺社勢力が強い地域で、検地や税収、寺社との調整を担うには、 高い実務能力と調整力が必要です。横浜良慶が5万石という高禄を領し、三家老の一人に数えられたことから、秀長がその能力を高く評価していたと推測できます。</p>
+<ul>
+<li>宗教勢力との折衝能力</li>
+</ul>
+<p>興福寺の衆徒に祭礼の執行を命じる書状が残っていることから、 寺社勢力との交渉や伝統行事の管理を任されていたことが分かります。
+秀長の大和支配にとって、寺社勢力の掌握は重要課題であり、その実務を担える人物として重く用いられたと考えられます。</p>
+<ul>
+<li>秀長からの信頼</li>
+</ul>
+<p>秀保の後見人を務めたことからも、 秀長からの信頼が厚かったことがうかがえます。単なる実務家ではなく、一族の将来を見据えたポジションに置かれていたと言えます。</p>
+<h2 id="総括">総括</h2>
+<p>秀長家臣団は創業期の長浜～中国攻めの時から、大和を治めるときでシフトすることになった。
+この時に領国経営を行うことが出来る人物が必要となった。
+といった辺りから大和をうまく治めるために、何かの理由で招聘された。
+招聘された理由は噂や第三者評価と思われます。
+そして、実際に噂や評価通りの仕事を行った。</p>
+<p>というあたりが流れでしょうか。</p>
+<p>安土・桃山時代に大和は寺社の扱いが非常に難しい土地だったようなので、調整や交渉には手腕があったことは間違いないと思います。</p>
+<p>また、秀長が重用したということは、恐らくそれなりの人物だったことも間違いないでしょう。</p>
+
+
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+</script>
+
+        </body>
+        </html>
