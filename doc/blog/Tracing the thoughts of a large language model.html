@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&#x6982;&#x8981;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+
+/* 記事タイトル (h1) */
+h1 {
+    font-size: 2rem;
+    color: #24292f;
+    line-height: 1.3;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 3px double #e1e4e8; /* 二重線で上品に */
+    text-align: center; /* タイトルを中央に寄せて特別感を出す */
+}
+
+/* セクション見出し (h2) */
+h2 {
+    font-size: 1.5rem;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(transparent 70%, #e8f0fe 70%); /* 下側に薄い色のアクセント */
+    border-left: 6px solid #0969da; /* 目次のテーマカラーと合わせる */
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* 強調文字 (strong) */
+strong {
+    font-weight: bold;
+    color: #cf222e; /* ホバー時の赤色と合わせて統一感を出す */
+    background: linear-gradient(transparent 60%, #fff2cc 60%); /* 黄色のマーカー風 */
+    padding: 0 2px;
+}
+
+/* 引用のコンテナ */
+blockquote {
+    position: relative;
+    padding: 20px 30px;
+    margin: 30px 0;
+    background-color: #f6f8fa; /* 目次の背景より少しだけ濃いグレー */
+    border-left: 5px solid #d0d7de; /* 落ち着いたグレーの境界線 */
+    color: #57606a; /* 文字色は少し薄くして引用らしさを出す */
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 引用符のアイコンを装飾として追加 */
+blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    font-size: 40px;
+    color: #d0d7de;
+    font-family: serif;
+    line-height: 1;
+}
+
+/* 読者になるボタンのデザイン */
+.btn-subscribe {
+    display: inline-block;
+    padding: 12px 35px; /* 横幅を広めにとって存在感を出します */
+    background-color: #383838; /* お好みの色に変更してください */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #555555;
+    text-decoration: none;
+}
+
+/* はてなブログで見えてしまう数式データを非表示にする */
+.katex-html {
+    display: none !important;
+}
+
+.katex-mathml {
+    display: inline !important;
+}
+/* Amazonカード型のオシャレなデザイン */
+.shop-card {
+    display: flex;
+    max-width: 500px;
+    margin: 20px auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* マウスホップした時の動き */
+.shop-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.shop-card-image {
+    width: 150px;
+    min-width: 150px;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shop-card-image img {
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+}
+
+.shop-card-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.shop-card-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.shop-card-description {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+/* Amazonらしいオレンジボタン */
+.shop-card-link a {
+    display: inline-block;
+    background-color: #ff9900;
+    color: #fff !important;
+    text-decoration: none !important;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.shop-card-link a:hover {
+    background-color: #e68a00;
+}
+
+/* スマホ対応：縦並びにする */
+@media (max-width: 480px) {
+    .shop-card {
+        flex-direction: column;
+        max-width: 100%;
+    }
+    .shop-card-image {
+        width: 100%;
+        height: 200px;
+    }
+}
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+
+            <p>LLM関係で最近衝撃を与え続けているAI cook &quot;Anthropic&quot;社が発表した論文で「Tracing the thoughts of a large language model」について調べてみました。</p>
+<h2 id="概要">概要</h2>
+<p>AnthropicのTracing the thoughts of a large language modelは、<strong>LLM内部の“思考プロセス”を回路（circuit）として可視化する</strong>研究です。<br>
+関連する2本の論文（方法論＋生物学的解釈）から構成されており、<strong>「LLMはどうやって答えを出しているのか？」</strong> をかなり具体的に明らかにしています。<a href="https://www.anthropic.com/research/tracing-thoughts-language-model">Anthropic Research</a></p>
+<h3 id="1-研究の目的llmの思考を解剖する">1. 研究の目的：LLMの「思考」を解剖する</h3>
+<ul>
+<li>従来の解釈可能性（interpretability）研究は、
+<ul>
+<li>個々のニューロンが何を表しているか</li>
+<li>特定の特徴量（feature）がどこで活性化するか<br>
+といった<strong>局所的な分析</strong>が中心でした。</li>
+</ul>
+</li>
+<li>この研究は、<strong>「特徴量同士がどうつながり、情報がどう流れるか」</strong> を“回路”としてマッピングし、<br>
+<strong>LLM内部の計算グラフ（computational graph）を可視化する</strong>ことを目指しています。<a href="https://www.anthropic.com/research/tracing-thoughts-language-model">Anthropic Research</a></li>
+</ul>
+<h3 id="2-手法circuit-tracing回路トレース">2. 手法：Circuit tracing（回路トレース）</h3>
+<p><strong>2本の論文で構成</strong></p>
+<ol>
+<li><strong>Circuit tracing: Revealing computational graphs in language models</strong>（方法論）</li>
+<li><strong>On the biology of a large language model</strong>（生物学的解釈・応用）</li>
+</ol>
+<p><strong>手法のポイント</strong></p>
+<ul>
+<li>既存の「特徴量マッピング」を拡張し、
+<ul>
+<li>特徴量同士を結びつける</li>
+<li>入力から出力までの<strong>情報の流れを“回路”として再構成</strong>する<br>
+という手法（attribution graphs）を提案しています。<a href="https://www.anthropic.com/research/tracing-thoughts-language-model">Anthropic Research</a></li>
+</ul>
+</li>
+<li>これにより、<strong>「どの特徴量が、どの層を経て、どの出力に寄与したか」</strong> をグラフとして追跡できます。</li>
+</ul>
+<h3 id="3-主な発見claudeの内部で何が起きているか">3. 主な発見：Claudeの内部で何が起きているか</h3>
+<p>発見内容自体は結構インパクトがあります。
+Anthropicは、自社モデルClaudeに対してこの手法を適用し、次のような発見を報告しています。<a href="https://www.anthropic.com/research/tracing-thoughts-language-model">Anthropic Research</a></p>
+<p><strong>① 多言語間の共通概念空間</strong></p>
+<ul>
+<li>Claudeは、<strong>異なる言語（英語・フランス語など）で同じ概念を表現する際、内部では共通の“概念空間”を使っている</strong>ことが確認されました。</li>
+<li>つまり、「dog」と「chien」は別の単語ですが、<strong>内部の特徴量レベルでは同じ回路を共有している</strong>ことが示されています。</li>
+</ul>
+<p><strong>② 詩作における“先読み”計画</strong></p>
+<ul>
+<li>詩を作るタスクで、Claudeは<strong>数単語先の韻を計画する</strong>ような回路を持っていることが観測されました。</li>
+<li>単に「次の単語を予測」しているのではなく、<strong>長いスパンで構造を計画している</strong>ことが回路トレースで証明されています。</li>
+</ul>
+<p><strong>③ 計算タスクでの並列経路</strong></p>
+<ul>
+<li>計算問題（例：暗算）では、
+<ul>
+<li><strong>近似計算用の経路</strong></li>
+<li><strong>精密計算用の経路</strong><br>
+が並列に存在し、状況に応じて使い分けていることが示されました。</li>
+</ul>
+</li>
+<li>興味深いことに、<strong>モデルが口頭で説明する戦略と、内部で実際に使っている経路が異なる</strong>ケースもあり、「後付けの説明」と「実際の計算」の乖離も観測されています。</li>
+</ul>
+<p><strong>④ 忠実な推論 vs “もっともらしい嘘”</strong></p>
+<ul>
+<li>回路トレースにより、
+<ul>
+<li><strong>忠実に推論しているときの情報の流れ</strong></li>
+<li><strong>“もっともらしい嘘”（bullshitting）をしているときの情報の流れ</strong><br>
+を区別できる可能性が示されました。</li>
+</ul>
+</li>
+<li>これにより、「モデルが本当に考えているのか、それとも“それっぽい説明”をでっち上げているのか」を<strong>内部から監査</strong>できるようになります。</li>
+</ul>
+<p><strong>⑤ 幻覚（hallucination）と拒否のメカニズム</strong></p>
+<ul>
+<li>Claude内部では、<strong>「答えない」がデフォルト状態</strong>であり、<br>
+「既知の実体（known-entity）」に関する特徴量が活性化することで、<strong>回答を許可する</strong>仕組みがあることが示されました。</li>
+<li>幻覚（hallucination）は、この**“既知実体”の判定が誤作動した結果**として説明されています。</li>
+</ul>
+<p><strong>⑥ 安全ガードレールと文法的一貫性の衝突</strong></p>
+<ul>
+<li>危険なプロンプト（jailbreak）に対して、
+<ul>
+<li><strong>安全ガードレールを守ろうとする回路</strong></li>
+<li><strong>文法的に一貫した文章を生成しようとする回路</strong><br>
+が衝突している様子が観測されました。</li>
+</ul>
+</li>
+<li>これにより、<strong>安全性と一貫性のトレードオフ</strong>が内部でどう処理されているかが可視化されています。</li>
+</ul>
+<h3 id="4-なぜこの研究が重要か">4. なぜこの研究が重要か</h3>
+<p><strong>① 「LLMは本当に考えているのか？」への回答</strong></p>
+<ul>
+<li>これまで「LLMは単に統計的パターンマッチングをしているだけ」という批判がありましたが、<br>
+この研究は、<strong>内部で計画・並列計算・概念共有といった“思考らしいプロセス”が実際に起きている</strong>ことを示しています。<a href="https://www.anthropic.com/research/tracing-thoughts-language-model">Anthropic Research</a></li>
+</ul>
+<p><strong>② AI安全性・アライメントへの応用</strong></p>
+<ul>
+<li>「忠実な推論」と「もっともらしい嘘」を区別できるようになれば、
+<ul>
+<li>モデルが<strong>本当に理解しているか</strong>を監査できる</li>
+<li>安全性評価（red teaming）の精度が上がる<br>
+など、<strong>AIアライメント研究</strong>に直接役立ちます。</li>
+</ul>
+</li>
+</ul>
+<p><strong>③ モデル設計へのフィードバック</strong></p>
+<ul>
+<li>どの回路が有用で、どの回路が危険かがわかれば、
+<ul>
+<li>有用な回路を強化する</li>
+<li>危険な回路を抑制する<br>
+といった<strong>モデル設計の指針</strong>が得られます。</li>
+</ul>
+</li>
+</ul>
+<h2 id="回路トレースアルゴリズム">回路トレースアルゴリズム</h2>
+<p>Anthropicの回路トレースは、<strong>「どの特徴量が、どの層を経て、どの出力に寄与したか」をグラフとして再構成する</strong>手法です。<br>
+公式の方法論論文と解説ページに基づき、アルゴリズムの流れを簡潔にまとめます。<a href="https://www.anthropic.com/research/tracing-thoughts-language-model">Anthropic Research</a></p>
+<p><img src="file:///d:\PycharmProjects\ScienceCalculation\image\Tracingthethoughtsofalargelanguagemodel\1775901980807.png" alt="1775901980807"></p>
+<h3 id="1-前提llm内部の特徴量と回路">1. 前提：LLM内部の「特徴量」と「回路」</h3>
+<ul>
+<li>LLM（Transformer）内部には、各層・各トークン位置で<strong>多数のニューロン（あるいは特徴量）</strong> が活性化しています。</li>
+<li>従来の解釈可能性研究では、
+<ul>
+<li>「このニューロンは“猫”を表している」</li>
+<li>「この特徴量は“否定”を表している」<br>
+といった<strong>個々の特徴量の意味</strong>を調べるのが主流でした。</li>
+</ul>
+</li>
+<li>回路トレースは、<strong>特徴量同士の接続関係</strong>に注目し、<br>
+「入力 → 特徴量A → 特徴量B → … → 出力」という<strong>情報の流れ（回路）</strong> を再構築します。<a href="https://www.anthropic.com/research/tracing-thoughts-language-model">Anthropic Research</a></li>
+</ul>
+<h3 id="2-アルゴリズムの全体像3ステップ">2. アルゴリズムの全体像（3ステップ）</h3>
+<p>大まかには次の3ステップで回路を構築します。</p>
+<ol>
+<li><strong>特徴量の同定（Feature identification）</strong></li>
+<li><strong>寄与度の計算（Attribution calculation）</strong></li>
+<li><strong>回路の構築（Circuit construction）</strong></li>
+</ol>
+<h3 id="3-ステップ1特徴量の同定">3. ステップ1：特徴量の同定</h3>
+<p><strong>目的</strong></p>
+<ul>
+<li>LLM内部で「意味のある単位」として働いている<strong>特徴量（feature）</strong> を特定します。</li>
+</ul>
+<p><strong>手法（概要）</strong></p>
+<ul>
+<li>既存の「辞書学習（dictionary learning）」や「スパースコーディング」に近い手法を使い、
+<ul>
+<li>多数のニューロン活性化パターンから</li>
+<li>**スパースな基底ベクトル（特徴量）**を抽出します。<a href="https://www.anthropic.com/research/tracing-thoughts-language-model">Anthropic Research</a></li>
+</ul>
+</li>
+<li>これにより、「猫」「否定」「数値」など、<strong>人間が解釈しやすい概念に対応する特徴量</strong>を特定します。</li>
+</ul>
+<h3 id="4-ステップ2寄与度の計算attribution">4. ステップ2：寄与度の計算（Attribution）</h3>
+<p><strong>目的</strong></p>
+<ul>
+<li>「ある特徴量が、特定の出力（単語・トークン）にどれだけ寄与したか」を数値化します。</li>
+</ul>
+<p><strong>手法（概要）</strong></p>
+<ul>
+<li>入力トークン列 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">x</span></span></span></span> に対して、モデルが出力トークン <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span></span></span></span> を生成する過程で、
+<ul>
+<li>各特徴量 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>f</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">f_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.1076em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> が<strong>どれだけ活性化したか</strong></li>
+<li>その活性化が<strong>出力 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span></span></span></span> にどれだけ影響したか</strong><br>
+を計算します。</li>
+</ul>
+</li>
+<li>具体的には、<strong>勾配ベースの寄与度計算</strong>（例：integrated gradients, activation × gradient など）を用い、
+<ul>
+<li>「特徴量 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>f</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">f_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.1076em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> が出力 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span></span></span></span> に与えた寄与度 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>a</mi><mrow><mi>i</mi><mo>→</mo><mi>y</mi></mrow></msub></mrow><annotation encoding="application/x-tex">a_{i \to y}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7167em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mrel mtight">→</span><span class="mord mathnormal mtight" style="margin-right:0.03588em;">y</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span></span></span></span>」<br>
+を推定します。<a href="https://www.anthropic.com/research/tracing-thoughts-language-model">Anthropic Research</a></li>
+</ul>
+</li>
+</ul>
+<h3 id="5-ステップ3回路の構築circuit-construction">5. ステップ3：回路の構築（Circuit construction）</h3>
+<p><strong>目的</strong></p>
+<ul>
+<li>寄与度の高い特徴量同士を結びつけ、<strong>「入力 → 特徴量 → 出力」の経路（回路）</strong> をグラフとして構築します。</li>
+</ul>
+<p><strong>手法（概要）</strong></p>
+<ol>
+<li>
+<p><strong>ノードの定義</strong></p>
+<ul>
+<li>各特徴量 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>f</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">f_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.1076em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> をノードとします。</li>
+<li>入力トークンや出力トークンもノードとして含めます。</li>
+</ul>
+</li>
+<li>
+<p><strong>エッジの重み付け</strong></p>
+<ul>
+<li>特徴量 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>f</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">f_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.1076em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> から特徴量 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>f</mi><mi>j</mi></msub></mrow><annotation encoding="application/x-tex">f_j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9805em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:-0.1076em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span></span></span></span> への寄与度 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>a</mi><mrow><mi>i</mi><mo>→</mo><mi>j</mi></mrow></msub></mrow><annotation encoding="application/x-tex">a_{i \to j}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7167em;vertical-align:-0.2861em;"></span><span class="mord"><span class="mord mathnormal">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3117em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathnormal mtight">i</span><span class="mrel mtight">→</span><span class="mord mathnormal mtight" style="margin-right:0.05724em;">j</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2861em;"><span></span></span></span></span></span></span></span></span></span> を計算し、
+<ul>
+<li>寄与度が閾値以上のものを<strong>有向エッジ</strong>として追加します。</li>
+</ul>
+</li>
+<li>同様に、入力トークンから特徴量、特徴量から出力トークンへのエッジも追加します。</li>
+</ul>
+</li>
+<li>
+<p><strong>回路の抽出</strong></p>
+<ul>
+<li>特定の出力トークン <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span></span></span></span> に対して、
+<ul>
+<li>寄与度の高いノードとエッジだけを残し、<strong>サブグラフ（回路）</strong> を抽出します。</li>
+</ul>
+</li>
+<li>これが「Circuit tracing」で得られる<strong>attribution graph</strong>です。<a href="https://www.anthropic.com/research/tracing-thoughts-language-model">Anthropic Research</a></li>
+</ul>
+</li>
+</ol>
+<h3 id="6-具体的な例詩作タスクでの回路">6. 具体的な例：詩作タスクでの回路</h3>
+<ul>
+<li>入力：「Write a poem about the moon」</li>
+<li>出力：「The moon shines bright / In the dark of night ...」</li>
+</ul>
+<p>回路トレースでは、例えば次のような経路が可視化されます。</p>
+<ul>
+<li>入力トークン「moon」 → 特徴量「天体・夜」 → 特徴量「韻（-ight）」 → 出力トークン「bright」「night」</li>
+<li>ここで、「数単語先の韻を計画する」ような<strong>長距離の接続</strong>が観測され、<br>
+「単なる次トークン予測ではなく、構造的な計画がある」ことが示されます。<a href="https://www.anthropic.com/research/tracing-thoughts-language-model">Anthropic Research</a></li>
+</ul>
+<h3 id="7-技術的な工夫簡潔に">7. 技術的な工夫（簡潔に）</h3>
+<ul>
+<li><strong>スケーラビリティ</strong>：全ノード・全エッジを計算すると計算量が膨大になるため、
+<ul>
+<li>寄与度の高い特徴量に絞る</li>
+<li>層ごとにサンプリングする<br>
+などの工夫で現実的な計算量に抑えています。</li>
+</ul>
+</li>
+<li><strong>解釈性</strong>：特徴量を人間が理解しやすい概念（例：「猫」「否定」「数値」）に対応づけることで、<br>
+回路を**“読める形”**にしています。</li>
+</ul>
+<h3 id="8-回路トレースのアルゴリズム">8. 回路トレースのアルゴリズム</h3>
+<ol>
+<li><strong>特徴量の同定</strong>：LLM内部の活性化パターンから、意味のある特徴量を抽出。</li>
+<li><strong>寄与度の計算</strong>：各特徴量が出力にどれだけ寄与したかを勾配ベースで推定。</li>
+<li><strong>回路の構築</strong>：寄与度の高い特徴量同士を結び、入力→特徴量→出力の経路をグラフ化。</li>
+</ol>
+<p>これにより、<strong>「LLMがどう考えて答えを出したか」を、内部の計算経路として可視化</strong>できます。<a href="https://www.anthropic.com/research/tracing-thoughts-language-model">Anthropic Research</a></p>
+<h2 id="総括">総括</h2>
+<ul>
+<li>Anthropicの「Tracing the thoughts of a large language model」は、<br>
+<strong>LLM内部の情報の流れを“回路”として可視化する</strong>画期的な解釈可能性手法です。</li>
+<li>Claudeを対象にした実験から、
+<ul>
+<li>多言語間の共通概念空間</li>
+<li>詩作における先読み計画</li>
+<li>計算の並列経路</li>
+<li>忠実な推論 vs もっともらしい嘘の区別</li>
+<li>幻覚・拒否・安全ガードレールのメカニズム<br>
+など、<strong>LLMの“思考”の実態</strong>が具体的に明らかになりました。<a href="https://www.anthropic.com/research/tracing-thoughts-language-model">Anthropic Research</a></li>
+</ul>
+</li>
+</ul>
+<p>この研究は、「LLMをブラックボックスとして扱う」時代から、<br>
+<strong>「内部の計算プロセスを可視化し、安全性・信頼性を担保する」</strong> 時代への転換点として、非常に重要な位置づけにあります。</p>
+
+            <script async src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+</script>
+
+        </body>
+        </html>
