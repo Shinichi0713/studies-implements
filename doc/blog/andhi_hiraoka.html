@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&#x5e73;&#x5ca1;&#x30a2;&#x30f3;&#x30c7;&#x30a3;&#x3068;&#x306f;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+
+/* 記事タイトル (h1) */
+h1 {
+    font-size: 2rem;
+    color: #24292f;
+    line-height: 1.3;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 3px double #e1e4e8; /* 二重線で上品に */
+    text-align: center; /* タイトルを中央に寄せて特別感を出す */
+}
+
+/* セクション見出し (h2) */
+h2 {
+    font-size: 1.5rem;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(transparent 70%, #e8f0fe 70%); /* 下側に薄い色のアクセント */
+    border-left: 6px solid #0969da; /* 目次のテーマカラーと合わせる */
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* 強調文字 (strong) */
+strong {
+    font-weight: bold;
+    color: #cf222e; /* ホバー時の赤色と合わせて統一感を出す */
+    background: linear-gradient(transparent 60%, #fff2cc 60%); /* 黄色のマーカー風 */
+    padding: 0 2px;
+}
+
+/* 引用のコンテナ */
+blockquote {
+    position: relative;
+    padding: 20px 30px;
+    margin: 30px 0;
+    background-color: #f6f8fa; /* 目次の背景より少しだけ濃いグレー */
+    border-left: 5px solid #d0d7de; /* 落ち着いたグレーの境界線 */
+    color: #57606a; /* 文字色は少し薄くして引用らしさを出す */
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 引用符のアイコンを装飾として追加 */
+blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    font-size: 40px;
+    color: #d0d7de;
+    font-family: serif;
+    line-height: 1;
+}
+
+/* 読者になるボタンのデザイン */
+.btn-subscribe {
+    display: inline-block;
+    padding: 12px 35px; /* 横幅を広めにとって存在感を出します */
+    background-color: #383838; /* お好みの色に変更してください */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #555555;
+    text-decoration: none;
+}
+
+/* はてなブログで見えてしまう数式データを非表示にする */
+.katex-html {
+    display: none !important;
+}
+
+.katex-mathml {
+    display: inline !important;
+}
+/* Amazonカード型のオシャレなデザイン */
+.shop-card {
+    display: flex;
+    max-width: 500px;
+    margin: 20px auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* マウスホップした時の動き */
+.shop-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.shop-card-image {
+    width: 150px;
+    min-width: 150px;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shop-card-image img {
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+}
+
+.shop-card-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.shop-card-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.shop-card-description {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+/* Amazonらしいオレンジボタン */
+.shop-card-link a {
+    display: inline-block;
+    background-color: #ff9900;
+    color: #fff !important;
+    text-decoration: none !important;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.shop-card-link a:hover {
+    background-color: #e68a00;
+}
+
+/* スマホ対応：縦並びにする */
+@media (max-width: 480px) {
+    .shop-card {
+        flex-direction: column;
+        max-width: 100%;
+    }
+    .shop-card-image {
+        width: 100%;
+        height: 200px;
+    }
+}
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+
+
+            <p>先日の平岡アンディの世界戦がYouTubeにアップされてました。
+微妙な判定でしたが勝っていても違和感感じない内容でした。</p>
+<h2 id="平岡アンディとは">平岡アンディとは</h2>
+<p>平岡アンディ（本名：平岡アンディ・ジャスティス）は、<strong>神奈川県横浜市出身のプロボクサー</strong>で、<strong>大橋ボクシングジム所属</strong>です<a href="https://ja.wikipedia.org/wiki/%E5%B9%B3%E5%B2%A1%E3%82%A2%E3%83%B3%E3%83%87%E3%82%A3">Wikipedia</a>。</p>
+<h3 id="基本プロフィール">基本プロフィール</h3>
+<ul>
+<li>生年月日：<strong>1996年8月8日</strong><a href="https://ja.wikipedia.org/wiki/%E5%B9%B3%E5%B2%A1%E3%82%A2%E3%83%B3%E3%83%87%E3%82%A3">Wikipedia</a></li>
+<li>身長：<strong>182cm</strong><a href="https://boxmob.jp/sugotoku/boxer/boxer.html?boxer_id=3985">ボクシングモバイルEX</a></li>
+<li>階級：主に<strong>スーパーライト級（約63.5kg）</strong></li>
+<li>スタイル：<strong>左ボクサーファイター</strong>（サウスポー）<a href="https://boxmob.jp/sugotoku/boxer/boxer.html?boxer_id=3985">ボクシングモバイルEX</a></li>
+</ul>
+<h3 id="戦績とタイトル">戦績とタイトル</h3>
+<ul>
+<li>通算戦績：<strong>25戦24勝（19KO）1敗</strong><a href="https://boxmob.jp/sugotoku/boxer/boxer.html?boxer_id=3985">ボクシングモバイルEX</a></li>
+<li>獲得タイトル：
+<ul>
+<li><strong>2014年度 東日本ライト級新人王</strong><a href="https://ja.wikipedia.org/wiki/%E5%B9%B3%E5%B2%A1%E3%82%A2%E3%83%B3%E3%83%87%E3%82%A3">Wikipedia</a></li>
+<li><strong>日本スーパーライト級ユース王座</strong>（初代王者）<a href="https://boxmob.jp/sugotoku/boxer/boxer.html?boxer_id=3985">ボクシングモバイルEX</a></li>
+<li><strong>日本スーパーライト級王座</strong>（2度防衛）<a href="https://boxmob.jp/sugotoku/boxer/boxer.html?boxer_id=3985">ボクシングモバイルEX</a></li>
+<li><strong>WBOアジアパシフィック・スーパーライト級王座</strong>（4度防衛）<a href="https://boxmob.jp/sugotoku/boxer/boxer.html?boxer_id=3985">ボクシングモバイルEX</a></li>
+</ul>
+</li>
+</ul>
+<h3 id="特徴評価">特徴・評価</h3>
+<ul>
+<li><strong>KO率が高い（19KO）ボクサー</strong>です。カウンター、自分から詰めに行くことも出来る万能ボクサーです。<a href="https://boxmob.jp/sugotoku/boxer/boxer.html?boxer_id=3985">ボクシングモバイルEX</a>。</li>
+<li>得意パンチは「特になし」とされていますが、<strong>左ボクサーファイターとして、左右のパンチをバランスよく使うスタイル</strong>です<a href="https://boxmob.jp/sugotoku/boxer/boxer.html?boxer_id=3985">ボクシングモバイルEX</a>。</li>
+<li>現在は<strong>WBAスーパーライト級5位、WBC同級9位</strong>と、<strong>世界ランキング上位に名を連ねる世界挑戦候補</strong>です<a href="https://boxmob.jp/sugotoku/boxer/boxer.html?boxer_id=3985">ボクシングモバイルEX</a>。</li>
+</ul>
+<h3 id="経歴エピソード">経歴・エピソード</h3>
+<p>結構面白いエピソードあります。</p>
+<ul>
+<li>父は<strong>ガーナ系アメリカ人の元アマチュアボクサー</strong>、母は日本人で、4歳からボクシングを始めました<a href="https://ja.wikipedia.org/wiki/%E5%B9%B3%E5%B2%A1%E3%82%A2%E3%83%B3%E3%83%87%E3%82%A3">Wikipedia</a>。</li>
+<li>幼少期には『さんまのSUPERからくりTV』に「<strong>気弱なボクシング少年</strong>」として出演したことがあります<a href="https://ja.wikipedia.org/wiki/%E5%B9%B3%E5%B2%A1%E3%82%A2%E3%83%B3%E3%83%87%E3%82%A3">Wikipedia</a>。</li>
+<li>高校時代には<strong>陸上中距離種目で国体に出場</strong>するなど、<strong>アスリートとしての素質</strong>も持っています<a href="https://ja.wikipedia.org/wiki/%E5%B9%B3%E5%B2%A1%E3%82%A2%E3%83%B3%E3%83%87%E3%82%A3">Wikipedia</a>。</li>
+<li>プロとしてのキャリアを積む中で、<strong>単身ロサンゼルスで2年間の修行</strong>を経験し、国際的な視野も持つボクサーです<a href="https://ja.wikipedia.org/wiki/%E5%B9%B3%E5%B2%A1%E3%82%A2%E3%83%B3%E3%83%87%E3%82%A3">Wikipedia</a>。</li>
+</ul>
+<p><strong>まとめると、平岡アンディは</strong></p>
+<ul>
+<li>日本国内で<strong>新人王→ユース王座→日本王座→WBOアジアパシフィック王座</strong>と階段を上ってきた、</li>
+<li><strong>KO力のある左ボクサーファイター</strong>で、</li>
+<li>現在は<strong>世界ランキング上位に位置する、世界挑戦を狙う日本スーパーライト級のエース級ボクサー</strong>という位置づけです。</li>
+</ul>
+<h2 id="世界戦">世界戦</h2>
+<p>さあ、肝心の世界戦を堪能しましょう。</p>
+<p><a href="https://www.youtube.com/watch?v=yiER3bpfKV4">https://www.youtube.com/watch?v=yiER3bpfKV4</a></p>
+<p>※各ラウンドの感想は発言しますが、著者ブログでは採点を公表しません。</p>
+<p><strong>1R</strong></p>
+<p>オープニングは距離を見合う展開からです。アンディは懐深いです。カウンターが上手なので迂闊には入れません。
+チャンピョンも攻守にバランス良いのが分かります。</p>
+<p><strong>2R</strong></p>
+<p>平岡がデトロイトスタイルになりました。これがいつもの平岡のスタイルです。
+距離は終始平岡でボクシングすることになります。
+コーナー詰めても平岡、実はインファイトも上手です。</p>
+<p><strong>3R</strong></p>
+<p>チャンピョンが距離を縮めて来る展開になりました。
+とは言え、全体はアンディのペースだった気がします。</p>
+<p><strong>4R</strong></p>
+<p>単発の差し合いが多いですが、双方ヒットは少な目。
+前半は見せ場はありません。
+全体的にはどちらかというとアンディが試合支配していたようにも見えます。</p>
+<p><strong>5R</strong></p>
+<p>チャンピョンがブロー気味に手を出しながら距離を詰めてアンディにロープを背負わせますが、やはり当たりは出ません。
+距離はチャンピョンの距離に縮まったような感じがします。</p>
+<p><strong>6R</strong></p>
+<p>5Rと同様の展開。
+チャンピョンは近距離に持ち込もうとしますが、アンディも立ち位置を入れ替えて見せ場は未だという感じです。</p>
+<p><strong>7R</strong></p>
+<p>アンディのボディが決まりだします。
+そして、チャンピョンが距離を詰めたときにアンディの左ストレートが入りました。
+ボディと有効打によりダウンこそなかったもののアンディがとったと思います。
+この展開を5Rくらいに出来ていれば・・・。</p>
+<p><strong>8R</strong></p>
+<p>アンディのボディフェイントの後のボディブローが有効打になってました。
+このチャンピョンしぶといな・・・。
+ダウンとってもおかしくないあたりだったと思います。
+チャンピョンはボディを嫌がっているのはわかりました。
+アンディに少し疲れが見えてきました。ジャブの切れが落ちてきて距離の維持が難しくなっている気がします。</p>
+<p><strong>9R</strong></p>
+<p>アンディのスタンスが変わり、積極的に前に出るようになりました。チャンピョンが今度はアウトに構えるようになりました。
+アンディの左アッパーが入りましたが、チャンピョンは倒れない。タフやなーという感じです。</p>
+<p><strong>10R</strong></p>
+<p>アンディがローブローで1P取られました。
+確かに低い・・・。
+これで倒さないと勝てなくなりました。
+肝心の試合はここは双方ヒットなし。</p>
+<p><strong>11R</strong></p>
+<p>アンディが1発フックをもらったように見えました。コンビネーションでもらうと危ないという当りでした。
+アンディもボディで良いあたりがありました。</p>
+<p><strong>12R</strong></p>
+<p>攻勢でアンディが攻め切りましたが、チャンピョンのディフェンスで防ぎきられました。</p>
+<h2 id="総評">総評</h2>
+<p>試合はペースは握っていたような気がします。実力は拮抗でした。
+ジャッジ一人変な採点してたなー。。。という気がします。
+有効打はアンディのように見えましたが、積極的な構成はチャンピョンでしょうか。</p>
+<p>アンディが世界取れないとなると、日本でスーパーライト付近の中量級はしばらく日本人では手が出ない可能性があります。</p>
+<p>勝ってほしかった。。。</p>
+
+
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+</script>
+
+
+            
+        </body>
+        </html>
