@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&#x51fa;&#x81ea;&#x30fb;&#x751f;&#x3044;&#x7acb;&#x3061;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+/* 目次全体のコンテナ */
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+
+/* 記事タイトル (h1) */
+h1 {
+    font-size: 2rem;
+    color: #24292f;
+    line-height: 1.3;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 3px double #e1e4e8; /* 二重線で上品に */
+    text-align: center; /* タイトルを中央に寄せて特別感を出す */
+}
+
+/* セクション見出し (h2) */
+h2 {
+    font-size: 1.5rem;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(transparent 70%, #e8f0fe 70%); /* 下側に薄い色のアクセント */
+    border-left: 6px solid #0969da; /* 目次のテーマカラーと合わせる */
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* 強調文字 (strong) */
+strong {
+    font-weight: bold;
+    color: #cf222e; /* ホバー時の赤色と合わせて統一感を出す */
+    background: linear-gradient(transparent 60%, #fff2cc 60%); /* 黄色のマーカー風 */
+    padding: 0 2px;
+}
+
+/* 引用のコンテナ */
+blockquote {
+    position: relative;
+    padding: 20px 30px;
+    margin: 30px 0;
+    background-color: #f6f8fa; /* 目次の背景より少しだけ濃いグレー */
+    border-left: 5px solid #d0d7de; /* 落ち着いたグレーの境界線 */
+    color: #57606a; /* 文字色は少し薄くして引用らしさを出す */
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 引用符のアイコンを装飾として追加 */
+blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    font-size: 40px;
+    color: #d0d7de;
+    font-family: serif;
+    line-height: 1;
+}
+
+/* 読者になるボタンのデザイン */
+.btn-subscribe {
+    display: inline-block;
+    padding: 12px 35px; /* 横幅を広めにとって存在感を出します */
+    background-color: #383838; /* お好みの色に変更してください */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #555555;
+    text-decoration: none;
+}
+
+/* はてなブログで見えてしまう数式データを非表示にする */
+.katex-html {
+    display: none !important;
+}
+
+.katex-mathml {
+    display: inline !important;
+}
+/* Amazonカード型のオシャレなデザイン */
+.shop-card {
+    display: flex;
+    max-width: 500px;
+    margin: 20px auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* マウスホップした時の動き */
+.shop-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.shop-card-image {
+    width: 150px;
+    min-width: 150px;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shop-card-image img {
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+}
+
+.shop-card-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.shop-card-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.shop-card-description {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+/* Amazonらしいオレンジボタン */
+.shop-card-link a {
+    display: inline-block;
+    background-color: #ff9900;
+    color: #fff !important;
+    text-decoration: none !important;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.shop-card-link a:hover {
+    background-color: #e68a00;
+}
+
+/* スマホ対応：縦並びにする */
+@media (max-width: 480px) {
+    .shop-card {
+        flex-direction: column;
+        max-width: 100%;
+    }
+    .shop-card-image {
+        width: 100%;
+        height: 200px;
+    }
+}
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+
+
+            <p>大河ドラマでテーマとなってきている織田 VS 浅井・朝倉の連合。
+浅井の総司令官は浅井長政、朝倉は誰でしょう？
+朝倉の当主・朝倉義景でしょうか。
+違います。朝倉景健です。</p>
+<p>正直、誰それ？だと思いますので、今日説明していきます。</p>
+<h2 id="出自生い立ち">出自・生い立ち</h2>
+<p>朝倉景健の出自と生い立ちについて、分かっている範囲を整理します。</p>
+<h3 id="出自">出自</h3>
+<ul>
+<li>
+<p><strong>家系</strong><br>
+朝倉氏の一族で、<strong>朝倉義景</strong>の従兄弟にあたる人物とされています。<br>
+朝倉氏は越前（現在の福井県東部）を本拠とした戦国大名で、景健はその一門衆（いちもんしゅう）＝有力な一族として位置づけられていました。</p>
+</li>
+<li>
+<p><strong>血縁関係</strong><br>
+父は<strong>朝倉景隆</strong>とされ、朝倉宗家（義景家）とは近い血縁関係にありました。<br>
+一門衆として家格が高く、軍事・政治の両面で重要な役割を担う立場にありました。</p>
+</li>
+</ul>
+<h3 id="生い立ちわかっている範囲">生い立ち（わかっている範囲）</h3>
+<p><img src="file:///d:\PycharmProjects\ScienceCalculation\studies-implements\doc\blog\image\30_Takakage_Asakura\1776476510883.png" alt="1776476510883"></p>
+<ul>
+<li>
+<p><strong>生年</strong><br>
+正確な生年ははっきりしない史料が多く、はっきりとは伝わっていません。<br>
+ただし、朝倉義景（1533年生）の従兄弟とされることから、<strong>16世紀前半〜中頃の生まれ</strong>と推定されます。</p>
+</li>
+<li>
+<p><strong>幼少期・青年期</strong><br>
+具体的な幼少期のエピソードはほとんど伝わっていませんが、</p>
+<ul>
+<li>朝倉氏の一門として越前で育った</li>
+<li>戦国大名の一門にふさわしい武芸・軍学の教育を受けた<br>
+とみなすのが一般的です。</li>
+</ul>
+</li>
+<li>
+<p><strong>史料上の登場</strong><br>
+景健が史料に明確に登場するのは、主に<strong>織田信長との対立が激化した時期</strong>（1560年代後半〜1570年代）です。<br>
+姉川の戦いや、浅井長政との連携による織田軍との戦いで、朝倉軍の前線指揮官として活躍したことが記録されています。</p>
+</li>
+</ul>
+<h2 id="朝倉景健の活躍">朝倉景健の活躍</h2>
+<p>朝倉景健の主な活躍を、時系列順に整理します。
+かなりいきなりですが、姉川の戦いが実績として明らかになる初めのイベントでした。</p>
+<h3 id="1570年家督相続と姉川の戦い">1570年：家督相続と姉川の戦い</h3>
+<ul>
+<li>父・景隆と兄たちが相次いで死去したため、<strong>家督を継承</strong><a href="https://ibispedia.com/asakurakagetake">土岐日記</a>。</li>
+<li>同年の<strong>姉川の戦い</strong>では、朝倉軍の<strong>総大将</strong>として約8,000の兵を率いて出陣<a href="https://ibispedia.com/asakurakagetake">土岐日記</a>。
+<ul>
+<li>浅井長政と連携して織田・徳川連合軍と戦うが、敗北。</li>
+<li>しかし、この戦いで景健は朝倉軍の指揮官として初めて大規模な戦闘を経験し、その後の戦いでも重要な役割を担うことになります。</li>
+</ul>
+</li>
+</ul>
+<h3 id="1570年志賀の陣下坂本の合戦">1570年：志賀の陣（下坂本の合戦）</h3>
+<ul>
+<li>姉川の戦いの後、織田信長が浅井・朝倉方を攻める<strong>志賀の陣</strong>（下坂本の合戦）が続く。</li>
+<li>この戦いで景健は、<strong>織田方の有力武将・森可成（もり よしなり）と織田信治（おだ のぶはる）を討ち取る</strong>という大きな戦果を挙げる<a href="https://ibispedia.com/asakurakagetake">土岐日記</a>。
+<ul>
+<li>織田軍の有力武将を討ち取ったことで、朝倉軍の士気を保ち、織田軍の進撃を一時的に食い止める役割を果たしました。</li>
+</ul>
+</li>
+</ul>
+<h3 id="1573年刀根坂の戦い">1573年：刀根坂の戦い</h3>
+<ul>
+<li>織田信長が浅井氏を降した後、本格的に越前へ侵攻。</li>
+<li><strong>刀根坂の戦い</strong>で朝倉軍は大敗するが、景健は奮戦し、<strong>主君・朝倉義景を一乗谷へ逃がすことに成功</strong><a href="https://ibispedia.com/asakurakagetake">土岐日記</a>。
+<ul>
+<li>敗戦の中でも主君の命を守るために戦い抜き、朝倉家滅亡直前の最後の大規模合戦で重要な役割を果たしました。</li>
+</ul>
+</li>
+</ul>
+<h3 id="1573年朝倉家滅亡と織田への降伏">1573年：朝倉家滅亡と織田への降伏</h3>
+<ul>
+<li>刀根坂の敗戦後、朝倉義景は一乗谷を追われ、<strong>自害</strong>。</li>
+<li>景健は織田信長に降伏し、<strong>「安居景健（あご かげたけ）」と改名</strong>して織田方に仕えることになる<a href="https://ibispedia.com/asakurakagetake">土岐日記</a>。</li>
+</ul>
+<h3 id="1574年越前一向一揆への降伏">1574年：越前一向一揆への降伏</h3>
+<ul>
+<li>越前で<strong>一向一揆</strong>が蜂起し、織田方の支配が揺らぐ。</li>
+<li>景健は<strong>一向一揆側に降伏</strong>し、織田方から離反<a href="https://ibispedia.com/asakurakagetake">土岐日記</a>。
+<ul>
+<li>戦国時代の動乱の中で、生き残りを図るための苦渋の選択とされています。</li>
+</ul>
+</li>
+</ul>
+<h3 id="1575年織田軍再侵攻と最期">1575年：織田軍再侵攻と最期</h3>
+<ul>
+<li>織田信長が越前へ再侵攻し、一向一揆勢力を攻撃。</li>
+<li>景健は、<strong>一揆の指揮官・下間頼照（しもつま らいしょう）と頼俊（らいしゅん）の首を持参して助命を請う</strong>が、信長に認められず、<strong>自害を命じられる</strong><a href="https://ibispedia.com/asakurakagetake">土岐日記</a>。
+<ul>
+<li>これにより、朝倉一門の有力武将としての生涯を終えました。</li>
+</ul>
+</li>
+</ul>
+<h3 id="まとめ">まとめ</h3>
+<ul>
+<li>景健は、<strong>姉川の戦いで朝倉軍総大将</strong>として登場し、<strong>志賀の陣で織田方の有力武将を討ち取る</strong>活躍を見せました。</li>
+<li>その後、<strong>刀根坂の戦いで主君・義景を逃がす</strong>など、朝倉家滅亡直前まで奮戦。</li>
+<li>朝倉滅亡後は、<strong>織田→一向一揆と所属を変えながらも、最終的には1575年に自害</strong>という形で生涯を閉じています。</li>
+</ul>
+<h2 id="力量">力量</h2>
+<p>実績を総括するいつものまとめだと面白くなかったので、整理の方法を変えてみます。
+朝倉景健の実績から、あくまで推測として力量を整理すると、次のように評価できます。</p>
+<h3 id="1-軍事指揮能力中中上程度の将">1. 軍事指揮能力：中〜中上程度の将</h3>
+<ul>
+<li>
+<p><strong>大軍の指揮経験</strong><br>
+姉川の戦いで<strong>約8,000の朝倉軍を総大将として率いた</strong>ことから、</p>
+<ul>
+<li>一門衆として家格が高く、大軍をまとめる立場にあった</li>
+<li>大規模合戦の指揮経験がある<br>
+という点で、<strong>軍団指揮官として一定の力量があった</strong>と推測できます<a href="https://ibispedia.com/asakurakagetake">土岐日記</a>。</li>
+</ul>
+</li>
+<li>
+<p><strong>戦果を挙げた実績</strong><br>
+志賀の陣（下坂本の合戦）で、<strong>森可成・織田信治という織田方の有力武将を討ち取る</strong>戦果を挙げています<a href="https://ibispedia.com/asakurakagetake">土岐日記</a>。</p>
+<ul>
+<li>これは局地戦での勝利であり、<strong>戦術的な采配・部隊運用が一定レベル以上だった</strong>ことを示唆します。</li>
+</ul>
+</li>
+<li>
+<p><strong>敗戦の中での奮戦</strong><br>
+刀根坂の戦いでは朝倉軍は大敗しますが、景健は<strong>主君・義景を一乗谷へ逃がすことに成功</strong>しています<a href="https://ibispedia.com/asakurakagetake">土岐日記</a>。</p>
+<ul>
+<li>劣勢でも戦線を維持し、主君の退却を支える役割を果たしたことから、<strong>危機対応能力や忠誠心に基づく戦闘継続力は高かった</strong>と評価できます。</li>
+</ul>
+</li>
+</ul>
+<p><strong>総合すると</strong>：</p>
+<ul>
+<li>大軍の指揮・局地戦での勝利・敗戦時の撤退指揮という実績から、<strong>軍事的には中〜中上クラスの将</strong>と見るのが妥当です。</li>
+<li>ただし、織田信長のような戦略的・大局的な勝利を連発したわけではないので、<strong>戦国トップクラスの名将というよりは「一門の有力指揮官」レベル</strong>と考えるのが自然です。</li>
+</ul>
+<h3 id="2-政治判断生き残り戦略やや苦しい選択を重ねた">2. 政治判断・生き残り戦略：やや苦しい選択を重ねた</h3>
+<ul>
+<li>
+<p><strong>織田への降伏と改名</strong><br>
+朝倉滅亡後、<strong>織田信長に降伏し「安居景健」と改名</strong>して仕えた<a href="https://ibispedia.com/asakurakagetake">土岐日記</a>。</p>
+<ul>
+<li>これは、主家滅亡後の<strong>生き残り策としては現実的</strong>で、一定の柔軟性があったと評価できます。</li>
+</ul>
+</li>
+<li>
+<p><strong>一向一揆への鞍替え</strong><br>
+その後、越前一向一揆が起こると、<strong>一揆側に降伏して織田方から離反</strong>しています<a href="https://ibispedia.com/asakurakagetake">土岐日記</a>。</p>
+<ul>
+<li>時勢に合わせて所属を変える<strong>政治的柔軟性</strong>はある一方、</li>
+<li>織田方→一揆方と<strong>立場を二転三転させた</strong>ことで、信長から見れば「信用しにくい人物」と映った可能性があります。</li>
+</ul>
+</li>
+<li>
+<p><strong>最期の交渉失敗</strong><br>
+1575年に織田軍が再侵攻した際、<strong>一揆の指揮官・下間頼照・頼俊の首を持参して助命を請う</strong>が、認められず自害を命じられています<a href="https://ibispedia.com/asakurakagetake">土岐日記</a>。</p>
+<ul>
+<li>これは、<strong>生き残りを図るための交渉術は発揮した</strong>ものの、</li>
+<li>信長の「朝倉一門を根絶やしにする」方針の前では<strong>政治的影響力が限定的</strong>だったことを示します。</li>
+</ul>
+</li>
+</ul>
+<p><strong>総合すると</strong>：</p>
+<ul>
+<li>景健は、<strong>生き残りを優先する現実的な判断</strong>を繰り返した武将ですが、</li>
+<li>戦国後期の信長政権下では、<strong>一門としての出自が重く、立場を変えても信頼を得にくい</strong>という限界がありました。</li>
+<li>政治力・交渉力は<strong>中程度〜やや苦しいレベル</strong>と評価せざるを得ません。</li>
+</ul>
+<h3 id="3-一門としての役割">3. 一門としての役割</h3>
+<ul>
+<li>
+<p><strong>義景を逃がした功績</strong><br>
+刀根坂の戦いで、敗戦の中でも<strong>義景を一乗谷へ逃がす</strong>ことに成功した点から、</p>
+<ul>
+<li>一門として<strong>主君への忠誠心は高かった</strong>と推測できます<a href="https://ibispedia.com/asakurakagetake">土岐日記</a>。</li>
+</ul>
+</li>
+<li>
+<p><strong>一門の重鎮としての役割</strong><br>
+姉川の戦いで総大将を務めたことから、<strong>朝倉家の中核的な軍事指揮官</strong>として期待されていたことが分かります。</p>
+</li>
+</ul>
+<p><strong>総合すると</strong>：</p>
+<ul>
+<li>軍事面では<strong>一門の重鎮として一定の信頼と力量があった</strong>。</li>
+<li>しかし、朝倉家全体の命運を左右するほどの<strong>戦略的・政治的な影響力までは持っていなかった</strong>と見るのが妥当です。</li>
+</ul>
+<h3 id="4-力量の総合評価推測">4. 力量の総合評価（推測）</h3>
+<ul>
+<li><strong>軍事力</strong>：中〜中上
+<ul>
+<li>大軍指揮・局地戦での勝利・敗戦時の撤退指揮という実績から、<strong>戦国大名の一門としては十分な力量</strong>。</li>
+</ul>
+</li>
+<li><strong>政治力・交渉力</strong>：中〜やや低め
+<ul>
+<li>生き残りを図る柔軟性はあるが、<strong>信長政権下では立場を変えても信頼を得られず、最期は自害</strong>という結末。</li>
+</ul>
+</li>
+<li><strong>一門としての役割</strong>：高め
+<ul>
+<li>義景を逃がすなど、<strong>主家へのモラルは強かった</strong>と評価できる。</li>
+</ul>
+</li>
+</ul>
+<p><strong>結論として</strong>：<br>
+朝倉景健は、<strong>朝倉一門の有力指揮官として一定の軍事能力を持ち、主家滅亡後も生き残りを図る現実的な武将</strong>でしたが、<br>
+戦国時代のトップクラスの武将たちと比べると、<strong>戦略的・政治的な影響力は限定的</strong>だったと推測しました。
+こういう人物を朝倉の司令官として立てる必要があったくらい朝倉家の人事制度は中世の色合いから脱却してなかったんだ、というのが個人的な思いです。</p>
+
+最後に本の紹介です。
+本日説明した朝倉景健のバックグランドは歴史の中で注目はされません。
+けれども当時の近畿や織田のライバルの目からどう映るかを知ることでわかることが多いと思います。
+そんなケースに面白く感じた本です。
+
+<div class="shop-card">
+    <div class="shop-card-image">
+        <img src="https://m.media-amazon.com/images/I/51KUAfhFPZL.jpg" alt="商品画像">
+    </div>
+    <div class="shop-card-content">
+        <div class="shop-card-title">朝倉義景のすべて</div>
+        <div class="shop-card-description">戦国朝倉家について詳解されているが，義景については読んでもあまりイメージが湧いてこない．これは筆者の書き方の問題というより，朝倉義景という人物像そのものを表しているような気がする．本書を読んで知ったが，朝倉家臣団にはそれなりにしっかりした人物がおり，組織の規模も同時代としては決して小さくなかったようだ。</div>
+        <div class="shop-card-link">
+            <a href="https://www.amazon.co.jp/%E6%9C%9D%E5%80%89%E7%BE%A9%E6%99%AF%E3%81%AE%E3%81%99%E3%81%B9%E3%81%A6-%E6%9D%BE%E5%8E%9F-%E4%BF%A1%E4%B9%8B/dp/4404031335?__mk_ja_JP=%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A&crid=22289F1GTQKMH&dib=eyJ2IjoiMSJ9.7XLyZ9j0SEWFtjNnn4m3G1NAHVhrk-TXPYzU6VllVzZQ6x5tln5N7h61xJ5QVEmzBURmO3u8mqwHCEu3e6ysCZTcmQ6bdVXtg1521g4fH45GdZK227qVtlSDHbgRn_lGhreihmQtAaAst_vnnFQqfXw_q9A8ZgCuJCYaS6Tg4c6dKCbE4y2n_n9NGCtD1KRhAEGICb_F_VHznzN4pw1V5JTdHyMDBn5fgeapRM5k8-isbgO78U-jQwxAq7kIYZE47qXCmE5QDDxBjJ-c5WaAosH9e43sUO4YyDDotZXPgh0.ElT4HvQJumtK4XEKTer1mKYcNaw_96pSBJKV99kDdVs&dib_tag=se&keywords=%E6%9C%9D%E5%80%89%E7%BE%A9%E6%99%AF&qid=1776476543&sprefix=%E6%9C%9D%E5%80%89%E7%BE%A9%E6%99%AF%2Caps%2C184&sr=8-7&linkCode=ll2&tag=yoshishinnze-22&linkId=1257cdaf13f7264f3f42a77294d25c80&ref_=as_li_ss_tl" target="_blank" rel="noopener">Amazonで詳細を見る</a>
+        </div>
+    </div>
+</div>
+
+<p></p>
+
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+</script>
+
+
+            
+        </body>
+        </html>
