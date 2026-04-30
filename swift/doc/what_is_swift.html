@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&#x6982;&#x8981;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+
+/* 記事タイトル (h1) */
+h1 {
+    font-size: 2rem;
+    color: #24292f;
+    line-height: 1.3;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 3px double #e1e4e8; /* 二重線で上品に */
+    text-align: center; /* タイトルを中央に寄せて特別感を出す */
+}
+
+/* セクション見出し (h2) */
+h2 {
+    font-size: 1.5rem;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(transparent 70%, #e8f0fe 70%); /* 下側に薄い色のアクセント */
+    border-left: 6px solid #0969da; /* 目次のテーマカラーと合わせる */
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* 強調文字 (strong) */
+strong {
+    font-weight: bold;
+    color: #cf222e; /* ホバー時の赤色と合わせて統一感を出す */
+    background: linear-gradient(transparent 60%, #fff2cc 60%); /* 黄色のマーカー風 */
+    padding: 0 2px;
+}
+
+/* 引用のコンテナ */
+blockquote {
+    position: relative;
+    padding: 20px 30px;
+    margin: 30px 0;
+    background-color: #f6f8fa; /* 目次の背景より少しだけ濃いグレー */
+    border-left: 5px solid #d0d7de; /* 落ち着いたグレーの境界線 */
+    color: #57606a; /* 文字色は少し薄くして引用らしさを出す */
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 引用符のアイコンを装飾として追加 */
+blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    font-size: 40px;
+    color: #d0d7de;
+    font-family: serif;
+    line-height: 1;
+}
+
+/* 読者になるボタンのデザイン */
+.btn-subscribe {
+    display: inline-block;
+    padding: 12px 35px; /* 横幅を広めにとって存在感を出します */
+    background-color: #383838; /* お好みの色に変更してください */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #555555;
+    text-decoration: none;
+}
+
+/* はてなブログで見えてしまう数式データを非表示にする */
+.katex-html {
+    display: none !important;
+}
+
+.katex-mathml {
+    display: inline !important;
+}
+/* Amazonカード型のオシャレなデザイン */
+.shop-card {
+    display: flex;
+    max-width: 500px;
+    margin: 20px auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* マウスホップした時の動き */
+.shop-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.shop-card-image {
+    width: 150px;
+    min-width: 150px;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shop-card-image img {
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+}
+
+.shop-card-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.shop-card-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.shop-card-description {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+/* Amazonらしいオレンジボタン */
+.shop-card-link a {
+    display: inline-block;
+    background-color: #ff9900;
+    color: #fff !important;
+    text-decoration: none !important;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.shop-card-link a:hover {
+    background-color: #e68a00;
+}
+
+/* スマホ対応：縦並びにする */
+@media (max-width: 480px) {
+    .shop-card {
+        flex-direction: column;
+        max-width: 100%;
+    }
+    .shop-card-image {
+        width: 100%;
+        height: 200px;
+    }
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+
+            <p>iPhoneアプリの開発をほんのちょっと必要になったので、開発に対応できるプログラム言語を調べました。
+そして出てきたのがSwiftです。
+どんな言語か興味がわいたので調べてみました。</p>
+<h2 id="概要">概要</h2>
+<p>Swift（スウィフト）は、Appleが2014年に公開した<strong>モダンな汎用プログラミング言語</strong>です。主にiOS、macOS、watchOS、tvOSなどのAppleプラットフォーム向けアプリ開発で使われますが、サーバーサイドやLinux環境でも利用できます。</p>
+<h3 id="主な特徴">主な特徴</h3>
+<ol>
+<li>
+<p><strong>安全性とパフォーマンスを重視</strong></p>
+<ul>
+<li>コンパイル時に多くのエラーを検出する「型安全」な言語で、メモリ管理も自動（ARC）なので、比較的安全に書けます。</li>
+<li>実行速度はC言語に近い水準を目指しており、高速です。</li>
+</ul>
+</li>
+<li>
+<p><strong>モダンで読みやすい構文</strong></p>
+<ul>
+<li>冗長になりがちなObjective-Cと比べて、シンプルで直感的な文法になっています。</li>
+<li>例：<code>print(&quot;Hello, world!&quot;)</code> だけで出力できます。</li>
+</ul>
+</li>
+<li>
+<p><strong>オープンソース</strong></p>
+<ul>
+<li>2015年にオープンソース化され、Apple以外の環境（Linux、Windowsなど）でも使えます。</li>
+<li>言語仕様や標準ライブラリ、コンパイラ（LLVMベース）が公開されています。</li>
+</ul>
+</li>
+<li>
+<p><strong>マルチパラダイム</strong></p>
+<ul>
+<li>オブジェクト指向、関数型、プロトコル指向プログラミングなど、複数のスタイルを柔軟に組み合わせられます。</li>
+</ul>
+</li>
+<li>
+<p><strong>Playgroundと対話的開発</strong></p>
+<ul>
+<li>XcodeのPlayground機能で、コードを書きながらリアルタイムに結果を確認できます。学習やプロトタイピングに便利です。</li>
+</ul>
+</li>
+</ol>
+<h3 id="主な用途">主な用途</h3>
+<ul>
+<li><strong>iOS / iPadOS / macOSアプリ開発</strong>
+<ul>
+<li>iPhoneやMacのネイティブアプリは、現在はほとんどSwiftで書かれています。</li>
+</ul>
+</li>
+<li><strong>サーバーサイド開発</strong>
+<ul>
+<li>VaporやKituraといったWebフレームワークがあり、バックエンドAPIやWebサービスも構築可能です。</li>
+</ul>
+</li>
+<li><strong>LinuxやWindowsでの開発</strong>
+<ul>
+<li>公式ツールチェーンやサードパーティの環境整備により、クロスプラットフォーム開発にも使われています。</li>
+</ul>
+</li>
+</ul>
+<h3 id="歴史ざっくり">歴史（ざっくり）</h3>
+<ul>
+<li>2014年：WWDCで発表、Objective-Cの後継として位置づけ。</li>
+<li>2015年：Swift 2.0でオープンソース化。</li>
+<li>2019年：Swift 5でABI安定化（バイナリ互換が安定）。</li>
+<li>現在：Appleエコシステムの標準言語として広く普及。</li>
+</ul>
+<h3 id="どんな人に向いているか">どんな人に向いているか</h3>
+<ul>
+<li>iPhoneアプリやMacアプリを作りたい人</li>
+<li>モダンで安全な言語を学びたい人</li>
+<li>C/C++/Objective-Cの「古めかしさ」を避けたい人</li>
+</ul>
+<h2 id="現状の立ち位置">現状の立ち位置</h2>
+<p>Swiftは、<strong>「特定の目的（Apple系アプリ開発）に強い、中級〜上級寄りの学習言語」</strong> というポジションに近いです。</p>
+<h3 id="学習言語としての位置づけ">学習言語としての位置づけ</h3>
+<p><strong>1. 最初の言語としては「ややニッチだが有力な選択肢」</strong></p>
+<ul>
+<li>
+<p><strong>メリット</strong></p>
+<ul>
+<li>Appleプラットフォーム（iPhone / iPad / Mac）のアプリ開発に直結するので、モチベーションが維持しやすい。</li>
+<li>モダンで安全な設計（型安全、ARCなど）のため、<strong>良いプログラミング習慣</strong>を身につけやすい。</li>
+<li>Playgroundで対話的に試せるので、初心者でも「動かす楽しさ」を感じやすい。</li>
+</ul>
+</li>
+<li>
+<p><strong>デメリット</strong></p>
+<ul>
+<li>学習環境が<strong>Mac必須</strong>（Windows/Linuxでは環境構築がやや面倒）。</li>
+<li>iOS/macOSアプリ開発以外の用途（Web、ゲーム、データ分析など）では、PythonやJavaScriptほど汎用的ではない。</li>
+<li>型やオプショナルなど、初心者には少し難しい概念が早い段階で出てくる。</li>
+</ul>
+</li>
+</ul>
+<p><strong>2. 他の言語との比較での位置づけ</strong></p>
+<ul>
+<li>
+<p><strong>Python</strong>：<br>
+データ分析・AI・Web・スクリプトなど用途が広く、初学者向けの教材も豊富。<br>
+→ 「まずプログラミングの全体像を掴みたい人」向け。</p>
+</li>
+<li>
+<p><strong>JavaScript</strong>：<br>
+Webフロントエンドが中心で、ブラウザですぐ動かせる。<br>
+→ 「Webアプリを作りたい人」向け。</p>
+</li>
+<li>
+<p><strong>Swift</strong>：<br>
+Appleデバイス向けアプリ開発が主戦場。<br>
+→ <strong>「iPhoneアプリを作りたい」という明確な目的がある人</strong>向け。</p>
+</li>
+</ul>
+<p><strong>3. 学習段階別のポジション</strong></p>
+<ul>
+<li>
+<p><strong>初心者（初めての言語）</strong></p>
+<ul>
+<li>「iPhoneアプリを作りたい」という強い動機があるなら、Swiftは十分に良い選択肢です。</li>
+<li>そうでなければ、PythonやJavaScriptの方が<strong>環境構築のハードルが低く、応用範囲も広い</strong>ことが多いです。</li>
+</ul>
+</li>
+<li>
+<p><strong>中級者（1つ以上言語を触ったことがある人）</strong></p>
+<ul>
+<li>Swiftは「モダンな静的型付け言語」として、<strong>良いステップアップ先</strong>になります。</li>
+<li>型安全性、プロトコル指向、メモリ管理（ARC）などを学ぶことで、より堅牢なコードの書き方を身につけられます。</li>
+</ul>
+</li>
+<li>
+<p><strong>上級者・プロ</strong></p>
+<ul>
+<li>Appleエコシステムの標準言語として、iOS/macOS開発では必須スキルです。</li>
+<li>サーバーサイド（Vaporなど）やクロスプラットフォーム開発でも使われていますが、まだPython/Java/Goほど主流ではありません。</li>
+</ul>
+</li>
+</ul>
+<h2 id="学習するメリット">学習するメリット</h2>
+<p>Swiftを学ぶメリットは、大きく分けて次の4つです。</p>
+<h3 id="1-appleプラットフォームのアプリ開発に直結する">1. Appleプラットフォームのアプリ開発に直結する</h3>
+<ul>
+<li>iPhone、iPad、Mac、Apple Watch、Apple TVなど、<strong>Apple製品向けのネイティブアプリ</strong>は、ほぼSwift（またはObjective-C）で書かれています。</li>
+<li>Appleが公式に推奨している言語なので、<strong>ドキュメント・サンプルコード・コミュニティ</strong>が豊富です。</li>
+<li>「自分のアプリをApp Storeに出したい」という目標がある場合、Swiftはほぼ必須スキルになります。</li>
+</ul>
+<h3 id="2-モダンで安全な言語設計を学べる">2. モダンで安全な言語設計を学べる</h3>
+<p>Swiftは、C++やObjective-Cの反省を踏まえて設計された「モダンな言語」です。</p>
+<ul>
+<li><strong>型安全</strong>：コンパイル時に多くのエラーを検出してくれるので、実行時エラーを減らせます。</li>
+<li><strong>メモリ管理（ARC）</strong>：メモリ管理を自動で行ってくれるため、メモリリークや不正アクセスのリスクが減ります。</li>
+<li><strong>オプショナル型</strong>：<code>nil</code>（値がない状態）を明示的に扱う仕組みがあり、「ぬるぽ（null参照）」によるクラッシュを防ぎやすいです。</li>
+<li><strong>プロトコル指向プログラミング</strong>：クラス継承に頼らず、プロトコル（インターフェース）で設計するスタイルを学べます。</li>
+</ul>
+<p>これらは、<strong>「良いコードを書く習慣」</strong> を身につける上で非常に役立ちます。</p>
+<h3 id="3-学習環境教材が充実している">3. 学習環境・教材が充実している</h3>
+<ul>
+<li>Apple公式の<strong>Swift Playgrounds</strong>アプリや、Xcodeの<strong>Playground</strong>機能で、対話的にコードを試せます。</li>
+<li>公式ドキュメントやWWDCのセッション動画、書籍、オンラインコースなど、<strong>学習リソースが豊富</strong>です。</li>
+<li>iOS/macOSアプリ開発の需要が高いため、<strong>「実務に近い形で学べる」</strong> 教材も多いです。</li>
+</ul>
+<h3 id="4-キャリア市場価値の面で有利">4. キャリア・市場価値の面で有利</h3>
+<ul>
+<li>iOS/macOSアプリ開発の求人は多く、<strong>Swiftスキルを持つエンジニアの需要は高い</strong>です。</li>
+<li>Appleエコシステムは高単価のユーザーが多いため、アプリビジネスも比較的成立しやすい傾向があります。</li>
+<li>サーバーサイド（Vaporなど）やクロスプラットフォーム開発でも使われ始めており、<strong>応用範囲が広がりつつあります</strong>。</li>
+</ul>
+<h2 id="まとめ">まとめ</h2>
+<ul>
+<li><strong>「iPhoneアプリを作りたい」という目的がはっきりしている人</strong>にとっては、Swiftは<strong>非常に良い学習言語</strong>です。</li>
+<li>目的がまだ曖昧な場合や、Windows/Linux中心の環境で学ぶ場合は、<strong>PythonやJavaScriptを先に学び、その後Swiftに進む</strong>のが現実的です。</li>
+<li>プログラミング教育全体では、「初心者向けの汎用言語」というより、**「Appleプラットフォーム開発に特化した中級〜上級向けの実用言語」**という位置づけが近いです。</li>
+</ul>
+<p>もし「自分はこういう目的で学びたい」という前提があれば、その条件に合わせて「Swiftが向いているかどうか」をもう少し具体的にアドバイスできます。</p>
+
+
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+</script>
+
+            
+        </body>
+        </html>

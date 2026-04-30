@@ -1,2 +1,30 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Jupyter Notebookを除外
+*.ipynb linguist-vendored
+*.py linguist-vendored
+*.html linguist-vendored
+
+*.py linguist-detectable=false
+*.ipynb linguist-detectable=false
+*.html linguist-detectable=false
+
+# C/C++ 関連ファイルを除外
+*.c linguist-vendored
+*.cpp linguist-vendored
+*.cc linguist-vendored
+*.cxx linguist-vendored
+*.h linguist-vendored
+*.hpp linguist-vendored
+*.hh linguist-vendored
+*.hxx linguist-vendored
+
+*.c linguist-detectable=false
+*.cpp linguist-detectable=false
+*.cc linguist-detectable=false
+*.cxx linguist-detectable=false
+*.h linguist-detectable=false
+*.hpp linguist-detectable=false
+*.hh linguist-detectable=false
+*.hxx linguist-detectable=false
