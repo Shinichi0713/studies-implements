@@ -1,0 +1,195 @@
+<style>
+    /* フッター全体のスタイル */
+    .site-footer {
+        background-color: #1a2a3a; /* さらに深みのあるネイビー */
+        color: #ecf0f1;
+        padding: 50px 20px 20px;
+        margin-top: 80px;
+        font-family: sans-serif;
+    }
+
+    .footer-inner {
+        max-width: 1000px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* 3列 → 2列に変更 */
+        gap: 40px;
+    }
+
+    .footer-heading {
+        font-size: 18px;
+        margin-bottom: 20px;
+        color: #3498db; /* アクセントカラーの青 */
+        border-bottom: 1px solid #34495e;
+        padding-bottom: 10px;
+    }
+
+    .footer-column p, .footer-list {
+        font-size: 14px;
+        line-height: 1.6;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    /* SNSリンクのスタイル */
+    .sns-links {
+        margin-top: 15px;
+    }
+    .sns-links a {
+        color: #bdc3c7;
+        margin-right: 15px;
+        text-decoration: none;
+        font-size: 13px;
+        border: 1px solid #34495e;
+        padding: 5px 10px;
+        border-radius: 4px;
+        transition: 0.3s;
+    }
+    .sns-links a:hover {
+        background-color: #3498db;
+        color: white;
+    }
+
+    /* Kindle プロモーション */
+    .kindle-promo {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 15px;
+        border-radius: 8px;
+        text-align: center;
+    }
+    .kindle-title {
+        font-weight: bold;
+        margin-bottom: 10px !important;
+        font-size: 13px !important;
+    }
+    .kindle-button {
+        display: inline-block;
+        background-color: #f39c12; /* Kindleをイメージしたオレンジ */
+        color: #fff !important;
+        text-decoration: none !important;
+        padding: 8px 15px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: bold;
+    }
+    .kindle-button:hover {
+        background-color: #e67e22;
+    }
+
+    /* コピーライト部分 */
+    .footer-bottom {
+        text-align: center;
+        margin-top: 50px;
+        padding-top: 20px;
+        border-top: 1px solid #34495e;
+        font-size: 12px;
+        color: #7f8c8d;
+    }
+
+    /* リストリンク */
+    .footer-list li {
+        margin-bottom: 10px;
+    }
+    .footer-list a {
+        color: #ecf0f1;
+        text-decoration: none;
+    }
+    .footer-list a:hover {
+        color: #3498db;
+    }
+
+    /* モバイルレスポンシブ対応 */
+    @media (max-width: 768px) {
+        .footer-inner {
+            grid-template-columns: 1fr; /* スマホでは1列に */
+            gap: 30px;
+        }
+    }
+    /* 追加：外部リンクの説明文スタイル */
+    .link-description {
+        font-size: 12px;
+        line-height: 1.4;
+        color: #bdc3c7;
+        margin-top: 5px;
+        padding-left: 10px;
+        border-left: 2px solid #3498db; /* アクセントカラーの青で左線 */
+    }
+
+    /* 追加：このリンクだけ少し目立たせる */
+    .footer-list li:last-child a {
+        font-weight: bold;
+        color: #3498db !important; /* リンク色を青に */
+    }
+    .footer-list li:last-child a:hover {
+        color: #2980b9 !important;
+    }
+    .link-description {
+        font-size: 12px;
+        line-height: 1.4;
+        color: #bdc3c7;
+        margin-top: 5px;
+        padding-left: 10px;
+        border-left: 2px solid #3498db;
+        text-align: left; /* 明示的に左寄せ */
+    }
+
+    /* 追加：このリンクだけ少し目立たせる（左寄せに修正） */
+    .footer-list li:last-child a {
+        font-weight: bold;
+        color: #3498db !important;
+        text-align: left; /* 明示的に左寄せ */
+        display: block;  /* 必要に応じてブロック要素化 */
+    }
+    .footer-list li:last-child a:hover {
+        color: #2980b9 !important;
+    }
+</style>
+
+<footer class="site-footer">
+    <div class="footer-inner">
+        <!-- 1列目：About -->
+        <div class="footer-column">
+            <h4 class="footer-heading">About</h4>
+            <p class="footer-tagline">dream shall be realized with dream<br>暇さえあればアルゴリズムいじり</p>
+            <div class="sns-links">
+                <a href="https://github.com/Shinichi0713" target="_blank" aria-label="GitHub">GitHub</a>
+                <a href="https://x.com/ShinnYoshi29813" target="_blank" aria-label="X (Twitter)">X (Twitter)</a>
+            </div>
+        </div>
+
+        <!-- 2列目：My Book（Aboutの下に配置） -->
+        <div class="footer-column">
+            <h4 class="footer-heading">My Book</h4>
+            <div class="kindle-promo">
+                <p class="kindle-title"></p>
+                <a href="https://www.amazon.com/author/3-sons-lover.japan.ai" class="kindle-button" target="_blank">kindle 出版物</a>
+            </div>
+        </div>
+
+        <!-- 3列目：Links -->
+        <div class="footer-column">
+            <h4 class="footer-heading">Links</h4>
+            <ul class="footer-list">
+                <!-- 追加：電装制御屋の備忘録 相互リンク募集 -->
+                <li>
+                    <a href="https://taroimo-lifestyle.com" target="_blank" rel="noopener">
+                        電装制御屋の備忘録
+                    </a>
+                </li>
+
+                <!-- 既存のリンク -->
+                <li>
+                    <a href="https://dejimaku.com/" target="_blank" rel="noopener">
+                        副業フリーランスマーケターの広告代理店「デジマク」
+                    </a>
+                    <div class="link-description">
+                        東京都で広告運用代理店・コンサルティング事業を行う副業フリーランスマーケターです。Google、Yahoo!などの検索広告をはじめ、ディスプレイ広告などの広告運用・コンサルティングを承ります。
+                    </div>
+                </li>
+                <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSeYJXK4XXoKWXMHCziLEJ4WuLbBN__hpI64pn9LbF8vUi-vQw/viewform?usp=header">お問い合わせ窓口</a></li>
+                <li><a href="https://yoshishinnze.hatenablog.com/about?_gl=1*2s8z1s*_gcl_au*MTMyMjg5NzU5My4xNzYzMjEwODQ4">Privacy Policy</a></li>
+            </ul>
+        </div>
+    </div>
+</footer>
