@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&#x305d;&#x3082;&#x305d;&#x3082;&#x3069;&#x3093;&#x306a;&#x4eba;&#x304b;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+
+/* 記事タイトル (h1) */
+h1 {
+    font-size: 2rem;
+    color: #24292f;
+    line-height: 1.3;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 3px double #e1e4e8; /* 二重線で上品に */
+    text-align: center; /* タイトルを中央に寄せて特別感を出す */
+}
+
+/* セクション見出し (h2) */
+h2 {
+    font-size: 1.5rem;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(transparent 70%, #e8f0fe 70%); /* 下側に薄い色のアクセント */
+    border-left: 6px solid #0969da; /* 目次のテーマカラーと合わせる */
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* 強調文字 (strong) */
+strong {
+    font-weight: bold;
+    color: #cf222e; /* ホバー時の赤色と合わせて統一感を出す */
+    background: linear-gradient(transparent 60%, #fff2cc 60%); /* 黄色のマーカー風 */
+    padding: 0 2px;
+}
+
+/* 引用のコンテナ */
+blockquote {
+    position: relative;
+    padding: 20px 30px;
+    margin: 30px 0;
+    background-color: #f6f8fa; /* 目次の背景より少しだけ濃いグレー */
+    border-left: 5px solid #d0d7de; /* 落ち着いたグレーの境界線 */
+    color: #57606a; /* 文字色は少し薄くして引用らしさを出す */
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 引用符のアイコンを装飾として追加 */
+blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    font-size: 40px;
+    color: #d0d7de;
+    font-family: serif;
+    line-height: 1;
+}
+
+/* 読者になるボタンのデザイン */
+.btn-subscribe {
+    display: inline-block;
+    padding: 12px 35px; /* 横幅を広めにとって存在感を出します */
+    background-color: #383838; /* お好みの色に変更してください */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #555555;
+    text-decoration: none;
+}
+
+/* はてなブログで見えてしまう数式データを非表示にする */
+.katex-html {
+    display: none !important;
+}
+
+.katex-mathml {
+    display: inline !important;
+}
+/* Amazonカード型のオシャレなデザイン */
+.shop-card {
+    display: flex;
+    max-width: 500px;
+    margin: 20px auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* マウスホップした時の動き */
+.shop-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.shop-card-image {
+    width: 150px;
+    min-width: 150px;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shop-card-image img {
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+}
+
+.shop-card-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.shop-card-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.shop-card-description {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+/* Amazonらしいオレンジボタン */
+.shop-card-link a {
+    display: inline-block;
+    background-color: #ff9900;
+    color: #fff !important;
+    text-decoration: none !important;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.shop-card-link a:hover {
+    background-color: #e68a00;
+}
+
+/* スマホ対応：縦並びにする */
+@media (max-width: 480px) {
+    .shop-card {
+        flex-direction: column;
+        max-width: 100%;
+    }
+    .shop-card-image {
+        width: 100%;
+        height: 200px;
+    }
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+
+
+            <p>今日は秀吉の仲良し友達　前田利家についてです。</p>
+<h2 id="そもそもどんな人か">そもそもどんな人か</h2>
+<p>前田利家は、戦国時代から安土桃山時代にかけて活躍した武将で、加賀藩（石川県）の礎を築いた人物です。
+利家は壮年期までは織田家の将官で、そこから柴田、豊臣に仕えました。
+若いころは槍の名手で、織田の高級士官でした。
+算盤が得意で加賀藩を上手に治めた治世家でもあります。</p>
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Maeda_Toshiie.jpg/330px-Maeda_Toshiie.jpg?_=20080114191403" width="500" style="display: block; margin: 0 auto;">
+<h2 id="生い立ち">生い立ち</h2>
+<p>利家の生い立ちは、尾張の国人領主の息子として生まれ、信長の側近として頭角を現していきました。</p>
+<ol>
+<li>
+<p>誕生: 1538年（天文7年）頃、尾張国荒子村（現在の名古屋市中川区）の荒子城主・前田利昌（利春）の四男として生まれました。幼名は犬千代（いぬちよ）です。</p>
+</li>
+<li>
+<p>信長への出仕: 14歳頃から織田信長に小姓として仕え始めました。当時の利家は身長が182cmほどある大男で、派手な格好を好む「かぶき者」として知られていました。</p>
+</li>
+<li>
+<p>「槍の又左」の異名: 戦場では6メートルを超える長槍を操り、数々の武功を挙げました。その勇猛さから、自身の通称「又左衛門」にちなんで「槍の又左（やりのまたざ）」と呼ばれ、信長の親衛隊である「赤母衣衆（あかほろしゅう）」の筆頭に抜擢されました。</p>
+</li>
+<li>
+<p>結婚: 21歳の時、10歳年下の従妹であるまつ（芳春院）と結婚しました。二人は子宝にも恵まれ、生涯を通じて強い絆で結ばれた夫婦となります。</p>
+</li>
+<li>
+<p>追放と復帰: 若気の至りで信長の同朋衆（茶坊主）を斬り殺してしまい、一度は織田家を追放されますが、桶狭間の戦いなどで勝手に参戦して手柄を立て、信長の信頼を取り戻して帰参を許されました。</p>
+</li>
+</ol>
+<h3 id="若いころの利家">若いころの利家</h3>
+<p>利家の若い頃は、一言でいえば&quot;かぶき者&quot;だったようです。
+信長も若いころは、派手な格好をした不良青年で、年も近かったこともあり、街をぶらついていた不良仲間だったようです。</p>
+<p>恰好だけではなく、自分の槍の柄を派手な朱色に塗るなど、戦場でも目立つことを好む正真正銘の目立ちたがり屋でした。</p>
+<p>また、体が大きく、武勇に優れていたようです。
+当時の日本の成人男性が157cm程度の身長だったのに対し、182cmだったのでかなり大柄だったと思います。</p>
+<p>生まれも良く、苦労知らずでこのままいっていたら、未来の加賀100万石はなかったかもしれません。</p>
+<h3 id="追放">追放</h3>
+<p>利家の若気の至りを象徴するのが、信長のお気に入りだった茶坊主（拾阿弥）を斬り殺した事件です。
+理由は、大切にしていた刀の笄（こうがい：髪を整える道具）を盗まれた上、侮辱されたことに激怒。信長の目の前で斬ってしまいました。</p>
+<p>信長はかなり怒り、利家を死罪にしようとしたようです。
+親友の柴田勝家らのとりなしで「織田家追放」で済みました。</p>
+<p>済んだとは言え、この頃結婚したばかりで、追放により収入も失うことになります。
+かなり逼迫した生活を送ることになりました。</p>
+<p>この頃、追放されたことで、それまでの交友関係もすっかりなくしました。
+ただ、追放されて人が寄り付かなくなった期間でも親しく交友を続けた人物が、秀吉と、柴田勝家だったようです。</p>
+<p>秀吉は、もともと陽気な性格で、自身も放浪していた身分でした。
+追放された人だろうが、気が合う仲間であれば喜んで会いに行くでしょう。</p>
+<p>勝家は義理堅い性格で、気に言った人であれば、お構いなしに付き合うような性格だったと思います。</p>
+<p>2人とも、織田の中で大将となる人物です。
+そんな2人に親しく交友されたということですので、利家も一角の人物だったといえるかもしれません。</p>
+<p>また、この頃困窮したことで、算盤が非常に上手になったようです。
+後年加賀に移転、国主となった際も倹約を行い、無駄と感じたものはコストカットしていきました。
+良い政治家はコスト感覚が優れていることが条件だと思いますが、この頃の困窮でコスト感覚は磨かれたのではないかと個人的に思ったりします。</p>
+<h3 id="織田への復帰">織田への復帰</h3>
+<p>追放されていた間も復帰への執念はあったようです。</p>
+<p>利家は追放されていた間も</p>
+<ul>
+<li>桶狭間の戦い（1560年）</li>
+<li>森部の戦い（1561年）</li>
+</ul>
+<p>両方に、無断で参加し、手柄を立てました。
+(敵の首を計5個。個人で行う武勇としてはかなり際立った手柄と思います)</p>
+<p>桶狭間の際は信長に&quot;赦しのない参陣だった。帰ってきてはならん&quot;と塩対応を受けました。
+ですが森部の戦いの後、正式に帰参を赦されました。</p>
+<p>また、帰参後すぐに前田家を&quot;四男の利家に前田家の家督を継がせる&quot;と、兄の代わりに利家を前田家の当主に据えました。</p>
+<h2 id="その後の仕事">その後の仕事</h2>
+<p>復帰後の利家は、信長の親衛隊長から「織田軍団の主力」へと着実にステップアップしていきました。主な働きは以下の通りです。</p>
+<h3 id="1-織田軍のエリート赤母衣衆筆頭">1. 織田軍のエリート「赤母衣衆」筆頭</h3>
+<p>信長直属の精鋭部隊「赤母衣衆（あかほろしゅう）」の筆頭に抜擢されました。姉川の戦いや長篠の戦いなど、信長の主要な合戦にはほとんど参戦し、常に最前線で槍を振るいました。</p>
+<blockquote>
+<p>赤母衣衆<br>
+織田信長が組織した直属の精鋭部隊です。単なる兵士ではなく、信長の側近として極めて重要な役割を担っていました。</p>
+<ol>
+<li>戦場での伝令・軍監（使番）<br>
+戦場を駆け巡り、大将（信長）の命令を各部隊へ伝えたり、戦況を報告したりする「使番（つかいばん）」としての役割が中心でした。
+そんな役割、将校の仕事ではないのではと思われるかもしれませんが、当時情報を正確に伝えることは非常に重要でした。今のように通信も発達していなかったため、状況を冷静に見極めたり、どんな部将に対しても親しく命令を伝えるような仕事は、人望がある、個人的に武勇がある、知能も優れている、といったことが求められました。<br>
+将来の幹部候補生<br>
+信長は、勇猛果敢な若手を選抜して「黒母衣衆」と「赤母衣衆」の2チームに分け、互いにライバルとして競わせました。<br>
+キャリア: ここで経験を積んだメンバーは、後に一国一城の主となるような将来の幹部候補として育てられました。前田利家はその筆頭格です。</li>
+</ol>
+</blockquote>
+<h3 id="2-北陸平定と能登一国の主">2. 北陸平定と「能登一国」の主</h3>
+<p>信長の北陸方面軍（司令官：柴田勝家）の副将格として従軍していました。
+主な仕事はこんなところです。</p>
+<p><strong>1. 最前線での戦闘（一向一揆との死闘）</strong></p>
+<p>当時の北陸（越前・加賀）は「一向一揆」の拠点で、織田家にとって最も過酷な戦場の一つでした。</p>
+<ul>
+<li>掃討作戦: 勝家と共に越前（福井県）へ侵攻し、一揆勢を鎮圧。この時の戦いぶりは凄まじく、信長からその武功を高く評価されました。</li>
+<li>上杉軍との対峙: 上杉謙信の南下に備え、七尾城（能登）の攻略や防衛にあたりました。</li>
+</ul>
+<p><strong>2. 「府中三人衆」としての行政管理</strong></p>
+<p>越前を平定した後、信長は利家を含む3人の武将（前田利家・佐々成政・不破光治）を「府中三人衆」に任命しました。</p>
+<ul>
+<li>役割: 越前の統治を共同で行う「監察官」のような仕事です。</li>
+<li>内容: 年貢の徴収、裁判、道路の整備、一揆の再発防止など、軍人としてだけでなく行政官（官僚）としての手腕を磨きました。この時の実務経験が、後の加賀百万石の経営に活かされます。</li>
+</ul>
+<p><strong>3. 能登国の「国づくり」（1581年〜）</strong></p>
+<p>手柄が認められ、信長から能登一国（23万石）を与えられると、初めて「一国の大名」としての仕事が始まります。</p>
+<ul>
+<li>拠点整備: 七尾城を本拠とし、支配体制を固めました。</li>
+<li>地検（検地）: 領内の土地の広さや収穫量を正確に把握し、軍事力を支える経済基盤を作りました。</li>
+</ul>
+<h3 id="3-豊臣家の重鎮へ">3. 豊臣家の重鎮へ</h3>
+<p>1582年に信長が光秀に倒されると、織田家は秀吉と勝家で割れることになります。
+利家はそれまで勝家の部将でした。この流れのまま勝家派に属しました。</p>
+<p>対立が発展して、賤ヶ岳の戦いが発生。
+利家も勝家派として賤ヶ岳の戦いに参加していました。</p>
+<p>賤ヶ岳の戦いは秀吉、勝家が互角の戦いで、佐久間盛政が秀吉に行った攻撃により勝家の旗色が悪くなっていきます。
+そして、勝家にとっても重要な局面で、利家が突然退却を始めます。
+これがきっかけとなり、盛政軍が崩れ勝家が敗れることになりました。</p>
+<p>利家も気が乗らなかったとは言え、勝家に悪いことをしたのでは？と思ってしまいます。
+利家はその後、秀吉に属し、秀吉政権の重鎮となっていきます。</p>
+<h3 id="4-5大老として">4. 5大老として</h3>
+<p>秀吉が政権の安定化のため、有力者を5大老としお互いに協議の上、国政を行うようにしました。
+ですが。
+うまくいくはずがありません。</p>
+<p>豊臣家は秀吉が1代で築き、特別な恩顧を与えるようなことが後年少なくなっていました。
+豊臣家の永続を心から願う人が、そこまで多くはありません。</p>
+<p>真っ先に5大老体制を破ったのが、筆頭格だった家康で、露骨に秀吉の遺訓を破っていきます。
+利家は、そんな家康と対決姿勢を強めていきます。</p>
+<p>利家の一派には、加藤清正、福島正則のような武闘派から、石田三成のように個人的に秀吉の遺訓をどうしても守りたい人、家康以外の5大老のメンツが集まりました。</p>
+<p>家康もこの時は、利家に和解を行い、一時は露骨な活動を行わなくなりました。
+そんな中で1599年に利家は亡くなっていきました。</p>
+<p>その後は、関ヶ原の合戦、大阪の陣につながり、豊臣政権が瓦解します。</p>
+<h2 id="利家のエピソード">利家のエピソード</h2>
+<ol>
+<li>倹約家</li>
+</ol>
+<p>「槍の又左」として暴れ回った武闘派ですが、実は大の数字好きでした。</p>
+<ul>
+<li>肌身離さず: 戦場でも常に算盤を持ち歩き、軍資金の管理や兵糧の計算を自ら行っていたと言われます。</li>
+<li>貯金が趣味: 浪人時代に苦労した反動か、金銭管理に非常に厳しく、加賀百万石の財政基盤を「倹約と計算」で築きました。</li>
+</ul>
+<p>そして、収入はあるのに、無駄使いをしないので、利家家は非常に蓄財が多かったです。
+そのため、いろいろな大名から借金の申し入れがありました。</p>
+<p>利家は、ほとんどの場合で心よくお金を貸したばかりか、死に際になって息子に、&quot;借用書はなかったことにしてやって&quot;と言い残しました。
+倹約家であると同時に、相手の立場も理解できる人情家でもあったと思います。</p>
+<ol start="2">
+<li>秀吉との「死の間際」のジョーク
+秀吉が亡くなる直前、病床の利家を見舞いに来た際のエピソードです。</li>
+</ol>
+<p>秀吉: 「お前が先に死んだら、あの世で信長様に『もうすぐ秀吉も行くから、酒の準備をして待ってろ』と伝えてくれ」</p>
+<p>利家: 「嫌だよ。信長様は気性が激しいから、そんなこと言ったら俺が先に怒られる。お前が自分で言いなよ」
+死を前にしても、若い頃からの軽口を叩き合えるほど仲が良かったことがわかります。</p>
+<ol start="3">
+<li>妻・まつへの「遺言」</li>
+</ol>
+<p>死の間際、利家は妻のまつに「これまで苦労をかけた。この新しい着物を着て死なせてくれ」と言いました。</p>
+<p>まつの反応: まつは「贅沢です。あなたはこれまで多くの人を殺してきたのだから、経帷子（きょうかたびら：死装束）を着て仏様に仕えなさい」と一蹴。</p>
+<p>利家の言い返し: 利家は苦笑いしながら「俺は主君のために戦ったんだ、地獄へ落ちても信長様や秀吉が黙っちゃいないさ」と言って息を引き取ったと伝えられています。</p>
+<p>まつは利家にふさわしい、非常に聡明は奥さんです。
+そして、若いころ、困窮していた利家と連れ添った奥さんです。</p>
+<p>苦労していないわけありません。
+そんな奥さんだったから冗談を言い合えたわけです。</p>
+<h2 id="総括">総括</h2>
+<p>利家は大河では秀吉の友達、同僚として出てくることが多いです。</p>
+<p>組織を運営するという意味では秀吉の才能が上回ったかもしれませんが、組織の中で人望を得て、組織の潤滑油になるという意味では利家の人柄には及ばなかったでしょう。</p>
+<p>そんな利家についての話でした。</p>
+<p>利家に関する本はハードカバーが多く、結構値が張ります。
+また史跡よりは物語のようになっているので、個人的に読みづらかったと思いがあります。</p>
+<p>もし利家のことがよく知りたいという場合は漫画がおすすめです。</p>
+<div class="shop-card">
+    <div class="shop-card-image">
+        <img src="https://m.media-amazon.com/images/I/91twXHr9QPL._SL1500_.jpg" alt="商品画像">
+    </div>
+    <div class="shop-card-content">
+        <div class="shop-card-title">新装版 前田利家 上</div>
+        <div class="shop-card-description">巨匠・永井豪が戦国武将の前田利家をマンガ化。「槍の又左」の異名をとり、かぶき者だった利家をはじめ、利家が仕えた織田信長、親交のあった豊臣秀吉、盟友・柴田勝家など数々の武将を、永井豪ならではの迫力の「戦」シーンや人間ドラマで堪能できます。</div>
+        <div class="shop-card-link">
+            <a href="https://www.amazon.co.jp/%E6%96%B0%E8%A3%85%E7%89%88-%E5%89%8D%E7%94%B0%E5%88%A9%E5%AE%B6-%E4%B8%8A-%E3%81%93%E3%81%AE%E3%83%9E%E3%83%B3%E3%82%AC%E3%81%8C%E3%81%99%E3%81%94%E3%81%84%EF%BC%81-comics/dp/4299075420?__mk_ja_JP=%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A&crid=39QC4OJXU202J&dib=eyJ2IjoiMSJ9.sJdFYn7taf7HXHxS95XNNzqldfNY_a1WLtX0VUysGFZ4rdLxPSLigQZbN5oElPWZh31XsBIUEPP49mrg4AqAtl3ZUfEmCizPz2C4TCY2Ulk0w8jjZZZkbz4rdABIgwHuhXYBInKsc-xkWdoZVv-9AJXxAa3EhW-bLOrgFqYfAzjcZZ_LS7Js2hUh8JNUT0rSdiuQd3loes1Mpx0Cr2ZXLE5w8k0Q6jYvTxf4fFQ30UHVjKwomwxJZQY-JFt7GezZsOS0vZWULIOZ4Kyu8G0zurGZq3amoZNQu1cfiQyXgP4.3eFzo8aUKJBVP4qD2IthBAdM5auqo2Serb937zjT0mY&dib_tag=se&keywords=%E5%89%8D%E7%94%B0%E5%88%A9%E5%AE%B6&qid=1773473064&sprefix=%E5%89%8D%E7%94%B0%E5%88%A9%E5%AE%B6%2Caps%2C178&sr=8-2&linkCode=ll2&tag=yoshishinnze-22&linkId=a3353990fc5ef342352945177323cbec&ref_=as_li_ss_tl" target="_blank" rel="noopener">Amazonで詳細を見る</a>
+        </div>
+    </div>
+</div>
+
+
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+</script>
+
+
+            
+        </body>
+        </html>

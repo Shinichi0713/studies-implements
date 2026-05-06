@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&#x6982;&#x8981;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+/* 目次全体のコンテナ */
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+
+/* 記事タイトル (h1) */
+h1 {
+    font-size: 2rem;
+    color: #24292f;
+    line-height: 1.3;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 3px double #e1e4e8; /* 二重線で上品に */
+    text-align: center; /* タイトルを中央に寄せて特別感を出す */
+}
+
+/* セクション見出し (h2) */
+h2 {
+    font-size: 1.5rem;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(transparent 70%, #e8f0fe 70%); /* 下側に薄い色のアクセント */
+    border-left: 6px solid #0969da; /* 目次のテーマカラーと合わせる */
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* 強調文字 (strong) */
+strong {
+    font-weight: bold;
+    color: #cf222e; /* ホバー時の赤色と合わせて統一感を出す */
+    background: linear-gradient(transparent 60%, #fff2cc 60%); /* 黄色のマーカー風 */
+    padding: 0 2px;
+}
+
+/* 引用のコンテナ */
+blockquote {
+    position: relative;
+    padding: 20px 30px;
+    margin: 30px 0;
+    background-color: #f6f8fa; /* 目次の背景より少しだけ濃いグレー */
+    border-left: 5px solid #d0d7de; /* 落ち着いたグレーの境界線 */
+    color: #57606a; /* 文字色は少し薄くして引用らしさを出す */
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 引用符のアイコンを装飾として追加 */
+blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    font-size: 40px;
+    color: #d0d7de;
+    font-family: serif;
+    line-height: 1;
+}
+
+/* 読者になるボタンのデザイン */
+.btn-subscribe {
+    display: inline-block;
+    padding: 12px 35px; /* 横幅を広めにとって存在感を出します */
+    background-color: #383838; /* お好みの色に変更してください */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #555555;
+    text-decoration: none;
+}
+
+/* はてなブログで見えてしまう数式データを非表示にする */
+.katex-html {
+    display: none !important;
+}
+
+.katex-mathml {
+    display: inline !important;
+}
+/* Amazonカード型のオシャレなデザイン */
+.shop-card {
+    display: flex;
+    max-width: 500px;
+    margin: 20px auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* マウスホップした時の動き */
+.shop-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.shop-card-image {
+    width: 150px;
+    min-width: 150px;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shop-card-image img {
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+}
+
+.shop-card-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.shop-card-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.shop-card-description {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+/* Amazonらしいオレンジボタン */
+.shop-card-link a {
+    display: inline-block;
+    background-color: #ff9900;
+    color: #fff !important;
+    text-decoration: none !important;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.shop-card-link a:hover {
+    background-color: #e68a00;
+}
+
+/* スマホ対応：縦並びにする */
+@media (max-width: 480px) {
+    .shop-card {
+        flex-direction: column;
+        max-width: 100%;
+    }
+    .shop-card-image {
+        width: 100%;
+        height: 200px;
+    }
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+
+            <p>秀吉兄弟で登場した大男、藤堂高虎（とうどう たかとら）。
+織田に仕える前は典型的な剛勇な部将だった藤堂高虎ですが、現在史実として伝わる藤堂高虎は築城や内政の名手です。
+そんな彼について調べてみました。
+結構面白いエピソードも見つかったので是非読んでください。</p>
+<h2 id="概要">概要</h2>
+<p><img src="file:///d:\PycharmProjects\ScienceCalculation\studies-implements\doc\blog\1-40\image\34_takatora_todo\1777771044663.png" alt="1777771044663"></p>
+<p>藤堂高虎は、戦国時代から江戸時代初期にかけて活躍した武将・大名です。
+「七度主君を変えても武士としての筋を通した」と言われるほど、主君を替えながらも能力と忠節で出世した、戦国きっての実務型・築城型の武将として知られています。</p>
+<ul>
+<li>
+<p>生没年：1556年〜1630年</p>
+</li>
+<li>
+<p>出身：近江国（現在の滋賀県）</p>
+</li>
+<li>
+<p>特徴
+藤堂高虎の主な特徴は、以下のように整理できます。</p>
+<ol>
+<li><strong>主君を替えても評価された「実務・能力重視」の武将</strong></li>
+</ol>
+<ul>
+<li>浅井長政 → 織田信長 → 豊臣秀長・秀吉 → 徳川家康と、主君を変えながらも出世を続けました。</li>
+<li>その都度、築城・土木・軍略などの実務能力を買われ、重用された点が特徴です。</li>
+</ul>
+<ol start="2">
+<li><strong>築城・土木の名手</strong></li>
+</ol>
+<ul>
+<li>今治城、津城、伊賀上野城など、多くの城の縄張り（設計）や改修を手がけました。</li>
+<li>地形を読み、防御性と実用性を重視した城づくりで知られています。</li>
+</ul>
+<ol start="3">
+<li><strong>徳川政権下での「外様なのに譜代並み」の信頼</strong></li>
+</ol>
+<ul>
+<li>関ヶ原で東軍に属し、その後も江戸城の普請や軍役を任されました。</li>
+<li>外様大名でありながら、幕府の重要な土木・軍事プロジェクトを任されるほど信頼されていた点が特徴的です。</li>
+</ul>
+<ol start="4">
+<li><strong>現実主義で生き延びた戦国武将</strong></li>
+</ol>
+<ul>
+<li>情勢を冷静に見極め、自分の能力を活かせる主君・立場を選び続けた「現実主義者」としても知られます。</li>
+<li>「七度主君を変えても武士としての筋を通した」と評されるように、裏切りではなく「能力と忠節で評価される」生き方を貫いた人物です。</li>
+</ul>
+</li>
+</ul>
+<h2 id="実績">実績</h2>
+<p>藤堂高虎が参加した主な合戦と実績を、時系列順にまとめます。</p>
+<h3 id="1-姉川の戦い1570年">1. 姉川の戦い（1570年）</h3>
+<ul>
+<li><strong>所属</strong>：浅井長政軍（磯野員昌隊）</li>
+<li><strong>実績</strong>：初陣で父とともに参戦し、武功を挙げたとされる<a href="https://ja.wikipedia.org/wiki/%E8%97%A4%E5%A0%82%E9%AB%98%E8%99%8E">藤堂高虎 - Wikipedia</a>。</li>
+<li><strong>補足</strong>：武将紹介サイトでは、この戦いで酒井忠高を討ち取ったとも伝えられています<a href="https://busho.fun/person/takatora-todo">藤堂高虎 - 戦国武将のハナシ</a>。</li>
+</ul>
+<h3 id="2-三木合戦15781580年頃">2. 三木合戦（1578〜1580年頃）</h3>
+<ul>
+<li><strong>所属</strong>：織田信長軍（羽柴秀吉配下）</li>
+<li><strong>実績</strong>：鷹尾山城攻めで加古六郎右衛門を討ち取り、「槍の高虎」の異名を得たとされる<a href="https://busho.fun/person/takatora-todo">藤堂高虎 - 戦国武将のハナシ</a>。</li>
+<li><strong>補足</strong>：播磨・三木城攻めの一環として、長期包囲戦の中で武功を立てています。</li>
+</ul>
+<h3 id="3-賤ヶ岳の戦い1583年">3. 賤ヶ岳の戦い（1583年）</h3>
+<ul>
+<li><strong>所属</strong>：羽柴秀吉軍（秀長配下）</li>
+<li><strong>実績</strong>：
+<ul>
+<li>佐久間盛政を銃撃して敗走させ、戦勝の端緒を開く抜群の戦功を挙げた<a href="https://ja.wikipedia.org/wiki/%E8%97%A4%E5%A0%82%E9%AB%98%E8%99%8E">藤堂高虎 - Wikipedia</a>。</li>
+<li>武将紹介サイトでは「500の手勢で味方を救出し、佐久間盛政を敗走させた」とされ、秀吉から絶賛されたと伝えられています<a href="https://busho.fun/person/takatora-todo">藤堂高虎 - 戦国武将のハナシ</a>。</li>
+</ul>
+</li>
+<li><strong>結果</strong>：この功により1,300石の加増を受けたとされます<a href="https://ja.wikipedia.org/wiki/%E8%97%A4%E5%A0%82%E9%AB%98%E8%99%8E">藤堂高虎 - Wikipedia</a>。</li>
+</ul>
+<h3 id="4-小牧長久手の戦い1584年">4. 小牧・長久手の戦い（1584年）</h3>
+<ul>
+<li><strong>所属</strong>：羽柴秀吉軍</li>
+<li><strong>実績</strong>：
+<ul>
+<li>峯城・松ヶ島城攻めで武功を挙げたとされる<a href="https://ja.wikipedia.org/wiki/%E8%97%A4%E5%A0%82%E9%AB%98%E8%99%8E">藤堂高虎 - Wikipedia</a>。</li>
+</ul>
+</li>
+<li><strong>補足</strong>：徳川家康との対決では、主に伊勢方面の城攻めで活躍したとされています。</li>
+</ul>
+<h3 id="5-紀州征伐1585年">5. 紀州征伐（1585年）</h3>
+<ul>
+<li><strong>所属</strong>：羽柴秀吉軍</li>
+<li><strong>実績</strong>：
+<ul>
+<li>湯川直晴を降伏させ、山本主膳を斬ったとされる<a href="https://ja.wikipedia.org/wiki/%E8%97%A4%E5%A0%82%E9%AB%98%E8%99%8E">藤堂高虎 - Wikipedia</a>。</li>
+</ul>
+</li>
+<li><strong>結果</strong>：戦後、1万石を与えられ、大名（城持大名）となったとされています<a href="https://ja.wikipedia.org/wiki/%E8%97%A4%E5%A0%82%E9%AB%98%E8%99%8E">藤堂高虎 - Wikipedia</a>。</li>
+</ul>
+<h3 id="6-九州征伐1587年">6. 九州征伐（1587年）</h3>
+<ul>
+<li><strong>所属</strong>：羽柴秀吉軍</li>
+<li><strong>実績</strong>：
+<ul>
+<li>根白坂の戦いで、島津軍に攻められた宮部継潤を救援する活躍を見せた<a href="https://ja.wikipedia.org/wiki/%E8%97%A4%E5%A0%82%E9%AB%98%E8%99%8E">藤堂高虎 - Wikipedia</a>。</li>
+<li>武将紹介サイトでは「命令を無視して島津義弘に奇襲をかけ、味方の窮地を救った」とされ、その活躍で2万石に加増されたと伝えられています<a href="https://busho.fun/person/takatora-todo">藤堂高虎 - 戦国武将のハナシ</a>。</li>
+</ul>
+</li>
+</ul>
+<h3 id="7-朝鮮出兵文禄慶長の役15921598年">7. 朝鮮出兵（文禄・慶長の役、1592〜1598年）</h3>
+<ul>
+<li><strong>所属</strong>：豊臣秀吉軍（水軍指揮官）</li>
+<li><strong>実績</strong>：
+<ul>
+<li>文禄の役では豊臣秀保の代理として出征<a href="https://ja.wikipedia.org/wiki/%E8%97%A4%E5%A0%82%E9%AB%98%E8%99%8E">藤堂高虎 - Wikipedia</a>。</li>
+<li>慶長の役では水軍を率い、<strong>漆川梁海戦</strong>で朝鮮水軍を殲滅したとされる<a href="https://ja.wikipedia.org/wiki/%E8%97%A4%E5%A0%82%E9%AB%98%E8%99%8E">藤堂高虎 - Wikipedia</a>。</li>
+<li>南原城の戦いや鳴梁海戦にも参加したとされています<a href="https://ja.wikipedia.org/wiki/%E8%97%A4%E5%A0%82%E9%AB%98%E8%99%8E">藤堂高虎 - Wikipedia</a>。</li>
+</ul>
+</li>
+<li><strong>補足</strong>：武将紹介サイトでは、漆川梁海戦で圧勝した一方、玉浦海戦や鳴梁海戦では李舜臣に苦戦し、負傷したとも伝えられています<a href="https://busho.fun/person/takatora-todo">藤堂高虎 - 戦国武将のハナシ</a>。</li>
+</ul>
+<h3 id="8-関ヶ原の戦い1600年">8. 関ヶ原の戦い（1600年）</h3>
+<ul>
+<li><strong>所属</strong>：東軍（徳川家康方）</li>
+<li><strong>実績</strong>：
+<ul>
+<li>本戦では大谷吉継や石田三成と交戦した<a href="https://ja.wikipedia.org/wiki/%E8%97%A4%E5%A0%82%E9%AB%98%E8%99%8E">藤堂高虎 - Wikipedia</a>。</li>
+<li>脇坂安治ら西軍武将に対して東軍への内応工作を行い、勝利に貢献したとされる<a href="https://ja.wikipedia.org/wiki/%E8%97%A4%E5%A0%82%E9%AB%98%E8%99%8E">藤堂高虎 - Wikipedia</a>。</li>
+</ul>
+</li>
+<li><strong>結果</strong>：戦後、伊予今治藩20万石から伊勢津藩32万石へ加増・転封され、大大名へと出世しました。</li>
+</ul>
+<h3 id="9-大坂の陣16141615年">9. 大坂の陣（1614〜1615年）</h3>
+<ul>
+<li><strong>所属</strong>：徳川方</li>
+<li><strong>実績</strong>：
+<ul>
+<li>冬の陣・夏の陣ともに参戦<a href="https://ja.wikipedia.org/wiki/%E8%97%A4%E5%A0%82%E9%AB%98%E8%99%8E">藤堂高虎 - Wikipedia</a>。</li>
+<li>夏の陣では河内方面の先鋒を志願し、<strong>八尾の戦い</strong>で長宗我部盛親隊と激戦を繰り広げたとされる<a href="https://ja.wikipedia.org/wiki/%E8%97%A4%E5%A0%82%E9%AB%98%E8%99%8E">藤堂高虎 - Wikipedia</a>。</li>
+</ul>
+</li>
+<li><strong>補足</strong>：武将紹介サイトでも、冬の陣・夏の陣で先陣を務め、長宗我部盛親らと交戦したと記されています<a href="https://busho.fun/person/takatora-todo">藤堂高虎 - 戦国武将のハナシ</a>。</li>
+</ul>
+<p>こう見ると戦争で活躍してたなぁと見えますが、彼の真骨頂は内政面にあります。</p>
+<h2 id="築城と内政">築城と内政</h2>
+<p>藤堂高虎が有名になったのは単なる指揮官ではなかった点にあります。
+藤堂高虎の内政・築城に関する主な実績は、以下のように整理できます。</p>
+<h3 id="1-築城に関する実績">1. 築城に関する実績</h3>
+<p><strong>(1) 今治城（愛媛県今治市）</strong></p>
+<ul>
+<li>関ヶ原の戦功により伊予半国20万石を領した高虎が、慶長7年（1602）に築城を開始し、慶長13年（1608）頃に完成させた海城です<a href="https://www.city.imabari.ehime.jp/museum/imabarijo/about/">今治城について</a>。</li>
+<li>海水を引き込んだ堀や城内の船入りを備えた日本屈指の海城として知られ、昭和28年（1953）に主郭部跡と内堀が県指定史跡となっています<a href="https://www.city.imabari.ehime.jp/museum/imabarijo/about/">今治城について</a>。</li>
+</ul>
+<p><strong>(2) 津城（三重県津市）</strong></p>
+<ul>
+<li>慶長13年（1608）に藤堂高虎が入城し、津藩32万石の居城として大改修を行いました<a href="https://www.info.city.tsu.mie.jp/kosodate_kyouiku/kyouikuiinkai/1004357/1004663/1004603/1004615/1004617.html">県指定史跡 津城跡</a>。</li>
+<li>城下町整備とともに伊勢街道を城下に取り込むなど、防御と経済の両面を意識した設計で、現在も県指定史跡として残っています<a href="https://www.info.city.tsu.mie.jp/kosodate_kyouiku/kyouikuiinkai/1004357/1004663/1004603/1004615/1004617.html">県指定史跡 津城跡</a>。</li>
+</ul>
+<p><strong>(3) 江戸城築城の責任者</strong></p>
+<ul>
+<li>外様大名でありながら、江戸城の築城・普請（土木工事）の総責任者を務めました<a href="https://niwareki.doorblog.jp/archives/7146724.html">藤堂高虎 七君に仕えたオールラウンダー</a>。</li>
+<li>これにより、徳川政権下で譜代大名並みの信頼を得たとされています。</li>
+</ul>
+<p><strong>(4) その他の築城・改修</strong></p>
+<ul>
+<li>宇和島城、赤木城（三重県熊野市）など、各地で城の縄張り・改修に関与したとされ、「築城の名手」として加藤清正・黒田官兵衛と並び称されることもあります<a href="https://kusanomido.com/study/history/japan/azuchi/39912/">加藤清正 ～日本最強の武将と恐れられた武将【築城、内政能力も…】</a>。</li>
+</ul>
+<h3 id="2-内政に関する実績">2. 内政に関する実績</h3>
+<p><strong>(1) 城下町整備と街道の再編（津藩）</strong></p>
+<ul>
+<li>津城に入城後、それまで城下の東側を通っていた伊勢街道を城下に取り込むなど、城下町の整備を行いました<a href="https://www.info.city.tsu.mie.jp/kosodate_kyouiku/kyouikuiinkai/1004357/1004663/1004603/1004615/1004617.html">県指定史跡 津城跡</a>。</li>
+<li>これにより、津は32万石の城下町として宿場町も兼ねる形で発展し、経済・交通の要衝となりました。</li>
+</ul>
+<p><strong>(2) 行政・外交・人脈構築の才</strong></p>
+<ul>
+<li>豊臣秀長の家老時代から、合戦だけでなく外交・周旋・行政・人脈構築など多岐にわたる能力を発揮したと評価されています<a href="https://ameblo.jp/hidekifukunaga/entry-11966700578.html">豊臣秀長が傑出した人物であったことを示す根拠</a>。</li>
+<li>主君を替えながらも常に重用された背景には、軍事だけでなく内政・外交の実務能力が高く評価されていたことがあります。</li>
+</ul>
+<p><strong>(3) 工期短縮とコスト削減の手腕</strong></p>
+<ul>
+<li>築城において工期短縮とコスト削減を実現した「変革者」としても評価され、多くの主君から重宝されたとされています<a href="https://shirobito.jp/article/1238">最強戦国大名を城びとも大胆予想！？「国民・専門家・AIがガチで…」</a>。</li>
+<li>これは単なる技術力だけでなく、資材調達・人員配置・予算管理といった内政的な手腕も含まれます。</li>
+</ul>
+<h3 id="内政が上手だった理由">内政が上手だった理由</h3>
+<p>藤堂高虎が築城や内政に優れていた理由ですが、もともと優れていたという訳でなく経験的なものが大きいと思っています。
+そして、経験を吸収できたのは仕事が大好きな人だった点にあろうと思っています。
+彼が内政巧者となった理由を4つの面で考えてみました。</p>
+<p><strong>1. 徹底した実務能力と現場主義</strong></p>
+<ul>
+<li>高虎は、戦闘だけでなく土木・築城・行政といった実務を自ら指揮し、現場をよく見ていました。</li>
+<li>江戸城築城の総責任者を務めたことからも分かるように、大規模プロジェクトのマネジメント能力に長けていました<a href="https://niwareki.doorblog.jp/archives/7146724.html">藤堂高虎 七君に仕えたオールラウンダー</a>。</li>
+<li>工期短縮とコスト削減を実現した「変革者」とも評され、効率性を重視する実務家としての側面が強かったと考えられます<a href="https://shirobito.jp/article/1238">最強戦国大名を城びとも大胆予想！？「国民・専門家・AIがガチで…」</a>。</li>
+</ul>
+<p><strong>2. 豊富な戦歴と築城経験の蓄積</strong></p>
+<ul>
+<li>姉川の戦い、賤ヶ岳の戦い、九州征伐、朝鮮出兵、関ヶ原、大坂の陣など、多数の合戦に参加し、攻め・守り両面の経験を積んでいました<a href="https://ja.wikipedia.org/wiki/%E8%97%A4%E5%A0%82%E9%AB%98%E8%99%8E">藤堂高虎 - Wikipedia</a>。</li>
+<li>戦場で「どう守るか」「どう攻められるか」を体感していたため、防御性と実用性を兼ね備えた城の設計ができたと考えられます。</li>
+<li>今治城のような海城や、津城の城下町整備など、地形や交通路を読み解く力も、こうした経験から培われたと推測されます。</li>
+</ul>
+<p><strong>3. 戦略的・長期的な視点</strong></p>
+<ul>
+<li>高虎は、単に戦に強いだけでなく、城下町の発展や街道の再編にも関心を持ちました。
+<ul>
+<li>津城では伊勢街道を城下に取り込むことで、経済・交通の要衝として発展させています<a href="https://www.info.city.tsu.mie.jp/kosodate_kyouiku/kyouikuiinkai/1004357/1004663/1004603/1004615/1004617.html">県指定史跡 津城跡</a>。</li>
+</ul>
+</li>
+<li>これは「城を守る」だけでなく、「領国を富ませる」という長期的な視点があったことを示しています。</li>
+</ul>
+<p><strong>4. 人脈・情報収集力と適応力</strong></p>
+<ul>
+<li>主君を替えながらも重用され続けた背景には、外交・周旋・人脈構築の能力があったとされています<a href="https://ameblo.jp/hidekifukunaga/entry-11966700578.html">豊臣秀長が傑出した人物であったことを示す根拠</a>。</li>
+<li>各地の武将や技術者との交流を通じて、最新の築城技術や行政手法を学び、自領に応用できた可能性があります。</li>
+<li>外様でありながら徳川政権で譜代並みの信頼を得たのは、こうした「情報と人脈を活かす力」が大きかったと考えられます。</li>
+</ul>
+<h2 id="エピソード">エピソード</h2>
+<p>藤堂高虎は活躍が派手だったこともあり、エピソードが沢山あります。</p>
+<h3 id="1-無銭飲食の逸話">1. 無銭飲食の逸話</h3>
+<ul>
+<li>若い頃、主家を離れて牢人（浪人）になった高虎が、三河吉田宿で空腹に耐えかねて餅屋に入り、お金がないのに餅を食べてしまったという話があります。</li>
+<li>後年、大名になった高虎がその宿を再訪し、白髪になった主人に「あのとき情けをかけていただいた者です。これは餅のお代です」と大金を支払ったと伝えられています<a href="https://busho.fun/person/takatora-todo">藤堂高虎は何をした人？</a>。</li>
+<li>出世後も昔の恩を忘れない「義理堅さ」を感じさせる逸話です。</li>
+</ul>
+<p>藤堂高虎は信長の野望では義理低ランクの定番ですが、史実では一生懸命かつ、発言したことは守る律儀さもあります。
+時勢のせいで変なイメージがついたのかと思ったりします。</p>
+<h3 id="2-身長約190cmの大男だった">2. 身長約190cmの大男だった</h3>
+<ul>
+<li>高虎は身長約190cmの大男だったとされ、当時としてはかなり異例の体格でした<a href="https://serai.jp/hobby/1158432">藤堂高虎の生涯｜家康臨終の際、枕元に招かれるほど信頼された知…</a>。</li>
+<li>戦場ではその巨体と怪力で恐れられ、「槍の高虎」の異名で知られました<a href="https://busho.fun/person/takatora-todo">藤堂高虎 - 戦国武将のハナシ</a>。</li>
+</ul>
+<h3 id="3-影武者が何十人もいた">3. 影武者が何十人もいた</h3>
+<ul>
+<li>高虎は、戦場で自らを狙われないよう、自分に似せた影武者を何十人も用意していたと伝えられています<a href="https://honcierge.jp/articles/shelf_story/1894">藤堂高虎の知っておきたい8つの逸話！</a>。</li>
+<li>敵に「どれが本物か分からない」状態を作り出し、身の安全と戦術の両方を狙った、かなり現実的な策士ぶりがうかがえます。</li>
+</ul>
+<h3 id="4-豊臣秀長に写経をさせられた">4. 豊臣秀長に「写経」をさせられた</h3>
+<ul>
+<li>高虎は若い頃、短気で粗暴な性格だったため、主君・豊臣秀長は彼に写経をさせて「短気を抑える」ことを学ばせたとされています<a href="https://busho.fun/person/takatora-todo">藤堂高虎は何をした人？</a>。</li>
+<li>さらに、前線に立ちたがる高虎をあえて後方の兵站（補給部隊）に回し、「支援する大切さ」を実感させたとも伝えられています。</li>
+<li>いわば「戦国時代の上司による人材育成」のエピソードとしても面白いです。</li>
+</ul>
+<h3 id="5-家康臨終の際に枕元に呼ばれた">5. 家康臨終の際に枕元に呼ばれた</h3>
+<ul>
+<li>外様大名でありながら、徳川家康が臨終の際に「もし天下を揺るがすような兵乱が起きた場合は、高虎を『将軍家の先陣』とせよ」と言い残したという逸話があります<a href="https://newswitch.jp/p/4543">ベスト秘書が戦国武将の中でもなぜ藤堂高虎に心を打たれたのか</a>。</li>
+<li>また、家康の重臣会議に外様大名で唯一参加したとも伝えられ、譜代並みの信頼を得ていたことが分かります。</li>
+</ul>
+<h3 id="6-遺言は早寝早起きだった">6. 遺言は「早寝早起き」だった</h3>
+<ul>
+<li>高虎は「遺訓二百ヶ条」を残したとされ、その中には「早寝早起き」など、現代でも通用するような生活訓が含まれていたと伝えられています<a href="https://honcierge.jp/articles/shelf_story/1894">藤堂高虎の知っておきたい8つの逸話！</a>。</li>
+<li>戦国武将らしからぬ、実務的で健康的な人生観がうかがえます。</li>
+</ul>
+<h3 id="7-七度主君を変えても武士としての筋を通した">7. 「七度主君を変えても武士としての筋を通した」</h3>
+<ul>
+<li>高虎は「七度主君を変えねば一人前とは言えぬ」という言葉を体現したかのように、浅井・織田・豊臣・徳川と主君を替えながら出世しました<a href="https://www.youtube.com/watch?v=SsOxK17j018">主君を七度変えて三十二万石を築いた男の処世術</a>。</li>
+<li>裏切り者と見られがちですが、実際には「忠義の対象を時代に合わせて変えつつ、常に実務で評価された」という、戦国ならではの処世術のエピソードです。</li>
+</ul>
+<h2 id="力量">力量</h2>
+<p>これまでの情報を総合すると、藤堂高虎の力量は「<strong>戦国きってのオールラウンダーで、特に築城と実務能力が突出した武将</strong>」と評価できます。分野ごとに整理すると、次のようになります。</p>
+<h3 id="1-軍事力戦闘戦略">1. 軍事力（戦闘・戦略）</h3>
+<ul>
+<li><strong>野戦・攻城戦</strong>：姉川の戦い、賤ヶ岳の戦い、紀州征伐、九州征伐、関ヶ原、大坂の陣など、主要な合戦にほぼすべて参加し、武功を挙げています<a href="https://ja.wikipedia.org/wiki/%E8%97%A4%E5%A0%82%E9%AB%98%E8%99%8E">藤堂高虎 - Wikipedia</a>。</li>
+<li><strong>水軍指揮</strong>：朝鮮出兵では水軍を率い、漆川梁海戦で朝鮮水軍を殲滅するなど、海戦でも能力を発揮しました<a href="https://ja.wikipedia.org/wiki/%E8%97%A4%E5%A0%82%E9%AB%98%E8%99%8E">藤堂高虎 - Wikipedia</a>。</li>
+<li><strong>知略</strong>：関ヶ原では脇坂安治らへの内応工作に成功し、戦局を有利に導いています<a href="https://ja.wikipedia.org/wiki/%E8%97%A4%E5%A0%82%E9%AB%98%E8%99%8E">藤堂高虎 - Wikipedia</a>。</li>
+</ul>
+<p><strong>評価</strong>：戦闘能力は一流。特に「寡兵で味方を救う」「奇襲で戦局をひっくり返す」など、臨機応変な戦術が得意です。</p>
+<h3 id="2-築城土木">2. 築城・土木</h3>
+<ul>
+<li><strong>築城の名手</strong>：今治城、津城、宇和島城、赤木城など、多数の城の設計・改修に関わり、「築城の名人」として加藤清正・黒田官兵衛と並び称されます<a href="https://kusanomido.com/study/history/japan/azuchi/39912/">加藤清正 ～日本最強の武将と恐れられた武将【築城、内政能力も…】</a>。</li>
+<li><strong>江戸城築城の責任者</strong>：外様でありながら江戸城の築城・普請の総責任者を務め、譜代並みの信頼を得ました<a href="https://niwareki.doorblog.jp/archives/7146724.html">藤堂高虎 七君に仕えたオールラウンダー</a>。</li>
+<li><strong>工期短縮・コスト削減</strong>：築城において工期短縮とコスト削減を実現した「変革者」とも評価されています<a href="https://shirobito.jp/article/1238">最強戦国大名を城びとも大胆予想！？「国民・専門家・AIがガチで…」</a>。</li>
+</ul>
+<p><strong>評価</strong>：戦国武将の中でもトップクラスの築城能力。防御性・実用性・経済性を兼ね備えた設計が特徴です。</p>
+<h3 id="3-内政行政">3. 内政・行政</h3>
+<ul>
+<li><strong>城下町整備</strong>：津城では伊勢街道を城下に取り込むなど、城下町整備を行い、宿場町としても発展させました<a href="https://www.info.city.tsu.mie.jp/kosodate_kyouiku/kyouikuiinkai/1004357/1004663/1004603/1004615/1004617.html">県指定史跡 津城跡</a>。</li>
+<li><strong>行政・外交・人脈構築</strong>：豊臣秀長の家老時代から、合戦だけでなく外交・周旋・行政・人脈構築など多岐にわたる能力を発揮したと評価されています<a href="https://ameblo.jp/hidekifukunaga/entry-11966700578.html">豊臣秀長が傑出した人物であったことを示す根拠</a>。</li>
+</ul>
+<p><strong>評価</strong>：軍事だけでなく、領国経営や外交にも長けた「実務型」の大名。外様でありながら譜代並みの扱いを受けた背景には、こうした内政力があります。</p>
+<h3 id="4-人間関係処世術">4. 人間関係・処世術</h3>
+<ul>
+<li><strong>主君を替えても重用される</strong>：浅井・織田・豊臣・徳川と主君を替えながらも、常に能力を買われて出世しました。</li>
+<li><strong>家康からの絶大な信頼</strong>：臨終の際に「天下を揺るがす兵乱があれば高虎を先陣とせよ」と言い残したと伝えられ、重臣会議にも外様で唯一参加したとされます<a href="https://newswitch.jp/p/4543">ベスト秘書が戦国武将の中でもなぜ藤堂高虎に心を打たれたのか</a>。</li>
+<li><strong>恩を忘れない</strong>：無銭飲食の餅屋に後年大金を返した逸話など、義理堅さも伝わっています<a href="https://busho.fun/person/takatora-todo">藤堂高虎は何をした人？</a>。</li>
+</ul>
+<p><strong>評価</strong>：「世渡り上手」と批判されることもありますが、実際には「能力と忠節で評価される」タイプ。人間関係と情報収集をうまく使い、時代の変化に適応したキャリア戦略が非常に高いです。</p>
+<h3 id="5-性格健康観">5. 性格・健康観</h3>
+<ul>
+<li><strong>短気を矯正</strong>：秀長に写経をさせられ、短気を抑える訓練を受けたと伝えられています<a href="https://busho.fun/person/takatora-todo">藤堂高虎は何をした人？</a>。</li>
+<li><strong>健康志向</strong>：遺訓に「早寝早起き」など、現代でも通用する生活訓を残したとされ、実務的な人生観がうかがえます<a href="https://honcierge.jp/articles/shelf_story/1894">藤堂高虎の知っておきたい8つの逸話！</a>。</li>
+</ul>
+<p><strong>評価</strong>：自己管理能力も高く、感情をコントロールして冷静に判断できるタイプです。</p>
+<h3 id="総合診断">総合診断</h3>
+<ul>
+<li><strong>軍事</strong>：★★★★☆（一流の戦闘能力と戦術眼）</li>
+<li><strong>築城</strong>：★★★★★（戦国トップクラスの築城・土木能力）</li>
+<li><strong>内政</strong>：★★★★☆（城下町整備・行政・外交に長ける）</li>
+<li><strong>人間関係・処世術</strong>：★★★★★（主君を替えても重用され、家康から絶大な信頼）</li>
+<li><strong>自己管理・健康</strong>：★★★★☆（短気を矯正し、健康志向の生活訓を残す）</li>
+</ul>
+<p><strong>結論</strong>：<br>
+藤堂高虎は、<strong>「戦闘・築城・内政・人間関係・キャリア戦略」のすべてが高水準で、特に築城と実務能力が突出した、戦国きってのオールラウンダー</strong>と言えます。<br>
+「七度主君を変えた」という点で批判されることもありますが、実際には「時代の変化に合わせて自分の能力を最大限に活かし、常に実務で評価された」という、非常に現実的で優秀な武将だったと診断できます。</p>
+
+
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+</script>
+
+
+            
+        </body>
+        </html>
