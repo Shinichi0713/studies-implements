@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&#x6982;&#x8981;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+/* 目次全体のコンテナ */
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+
+/* 記事タイトル (h1) */
+h1 {
+    font-size: 2rem;
+    color: #24292f;
+    line-height: 1.3;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 3px double #e1e4e8; /* 二重線で上品に */
+    text-align: center; /* タイトルを中央に寄せて特別感を出す */
+}
+
+/* セクション見出し (h2) */
+h2 {
+    font-size: 1.5rem;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(transparent 70%, #e8f0fe 70%); /* 下側に薄い色のアクセント */
+    border-left: 6px solid #0969da; /* 目次のテーマカラーと合わせる */
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* 強調文字 (strong) */
+strong {
+    font-weight: bold;
+    color: #cf222e; /* ホバー時の赤色と合わせて統一感を出す */
+    background: linear-gradient(transparent 60%, #fff2cc 60%); /* 黄色のマーカー風 */
+    padding: 0 2px;
+}
+
+/* 引用のコンテナ */
+blockquote {
+    position: relative;
+    padding: 20px 30px;
+    margin: 30px 0;
+    background-color: #f6f8fa; /* 目次の背景より少しだけ濃いグレー */
+    border-left: 5px solid #d0d7de; /* 落ち着いたグレーの境界線 */
+    color: #57606a; /* 文字色は少し薄くして引用らしさを出す */
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 引用符のアイコンを装飾として追加 */
+blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    font-size: 40px;
+    color: #d0d7de;
+    font-family: serif;
+    line-height: 1;
+}
+
+/* 読者になるボタンのデザイン */
+.btn-subscribe {
+    display: inline-block;
+    padding: 12px 35px; /* 横幅を広めにとって存在感を出します */
+    background-color: #383838; /* お好みの色に変更してください */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #555555;
+    text-decoration: none;
+}
+
+/* はてなブログで見えてしまう数式データを非表示にする */
+.katex-html {
+    display: none !important;
+}
+
+.katex-mathml {
+    display: inline !important;
+}
+/* Amazonカード型のオシャレなデザイン */
+.shop-card {
+    display: flex;
+    max-width: 500px;
+    margin: 20px auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* マウスホップした時の動き */
+.shop-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.shop-card-image {
+    width: 150px;
+    min-width: 150px;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shop-card-image img {
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+}
+
+.shop-card-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.shop-card-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.shop-card-description {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+/* Amazonらしいオレンジボタン */
+.shop-card-link a {
+    display: inline-block;
+    background-color: #ff9900;
+    color: #fff !important;
+    text-decoration: none !important;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.shop-card-link a:hover {
+    background-color: #e68a00;
+}
+
+/* スマホ対応：縦並びにする */
+@media (max-width: 480px) {
+    .shop-card {
+        flex-direction: column;
+        max-width: 100%;
+    }
+    .shop-card-image {
+        width: 100%;
+        height: 200px;
+    }
+}
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+            <p>本日は1577年に織田と、戦国の軍神・上杉謙信が直接対決をした手取川の戦いについての話です。</p>
+<h2 id="概要">概要</h2>
+<p><strong>手取川の戦い（てどりがわのたたかい）</strong> は、天正5年9月23日（1577年11月3日）に<strong>加賀国（現在の石川県白山市）の手取川周辺</strong>で、<strong>上杉謙信軍と織田信長軍（柴田勝家が総大将）</strong> が激突した合戦です。<a href="https://ja.wikipedia.org/wiki/%E6%89%8B%E5%8F%96%E5%B7%9D%E3%81%AE%E6%88%A6%E3%81%84">Wikipedia「手取川の戦い」</a></p>
+<h3 id="1-背景織田信長の北陸攻略と上杉謙信の出陣">1. 背景：織田信長の北陸攻略と上杉謙信の出陣</h3>
+<ul>
+<li>織田信長は、<strong>北陸方面（加賀・能登・越前）の平定</strong>を進めており、重臣・柴田勝家を北ノ庄（福井）に置いて攻略を担当させていました。<a href="https://www.touken-world.jp/dtl/tedorigawa/">刀剣ワールド「手取川の戦い／古戦場」</a></li>
+<li>一方、<strong>上杉謙信</strong>は越後・越中を抑え、<strong>能登の七尾城（畠山氏）</strong> をめぐって織田方と対立していました。</li>
+<li>七尾城の実質的な支配者・長続連（ちょうつぐつら）が織田信長に救援を要請し、織田軍が加賀へ侵攻したことが、手取川の戦いの直接のきっかけになります。<a href="https://bushoojapan.com/bushoo/war/2024/09/22/30469">武将ジャパン「手取川の戦い1577年」</a></li>
+</ul>
+<h3 id="2-戦いの経過概要">2. 戦いの経過（概要）</h3>
+<ul>
+<li><strong>兵力</strong>
+<ul>
+<li>織田軍：柴田勝家を総大将に、前田利家・佐々成政らを含む<strong>約4万</strong>とされる大軍。<a href="https://www.touken-world.jp/dtl/tedorigawa/">刀剣ワールド「手取川の戦い／古戦場」</a></li>
+<li>上杉軍：上杉謙信率いる<strong>約1万2千</strong>とされる軍勢。<a href="https://www.touken-world.jp/dtl/tedorigawa/">刀剣ワールド「手取川の戦い／古戦場」</a></li>
+</ul>
+</li>
+<li><strong>七尾城の陥落と謙信の南下</strong>
+<ul>
+<li>上杉謙信は能登・七尾城を攻め、1577年9月に<strong>七尾城を落城</strong>させます。<a href="https://bushoojapan.com/bushoo/war/2024/09/22/30469">武将ジャパン「手取川の戦い1577年」</a></li>
+<li>その後、<strong>加賀へ南下</strong>し、手取川付近で織田軍と対峙します。</li>
+</ul>
+</li>
+<li><strong>織田軍の撤退と追撃</strong>
+<ul>
+<li>織田軍は、七尾城落城の報を受けるなどして<strong>戦略的に不利</strong>と判断し、<strong>撤退を開始</strong>します。<a href="https://bushoojapan.com/bushoo/war/2024/09/22/30469">武将ジャパン「手取川の戦い1577年」</a></li>
+<li>上杉軍は、<strong>手取川を渡河しようとする織田軍を追撃</strong>し、川を渡りきれない兵や混乱した部隊に大打撃を与えました。<a href="https://www.touken-world.jp/dtl/tedorigawa/">刀剣ワールド「手取川の戦い／古戦場」</a></li>
+</ul>
+</li>
+</ul>
+<h3 id="3-結果と影響">3. 結果と影響</h3>
+<ul>
+<li><strong>上杉軍の大勝</strong>
+<ul>
+<li>織田軍は多数の<strong>戦死者・溺死者</strong>を出し、<strong>上杉謙信軍の圧勝</strong>に終わったとされます。<a href="https://www.touken-world.jp/dtl/tedorigawa/">刀剣ワールド「手取川の戦い／古戦場」</a></li>
+</ul>
+</li>
+<li><strong>織田信長の北陸戦線への影響</strong>
+<ul>
+<li>この敗戦により、織田信長は<strong>一時的に北陸方面の作戦を縮小・中断</strong>せざるを得なくなったとされています。<a href="https://bushoojapan.com/bushoo/war/2024/09/22/30469">武将ジャパン「手取川の戦い1577年」</a></li>
+</ul>
+</li>
+<li><strong>上杉謙信の死</strong>
+<ul>
+<li>手取川の戦いの翌年（1578年）、上杉謙信は急死し、上杉家は<strong>御館の乱</strong>で内紛状態に陥ります。<a href="https://ja.wikipedia.org/wiki/%E6%89%8B%E5%8F%96%E5%B7%9D%E3%81%AE%E6%88%A6%E3%81%84">Wikipedia「手取川の戦い」</a></li>
+</ul>
+</li>
+</ul>
+<h3 id="4-豊臣兄弟との関係補足">4. 「豊臣兄弟！」との関係（補足）</h3>
+<ul>
+<li>先の回答で触れた**「豊臣兄弟！」第19回の“上杉攻め”<strong>は、<br>
+この</strong>手取川の戦いを含む柴田勝家の北陸戦線<strong>を下敷きにした</strong>創作的な戦い**です。<a href="https://www.sankei.com/article/20260515-E5STM3ZHQBHHLCVTVTM7V4WYGQ/">産経ニュース「豊臣兄弟！第19回あらすじ」</a></li>
+<li>ドラマでは、<strong>柴田勝家を総大将とする上杉攻めに秀吉が加わり、作戦方針で対立する</strong>という人間ドラマが描かれていますが、<br>
+史実の手取川の戦いでは、<strong>秀吉は参戦しておらず、主に柴田勝家と上杉謙信の戦い</strong>でした。<a href="https://bushoojapan.com/bushoo/war/2024/09/22/30469">武将ジャパン「手取川の戦い1577年」</a></li>
+</ul>
+<h2 id="背景">背景</h2>
+<p>手取川の戦い（1577年）に至るまでの<strong>織田信長と上杉謙信の関係と動向</strong>を、時系列で整理して説明します。</p>
+<h3 id="1-初期の関係友好同盟関係濃越同盟">1. 初期の関係：友好・同盟関係（濃越同盟）</h3>
+<p><strong>織田信長の動向（1560年代〜1570年代初頭）</strong></p>
+<ul>
+<li>尾張・美濃を平定し、<strong>足利義昭を奉じて上洛</strong>（1568年）。</li>
+<li>浅井・朝倉、石山本願寺、武田信玄らによる<strong>信長包囲網</strong>に対処しながら、<strong>近畿・東海の支配</strong>を進めていました。<a href="https://ja.wikipedia.org/wiki/%E4%B8%89%E6%96%B9%E3%83%B6%E5%8E%9F%E3%81%AE%E6%88%A6%E3%81%84">三方ヶ原の戦い - Wikipedia</a></li>
+</ul>
+<p><strong>上杉謙信の動向</strong></p>
+<ul>
+<li>越後を本拠に、<strong>関東管領・上杉家</strong>として関東や北信濃で武田信玄と激突（川中島の戦いなど）。</li>
+<li>室町幕府の秩序を重んじる立場から、<strong>将軍・足利義昭や幕府秩序の維持</strong>を重視していました。<a href="https://ja.wikipedia.org/wiki/%E6%BF%83%E8%B6%8A%E5%90%8C%E7%9B%9F">濃越同盟 - Wikipedia</a></li>
+</ul>
+<p><strong>両者の関係性：濃越同盟（1572年）</strong></p>
+<ul>
+<li>元亀3年（1572年）11月20日、<strong>美濃の織田信長と越後の上杉謙信の間で「濃越同盟」</strong> が結ばれます。<a href="https://ja.wikipedia.org/wiki/%E6%BF%83%E8%B6%8A%E5%90%8C%E7%9B%9F">濃越同盟 - Wikipedia</a></li>
+<li>これは、<strong>共通の敵である武田信玄への対抗</strong>や、幕府秩序維持を名目とした<strong>友好・同盟関係</strong>でした。<a href="https://www.synchronous.jp/articles/-/3576">Synchronous「上杉謙信と織田信長『戦国最強同盟』」</a></li>
+<li>この時期、信長は謙信に<strong>養子を出す提案</strong>もしており、かなり親密な外交関係にあったとされます。<a href="https://raisoku.com/1310">raisoku.com「信長が上杉輝虎（謙信）に養子を出そうとしていた事実」</a></li>
+</ul>
+<h3 id="2-関係悪化のきっかけ織田の北陸進出と謙信の警戒">2. 関係悪化のきっかけ：織田の北陸進出と謙信の警戒</h3>
+<p><strong>織田信長の北陸戦略（1570年代半ば）</strong></p>
+<ul>
+<li>信長は<strong>北陸方面（越前・加賀・能登）の平定</strong>を進め、重臣・<strong>柴田勝家</strong>を北ノ庄（福井）に置いて攻略を担当させます。<a href="https://www.touken-world.jp/dtl/tedorigawa/">刀剣ワールド「手取川の戦い／古戦場」</a></li>
+<li>加賀では<strong>一向一揆勢力</strong>が強く、信長はこれを<strong>鎮圧し、加賀を織田領に組み込む</strong>方針をとります。<a href="https://www.touken-world.jp/dtl/tedorigawa/">刀剣ワールド「手取川の戦い／古戦場」</a></li>
+</ul>
+<p><strong>上杉謙信の立場の変化</strong></p>
+<ul>
+<li>謙信は越後・越中を抑え、<strong>能登・加賀への影響力</strong>も持っていました。</li>
+<li>織田の北陸進出は、<strong>謙信の勢力圏（北陸ルート）への直接的な脅威</strong>となり、<strong>友好関係から対立関係へ</strong>と転じていきます。<a href="https://www.synchronous.jp/articles/-/186">Synchronous「友好な関係だった上杉謙信と織田信長はなぜ、手取川で戦ったのか」</a></li>
+</ul>
+<h3 id="3-手取川の戦い直前の具体的な動向">3. 手取川の戦い直前の具体的な動向</h3>
+<p><strong>① 七尾城の戦い（1576〜1577年）</strong></p>
+<ul>
+<li>能登の要衝・<strong>七尾城（畠山氏の居城）</strong> をめぐり、上杉謙信が<strong>能登平定を目指して侵攻</strong>します。<a href="https://sengoku-his.com/151">戦国ヒストリー「七尾城の戦い（1576～77年）」</a></li>
+<li>七尾城は堅牢で、謙信は長期の包囲戦を強いられます。</li>
+<li>城内では疫病が蔓延し、<strong>重臣・長続連（ちょうつぐつら）が織田信長に救援を要請</strong>します。<a href="https://www.touken-world.jp/dtl/tedorigawa/">刀剣ワールド「手取川の戦い／古戦場」</a></li>
+</ul>
+<p><strong>② 織田軍の北陸進出と加賀一向一揆</strong></p>
+<ul>
+<li>柴田勝家は<strong>加賀一向一揆の鎮圧と加賀平定</strong>を進め、北陸方面での織田勢力を拡大します。<a href="https://www.touken-world.jp/dtl/tedorigawa/">刀剣ワールド「手取川の戦い／古戦場」</a></li>
+<li>本願寺（石山本願寺）は、<strong>上杉謙信に使者を送り、織田信長への共闘を要請</strong>します。<a href="https://kiboriguma.hatenadiary.jp/entry/tedorigawa">はてなブログ「手取川の戦いとは？わかりやすく、簡単に解説！」</a></li>
+<li>これにより、<strong>一向一揆勢力と上杉謙信が連携し、織田に対抗する構図</strong>が生まれます。</li>
+</ul>
+<p><strong>③ 七尾城落城と謙信の南下</strong></p>
+<ul>
+<li>1577年9月、七尾城内の混乱と疫病の影響もあり、<strong>上杉謙信が七尾城を落城</strong>させます。<a href="https://bushoojapan.com/bushoo/war/2024/09/22/30469">武将ジャパン「手取川の戦い1577年」</a></li>
+<li>謙信は<strong>能登平定をほぼ完了</strong>させ、その勢いで<strong>加賀へ南下</strong>します。</li>
+</ul>
+<p><strong>織田軍の動き</strong></p>
+<ul>
+<li>柴田勝家を総大将とする<strong>約4万の織田軍</strong>が、加賀平定と七尾城救援を兼ねて北陸に進出していました。<a href="https://www.touken-world.jp/dtl/tedorigawa/">刀剣ワールド「手取川の戦い／古戦場」</a></li>
+<li>しかし、<strong>七尾城落城の報</strong>などを受け、<strong>戦略的に不利と判断して撤退</strong>を開始します。<a href="https://bushoojapan.com/bushoo/war/2024/09/22/30469">武将ジャパン「手取川の戦い1577年」</a></li>
+</ul>
+<p><strong>上杉軍の動き</strong></p>
+<ul>
+<li>上杉謙信は<strong>約1万2千の軍勢</strong>で加賀へ南下し、<strong>手取川付近で織田軍を捕捉</strong>します。<a href="https://www.touken-world.jp/dtl/tedorigawa/">刀剣ワールド「手取川の戦い／古戦場」</a></li>
+</ul>
+<p>こうして織田 VS 上杉謙信の直接的な戦闘につながりました。</p>
+<h2 id="戦闘に至るまで">戦闘に至るまで</h2>
+<p>手取川の戦い（1577年）に至るまでの<strong>織田軍内の出来事と、豊臣秀吉（当時は羽柴秀吉）の関わり</strong>を、時系列で整理します。</p>
+<h3 id="1-織田軍の北陸出陣1577年8月8日">1. 織田軍の北陸出陣（1577年8月8日）</h3>
+<ul>
+<li>織田信長は、<strong>上杉謙信の北陸進出と能登・加賀への影響力拡大</strong>に対抗するため、<br>
+<strong>柴田勝家を総大将とする北陸方面軍</strong>を編成します。<a href="https://bushoojapan.com/bushoo/toyobrother-bushoo/2025/09/22/195550">武将ジャパン「秀吉が上杉との合戦を前に戦場を放棄！」</a></li>
+<li>この軍には、<strong>羽柴秀吉</strong>をはじめ、前田利家・佐々成政ら織田家の有力武将が含まれていました。<a href="https://www.touken-world.jp/dtl/tedorigawa/">刀剣ワールド「手取川の戦い／古戦場」</a></li>
+<li>目的は、<strong>加賀一向一揆の鎮圧</strong>と、<strong>上杉謙信の南下を食い止めること</strong>でした。<a href="https://www.touken-world.jp/dtl/tedorigawa/">刀剣ワールド「手取川の戦い／古戦場」</a></li>
+</ul>
+<p><strong>秀吉の関わり</strong>：</p>
+<ul>
+<li>秀吉は<strong>勝家の指揮下に入り、北陸方面へ出陣</strong>します。</li>
+<li>この時点では、<strong>織田軍の一員として上杉攻めに参加する立場</strong>でした。</li>
+</ul>
+<h3 id="2-北陸進軍中の出来事1577年8月中旬9月上旬">2. 北陸進軍中の出来事（1577年8月中旬〜9月上旬）</h3>
+<ul>
+<li>織田軍は加賀へ向けて進軍しますが、<strong>加賀一向一揆勢力との小競り合いや城攻め</strong>があり、進軍速度はゆっくりでした。<a href="https://note.com/nagatsukinanaki/n/ncbc1097519ad">note「天正五年（1577年）手取川の戦い」</a></li>
+<li>一方、<strong>上杉謙信は能登・七尾城を包囲</strong>し、長期戦の末に<strong>1577年9月に七尾城を落城</strong>させます。<a href="https://bushoojapan.com/bushoo/war/2024/09/22/30469">武将ジャパン「手取川の戦い1577年」</a></li>
+<li>七尾城落城の報は、<strong>織田軍にも伝わり、戦略的に不利な状況</strong>が明らかになります。</li>
+</ul>
+<p><strong>秀吉の関わり</strong>：</p>
+<ul>
+<li>秀吉は<strong>勝家の指揮下で作戦に従事</strong>しますが、
+<ul>
+<li>勝家との<strong>作戦方針の対立</strong></li>
+<li>上杉謙信の強さへの<strong>警戒</strong><br>
+などから、<strong>戦線からの離脱を決意</strong>したとされます。<a href="https://bushoojapan.com/bushoo/toyobrother-bushoo/2025/09/22/195550">武将ジャパン「秀吉が上杉との合戦を前に戦場を放棄！」</a></li>
+</ul>
+</li>
+</ul>
+<h3 id="3-秀吉の無断撤退1577年9月上旬中旬">3. 秀吉の無断撤退（1577年9月上旬〜中旬）</h3>
+<ul>
+<li>手取川の戦いが勃発する<strong>約1ヶ月前（9月23日の約1ヶ月前＝8月下旬〜9月上旬頃）</strong>、<br>
+秀吉は<strong>勝手に戦線を離れ、無断で撤退</strong>します。<a href="https://bushoojapan.com/bushoo/toyobrother-bushoo/2025/09/22/195550">武将ジャパン「秀吉が上杉との合戦を前に戦場を放棄！」</a></li>
+<li>撤退の理由として、
+<ul>
+<li><strong>柴田勝家との反りが合わなかった</strong></li>
+<li><strong>上杉謙信の強さに恐れをなした</strong><br>
+などの説が挙げられていますが、詳細は不明とされています。<a href="https://bushoojapan.com/bushoo/toyobrother-bushoo/2025/09/22/195550">武将ジャパン「秀吉が上杉との合戦を前に戦場を放棄！」</a></li>
+</ul>
+</li>
+</ul>
+<p><strong>秀吉の関わり</strong>：</p>
+<ul>
+<li>秀吉は<strong>手取川の戦いそのものには参加せず、戦闘が始まる前に撤退</strong>しています。</li>
+<li>これは、<strong>織田軍の命令を無視した「戦場放棄」</strong> であり、信長の怒りを買う行動でした。</li>
+</ul>
+<h3 id="4-手取川の戦いと織田軍の敗北1577年9月23日">4. 手取川の戦いと織田軍の敗北（1577年9月23日）</h3>
+<ul>
+<li>秀吉が撤退した後、<strong>柴田勝家を総大将とする織田軍（約4万）</strong> は、<br>
+<strong>上杉謙信軍（約1万2千）</strong> と<strong>手取川周辺</strong>で対峙します。<a href="https://www.touken-world.jp/dtl/tedorigawa/">刀剣ワールド「手取川の戦い／古戦場」</a></li>
+<li>七尾城落城の報などを受け、織田軍は<strong>戦略的に不利と判断して撤退</strong>を開始しますが、<br>
+<strong>手取川を渡河しようとするタイミングで上杉軍の追撃</strong>を受け、<strong>多数の戦死者・溺死者</strong>を出して敗北します。<a href="https://www.touken-world.jp/dtl/tedorigawa/">刀剣ワールド「手取川の戦い／古戦場」</a></li>
+</ul>
+<p><strong>秀吉の関わり</strong>：</p>
+<ul>
+<li>秀吉は<strong>この時点で戦場にいなかった</strong>ため、
+<ul>
+<li>手取川の戦いの<strong>直接の戦闘には関与していません</strong>。</li>
+<li>しかし、<strong>合戦前に離脱したことで、織田軍の戦力を減らし、結果的に敗北を助長した</strong>と評価されることもあります。</li>
+</ul>
+</li>
+</ul>
+<h3 id="5-戦後の織田軍内での出来事と秀吉の処遇">5. 戦後の織田軍内での出来事と秀吉の処遇</h3>
+<ul>
+<li>信長は秀吉の<strong>無断撤退に激怒</strong>し、『信長公記』では秀吉が <strong>「進退に窮した（どうにもならない状況に陥った）」</strong> と記されるほど、<strong>窮地に立たされます</strong>。<a href="https://bushoojapan.com/bushoo/toyobrother-bushoo/2025/09/22/195550">武将ジャパン「秀吉が上杉との合戦を前に戦場を放棄！」</a></li>
+<li>しかし、直後に<strong>松永久秀の謀反（信貴山城の戦い）</strong> が勃発し、<br>
+信長は<strong>久秀討伐を優先</strong>せざるを得なくなります。<a href="https://bushoojapan.com/bushoo/toyobrother-bushoo/2025/09/22/195550">武将ジャパン「秀吉が上杉との合戦を前に戦場を放棄！」</a></li>
+<li>さらに、秀吉はその後<strong>播磨・但馬方面での軍功</strong>を挙げたため、<br>
+信長は<strong>処罰を下さず、むしろ名品の茶釜『乙御前の釜』を褒美として与えた</strong>とされます。<a href="https://bushoojapan.com/bushoo/toyobrother-bushoo/2025/09/22/195550">武将ジャパン「秀吉が上杉との合戦を前に戦場を放棄！」</a></li>
+</ul>
+<p><strong>秀吉の関わり（まとめ）</strong>：</p>
+<ul>
+<li><strong>北陸出陣</strong>：勝家の指揮下で上杉攻めに参加。</li>
+<li><strong>無断撤退</strong>：合戦の約1ヶ月前に戦線を離脱し、手取川の戦いには不参加。</li>
+<li><strong>信長の激怒</strong>：命令違反として窮地に立たされる。</li>
+<li><strong>結果的免責</strong>：松永久秀の謀反と播磨での軍功により、処罰は免れ、むしろ褒美を受ける。</li>
+</ul>
+<h2 id="誰が撤退を判断したか">誰が撤退を判断したか</h2>
+<p>手取川の戦いにおける<strong>織田軍の撤退判断の根拠</strong>と、<strong>誰の判断か（信長か現場の将官か）</strong> について、史料と通説をもとに整理します。</p>
+<h3 id="1-撤退判断の根拠史料に書かれていること">1. 撤退判断の根拠（史料に書かれていること）</h3>
+<p>そもそもなぜ撤退しようということになったかについて考察します。</p>
+<p><strong>① 七尾城落城と上杉軍の南下</strong></p>
+<ul>
+<li>上杉謙信は能登・<strong>七尾城</strong>を長期包囲の末、<strong>1577年9月に落城</strong>させます。<a href="https://bushoojapan.com/bushoo/war/2024/09/22/30469">武将ジャパン「手取川の戦い1577年」</a></li>
+<li>この報が織田軍に伝わり、<strong>救援の目的（七尾城救援）が失われた</strong>と判断されます。<a href="https://www.touken-world.jp/dtl/tedorigawa/">刀剣ワールド「手取川の戦い／古戦場」</a></li>
+<li>同時に、<strong>上杉軍が加賀へ南下</strong>している情報もあり、織田軍は<strong>正面で謙信と決戦するリスク</strong>を避けようとします。<a href="https://rekishikaido.php.co.jp/detail/4360">歴史街道「手取川の戦い」</a></li>
+</ul>
+<p><strong>② 織田軍の戦略的不利</strong></p>
+<ul>
+<li>織田軍は<strong>加賀一向一揆勢力との小競り合い</strong>や城攻めを続けており、<strong>進軍速度が遅く、疲弊</strong>していました。<a href="https://note.com/nagatsukinanaki/n/ncbc1097519ad">note「天正五年（1577年）手取川の戦い」</a></li>
+<li>一方、上杉軍は<strong>七尾城落城で勢いに乗り、士気が高い</strong>状態でした。<a href="https://www.touken-world.jp/dtl/tedorigawa/">刀剣ワールド「手取川の戦い／古戦場」</a></li>
+<li>この状況で<strong>手取川を越えて決戦するのは不利</strong>と判断され、<strong>撤退して態勢を立て直す</strong>方針がとられたとされます。<a href="https://rekishikaido.php.co.jp/detail/4360">歴史街道「手取川の戦い」</a></li>
+</ul>
+<p><strong>③ 撤退のタイミングと結果</strong></p>
+<ul>
+<li>織田軍は<strong>手取川を渡河しようとするタイミングで撤退</strong>を開始しますが、<br>
+<strong>上杉軍の追撃</strong>を受け、<strong>多数の戦死者・溺死者</strong>を出して敗走します。<a href="https://www.touken-world.jp/dtl/tedorigawa/">刀剣ワールド「手取川の戦い／古戦場」</a></li>
+</ul>
+<p><strong>まとめると、撤退判断の根拠は、</strong></p>
+<ul>
+<li>七尾城落城で<strong>救援目的が消滅</strong>したこと</li>
+<li>上杉軍の南下と<strong>織田軍の疲弊・不利な状況</strong></li>
+<li><strong>手取川を越えて決戦するリスク</strong>を避けるため<br>
+という、<strong>戦略的な判断</strong>に基づくものとされています。<a href="https://bushoojapan.com/bushoo/war/2024/09/22/30469">武将ジャパン「手取川の戦い1577年」</a><a href="https://www.touken-world.jp/dtl/tedorigawa/">刀剣ワールド「手取川の戦い／古戦場」</a></li>
+</ul>
+<h3 id="2-誰の判断か信長か現場の将官か">2. 誰の判断か（信長か現場の将官か）</h3>
+<p><strong>① 史料上の記述</strong></p>
+<ul>
+<li>『信長公記』など<strong>織田側の一次史料</strong>には、<strong>「信長が撤退を命じた」という明確な記述はありません</strong>。<a href="https://bushoojapan.com/bushoo/war/2024/09/22/30469">武将ジャパン「手取川の戦い1577年」</a></li>
+<li>一方、<strong>歴史街道</strong>などの解説では、<br>
+「<strong>信長はここに撤退を命じた</strong>」と記述しているものもあります。<a href="https://rekishikaido.php.co.jp/detail/4360">歴史街道「手取川の戦い」</a></li>
+<li>ただし、これは<strong>後世の解釈・推測</strong>であり、<strong>一次史料に直接の根拠があるわけではありません</strong>。</li>
+</ul>
+<p><strong>② 通説と研究者の見解</strong></p>
+<ul>
+<li>通説では、<strong>柴田勝家を総大将とする現場の将官が撤退を決断した</strong>とされることが多いです。<a href="https://www.touken-world.jp/dtl/tedorigawa/">刀剣ワールド「手取川の戦い／古戦場」</a></li>
+<li>理由としては、
+<ul>
+<li>信長は<strong>畿内（松永久秀の謀反など）の対応</strong>に忙しく、<strong>北陸前線の細かな指揮までは及んでいない</strong>可能性が高いこと</li>
+<li>勝家は<strong>北陸方面の責任者</strong>として、<strong>現場の状況に応じた判断権限</strong>を持っていたこと<br>
+が挙げられます。<a href="https://bushoojapan.com/bushoo/toyobrother-bushoo/2025/09/22/195550">武将ジャパン「秀吉が上杉との合戦を前に戦場を放棄！」</a></li>
+</ul>
+</li>
+<li>一部の解説では「<strong>信長が撤退を命じた</strong>」とする説もありますが、これは<strong>史料上の裏付けが弱く、推測の域を出ない</strong>とされています。<a href="https://rekishikaido.php.co.jp/detail/4360">歴史街道「手取川の戦い」</a></li>
+</ul>
+<p><strong>③ 結論（現時点の評価）</strong></p>
+<ul>
+<li><strong>撤退判断の根拠</strong>は、
+<ul>
+<li>七尾城落城で<strong>救援目的の消失</strong></li>
+<li>上杉軍の南下と<strong>織田軍の不利な状況</strong><br>
+という<strong>戦略的判断</strong>に基づくものと解釈できます。<a href="https://bushoojapan.com/bushoo/war/2024/09/22/30469">武将ジャパン「手取川の戦い1577年」</a></li>
+</ul>
+</li>
+<li><strong>誰の判断か</strong>については、
+<ul>
+<li>一次史料に<strong>信長命令の明記はない</strong></li>
+<li>勝家が<strong>北陸方面の総大将</strong>として<strong>現場判断</strong>した可能性が高い<br>
+ため、<strong>柴田勝家を中心とする現場の将官の判断</strong>とするのが、現時点では最も妥当な見方です。<a href="https://www.touken-world.jp/dtl/tedorigawa/">刀剣ワールド「手取川の戦い／古戦場」</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="戦闘の影響">戦闘の影響</h2>
+<p>手取川の戦い（1577年）の結果、<strong>織田信長・織田家は以下のような状況</strong>になりました。</p>
+<h3 id="1-北陸方面での後退と支配圏の縮小">1. 北陸方面での後退と支配圏の縮小</h3>
+<ul>
+<li>手取川の戦いで<strong>織田軍は大敗</strong>し、<strong>多数の戦死者・溺死者</strong>を出しました。<a href="https://www.touken-world.jp/dtl/tedorigawa/">刀剣ワールド「手取川の戦い／古戦場」</a></li>
+<li>この敗北により、<strong>加賀での織田の支配は後退</strong>し、<br>
+<strong>上杉謙信が北陸（越中・能登・加賀）で勢力を拡大</strong>しました。<a href="https://www.synchronous.jp/articles/-/844">Synchronous「謙信最後の合戦『手取川合戦』の実像」</a></li>
+<li>織田方は<strong>越前（北ノ庄）を拠点に防衛線を維持</strong>するものの、<strong>加賀平定は一時的に中断</strong>せざるを得なくなります。<a href="https://bushoojapan.com/bushoo/war/2024/09/22/30469">武将ジャパン「手取川の戦い1577年」</a></li>
+</ul>
+<p><strong>結果</strong>：</p>
+<ul>
+<li>北陸では<strong>上杉謙信が優位</strong>となり、織田は<strong>北陸方面の進出を一時的に後退</strong>させました。</li>
+</ul>
+<h3 id="2-信長包囲網への影響と周辺勢力の動き">2. 信長包囲網への影響と周辺勢力の動き</h3>
+<ul>
+<li>手取川の戦いは、<strong>信長包囲網（本願寺・武田・上杉など）<strong>の中で、<br>
+<strong>上杉謙信が織田軍を正面で撃破した数少ない事例</strong>として、<br>
+周辺勢力に</strong>「織田も敗れる」という印象</strong>を与えました。<a href="https://www.synchronous.jp/articles/-/844">Synchronous「謙信最後の合戦『手取川合戦』の実像」</a></li>
+<li>特に<strong>石山本願寺</strong>や<strong>武田勝頼</strong>など、信長と敵対する勢力にとっては、<br>
+<strong>上杉の勝利が「包囲網がまだ有効である」というシグナル</strong>になりました。<a href="https://bushoojapan.com/bushoo/war/2024/09/22/30469">武将ジャパン「手取川の戦い1577年」</a></li>
+</ul>
+<p><strong>結果</strong>：</p>
+<ul>
+<li>信長包囲網は<strong>一時的に勢いを取り戻し</strong>、織田は<strong>複数方面での対処を迫られる</strong>状況が続きました。</li>
+</ul>
+<h3 id="3-上杉謙信の死と織田の北陸再進出">3. 上杉謙信の死と織田の北陸再進出</h3>
+<ul>
+<li>手取川の戦いの<strong>翌年（1578年）</strong>、上杉謙信が急死し、<br>
+上杉家は**御館の乱（おたてのらん）**で内紛状態に陥ります。<a href="https://ja.wikipedia.org/wiki/%E6%89%8B%E5%8F%96%E5%B7%9D%E3%81%AE%E6%88%A6%E3%81%84">Wikipedia「手取川の戦い」</a></li>
+<li>これにより、<strong>北陸での最大の脅威が消滅</strong>し、織田は<strong>再び北陸方面への進出</strong>を開始します。</li>
+<li>柴田勝家らは**魚津城攻防（1582年）**などで上杉方の城を次々と落とし、<br>
+<strong>能登・加賀を再び織田領に組み込んでいきます</strong>。<a href="https://www.touken-world.jp/dtl/tedorigawa/">刀剣ワールド「手取川の戦い／古戦場」</a></li>
+</ul>
+<p><strong>結果</strong>：</p>
+<ul>
+<li>手取川の敗北は<strong>一時的な後退</strong>に過ぎず、<strong>謙信の死を契機に織田が北陸を再制圧</strong>しました。</li>
+</ul>
+<h3 id="4-織田家中での評価と秀吉の立場">4. 織田家中での評価と秀吉の立場</h3>
+<ul>
+<li>手取川の戦いでは、<strong>羽柴秀吉が無断で撤退</strong>したことが問題視され、<br>
+信長は激怒したとされますが、**松永久秀の謀反（信貴山城の戦い）**や<br>
+<strong>播磨・但馬での軍功</strong>により、<strong>処罰は免れ、むしろ褒美を受けた</strong>とされています。<a href="https://bushoojapan.com/bushoo/toyobrother-bushoo/2025/09/22/195550">武将ジャパン「秀吉が上杉との合戦を前に戦場を放棄！」</a></li>
+<li>一方、<strong>柴田勝家は北陸方面の責任者として敗北を経験</strong>しましたが、<br>
+その後も<strong>北陸戦線の中心</strong>として活躍し、<strong>織田家中での地位は維持</strong>されました。<a href="https://www.touken-world.jp/dtl/tedorigawa/">刀剣ワールド「手取川の戦い／古戦場」</a></li>
+</ul>
+<p><strong>結果</strong>：</p>
+<ul>
+<li>手取川の敗北は<strong>織田家中の権力構造を大きく変えるものではなく</strong>、<br>
+<strong>秀吉の台頭と勝家の立場</strong>は、その後も<strong>別の戦功や情勢</strong>によって決まっていきました。</li>
+</ul>
+<h3 id="5-総合的な評価">5. 総合的な評価</h3>
+<ul>
+<li><strong>短期的には</strong>：
+<ul>
+<li>織田は<strong>北陸で後退</strong>し、<strong>上杉謙信の優位</strong>が確定。</li>
+<li>信長包囲網は<strong>一時的に勢いを取り戻す</strong>。</li>
+</ul>
+</li>
+<li><strong>長期的には</strong>：
+<ul>
+<li><strong>謙信の死</strong>により、<strong>北陸の最大の敵が消滅</strong>。</li>
+<li>織田は<strong>北陸を再制圧</strong>し、<strong>天下統一に向けた基盤を固める</strong>。</li>
+</ul>
+</li>
+</ul>
+<p><strong>まとめると、</strong><br>
+手取川の戦いは<strong>織田にとって一時的な敗北と後退</strong>をもたらしましたが、<br>
+<strong>上杉謙信の死という偶然</strong>もあり、<strong>最終的には北陸を織田が制圧する結果</strong>になりました。<a href="https://bushoojapan.com/bushoo/war/2024/09/22/30469">武将ジャパン「手取川の戦い1577年」</a><a href="https://www.touken-world.jp/dtl/tedorigawa/">刀剣ワールド「手取川の戦い／古戦場」</a></p>
+<div class="shop-card">
+    <div class="shop-card-image">
+        <img src="https://m.media-amazon.com/images/I/81tL0rxke2L._SL1500_.jpg" alt="商品画像">
+    </div>
+    <div class="shop-card-content">
+        <div class="shop-card-title">謙信×信長 手取川合戦の真実</div>
+        <div class="shop-card-description">天正5年（1577）、上杉謙信軍と織田信長軍が加賀・手取川で激突。史料に乏しく「幻の合戦」と目されている手取川合戦である。もともと謙信と信長は長らく友好関係を結んでいた。両者は何を理由に友好関係を結んだのか。それがなぜ破綻して軍事衝突することになったのか。</div>
+        <div class="shop-card-link">
+            <a href="https://www.amazon.co.jp/%E8%AC%99%E4%BF%A1%C3%97%E4%BF%A1%E9%95%B7-%E6%89%8B%E5%8F%96%E5%B7%9D%E5%90%88%E6%88%A6%E3%81%AE%E7%9C%9F%E5%AE%9F-PHP%E6%96%B0%E6%9B%B8-%E4%B9%83%E8%87%B3-%E6%94%BF%E5%BD%A6-ebook/dp/B0C4NRVBS5?__mk_ja_JP=%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A&crid=R71V8RL2RW1&dib=eyJ2IjoiMSJ9.lhU-pQjgvmdru78JN_rxn3OBrmPCy07dM0UremGKlTXGjHj071QN20LucGBJIEps.NZzBPpjyZ8fty-vsVOdeO0mtz6MzdV_sDEoAiE1Mi9E&dib_tag=se&keywords=%E6%89%8B%E5%8F%96%E5%B7%9D%E3%81%AE%E6%88%A6%E3%81%84&qid=1778921926&sprefix=%E6%89%8B%E5%8F%96%E5%B7%9D%E3%81%AE%E6%88%A6%E3%81%84%2Caps%2C167&sr=8-1&linkCode=ll2&tag=yoshishinnze-22&linkId=5cf32b3d33415121f40e123003ba8538&ref_=as_li_ss_tl" target="_blank" rel="noopener">Amazonで詳細を見る</a>
+        </div>
+    </div>
+</div>
+
+<p></p>
+
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+</script>
+
+            
+        </body>
+        </html>
