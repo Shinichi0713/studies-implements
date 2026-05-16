@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&#x6b6f;&#x78e8;&#x304d;&#x306e;&#x8ab2;&#x984c;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+/* 目次全体のコンテナ */
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+
+/* 記事タイトル (h1) */
+h1 {
+    font-size: 2rem;
+    color: #24292f;
+    line-height: 1.3;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 3px double #e1e4e8; /* 二重線で上品に */
+    text-align: center; /* タイトルを中央に寄せて特別感を出す */
+}
+
+/* セクション見出し (h2) */
+h2 {
+    font-size: 1.5rem;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(transparent 70%, #e8f0fe 70%); /* 下側に薄い色のアクセント */
+    border-left: 6px solid #0969da; /* 目次のテーマカラーと合わせる */
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* 強調文字 (strong) */
+strong {
+    font-weight: bold;
+    color: #cf222e; /* ホバー時の赤色と合わせて統一感を出す */
+    background: linear-gradient(transparent 60%, #fff2cc 60%); /* 黄色のマーカー風 */
+    padding: 0 2px;
+}
+
+/* 引用のコンテナ */
+blockquote {
+    position: relative;
+    padding: 20px 30px;
+    margin: 30px 0;
+    background-color: #f6f8fa; /* 目次の背景より少しだけ濃いグレー */
+    border-left: 5px solid #d0d7de; /* 落ち着いたグレーの境界線 */
+    color: #57606a; /* 文字色は少し薄くして引用らしさを出す */
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 引用符のアイコンを装飾として追加 */
+blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    font-size: 40px;
+    color: #d0d7de;
+    font-family: serif;
+    line-height: 1;
+}
+
+/* 読者になるボタンのデザイン */
+.btn-subscribe {
+    display: inline-block;
+    padding: 12px 35px; /* 横幅を広めにとって存在感を出します */
+    background-color: #383838; /* お好みの色に変更してください */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #555555;
+    text-decoration: none;
+}
+
+/* はてなブログで見えてしまう数式データを非表示にする */
+.katex-html {
+    display: none !important;
+}
+
+.katex-mathml {
+    display: inline !important;
+}
+/* Amazonカード型のオシャレなデザイン */
+.shop-card {
+    display: flex;
+    max-width: 500px;
+    margin: 20px auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* マウスホップした時の動き */
+.shop-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.shop-card-image {
+    width: 150px;
+    min-width: 150px;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shop-card-image img {
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+}
+
+.shop-card-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.shop-card-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.shop-card-description {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+/* Amazonらしいオレンジボタン */
+.shop-card-link a {
+    display: inline-block;
+    background-color: #ff9900;
+    color: #fff !important;
+    text-decoration: none !important;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.shop-card-link a:hover {
+    background-color: #e68a00;
+}
+
+/* スマホ対応：縦並びにする */
+@media (max-width: 480px) {
+    .shop-card {
+        flex-direction: column;
+        max-width: 100%;
+    }
+    .shop-card-image {
+        width: 100%;
+        height: 200px;
+    }
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+
+            <p>最近の子供の歯磨きでいくつか課題がありました。課題の考察と、課題の解決案について話をしていこうと思います。</p>
+<h2 id="歯磨きの課題">歯磨きの課題</h2>
+<p>子供の歯磨きがかかる問題としては以下があります。</p>
+<p><img src="file:///d:\PycharmProjects\ScienceCalculation\studies-implements\doc\blog\1-40\image\35_tooth_brush\1778037693009.png" alt="1778037693009"></p>
+<h3 id="1-磨き残し">1. 磨き残し</h3>
+<p><strong>課題の内容：</strong><br>
+子どもが自分で歯を磨いたとき、歯の表面や奥歯の溝、歯と歯の間などに汚れ（プラーク）が残ってしまうことが多い。</p>
+<p><strong>具体的な問題点：</strong></p>
+<ul>
+<li>手先がまだ不器用で、細かい動きが難しいため、きちんと磨ききれない。</li>
+<li>特に奥歯の裏側や歯と歯ぐきの境目など、見えにくい場所が磨けていない。</li>
+<li>磨き残しが続くと、虫歯や歯肉炎の原因になりやすい。</li>
+</ul>
+<h3 id="2-子どもが歯磨きを嫌がる飽きる">2. 子どもが「歯磨きを嫌がる・飽きる」</h3>
+<p><strong>課題の内容：</strong><br>
+歯磨きそのものを嫌がったり、途中で飽きてしまったりして、最後までしっかり磨かせることが難しい。</p>
+<p><strong>具体的な問題点：</strong></p>
+<ul>
+<li>「歯磨き＝面倒・つまらない」と感じて、やりたがらない。</li>
+<li>磨き始めてもすぐに飽きてしまい、時間が短くなったり、適当に終わらせてしまう。</li>
+<li>親が声をかけても、ぐずったり逃げたりして、スムーズに歯磨きが進まない。</li>
+</ul>
+<h3 id="3-仕上げ磨きの負担">3. 仕上げ磨きの負担</h3>
+<p><strong>課題の内容：</strong><br>
+子どもが自分で磨いたあと、親が仕上げ磨きをする必要があるが、その負担が大きい。</p>
+<p><strong>具体的な問題点：</strong></p>
+<ul>
+<li>子どもが嫌がって口を開けてくれず、仕上げ磨きがうまくできない。</li>
+<li>毎日続けることで、親の時間的・体力的な負担が大きくなる。</li>
+<li>仕上げ磨きをさぼりがちになると、子どもの磨き残しが増え、虫歯リスクが高まる。</li>
+</ul>
+<p>このように整理すると、</p>
+<ul>
+<li>「どこを・どのように磨くか」の問題（1）</li>
+<li>「子どもが歯磨きをやりたがらない」問題（2）</li>
+<li>「親の負担が大きく、継続が難しい」問題（3）<br>
+という3つの観点に分かれます。</li>
+</ul>
+<h2 id="将来への影響">将来への影響</h2>
+<p>子どもの頃の歯磨き習慣は、単に「そのときの虫歯を防ぐ」だけでなく、<strong>将来の歯の健康・全身の健康・生活の質（QOL）に長期的な影響を与える</strong>ことが、公的資料や研究から示されています。</p>
+<h3 id="1-乳幼児期の習慣が永久歯の虫歯リスクに与える影響">1. 乳幼児期の習慣が「永久歯の虫歯リスク」に与える影響</h3>
+<p>厚生労働省の「健康日本21（歯の健康）」では、次のように述べられています。</p>
+<ul>
+<li><strong>乳幼児期のむし歯と学童期のむし歯（永久歯の健康）には強い関連が認められる</strong></li>
+<li>この時期に、歯みがき習慣や食習慣などの<strong>基本的な歯科保健習慣を身につけることが重要</strong>である</li>
+<li>学童期に適切な歯科保健指導を受けることは、<strong>生涯にわたる基本的な保健習慣や行動の形成において大きな意義を持つ</strong></li>
+</ul>
+<p><a href="https://www.mhlw.go.jp/www1/topics/kenko21_11/b6.html">厚生労働省「健康日本21（歯の健康）」</a></p>
+<p>つまり、乳幼児期に「歯をきちんと磨く習慣」が身についているかどうかは、その後の<strong>永久歯の虫歯リスクと強く関係している</strong>、という位置づけです。</p>
+<h3 id="2-子どもの歯磨き頻度と虫歯リスクの関係研究の例">2. 子どもの歯磨き頻度と虫歯リスクの関係（研究の例）</h3>
+<p>子どもを対象とした系統的レビュー・メタ分析では、次のような結果が報告されています。</p>
+<ul>
+<li><strong>1日2回の歯磨き</strong>は、1日1回の歯磨きと比べて、<strong>虫歯の発生を有意に減らす</strong></li>
+<li>3歳以降に1日2回の歯磨きを習慣づけることは、<strong>個人レベル・地域レベルでの虫歯予防に有効</strong>である</li>
+</ul>
+<p><a href="https://www.researchgate.net/publication/374245021_Does_Tooth_Brushing_Prevent_Dental_Caries_among_Children_A_Systematic_Review_and_Meta-analysis">Does Tooth Brushing Prevent Dental Caries among Children? A Systematic Review and Meta-analysis</a></p>
+<p>このように、<strong>「どれだけ頻繁に磨くか」という習慣そのものが、子どもの虫歯リスクを大きく左右する</strong>ことが示されています。</p>
+<h3 id="3-子どもの習慣が大人になってからの歯の残存数に与える影響">3. 子どもの習慣が「大人になってからの歯の残存数」に与える影響</h3>
+<p>厚生労働省の資料では、成人期の歯科保健として「8020運動（80歳で20本以上の自分の歯を保つ）」が紹介されています。</p>
+<ul>
+<li>成人期の歯の喪失を防ぎ、<strong>高齢期まで自分の歯を多く残す</strong>ことは、
+<ul>
+<li>咀嚼（そしゃく）機能の維持</li>
+<li>生活習慣病の予防</li>
+<li>QOL（生活の質）の向上<br>
+に深く関わるとされています。</li>
+</ul>
+</li>
+<li>その基盤となるのは、<strong>幼少期から身につけた歯みがき習慣や食習慣</strong>であり、
+<ul>
+<li>セルフケア（適切な歯みがき、フッ化物利用）</li>
+<li>定期的なプロフェッショナルケア（歯科検診・指導）<br>
+を組み合わせた<strong>生涯にわたる歯科保健習慣</strong>であるとされています。</li>
+</ul>
+</li>
+</ul>
+<p><a href="https://www.mhlw.go.jp/www1/topics/kenko21_11/b6.html">厚生労働省「健康日本21（歯の健康）」</a></p>
+<p>つまり、<strong>子どもの頃に身につけた歯磨き習慣は、高齢期まで自分の歯を何本残せるかという「歯の寿命」にまで影響する</strong>、という見方が公的に示されています。</p>
+<h3 id="4-歯の健康が全身の健康qolに与える影響">4. 歯の健康が「全身の健康・QOL」に与える影響</h3>
+<p>歯の健康は、単に口の中だけの問題ではありません。</p>
+<ul>
+<li>歯周病や重度の虫歯を放置すると、<strong>心疾患や糖尿病などの生活習慣病リスクが高まる</strong>可能性が指摘されています。</li>
+<li>歯を失うと、<strong>噛む力が低下し、栄養バランスが崩れやすくなる</strong>ため、全身の健康状態にも影響します。</li>
+<li>また、見た目や発音、食事の楽しみなど、<strong>生活の質（QOL）にも直結</strong>します。</li>
+</ul>
+<p>こうした点から、<strong>子どもの頃から歯を大切にする習慣を身につけることは、将来の全身の健康や生活の質にも間接的に影響する</strong>と考えられます。</p>
+<h2 id="対応策">対応策</h2>
+<p><strong>歯磨き習慣を定着させるためのエッセンス</strong></p>
+<ol>
+<li>
+<p><strong>「続けること」を最優先にする</strong></p>
+<ul>
+<li>毎日同じタイミングで行い、ルーティン化する。</li>
+<li>完璧を目指さず、「1日サボっても翌日から戻す」くらいの気持ちでOK。</li>
+</ul>
+</li>
+<li>
+<p><strong>子どもが「歯磨き＝楽しい」と感じる仕掛けを作る</strong></p>
+<ul>
+<li>歌・動画・ストーリー仕立てで遊びの要素を入れる。</li>
+<li>シールカレンダーや小さなご褒美で「できた！」を可視化する。</li>
+<li>歯ブラシや歯磨き粉を子どもに選ばせる。</li>
+</ul>
+</li>
+<li>
+<p><strong>磨き残しを減らす工夫を入れる</strong></p>
+<ul>
+<li>電動歯ブラシで効率的に磨く（子ども用の小さめヘッド）。</li>
+<li>子どもが磨いたあと、親が仕上げ磨きを1日1回はしっかり行う。</li>
+<li>歯科医院でブラッシング指導やフッ素塗布など、プロの力を借りる。</li>
+</ul>
+</li>
+<li>
+<p><strong>親の負担を減らして続けやすくする</strong></p>
+<ul>
+<li>電動ブラシで短時間で仕上げ磨き。</li>
+<li>「夜だけ丁寧に」など、回数や時間を割り切る。</li>
+<li>寝かせ磨きやおもちゃ・動画で子どもの姿勢を安定させる。</li>
+</ul>
+</li>
+<li>
+<p><strong>長期的な視点で「歯を守る習慣」を育てる</strong></p>
+<ul>
+<li>乳幼児期は「口に触られることに慣れる」、3〜6歳は「自分で磨く＋仕上げ」、小学生以上は「自分で責任を持って磨く」と、年齢に合わせてステップアップ。</li>
+<li>歯科検診を「怖くない場所」にし、定期的に褒めてもらう経験を積む。</li>
+</ul>
+</li>
+</ol>
+<p>ということで継続的な歯磨き習慣の定着には通常ブラシよりは電動歯ブラシが優位と思われます。</p>
+<h2 id="電動ブラシの選定">電動ブラシの選定</h2>
+<p>著者の家で導入している電動歯ブラシは今が3代目です。
+3代使って、利用する上で重視しべきポイントは以下と考えています。</p>
+<ol>
+<li>タイマー機能(時間測れる機能があるものは非常に良いです。目安2分or3分の設定可能なものが良い)、</li>
+<li>振動モードは音波式。(当ててるだけで落ちていく感覚があり、回転式よりも表面をこすり傷をつける可能性が低い)</li>
+<li>交換用ブラシの種類が豊富か、入手しやすいか。(うちは子供3人で別々のヘッドを使っています。ブラシは消耗品で入手性も重要です)</li>
+<li>防水仕様で、コードレス・充電式のもの</li>
+</ol>
+<p>ご指定の評価軸に沿って、Amazonで入手可能な代表的な電動歯ブラシを比較します。<br>
+評価は以下の基準で行います。</p>
+<ul>
+<li><strong>〇</strong>：条件を十分に満たす</li>
+<li><strong>△</strong>：一部条件を満たす、または条件に合うがやや弱い</li>
+<li><strong>×</strong>：条件を満たさない</li>
+</ul>
+<hr>
+<h3 id="1-ブラウン-オーラルb-すみずみクリーン-マルチアクションd1004132bk-など">1. ブラウン オーラルB すみずみクリーン マルチアクション（D1004132BK など）</h3>
+<ul>
+<li><strong>タイマー機能</strong>：2分タイマー付き（30秒ごとの区切りは機種による）<br>
+→ 2分の目安は明確。<strong>〇</strong></li>
+<li><strong>交換用ブラシの種類・入手性</strong>：
+<ul>
+<li>すみずみクリーン、やわらかクリーン、ホワイトニングなど、複数種類のブラシヘッドが豊富。</li>
+<li>Amazonで安定して入手可能。<br>
+→ 種類・入手性ともに良好。<strong>〇</strong></li>
+</ul>
+</li>
+<li><strong>防水・コードレス・充電式</strong>：IPX7防水、充電式、コードレス<br>
+→ 条件を満たす。<strong>〇</strong></li>
+<li><strong>価格のリーズナブルさ</strong>：本体価格は3,000〜4,000円前後と、大手メーカーの中では比較的リーズナブル。<strong>△〜〇</strong></li>
+</ul>
+<p><strong>総合評価</strong>：<br>
+タイマー・ブラシの種類・入手性・防水・充電式の条件を満たし、価格も手頃なため、<strong>総合的に〇</strong>。</p>
+<h3 id="2-フィリップス-ソニッケアー-3100シリーズhx367333-など">2. フィリップス ソニッケアー 3100シリーズ（HX3673/33 など）</h3>
+<ul>
+<li><strong>タイマー機能</strong>：2分タイマー＋30秒ごとの区切り（クアドパーサー）<br>
+→ 時間管理が優秀。<strong>〇</strong></li>
+<li><strong>交換用ブラシの種類・入手性</strong>：
+<ul>
+<li>プレミアムクリーン、ホワイトプラス、歯ぐきケアなど、複数種類のブラシヘッドが販売されている。</li>
+<li>Amazonで比較的安定して入手可能。<br>
+→ 種類は中程度、入手性は良好。<strong>△〜〇</strong></li>
+</ul>
+</li>
+<li><strong>防水・コードレス・充電式</strong>：IPX7防水、USB充電式、コードレス<br>
+→ 条件を満たす。<strong>〇</strong></li>
+<li><strong>価格のリーズナブルさ</strong>：本体価格は5,000〜7,000円前後と、やや高め。<strong>△</strong></li>
+</ul>
+<p><strong>総合評価</strong>：<br>
+タイマー・防水・充電式の条件は満たすが、価格がやや高めで、ブラシの種類も中程度のため、<strong>総合的に△〜〇</strong>。</p>
+<h3 id="3-汎用音波電動歯ブラシ例t1--t2-モデル替えブラシ8本付き">3. 汎用音波電動歯ブラシ（例：T1 / T2 モデル、替えブラシ8本付き）</h3>
+<ul>
+<li><strong>タイマー機能</strong>：2分オートタイマー機能<br>
+→ 2分の目安はあるが、30秒ごとの区切りがないモデルも多い。<strong>△〜〇</strong></li>
+<li><strong>交換用ブラシの種類・入手性</strong>：
+<ul>
+<li>モデルによっては複数種類のブラシヘッドが付属するが、メーカー純正に比べると種類は少なめ。</li>
+<li>Amazonで入手は可能だが、モデル変更や生産終了のリスクがある。<br>
+→ 種類・入手性は<strong>△</strong>。</li>
+</ul>
+</li>
+<li><strong>防水・コードレス・充電式</strong>：IPX7防水、USB充電式、コードレス<br>
+→ 条件を満たす。<strong>〇</strong></li>
+<li><strong>価格のリーズナブルさ</strong>：本体価格は3,000〜5,000円前後と、比較的安価。<strong>〇</strong></li>
+</ul>
+<p><strong>総合評価</strong>：<br>
+価格と防水・充電式の条件は満たすが、タイマー機能がシンプルで、ブラシの種類・入手性がやや不安定なため、<strong>総合的に△</strong>。</p>
+<h3 id="4-epeiosエペイオスokare-et003-音波電動歯ブラシ">4. Epeios（エペイオス）OKare! ET003 音波電動歯ブラシ</h3>
+<ul>
+<li><strong>タイマー機能</strong>：スマートタイマー（2分）<br>
+→ 2分の目安はあるが、30秒ごとの区切りは機種による。<strong>△〜〇</strong></li>
+<li><strong>交換用ブラシの種類・入手性</strong>：
+<ul>
+<li>ブラシヘッドは専用設計で、種類は限定的。</li>
+<li>Amazonで入手は可能だが、大手メーカーほど豊富ではない。<br>
+→ 種類・入手性は<strong>△</strong>。</li>
+</ul>
+</li>
+<li><strong>防水・コードレス・充電式</strong>：IPX7防水、Type-C充電式、コードレス<br>
+→ 条件を満たす。<strong>〇</strong></li>
+<li><strong>価格のリーズナブルさ</strong>：本体価格は4,000〜5,000円前後と、コスパが良い。<strong>〇</strong></li>
+</ul>
+<p><strong>総合評価</strong>：<br>
+価格と防水・充電式の条件は満たすが、ブラシの種類・入手性がやや弱いため、<strong>総合的に△</strong>。</p>
+<h3 id="評価軸ごとのまとめ">評価軸ごとのまとめ</h3>
+<table>
+<thead>
+<tr>
+<th>モデル</th>
+<th>タイマー機能</th>
+<th>交換用ブラシの種類・入手性</th>
+<th>防水・コードレス・充電式</th>
+<th>価格のリーズナブルさ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ブラウン オーラルB すみずみクリーン</td>
+<td>〇</td>
+<td>〇</td>
+<td>〇</td>
+<td>△〜〇</td>
+</tr>
+<tr>
+<td>フィリップス ソニッケアー 3100</td>
+<td>〇</td>
+<td>△〜〇</td>
+<td>〇</td>
+<td>△</td>
+</tr>
+<tr>
+<td>汎用音波モデル（T1/T2など）</td>
+<td>△〜〇</td>
+<td>△</td>
+<td>〇</td>
+<td>〇</td>
+</tr>
+<tr>
+<td>Epeios OKare! ET003</td>
+<td>△〜〇</td>
+<td>△</td>
+<td>〇</td>
+<td>〇</td>
+</tr>
+</tbody>
+</table>
+<h3 id="おすすめの選定">おすすめの選定</h3>
+<ul>
+<li><strong>ブラシの種類・入手性と価格のバランスを重視する場合</strong><br>
+→ <strong>ブラウン オーラルB すみずみクリーン マルチアクション</strong>が最も条件に合います。
+<ul>
+<li>タイマー機能：〇</li>
+<li>ブラシの種類・入手性：〇</li>
+<li>防水・充電式：〇</li>
+<li>価格：△〜〇（大手メーカーの中ではリーズナブル）</li>
+</ul>
+</li>
+</ul>
+<div class="shop-card">
+    <div class="shop-card-image">
+        <img src="https://m.media-amazon.com/images/I/51jXLemm+LL._AC_.jpg" alt="商品画像">
+    </div>
+    <div class="shop-card-content">
+        <div class="shop-card-title">ブラウン 電動歯ブラシ Oral-B オーラルB</div>
+        <div class="shop-card-description">- 選べるブラッシングモードクリーンモード: 通常のブラッシングに適した標準的なモードです。やわらかクリーンモード: 歯ぐきへの優しさを重視したモードで、初めて電動歯ブラシを使う方や歯ぐきの状態が気になる方に適しています。
+        -  利便性とデザイン8日間連続使用可能: 1日2回、各2分間の使用で、1回のフル充電から約8日間使用できます。握りやすいラバーハンドル: 濡れた手でも滑りにくい人間工学に基づいたラバー仕様です。防水加工: 本体は防水仕様のため、洗面所でも安心して使用でき、水洗いも可能です。</div>
+        <div class="shop-card-link">
+            <a href="https://www.amazon.co.jp/%E9%9B%BB%E5%8B%95%E6%AD%AF%E3%83%96%E3%83%A9%E3%82%B7-Oral-B-BRAUN-%E3%82%AA%E3%83%BC%E3%83%A9%E3%83%ABB-%E3%81%99%E3%81%BF%E3%81%9A%E3%81%BF%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%B3/dp/B0CD3R6VS3?__mk_ja_JP=%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A&dib=eyJ2IjoiMSJ9.M5nGK0mo6AM9ZRMG3N3QDa8AXk7Ay3uxwD4BdhjpJiYoe3vvH9cUygZgdYJExMWRt382FZ-J_IQ4G9r4PeSsYy7nog4XWb0IgjCx1usE883XYhXkLCUKAPVfIXXlC0ADTcoKoUWcxBQxU8m1DWML7w8cE959yVVHkTj7jW8YYhA1ljRnHdWuXlNVvIBVelDhBgDYR1ftXSZL9BXkx-6CEUbjYe4o4t041ildLZDiQrT05xgCuRiPq1gc1tSucfbDmp-E5niyVNEtMj_xPWAU8Qo86sq2lTJfMChgTYqBuCM.TljIryjPb1DWuZmtyCqaYF507jKic3xgpevIF2gBHqo&dib_tag=se&keywords=%E3%83%96%E3%83%A9%E3%82%A6%E3%83%B3+%E3%82%AA%E3%83%BC%E3%83%A9%E3%83%ABB&qid=1778041167&s=hpc&sr=1-6&linkCode=ll2&tag=yoshishinnze-22&linkId=a134a029525e88d390469c0b91a94154&ref_=as_li_ss_tl" target="_blank" rel="noopener">Amazonで詳細を見る</a>
+        </div>
+    </div>
+</div>
+<p>もしくは振動モードが音波をご希望される場合は汎用音波モデルも選択肢となるかと思います。</p>
+<div class="shop-card">
+    <div class="shop-card-image">
+        <img src="https://m.media-amazon.com/images/I/81LeDbfgzJL._AC_SL1500_.jpg" alt="商品画像">
+    </div>
+    <div class="shop-card-content">
+        <div class="shop-card-title">電動歯ブラシ 音波式 電動ハブラシ 横振り</div>
+        <div class="shop-card-description">- 高周波音波洗浄: 毎分約40,000回の高速振動で、手磨きでは届きにくい歯の隙間の汚れや歯垢を効率よく除去します。
+        - 替えブラシ8本付属: デュポン製ブラシ毛を採用した「W字型」ブラシが8本同梱されており、約2年間分（3ヶ月に1回の交換目安）のストックが最初から揃っています。
+        - 長時間航続: 1回のフル充電（約5時間）で20日間〜30日間程度の連続使用が可能です。充電は汎用性の高いType-C方式に対応しています。</div>
+        <div class="shop-card-link">
+            <a href="https://www.amazon.co.jp/%E9%9B%BB%E5%8B%95%E3%83%8F%E3%83%96%E3%83%A9%E3%82%B7%E6%A8%AA%E6%8C%AF%E3%82%8A-6%E3%83%A2%E3%83%BC%E3%83%89%E9%9F%B3%E6%B3%A2%E6%AD%AF%E3%83%96%E3%83%A9%E3%82%B7-%E6%9B%BF%E3%81%88%E3%83%96%E3%83%A9%E3%82%B78%E6%9C%AC%E4%BB%98-2%E5%88%86%E9%96%93%E3%82%AA%E3%83%BC%E3%83%88%E3%82%BF%E3%82%A4%E3%83%9E%E3%83%BC%E6%A9%9F%E8%83%BD-T2/dp/B0FC2V9CPQ?__mk_ja_JP=%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A&crid=3F2DI6SQUDO4Y&dib=eyJ2IjoiMSJ9.ZcDNXJIUy9ykX2pcRvR9Jemewpz99Z0BLLsd_jP7KsGDmQLRWLhI8irwRbc4frV8-5LTD8oqpHhBGQkCay6PJgbtlSkgv7cZxuGEl_LPDjNRzlVkuwSrkAxbb1ewC8L6UxXcB4RZOtHBC4cOcMvnVkNPTak10E-5tYXNUKXXZuilvYC2DJxzaIppBLqXLiC-Bt-snDcU6Acz0TyehJMAalgb9q4w-V5xBQoeMwy4832b6DP2WsZYr9x6whnyf1KaZ8M6YLcIVgJZSnIKoWkHZ-4ft0ibgtIh9sypLGPC4Q8.IhXvWEOGPkJCsU0Rbx8pDE_ft2c5xnbGZqoaZn7Wsz0&dib_tag=se&keywords=%E6%B1%8E%E7%94%A8%E9%9F%B3%E6%B3%A2%E3%83%A2%E3%83%87%E3%83%AB%2B%E9%9B%BB%E5%8B%95%E6%AD%AF%E3%83%96%E3%83%A9%E3%82%B7&qid=1778041593&sprefix=%E6%B1%8E%E7%94%A8%E9%9F%B3%E6%B3%A2%E3%83%A2%E3%83%87%E3%83%AB%2B%E9%9B%BB%E5%8B%95%E6%AD%AF%E3%83%96%E3%83%A9%E3%82%B7%2Caps%2C178&sr=8-2&th=1&linkCode=ll2&tag=yoshishinnze-22&linkId=6994348581beeb3d0a700a193dadd44d&ref_=as_li_ss_tl" target="_blank" rel="noopener">Amazonで詳細を見る</a>
+        </div>
+    </div>
+</div>
+<p>ということで本日は電動ブラシでした。</p>
+
+            
+
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+</script>
+        </body>
+        </html>
