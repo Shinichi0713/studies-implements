@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&#x6982;&#x8981;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+/* 目次全体のコンテナ */
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+
+/* 記事タイトル (h1) */
+h1 {
+    font-size: 2rem;
+    color: #24292f;
+    line-height: 1.3;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 3px double #e1e4e8; /* 二重線で上品に */
+    text-align: center; /* タイトルを中央に寄せて特別感を出す */
+}
+
+/* セクション見出し (h2) */
+h2 {
+    font-size: 1.5rem;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(transparent 70%, #e8f0fe 70%); /* 下側に薄い色のアクセント */
+    border-left: 6px solid #0969da; /* 目次のテーマカラーと合わせる */
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* 強調文字 (strong) */
+strong {
+    font-weight: bold;
+    color: #cf222e; /* ホバー時の赤色と合わせて統一感を出す */
+    background: linear-gradient(transparent 60%, #fff2cc 60%); /* 黄色のマーカー風 */
+    padding: 0 2px;
+}
+
+/* 引用のコンテナ */
+blockquote {
+    position: relative;
+    padding: 20px 30px;
+    margin: 30px 0;
+    background-color: #f6f8fa; /* 目次の背景より少しだけ濃いグレー */
+    border-left: 5px solid #d0d7de; /* 落ち着いたグレーの境界線 */
+    color: #57606a; /* 文字色は少し薄くして引用らしさを出す */
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 引用符のアイコンを装飾として追加 */
+blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    font-size: 40px;
+    color: #d0d7de;
+    font-family: serif;
+    line-height: 1;
+}
+
+/* 読者になるボタンのデザイン */
+.btn-subscribe {
+    display: inline-block;
+    padding: 12px 35px; /* 横幅を広めにとって存在感を出します */
+    background-color: #383838; /* お好みの色に変更してください */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #555555;
+    text-decoration: none;
+}
+
+/* はてなブログで見えてしまう数式データを非表示にする */
+.katex-html {
+    display: none !important;
+}
+
+.katex-mathml {
+    display: inline !important;
+}
+/* Amazonカード型のオシャレなデザイン */
+.shop-card {
+    display: flex;
+    max-width: 500px;
+    margin: 20px auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* マウスホップした時の動き */
+.shop-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.shop-card-image {
+    width: 150px;
+    min-width: 150px;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shop-card-image img {
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+}
+
+.shop-card-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.shop-card-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.shop-card-description {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+/* Amazonらしいオレンジボタン */
+.shop-card-link a {
+    display: inline-block;
+    background-color: #ff9900;
+    color: #fff !important;
+    text-decoration: none !important;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.shop-card-link a:hover {
+    background-color: #e68a00;
+}
+
+/* スマホ対応：縦並びにする */
+@media (max-width: 480px) {
+    .shop-card {
+        flex-direction: column;
+        max-width: 100%;
+    }
+    .shop-card-image {
+        width: 100%;
+        height: 200px;
+    }
+}
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+            <span id="markdown-mermaid" aria-hidden="true" data-config="{&quot;darkModeTheme&quot;:&quot;dark&quot;,&quot;lightModeTheme&quot;:&quot;default&quot;,&quot;maxTextSize&quot;:50000,&quot;clickDrag&quot;:&quot;alt&quot;,&quot;showControls&quot;:&quot;onHoverOrFocus&quot;,&quot;resizable&quot;:true,&quot;maxHeight&quot;:&quot;&quot;}"></span>
+				<p>秀吉兄弟でついに秀吉が中国侵略軍の司令官になりました。
+織田軍でも指折りの与力を付与されて万単位の軍を指揮することになります。</p>
+<p>そして、そんな秀吉が中国侵略の初期に出会った人物が黒田孝高（くろだ よしたか）です。
+彼は<a href="https://yoshishinnze.hatenablog.com/entry/2026/02/22/000000">竹中重治</a>と並ぶ&quot;2兵衛&quot;の一人です。</p>
+<p>本日テーマ：</p>
+<blockquote>
+<p>黒田孝高について語ります</p>
+</blockquote>
+<img src="https://sengoku-g.net/img/00034_m.jpg" width="400">
+<h2 id="概要">概要</h2>
+<p>黒田孝高は、戦国時代から江戸時代初期にかけて活躍した武将で、通称は<strong>黒田官兵衛（くろだ かんべえ）</strong> としてよく知られています。<br>
+豊臣秀吉の軍師として有名で、知略に優れた「参謀・軍師タイプの部将」として評価されています。</p>
+<h3 id="1-軍師参謀としての能力が非常に高い">1. 軍師・参謀としての能力が非常に高い</h3>
+<ul>
+<li>豊臣秀吉の天下統一の過程で、多くの合戦の<strong>作戦立案や外交交渉</strong>を担いました。</li>
+<li>特に「中国大返し」や「水攻め」など、秀吉の有名な戦略の背後には官兵衛の献策があったとされています。</li>
+<li>敵情分析や調略（相手を内応させる工作）にも長け、<strong>「頭脳派の武将」</strong> として知られています。</li>
+</ul>
+<h3 id="2-冷静で先を見通す洞察力">2. 冷静で先を見通す洞察力</h3>
+<ul>
+<li>感情に流されず、長期的な視点で情勢を読む力に優れていました。</li>
+<li>主君・秀吉の性格や周囲の人間関係もよく理解し、危険を避けつつ自分の立場を守るなど、<strong>政治的センスも高い</strong>人物でした。</li>
+</ul>
+<h3 id="3-忠義と独立心のバランス">3. 忠義と独立心のバランス</h3>
+<ul>
+<li>若い頃は小寺氏、その後は織田信長・豊臣秀吉に仕え、基本的には<strong>忠義厚い家臣</strong>として振る舞いました。</li>
+<li>一方で、秀吉からは「天下を狙う器」と警戒されるほど、<strong>独自の野心</strong>も持っていたと伝えられています。</li>
+<li>晩年は秀吉から警戒されつつも、巧みに身を処し、関ヶ原の戦い後には息子・長政とともに筑前福岡藩52万石の大大名となりました。</li>
+</ul>
+<h3 id="4-キリシタン大名としての側面">4. キリシタン大名としての側面</h3>
+<ul>
+<li>洗礼名は<strong>シメオン</strong>で、キリスト教（キリシタン）の信仰を持っていました。</li>
+<li>戦国時代の武将の中では珍しく、西洋の知識や文化にも関心を持ち、<strong>国際的な視野</strong>を持っていたとも言えます。</li>
+</ul>
+<h2 id="生い立ち">生い立ち</h2>
+<p>黒田孝高（官兵衛）の生い立ちについて、幼少期から青年期までを時系列でまとめます。</p>
+<h3 id="出生と家族">出生と家族</h3>
+<ul>
+<li><strong>生誕</strong>
+<ul>
+<li>天文15年11月29日（1546年12月22日）、播磨国姫路（現在の兵庫県姫路市）で生まれました<a href="https://ja.wikipedia.org/wiki/%E9%BB%92%E7%94%B0%E5%AD%9D%E9%AB%98">Wikipedia</a>。</li>
+</ul>
+</li>
+<li><strong>父</strong>
+<ul>
+<li>黒田職隆（くろだ もとたか）。播磨の有力国人・小寺氏の家臣で、姫路城主でした<a href="https://www.touken-world.jp/tips/38336">刀剣ワールド</a>。</li>
+</ul>
+</li>
+<li><strong>幼名</strong>
+<ul>
+<li>幼名は<strong>万吉（まんきち）<strong>といい、のちに</strong>小寺万吉</strong>とも称されました<a href="https://ja.wikipedia.org/wiki/%E9%BB%92%E7%94%B0%E5%AD%9D%E9%AB%98">Wikipedia</a>。</li>
+</ul>
+</li>
+</ul>
+<h3 id="幼少期のエピソード">幼少期のエピソード</h3>
+<ul>
+<li><strong>母の死と学問への傾倒</strong>
+<ul>
+<li>14歳のときに母親を亡くし、大きな落胆を経験したと伝えられています<a href="https://www.touken-world.jp/tips/97075">刀剣ワールド</a>。</li>
+<li>幼い頃から僧侶・円満（えんまん）から学問を学んでおり、母の死後はさらに学芸・学問に打ち込んだとされています<a href="https://www.touken-world.jp/tips/97075">刀剣ワールド</a>。</li>
+</ul>
+</li>
+<li><strong>軍師・張良の話への感銘</strong>
+<ul>
+<li>円満から中国の軍師・<strong>張良</strong>の話を聞き、強い感銘を受けたと伝えられています<a href="https://www.touken-world.jp/tips/97075">刀剣ワールド</a>。</li>
+<li>これがのちに「今世の張良」と称される軍師としての素地になったとも言われています。(この呼び名は徳川秀忠が一方的に読んだ呼び名で、一般的に呼ばれたわけではありません。。。)</li>
+</ul>
+</li>
+</ul>
+<h3 id="元服と初陣">元服と初陣</h3>
+<ul>
+<li><strong>元服と名前の変遷</strong>
+<ul>
+<li>元服後は、はじめ<strong>祐隆（すけたか）</strong> 、のちに<strong>孝隆（よしたか）</strong>、さらに<strong>孝高</strong>と名を改めています<a href="https://ja.wikipedia.org/wiki/%E9%BB%92%E7%94%B0%E5%AD%9D%E9%AB%98">Wikipedia</a>。</li>
+<li>通称として<strong>官兵衛（かんべえ）</strong> を名乗り、これが最もよく知られる呼び名になりました。</li>
+</ul>
+</li>
+<li><strong>初陣と若年期の活動</strong>
+<ul>
+<li>若い頃から父・職隆とともに、播磨国内の戦や調略に関わったとされています。</li>
+<li>当初は播磨の国人・<strong>小寺政職</strong> に仕え、小寺氏の家臣として活動していました<a href="https://www.touken-world.jp/tips/97075">刀剣ワールド</a>。</li>
+</ul>
+</li>
+</ul>
+<h3 id="青年期主君への献策">青年期〜主君への献策</h3>
+<ul>
+<li><strong>織田信長への臣従を主張</strong>
+<ul>
+<li>織田信長が勢力を伸ばしてくると、播磨は東の信長と西の毛利氏に挟まれる形になりました。</li>
+<li>小寺政職がどちらに付くか迷う中、官兵衛は<strong>織田信長への臣従</strong>を強く主張したと伝えられています<a href="https://www.touken-world.jp/tips/97075">刀剣ワールド</a>。</li>
+<li>この判断がきっかけで、のちに羽柴秀吉（豊臣秀吉）と深く関わることになります。</li>
+</ul>
+</li>
+<li><strong>秀吉との出会いと軍師としての頭角</strong>
+<ul>
+<li>秀吉が中国攻めの司令官として播磨に入ると、官兵衛はその軍師的な役割を担い、調略や作戦立案で力を発揮しました。</li>
+<li>この頃から「秀吉の参謀」としての評価が高まっていきます。</li>
+</ul>
+</li>
+</ul>
+<h2 id="実績">実績</h2>
+<p>黒田孝高（官兵衛）が「世に出るようになってから」の実績は、おおまかに次のような流れで整理できます。</p>
+<h3 id="1-播磨時代小寺氏の家臣としての頭角15601570年代">1. 播磨時代：小寺氏の家臣としての頭角（1560〜1570年代）</h3>
+<ul>
+<li>播磨の国人・<strong>小寺政職</strong>に仕え、若い頃から合戦や調略で手腕を発揮しました。</li>
+<li>織田信長が勢力を伸ばす中、播磨は東の信長と西の毛利に挟まれる形になります。</li>
+<li>小寺氏の家老会議で、多くの家臣が毛利方につくべきと主張する中、官兵衛は<strong>織田信長への臣従</strong>を強く主張し、それが採用されました。
+<ul>
+<li>これがきっかけで、のちに羽柴秀吉（豊臣秀吉）と深く関わることになります。</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-秀吉の中国攻めでの軍師的活躍1570年代後半">2. 秀吉の中国攻めでの軍師的活躍（1570年代後半〜）</h3>
+<p><strong>（1）秀吉の参謀としての抜擢</strong></p>
+<ul>
+<li>秀吉が中国地方の攻略を任されると、官兵衛はその<strong>軍師・参謀</strong>として重用されます。</li>
+<li>竹中半兵衛とともに「両兵衛」「二兵衛」と並び称され、秀吉の天下統一を支える頭脳として活躍しました。</li>
+</ul>
+<p><strong>（2）調略と外交での実績</strong></p>
+<ul>
+<li>播磨・備前・美作など、中国地方の諸勢力に対して<strong>調略（内応工作）</strong> を展開し、多くの城や武将を織田方に引き入れました。</li>
+<li>特に<strong>宇喜多直家</strong>との交渉や、その重臣・戸川秀安との折衝など、外交面での手腕が評価されています。</li>
+</ul>
+<p><strong>（3）三木城攻め（別所長治）への関与</strong></p>
+<ul>
+<li>播磨の三木城主・<strong>別所長治</strong>が信長に背いた際、秀吉軍は長期の攻城戦（三木の干殺し）を行います。</li>
+<li>官兵衛は兵糧攻めや周辺の支城制圧など、作戦面で重要な役割を果たしました。</li>
+</ul>
+<h3 id="3-有岡城の牢獄とその後15781580">3. 有岡城の牢獄とその後（1578〜1580）</h3>
+<p><strong>（1）荒木村重の謀反と幽閉</strong></p>
+<ul>
+<li>摂津の有力武将・<strong>荒木村重</strong>が信長に謀反を起こし、有岡城に籠城しました。</li>
+<li>官兵衛は村重を翻意させるために単身で有岡城へ乗り込みますが、説得に失敗し、逆に<strong>約1年間も牢獄に幽閉</strong>されます。</li>
+<li>この間に信長は「官兵衛も裏切った」と疑い、人質として預けていた息子・松寿丸（のちの黒田長政）の処刑を命じますが、秀吉と竹中半兵衛が密かに匿い、命を救いました。</li>
+</ul>
+<p><strong>（2）解放後の復帰と信頼回復</strong></p>
+<ul>
+<li>有岡城が落城し、官兵衛は解放されますが、長期の幽閉で足が不自由になるほどの衰弱を負いました。</li>
+<li>それでも秀吉のもとで軍師として復帰し、信長からの信頼も徐々に回復していきます。</li>
+</ul>
+<h3 id="4-本能寺の変と中国大返し1582">4. 本能寺の変と「中国大返し」（1582）</h3>
+<ul>
+<li>1582年、秀吉は備中高松城（清水宗治）を水攻め中でした。</li>
+<li>その最中に<strong>本能寺の変</strong>（信長死亡）の報が入ります。</li>
+<li>官兵衛は秀吉に対し、
+<ul>
+<li>信長の死をしばらく秘匿すること</li>
+<li>毛利と<strong>迅速に和睦</strong>すること</li>
+<li>すぐに京へ戻り、明智光秀を討つこと
+を献策し、これが <strong>「中国大返し」</strong> として知られる大軍の高速移動につながります。</li>
+</ul>
+</li>
+<li>この献策と行動が、秀吉の天下取りの大きな転機となりました。</li>
+</ul>
+<h3 id="5-秀吉の天下統一での活躍1580年代1590年代">5. 秀吉の天下統一での活躍（1580年代〜1590年代）</h3>
+<p><strong>（1）四国征伐・九州征伐</strong></p>
+<ul>
+<li>四国攻め（長宗我部氏）や九州攻め（島津氏）で、秀吉軍の作戦立案や調略を担当。</li>
+<li>特に九州征伐では、秀吉本隊とは別に<strong>先鋒・別働隊</strong>として活躍し、多くの城や地域を平定しました。</li>
+</ul>
+<p><strong>（2）小田原征伐と関東・東北の調略</strong></p>
+<ul>
+<li>小田原征伐（北条氏）の際にも、秀吉の参謀として関東・東北の諸大名への調略を進めました。</li>
+<li>これにより、多くの大名が秀吉に従う選択をし、天下統一が加速します。</li>
+</ul>
+<p><strong>（3）朝鮮出兵（文禄・慶長の役）</strong></p>
+<ul>
+<li>朝鮮出兵にも参加し、軍監・参謀的な立場で作戦に関与しました。</li>
+<li>ただし、晩年は秀吉からその才覚を警戒され、表立って大きな役職にはつきませんでした。</li>
+</ul>
+<h3 id="6-関ヶ原の戦いと筑前福岡藩の成立1600">6. 関ヶ原の戦いと筑前福岡藩の成立（1600）</h3>
+<p><strong>（1）関ヶ原での動き</strong></p>
+<ul>
+<li>関ヶ原の戦いでは、官兵衛（この頃は出家して<strong>如水</strong>と名乗る）は表向きは隠居の身でしたが、九州で独自に兵を挙げます。</li>
+<li>息子・長政が東軍（徳川方）として関ヶ原本戦に参戦する一方、官兵衛は九州で西軍方の諸城を次々と攻略し、<strong>九州の大半を制圧</strong>するほどの勢いを見せました。</li>
+</ul>
+<p><strong>（2）福岡藩52万石の成立</strong></p>
+<ul>
+<li>関ヶ原で東軍が勝利したことにより、黒田家はその功績を認められ、<strong>筑前福岡藩52万石</strong>の大大名となります。(これは倅にあたる黒田長政の活躍に対する功績の寄与度が高いかもしれませんが)</li>
+<li>官兵衛自身は隠居の身でしたが、この大きな領地獲得は彼の戦略眼と行動力が大きく影響しています。</li>
+</ul>
+<h2 id="エピソード">エピソード</h2>
+<p>黒田孝高には、軍師としてのイメージとは少し違う「意外で人間味のある」エピソードがいくつか伝わっています。代表的なものを挙げます。</p>
+<h3 id="1-中国大返しでの最大のミスと秀吉からの警戒">1. 「中国大返し」での“最大のミス”と秀吉からの警戒</h3>
+<ul>
+<li>本能寺の変の報を受けたとき、秀吉は備中高松城を水攻め中でした。</li>
+<li>官兵衛は「信長の死を秘匿し、毛利と和睦してすぐ京へ戻るべきだ」と献策し、これが<strong>中国大返し</strong>につながります。</li>
+<li>ところが、このとき官兵衛は「<strong>毛利方に信長の死を知られないよう、和睦交渉を急ぎすぎた</strong>」ため、結果として<strong>毛利に有利な条件で和睦してしまった</strong>とも言われています<a href="https://odanobu.com/article/55">おだのぶ</a>。</li>
+<li>秀吉は官兵衛の献策で天下取りのチャンスをつかんだ一方、「<strong>この男はあまりに頭が回りすぎる</strong>」と警戒し、その後は大きな役職を与えなかった、という見方があります<a href="https://x10217.net/sengoku">戦国武将の意外な素顔</a>。</li>
+<li>「最大の功績を挙げた瞬間に、同時に最大のミスも犯した」という、官兵衛らしい皮肉な逸話です。</li>
+</ul>
+<h3 id="2-有岡城の牢獄で足が不自由になった話">2. 有岡城の牢獄で足が不自由になった話</h3>
+<ul>
+<li>荒木村重の謀反の際、官兵衛は単身で有岡城に乗り込み、村重を説得しようとしますが失敗し、<strong>約1年間も土牢に幽閉</strong>されます。</li>
+<li>その間に足を悪くし、解放されたときには<strong>足が不自由になっていた</strong>と伝えられています<a href="https://manareki.com/kuroda-kanbei">まなれき</a>。</li>
+<li>軍師として頭脳一辺倒ではなく、実際に命がけで敵陣に乗り込む「現場の武将」としての一面がうかがえるエピソードです。</li>
+</ul>
+<h3 id="3-キリシタン大名としての洗礼名ドンシメオン">3. キリシタン大名としての洗礼名「ドン・シメオン」</h3>
+<ul>
+<li>官兵衛はキリスト教（キリシタン）を信仰し、洗礼名を<strong>ドン・シメオン</strong>と名乗っていました<a href="https://ja.wikipedia.org/wiki/%E9%BB%92%E7%94%B0%E5%AD%9D%E9%AB%98">Wikipedia</a>。</li>
+<li>戦国武将の中にはキリシタン大名も少なくありませんが、官兵衛のように「軍師」「参謀」として知られる人物が熱心なキリシタンだったのは、少し意外な組み合わせです。</li>
+<li>西洋の知識や文化にも関心を持ち、国際的な視野を持っていたとも言われています。</li>
+</ul>
+<h3 id="4-今世の張良と評された引き際の潔さ">4. 「今世の張良」と評された引き際の潔さ</h3>
+<ul>
+<li>二代将軍・徳川秀忠が官兵衛（如水）を評して「<strong>今世の張良なるべし</strong>」と言った、という話が『三河後風土記』などに伝わっています<a href="https://www.excite.co.jp/news/article/Bizjournal_mixi201408_post-3846">Bizjournal</a>。</li>
+<li>漢の張良は、天下統一後に官職を辞して隠棲したことで知られ、官兵衛も秀吉から領地の加増を勧められた際に<strong>それを断って隠居</strong>したとされています。</li>
+<li>「天下を狙える器」とまで言われた男が、最後はあっさりと身を引いた――その潔さが「張良」になぞらえられた、という解釈もあります。</li>
+</ul>
+<h3 id="5-創作的な逸話が多いこと自体が面白い">5. 創作的な逸話が多いこと自体が“面白い”</h3>
+<ul>
+<li>官兵衛に関するエピソードは、<strong>創作や誇張が混ざっているものが多い</strong>と指摘されています<a href="https://news.yahoo.co.jp/expert/articles/9f450e8247f3a18a979447ec818f4f9f0c5b1aa0">Yahoo!ニュース</a>。</li>
+<li>例えば、
+<ul>
+<li>「家康に右手を握られた長政に『そのとき左手は何をしていたのだ』と叱った」</li>
+<li>「関ヶ原で家康の勝利を見越して戦っていた」
+といった話は、史実かどうかはっきりしないものが多いです<a href="https://bushoojapan.com/bushoo/kuroda/2025/03/19/111535">武将ジャパン</a>。</li>
+</ul>
+</li>
+<li>それだけ「天才軍師」としてのイメージが強く、後世の人々が面白い逸話をたくさん作り上げてしまった、という点も官兵衛の“面白さ”の一つです。</li>
+</ul>
+<h2 id="参謀としてのインサイドワーク">参謀としてのインサイドワーク</h2>
+<p>黒田孝高が「参謀として優れていた」ことを示す話は、いくつか代表的なエピソードとして伝わっています。</p>
+<h3 id="1-中国大返しでの信長の死を秘匿し毛利と迅速に和睦">1. 中国大返しでの「信長の死を秘匿し、毛利と迅速に和睦」</h3>
+<p><strong>状況</strong></p>
+<ul>
+<li>1582年、秀吉は備中高松城（清水宗治）を水攻め中でした。</li>
+<li>その最中に<strong>本能寺の変</strong>（織田信長死亡）の報が入ります。</li>
+</ul>
+<p><strong>官兵衛の献策と洞察</strong></p>
+<ul>
+<li>官兵衛は秀吉に対し、次のように進言したとされています。
+<ol>
+<li><strong>信長の死をしばらく秘匿する</strong><br>
+→ 軍の動揺を防ぎ、毛利方に情報が漏れるのを防ぐ。</li>
+<li><strong>毛利と迅速に和睦する</strong><br>
+→ 条件は多少不利でも、一刻も早く京へ戻ることを優先。</li>
+<li><strong>すぐに京へ戻り、明智光秀を討つ</strong><br>
+→ 天下取りの主導権を握る。</li>
+</ol>
+</li>
+<li>これが**「中国大返し」**として知られる、大軍の高速移動につながりました。</li>
+</ul>
+<p><strong>参謀としてのポイント</strong></p>
+<ul>
+<li>信長の死という最大の危機を、<strong>天下取りの最大のチャンスに転換する</strong>という発想。</li>
+<li>敵（毛利）の動きを読んで「和睦を急ぐべき」と判断し、<strong>長期的な勝ち筋</strong>を優先した点が、参謀としての先見性を示しています。</li>
+</ul>
+<h3 id="2-三木城攻め別所長治での兵糧攻めと支城制圧">2. 三木城攻め（別所長治）での兵糧攻めと支城制圧</h3>
+<p>秀吉は城攻めの名人と呼ばれるようになりますが、実際はほとんどが黒田孝高の影響を受けたものです。</p>
+<p><strong>状況</strong></p>
+<ul>
+<li>播磨の三木城主・<strong>別所長治</strong>が信長に背き、秀吉軍は長期の攻城戦（三木の干殺し）を行います。</li>
+</ul>
+<p><strong>官兵衛の関与</strong></p>
+<ul>
+<li>官兵衛は、単に力攻めするのではなく、
+<ul>
+<li>周辺の支城を次々と落とし、<strong>兵糧や援軍のルートを断つ</strong></li>
+<li>長期戦を見越して、兵站や補給線を確保する
+といった<strong>兵糧攻め・包囲戦略</strong>を主導しました。</li>
+</ul>
+</li>
+</ul>
+<p><strong>参謀としてのポイント</strong></p>
+<ul>
+<li>敵の「籠城して時間を稼ぎ、毛利からの援軍を待つ」という意図を読み、<strong>援軍と補給を断つ</strong>ことで、戦いを有利に進めました。</li>
+<li>これは「敵の意図を洞察し、それに対抗する準備を周到に行う」という、参謀の典型的な働きです。</li>
+</ul>
+<h3 id="3-関ヶ原前後の九州での独自行動">3. 関ヶ原前後の九州での独自行動</h3>
+<p><strong>状況</strong></p>
+<ul>
+<li>関ヶ原の戦い（1600年）では、官兵衛（如水）は表向きは隠居の身でした。</li>
+<li>しかし九州で独自に兵を挙げ、西軍方の諸城を次々と攻略し、<strong>九州の大半を制圧</strong>する勢いを見せます。</li>
+</ul>
+<p><strong>官兵衛の洞察と準備</strong></p>
+<ul>
+<li>官兵衛は「<strong>家康が勝つだろう</strong>」と見越していたとされ、そのうえで
+<ul>
+<li>息子・長政を東軍として関ヶ原に参戦させる</li>
+<li>自分は九州で西軍勢力を掃討し、<strong>東軍への貢献</strong>を明確にする
+という二段構えの戦略をとりました。</li>
+</ul>
+</li>
+<li>結果として、黒田家は<strong>筑前福岡藩52万石</strong>の大大名となります。</li>
+</ul>
+<p><strong>参謀としてのポイント</strong></p>
+<ul>
+<li>天下の趨勢を読み、「どちらが勝つか」だけでなく「<strong>勝った後にどう評価されるか</strong>」まで見越した行動です。</li>
+<li>これはまさに「先を見越した準備」と「敵（西軍）の意図を読み、それを崩す」参謀の働きと言えます。</li>
+</ul>
+<h3 id="4-外交調略での敵の意図を読む手腕">4. 外交・調略での「敵の意図を読む」手腕</h3>
+<ul>
+<li>播磨・備前・美作など、中国地方の諸勢力に対して、官兵衛は<strong>調略（内応工作）</strong> を多用しました。</li>
+<li>特に<strong>宇喜多直家</strong>やその重臣・戸川秀安との交渉では、
+<ul>
+<li>相手の「どの勢力につけば生き残れるか」という打算を読み</li>
+<li>織田方につくメリットを提示し、内応させた
+とされています。</li>
+</ul>
+</li>
+<li>これは「敵の意図（生き残り・保身）を洞察し、それに沿った提案をする」という、高度な外交手腕です。</li>
+</ul>
+<h2 id="力量について">力量について</h2>
+<p>毎回恒例の力量について個人的に見てみたいと思います。</p>
+<p>これまで見てきた実績をもとに、黒田孝高（官兵衛）の「戦国武将としての力量」を、いくつかの観点から評価してみます。</p>
+<h3 id="1-軍事面参謀軍師としての力量">1. 軍事面：参謀・軍師としての力量</h3>
+<p><strong>評価ポイント</strong></p>
+<ul>
+<li><strong>中国大返し</strong>：本能寺の変という最大の危機を、秀吉の天下取りの最大のチャンスに転換する献策を行った。</li>
+<li><strong>三木城攻め・中国攻め</strong>：兵糧攻めや支城制圧、調略を駆使し、力攻めではなく「戦わずして勝つ」戦略を多用。</li>
+<li><strong>九州征伐・小田原征伐</strong>：秀吉軍の作戦立案や諸大名の調整を担い、天下統一を後方から支えた。</li>
+</ul>
+<p><strong>総評</strong></p>
+<ul>
+<li>単なる勇将ではなく、<strong>戦略・戦術レベルで戦を動かすタイプの武将</strong>でした。</li>
+<li>特に「敵の意図を読んで先手を打つ」「長期戦を見越して兵站・補給を整える」点で、参謀としての力量は非常に高かったと言えます。</li>
+</ul>
+<h3 id="2-政治外交面調略と交渉力">2. 政治・外交面：調略と交渉力</h3>
+<p><strong>評価ポイント</strong></p>
+<ul>
+<li><strong>播磨時代の外交判断</strong>：織田信長への臣従を強く主張し、小寺氏の命運を大きく左右した。</li>
+<li><strong>宇喜多直家やその重臣との交渉</strong>：内応工作で多くの城や武将を織田方に引き入れた。</li>
+<li><strong>朝鮮の役での軍監・外交的役割</strong>：諸将の調整や補給・情報面での支えを担った。</li>
+</ul>
+<p><strong>総評</strong></p>
+<ul>
+<li>武力だけでなく、<strong>交渉・調略で相手を味方につける</strong>手腕に長けていました。</li>
+<li>これは単なる「戦術」ではなく、<strong>政治的な駆け引き</strong>としての力量が高いことを示しています。</li>
+</ul>
+<h3 id="3-人間関係立ち回り秀吉信長家康との関係">3. 人間関係・立ち回り：秀吉・信長・家康との関係</h3>
+<p><strong>評価ポイント</strong></p>
+<ul>
+<li><strong>秀吉からの警戒</strong>：中国大返しでの献策で天下取りのきっかけを作った一方、「頭が回りすぎる男」として警戒され、大きな役職にはつかなかった。</li>
+<li><strong>信長からの疑念と復帰</strong>：荒木村重謀反の際に幽閉され、信長からも疑われたが、後に復帰し信頼を回復。</li>
+<li><strong>関ヶ原前後の行動</strong>：家康の勝利を見越し、九州で独自に兵を挙げて東軍への貢献を明確にし、福岡藩52万石を得た。</li>
+</ul>
+<p><strong>総評</strong></p>
+<ul>
+<li>才覚ゆえに<strong>主君から警戒される</strong>という危うさを持ちつつも、最終的には巧みに身を処し、大大名にまで上り詰めました。</li>
+<li>「どこまで出るか／引くか」の判断が非常にうまく、<strong>政治的センスに優れた武将</strong>だったと言えます。</li>
+</ul>
+<h3 id="4-領国経営後継者育成">4. 領国経営・後継者育成</h3>
+<p><strong>評価ポイント</strong></p>
+<ul>
+<li><strong>福岡藩52万石の基礎づくり</strong>：関ヶ原後の行動が評価され、筑前福岡藩の祖となった。</li>
+<li><strong>息子・長政の教育・後見</strong>：長政を東軍の主力として関ヶ原に送り込み、自身は九州で勢力を拡大する二段構えをとった。</li>
+</ul>
+<p><strong>総評</strong></p>
+<ul>
+<li>単なる軍師・参謀にとどまらず、<strong>一族・家臣団を大大名にまで押し上げる</strong>政治力・統治力も備えていました。</li>
+<li>晩年は隠居しながらも、藩政や外交に助言を与えるなど、<strong>「家」を守り発展させる力</strong>も高かったと言えます。</li>
+</ul>
+<h3 id="5-総合評価">5. 総合評価</h3>
+<p>黒田孝高の戦国武将としての力量を総合すると、</p>
+<ul>
+<li><strong>軍事面</strong>：★★★★★（参謀・軍師としての戦略眼は一流）</li>
+<li><strong>政治・外交面</strong>：★★★★☆（調略・交渉で多くの城・武将を味方につけた）</li>
+<li><strong>人間関係・立ち回り</strong>：★★★★☆（才覚ゆえの危うさを抱えつつ、最終的には大大名に）</li>
+<li><strong>領国経営・後継</strong>：★★★★☆（福岡藩の基礎を築き、長政を育てた）</li>
+</ul>
+<p>といったところでしょうか。</p>
+<p>秀吉の中国侵略には、単独の軍団で毛利を相手に有利に仕事を進めました。
+その時に軍事・外交で果たした仕事は秀吉に大きく利益をもたらしたと思います。</p>
+<p>そんな黒田さんの話でした。</p>
+<p>黒田さんの話で読み応えがあるのはやはり司馬遼太郎の作品です。
+(吉川英二よりはこっちが個人的には面白かったです)</p>
+<p>是非ご覧ください。</p>
+<div class="shop-card">
+    <div class="shop-card-image">
+        <img src="https://m.media-amazon.com/images/I/81UsXftH4vL._SL1293_.jpg" alt="商品画像">
+    </div>
+    <div class="shop-card-content">
+        <div class="shop-card-title">播磨灘物語(1)</div>
+        <div class="shop-card-description">『播磨灘物語（はりまなだものがたり）』は、作家・司馬遼太郎が「黒田官兵衛」の生涯を描いた不朽の歴史小説です。現在放送中の大河ドラマ「豊臣兄弟！」で描かれている「播磨攻略」や、第21回から登場する新キャストの小寺官兵衛（倉悠貴）をより深く知る上での名作です</div>
+        <div class="shop-card-link">
+            <a href="https://www.amazon.co.jp/%E6%96%B0%E8%A3%85%E7%89%88-%E6%92%AD%E7%A3%A8%E7%81%98%E7%89%A9%E8%AA%9E-%E8%AC%9B%E8%AB%87%E7%A4%BE%E6%96%87%E5%BA%AB-%E5%8F%B8%E9%A6%AC-%E9%81%BC%E5%A4%AA%E9%83%8E/dp/4062739321?crid=18OP6NYYIS4R1&dib=eyJ2IjoiMSJ9.QdqKa4eiwdP1Orz6opKhFGxUnB1XJfGW1OjwuKA_LonwgYtk9agPWulyhk_dT2CGFWOwsGxP96P2n23XhHRNKcMtkhYtK1iwqo8NdDum0gQbFHU4F40uZmv1qF1S9aAGsacLOUQ3w6cDuOS8ZH-i2o3e2KwqDV4GpPi0PRYEb3WQYUBy0jrHShu82cxdFfiLjd0T40C8caTx7OCTTXcuAsiQWsOrvkOZMXESiJA2q24cugZWyQU5Jgo4ri_01-OOzREKHdjHuBjFNBG18I02cEkJKDWq1WEjFLOYL4uOCqs.kL4G2agRDxWhKWWwHG4oSQLs8GYZaV8eLDKap0EXEGY&dib_tag=se&keywords=%E9%BB%92%E7%94%B0%E5%AE%98%E5%85%B5%E8%A1%9B&qid=1780112534&sprefix=%E9%BB%92%E7%94%B0%E5%AD%9D%E9%AB%98%2Caps%2C252&sr=8-10&linkCode=ll2&tag=yoshishinnze-22&linkId=fa87cebea66d1bee14126097c3034a23&ref_=as_li_ss_tl" target="_blank" rel="noopener">Amazonで詳細を見る</a>
+        </div>
+    </div>
+</div>
+
+
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+</script>
+            
+        </body>
+        </html>
