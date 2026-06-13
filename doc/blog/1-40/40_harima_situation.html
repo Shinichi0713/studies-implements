@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&#x3056;&#x3063;&#x3068;&#x3057;&#x305f;&#x7d4c;&#x7def;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+/* 目次全体のコンテナ */
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+
+/* 記事タイトル (h1) */
+h1 {
+    font-size: 2rem;
+    color: #24292f;
+    line-height: 1.3;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 3px double #e1e4e8; /* 二重線で上品に */
+    text-align: center; /* タイトルを中央に寄せて特別感を出す */
+}
+
+/* セクション見出し (h2) */
+h2 {
+    font-size: 1.5rem;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(transparent 70%, #e8f0fe 70%); /* 下側に薄い色のアクセント */
+    border-left: 6px solid #0969da; /* 目次のテーマカラーと合わせる */
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* 強調文字 (strong) */
+strong {
+    font-weight: bold;
+    color: #cf222e; /* ホバー時の赤色と合わせて統一感を出す */
+    background: linear-gradient(transparent 60%, #fff2cc 60%); /* 黄色のマーカー風 */
+    padding: 0 2px;
+}
+
+/* 引用のコンテナ */
+blockquote {
+    position: relative;
+    padding: 20px 30px;
+    margin: 30px 0;
+    background-color: #f6f8fa; /* 目次の背景より少しだけ濃いグレー */
+    border-left: 5px solid #d0d7de; /* 落ち着いたグレーの境界線 */
+    color: #57606a; /* 文字色は少し薄くして引用らしさを出す */
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 引用符のアイコンを装飾として追加 */
+blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    font-size: 40px;
+    color: #d0d7de;
+    font-family: serif;
+    line-height: 1;
+}
+
+/* 読者になるボタンのデザイン */
+.btn-subscribe {
+    display: inline-block;
+    padding: 12px 35px; /* 横幅を広めにとって存在感を出します */
+    background-color: #383838; /* お好みの色に変更してください */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #555555;
+    text-decoration: none;
+}
+
+/* はてなブログで見えてしまう数式データを非表示にする */
+.katex-html {
+    display: none !important;
+}
+
+.katex-mathml {
+    display: inline !important;
+}
+/* Amazonカード型のオシャレなデザイン */
+.shop-card {
+    display: flex;
+    max-width: 500px;
+    margin: 20px auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* マウスホップした時の動き */
+.shop-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.shop-card-image {
+    width: 150px;
+    min-width: 150px;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shop-card-image img {
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+}
+
+.shop-card-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.shop-card-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.shop-card-description {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+/* Amazonらしいオレンジボタン */
+.shop-card-link a {
+    display: inline-block;
+    background-color: #ff9900;
+    color: #fff !important;
+    text-decoration: none !important;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.shop-card-link a:hover {
+    background-color: #e68a00;
+}
+
+/* スマホ対応：縦並びにする */
+@media (max-width: 480px) {
+    .shop-card {
+        flex-direction: column;
+        max-width: 100%;
+    }
+    .shop-card-image {
+        width: 100%;
+        height: 200px;
+    }
+}
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+
+            <span id="markdown-mermaid" aria-hidden="true" data-config="{&quot;darkModeTheme&quot;:&quot;vscode&quot;,&quot;lightModeTheme&quot;:&quot;vscode&quot;,&quot;maxTextSize&quot;:50000,&quot;clickDrag&quot;:&quot;alt&quot;,&quot;showControls&quot;:&quot;onHoverOrFocus&quot;,&quot;resizable&quot;:true,&quot;maxHeight&quot;:&quot;&quot;}"></span>
+				<p>秀吉が軍団を率いて毛利攻め(中国攻め)した当初、織田と毛利の緩衝地帯だった播磨が揺れに揺れ、反織田勢力の台頭から、徐々に秀吉が優勢を奪っていくまでの経緯について詳細を調べてみました。</p>
+<p>本日テーマ：</p>
+<blockquote>
+<p>秀吉の中国入りから戦況の回復までを追ってみた</p>
+</blockquote>
+<h2 id="ざっとした経緯">ざっとした経緯</h2>
+<p>羽柴秀吉の「中国攻め」は、織田信長の命を受けて毛利氏を制圧するための遠征で、1577年（天正5）から1582年（天正10）にかけて行われました。<br>
+播磨入りから播磨平定、さらに因幡・備中へと進出するまでの流れを、史料に基づいて概略で整理します。</p>
+<h3 id="1-播磨入りと初期の戦況1577年">1. 播磨入りと初期の戦況（1577年）</h3>
+<ul>
+<li>
+<p><strong>天正5年（1577）10月</strong><br>
+羽柴秀吉は中国経略（対毛利氏）の総司令官として播磨に入国し、姫路城を拠点とします<a href="https://rekihaku.pref.hyogo.lg.jp/castle/himeji-chronology">姫路城 年表</a>。<br>
+播磨の国人衆の多くは当初、秀吉に服属しました<a href="https://ja.wikipedia.org/wiki/%E4%B8%AD%E5%9B%BD%E6%94%BB%E3%82%81">中国攻め - Wikipedia</a>。</p>
+</li>
+<li>
+<p>同年11月には<strong>但馬</strong>へ進出し、<strong>岩洲城（朝来市）</strong> などを攻略して但馬の一部を制圧します<a href="https://ja.wikipedia.org/wiki/%E4%B8%AD%E5%9B%BD%E6%94%BB%E3%82%81">中国攻め - Wikipedia</a>。</p>
+</li>
+<li>
+<p>同年12月には<strong>播磨上月城</strong>を攻略し、尼子勝久らを入れて毛利方への前線拠点とします<a href="https://ja.wikipedia.org/wiki/%E4%B8%AD%E5%9B%BD%E6%94%BB%E3%82%81">中国攻め - Wikipedia</a>。</p>
+</li>
+</ul>
+<p>この段階では、播磨の大半は形式的には織田方に従い、秀吉は上月城を足がかりに山陰方面へも手を伸ばしつつありました。</p>
+<h3 id="2-播磨での大規模反乱と長期戦15781580">2. 播磨での大規模反乱と長期戦（1578–1580）</h3>
+<ul>
+<li>
+<p><strong>天正6年（1578）2月</strong><br>
+播磨の有力国人・<strong>別所長治</strong>が三木城で離反し、毛利方に寝返ります。これにより<strong>三木合戦</strong>（三木の干殺し）が始まります<a href="https://ja.wikipedia.org/wiki/%E4%B8%AD%E5%9B%BD%E6%94%BB%E3%82%81">中国攻め - Wikipedia</a>。</p>
+</li>
+<li>
+<p>同年7月には、毛利軍の攻撃により<strong>上月城が陥落</strong>し、尼子勝久らが自害します<a href="https://ja.wikipedia.org/wiki/%E4%B8%AD%E5%9B%BD%E6%94%BB%E3%82%81">中国攻め - Wikipedia</a>。<br>
+秀吉は本願寺・荒木村重・別所長治など複数の敵を抱え、播磨で長期の包囲戦を強いられることになります。</p>
+</li>
+<li>
+<p><strong>天正8年（1580）1月</strong><br>
+長期間の兵糧攻めの末、<strong>三木城が陥落</strong>し、別所長治らは自害します（いわゆる「三木の干殺し」）<a href="https://ja.wikipedia.org/wiki/%E4%B8%AD%E5%9B%BD%E6%94%BB%E3%82%81">中国攻め - Wikipedia</a>。</p>
+</li>
+</ul>
+<h3 id="3-播磨平定の完了1580年">3. 播磨平定の完了（1580年）</h3>
+<p>三木城陥落後、秀吉は播磨西部の抵抗勢力を一掃し、播磨一国の平定を完成させます。</p>
+<ul>
+<li>
+<p><strong>1580年4月</strong><br>
+秀吉は播磨西部の<strong>宇野一族</strong>（織田方に抵抗していた勢力）の平定に着手します。<br>
+黒田官兵衛・荒木平大夫・神子田半左衛門らに命じ、宇野氏の本拠・<strong>長水城</strong>の支城（林田松山城・常屋城・香山城・篠の丸城など）を短期間で攻略させます<a href="https://sengoku.jimdofree.com/%E4%BF%A1%E9%95%B7%E5%8F%B2/1574-1581-%E5%A4%A9%E4%B8%8B%E5%B8%83%E6%AD%A6%E7%B7%A8/1580%E2%91%A1-%E7%A7%80%E5%90%89%E3%81%AE%E6%92%AD%E7%A3%A8%E5%B9%B3%E5%AE%9A">信長史：秀吉の播磨平定</a>。</p>
+</li>
+<li>
+<p>続いて秀吉は<strong>英賀（現在の姫路市英賀）</strong> へ進軍。<br>
+別所氏や本願寺の残党は抵抗せず毛利領へ逃亡し、秀吉は<strong>無血で英賀の寺内町を占領</strong>します<a href="https://sengoku.jimdofree.com/%E4%BF%A1%E9%95%B7%E5%8F%B2/1574-1581-%E5%A4%A9%E4%B8%8B%E5%B8%83%E6%AD%A6%E7%B7%A8/1580%E2%91%A1-%E7%A7%80%E5%90%89%E3%81%AE%E6%92%AD%E7%A3%A8%E5%B9%B3%E5%AE%9A">信長史：秀吉の播磨平定</a>。</p>
+</li>
+<li>
+<p><strong>長水城</strong>では、宇野政頼の息子たちの内紛を利用した調略が進められ、<strong>5月9日</strong>に内通者の手引きで秀吉軍が城内へ侵入し、<strong>5月10日に落城</strong>します<a href="https://sengoku.jimdofree.com/%E4%BF%A1%E9%95%B7%E5%8F%B2/1574-1581-%E5%A4%A9%E4%B8%8B%E5%B8%83%E6%AD%A6%E7%B7%A8/1580%E2%91%A1-%E7%A7%80%E5%90%89%E3%81%AE%E6%92%AD%E7%A3%A8%E5%B9%B3%E5%AE%9A">信長史：秀吉の播磨平定</a>。</p>
+</li>
+<li>
+<p><strong>6月5日</strong>には潜伏していた宇野政頼・祐清父子らが追撃を受けて討ち死にし、これにより<strong>播磨一国は完全に平定</strong>されます<a href="https://sengoku.jimdofree.com/%E4%BF%A1%E9%95%B7%E5%8F%B2/1574-1581-%E5%A4%A9%E4%B8%8B%E5%B8%83%E6%AD%A6%E7%B7%A8/1580%E2%91%A1-%E7%A7%80%E5%90%89%E3%81%AE%E6%92%AD%E7%A3%A8%E5%B9%B3%E5%AE%9A">信長史：秀吉の播磨平定</a>。</p>
+</li>
+</ul>
+<p>姫路城年表でも、<strong>1577年に秀吉が播磨に派遣され、1580年に三木城・英賀城・長水山城が落城して播磨平定が完了</strong>したことが確認できます<a href="https://rekihaku.pref.hyogo.lg.jp/castle/himeji-chronology">姫路城 年表</a>。</p>
+<h3 id="4-但馬因幡の平定と中国地方奥部への進出15801581">4. 但馬・因幡の平定と中国地方奥部への進出（1580–1581）</h3>
+<p>播磨平定と並行して、秀吉は但馬・因幡方面にも進出します。</p>
+<ul>
+<li>
+<p><strong>天正8年（1580）5月</strong><br>
+秀吉は<strong>但馬</strong>の<strong>有子山城</strong>を攻略し、但馬を平定します<a href="https://ja.wikipedia.org/wiki/%E4%B8%AD%E5%9B%BD%E6%94%BB%E3%82%81">中国攻め - Wikipedia</a>。</p>
+</li>
+<li>
+<p>同年6月には<strong>因幡</strong>で<strong>第一次鳥取城攻め</strong>を行い、因幡の平定を進めます<a href="https://ja.wikipedia.org/wiki/%E4%B8%AD%E5%9B%BD%E6%94%BB%E3%82%81">中国攻め - Wikipedia</a>。</p>
+</li>
+<li>
+<p><strong>天正9年（1581）6月〜10月</strong><br>
+秀吉は<strong>第二次鳥取城攻め</strong>を実施し、徹底した兵糧攻め（いわゆる「鳥取の渇殺し」）を行います。<br>
+同年<strong>10月25日</strong>、城主・吉川経家が自害して開城し、因幡も平定されます<a href="https://ja.wikipedia.org/wiki/%E4%B8%AD%E5%9B%BD%E6%94%BB%E3%82%81">中国攻め - Wikipedia</a>。</p>
+</li>
+</ul>
+<p>この時点で、秀吉は<strong>播磨・但馬・因幡</strong>をほぼ掌握し、毛利氏の本拠・中国地方の奥部に迫る態勢を整えました。</p>
+<h3 id="5-備中高松城攻めと本能寺の変1582年">5. 備中高松城攻めと本能寺の変（1582年）</h3>
+<ul>
+<li>
+<p><strong>天正10年（1582）4月</strong><br>
+秀吉は姫路城から備中へ進軍し、<strong>備中高松城</strong>を包囲します。<br>
+黒田官兵衛の献策により、足守川の水を利用した<strong>水攻め</strong>を行い、城を孤立させます<a href="https://ja.wikipedia.org/wiki/%E4%B8%AD%E5%9B%BD%E6%94%BB%E3%82%81">中国攻め - Wikipedia</a>、<a href="https://ja.wikipedia.org/wiki/%E5%82%99%E4%B8%AD%E9%AB%98%E6%9D%BE%E5%9F%8E%E3%81%AE%E6%88%A6%E3%81%84">備中高松城の戦い - Wikipedia</a>。</p>
+</li>
+<li>
+<p><strong>6月2日</strong>に<strong>本能寺の変</strong>が発生し、織田信長が死去。<br>
+秀吉は<strong>6月4日</strong>、城主・清水宗治の自害を条件に毛利氏と講和を結び、直ちに京へ戻る「<strong>中国大返し</strong>」を開始します<a href="https://ja.wikipedia.org/wiki/%E4%B8%AD%E5%9B%BD%E6%94%BB%E3%82%81">中国攻め - Wikipedia</a>。</p>
+</li>
+</ul>
+<h3 id="一覧">一覧</h3>
+<ul>
+<li><strong>1577年</strong>：秀吉が播磨に入り、姫路城を拠点に上月城・但馬の一部を攻略。</li>
+<li><strong>1578–1580年</strong>：別所長治の離反により三木合戦が長期化し、上月城を失うなど苦戦を強いられる。</li>
+<li><strong>1580年</strong>：三木城陥落後、長水城・英賀城など播磨西部を平定し、播磨一国を完全掌握。</li>
+<li><strong>1580–1581年</strong>：但馬・因幡を平定し、鳥取城を兵糧攻めで落とす。</li>
+<li><strong>1582年</strong>：備中高松城を水攻めで包囲中に本能寺の変が起こり、毛利と講和して中国大返しへ。</li>
+</ul>
+<p>このように、秀吉の中国攻めは播磨平定を足がかりに、但馬・因幡・備中へと進出し、毛利氏の本拠に迫る段階まで進みましたが、本能寺の変によって信長の天下統一事業としては中断されました。<br>
+その後、秀吉は毛利氏と同盟関係を結び、中国地方の平定は豊臣政権下で完成していくことになります。</p>
+<h2 id="中国攻め開始時点の状況">中国攻め開始時点の状況</h2>
+<p>中国攻め（中国征伐）を開始した当初（天正5年＝1577年頃）の秀吉軍の勢力と、播磨の状況は、おおむね次のように整理できます。</p>
+<h3 id="1-秀吉が率いた勢力中国攻め開始当初">1. 秀吉が率いた勢力（中国攻め開始当初）</h3>
+<p><strong>総大将と主な武将</strong></p>
+<ul>
+<li>
+<p><strong>総大将</strong>：羽柴秀吉（のちの豊臣秀吉）<br>
+織田信長から中国地方（毛利輝元の勢力圏）攻略を命じられ、中国方面軍の総司令官となります<a href="https://ja.wikipedia.org/wiki/%E4%B8%AD%E5%9B%BD%E6%94%BB%E3%82%81">中国攻め - Wikipedia</a>。</p>
+</li>
+<li>
+<p><strong>主な与力・家臣</strong>（1577年時点の代表例）</p>
+<ul>
+<li><strong>羽柴秀長</strong>（秀吉の弟、のちの豊臣秀長）<br>
+中国攻めを通じて秀吉の右腕として活躍し、播磨平定や鳥取城攻めなどで重要な役割を果たします<a href="https://www.nagahama-sengoku.jp/story/hidenaga">豊臣秀長｜戦国を攻略せよ</a>。</li>
+<li><strong><a href="https://yoshishinnze.hatenablog.com/entry/2026/06/02/043000">黒田官兵衛（孝高）</a></strong><br>
+播磨の国人・小寺氏の重臣で、早くから織田方につくよう主君を説得し、秀吉の中国攻めに軍師として従軍。兵糧攻め・水攻めなど戦術面で大きな役割を果たします<a href="https://www.touken-world.jp/tips/38336">黒田官兵衛の歴史</a>。</li>
+<li><strong><a href="https://yoshishinnze.hatenablog.com/entry/2026/03/04/000000">蜂須賀正勝（小六）</a></strong><br>
+秀吉の古くからの与力で、播磨平定や城攻めで先鋒・築城・包囲など多方面で活躍<a href="https://ja.wikipedia.org/wiki/%E4%B8%AD%E5%9B%BD%E6%94%BB%E3%82%81">中国攻め - Wikipedia</a>。</li>
+<li><strong><a href="https://yoshishinnze.hatenablog.com/entry/2026/02/22/000000">竹中半兵衛（重治）</a></strong><br>
+軍師として秀吉を補佐し、三木城攻めなどで兵糧攻めの立案・指揮に関わりますが、天正7年（1579）に陣中で病没します<a href="https://japanknowledge.com/introduction/keyword.html?i=1620">竹中半兵衛 - ジャパンナレッジ</a>。</li>
+<li><strong>宮部継潤</strong><br>
+但馬・因幡方面の攻略で活躍し、鳥取城攻めなどで重要な役割を担います<a href="https://ja.wikipedia.org/wiki/%E4%B8%AD%E5%9B%BD%E6%94%BB%E3%82%81">中国攻め - Wikipedia</a>。</li>
+</ul>
+</li>
+<li>
+<p><strong>兵力規模</strong><br>
+中国攻め全体を通じて、秀吉軍はおおむね<strong>2〜3万規模</strong>の兵力を動かしたとされます（備中高松城攻めでは宇喜多勢を加えて総勢3万とされる例もあり）<a href="https://www.touken-world.jp/tips/10365">山崎の戦い／ホームメイト</a>、<a href="https://ja.wikipedia.org/wiki/%E5%82%99%E4%B8%AD%E9%AB%98%E6%9D%BE%E5%9F%8E%E3%81%AE%E6%88%A6%E3%81%84">備中高松城の戦い - Wikipedia</a>。<br>
+播磨入り当初（1577年）も、この規模に近い軍勢を率いて姫路城を拠点としたとみられます。</p>
+</li>
+</ul>
+<h3 id="2-播磨の状況1577年頃">2. 播磨の状況（1577年頃）</h3>
+<p><strong>地理・政治的位置</strong></p>
+<ul>
+<li>
+<p>播磨（現在の兵庫県南西部）は、<strong>織田勢力圏の西端</strong>であり、<strong>毛利勢力圏の東端</strong>でもありました。<br>
+織田信長と毛利輝元は、これまで但馬・播磨・備前あたりを<strong>緩衝地帯</strong>として互いに友好関係を保ってきたとされます<a href="https://ja.wikipedia.org/wiki/%E4%B8%AD%E5%9B%BD%E6%94%BB%E3%82%81">中国攻め - Wikipedia</a>。</p>
+</li>
+<li>
+<p>しかし1570年代後半になると、信長は石山本願寺・三好氏と対峙しつつ、瀬戸内海の制海権を握ろうとし、毛利氏との対立が深まります。<br>
+その結果、播磨は<strong>織田 vs 毛利の最前線</strong>となりました。</p>
+</li>
+</ul>
+<p><strong>播磨国人衆の動向</strong></p>
+<ul>
+<li>
+<p><strong>多くの国人が秀吉に服属</strong><br>
+1577年10月、秀吉が播磨に入ると、播磨の国人衆の多くは<strong>当初は秀吉に服属</strong>しました<a href="https://ja.wikipedia.org/wiki/%E4%B8%AD%E5%9B%BD%E6%94%BB%E3%82%81">中国攻め - Wikipedia</a>。<br>
+これには、黒田官兵衛が主君・小寺政職を説得して織田方についたことも影響しています<a href="https://www.touken-world.jp/tips/38336">黒田官兵衛の歴史</a>。</p>
+</li>
+<li>
+<p><strong>一部は毛利方に残る</strong><br>
+しかし、西播磨の豪族・<strong>赤松政範</strong>（上月城主）などは毛利方につき、備前の宇喜多直家と連携して抵抗しました<a href="https://ja.wikipedia.org/wiki/%E4%B8%AD%E5%9B%BD%E6%94%BB%E3%82%81">中国攻め - Wikipedia</a>。<br>
+これが<strong>第一次上月城の戦い</strong>（1577年11〜12月）につながり、秀吉は上月城を攻略しますが、翌年には毛利軍の反攻で上月城を失います<a href="https://serai.jp/hobby/1269509">上月城合戦とは？</a>。</p>
+</li>
+<li>
+<p><strong>別所長治の離反</strong><br>
+さらに<strong>天正6年（1578）2月</strong>には、播磨の有力国人・<strong>別所長治</strong>が三木城で離反し、毛利方に寝返ります<a href="https://ja.wikipedia.org/wiki/%E4%B8%AD%E5%9B%BD%E6%94%BB%E3%82%81">中国攻め - Wikipedia</a>。<br>
+これにより<strong>三木合戦</strong>（三木の干殺し）が始まり、播磨平定は長期化します。</p>
+</li>
+</ul>
+<h4 id="秀吉の拠点と戦略">秀吉の拠点と戦略</h4>
+<ul>
+<li>
+<p><strong>姫路城を拠点化</strong><br>
+秀吉は播磨入り後、黒田官兵衛から献じられた<strong>姫路城</strong>を中国攻めの拠点とし、ここを本営として播磨平定・但馬・因幡への進出を進めます<a href="https://rekihaku.pref.hyogo.lg.jp/castle/himeji-chronology">姫路城 年表</a>。</p>
+</li>
+<li>
+<p><strong>国人衆の懐柔と切り崩し</strong><br>
+秀吉は、播磨国人を<strong>懐柔・調略</strong>しつつ、抵抗する勢力（赤松政範・別所長治・宇野一族など）に対しては<strong>兵糧攻め・包囲戦</strong>を多用します。<br>
+これが「三木の干殺し」「鳥取の渇殺し」「備中高松城の水攻め」といった長期包囲戦の原型となりました<a href="https://ja.wikipedia.org/wiki/%E4%B8%AD%E5%9B%BD%E6%94%BB%E3%82%81">中国攻め - Wikipedia</a>。</p>
+</li>
+</ul>
+<h3 id="3-まとめ">3. まとめ</h3>
+<ul>
+<li>
+<p><strong>秀吉側の勢力</strong>：<br>
+総大将・羽柴秀吉のもと、弟・秀長、軍師・黒田官兵衛・竹中半兵衛、武将・蜂須賀正勝・宮部継潤らが参加し、<strong>2〜3万規模</strong>の軍勢で播磨に入りました。</p>
+</li>
+<li>
+<p><strong>播磨の状況</strong>：<br>
+織田と毛利の緩衝地帯だった播磨は、1577年頃から<strong>最前線</strong>となり、多くの国人が秀吉に服属する一方、赤松政範・別所長治・宇野一族などが毛利方について抵抗しました。<br>
+秀吉は姫路城を拠点に、懐柔と包囲戦を組み合わせて播磨平定を進め、その後に但馬・因幡・備中へと進出していきます。</p>
+</li>
+</ul>
+<p>このように、中国攻め開始当初の秀吉軍は、播磨国人の多くを味方につけつつも、一部の強硬な毛利方勢力との長期戦を強いられる状況にありました。</p>
+<h2 id="初期の苦戦">初期の苦戦</h2>
+<p>中国攻めの播磨入り後の1年後に戦況は秀吉に大きく不利な状況となりました。
+中国攻めの初期に秀吉が苦戦する<strong>直接のきっかけ</strong>は、<strong>播磨の有力国人・別所長治の離反</strong>です。<br>
+そして、その離反をきっかけに起こった<strong>特に大きな出来事</strong>は、<strong>上月城の陥落と尼子再興軍の壊滅</strong>です。</p>
+<h3 id="1-苦戦のきっかけ別所長治の離反1578年2月">1. 苦戦の「きっかけ」：別所長治の離反（1578年2月）</h3>
+<ul>
+<li>
+<p><strong>天正6年（1578）2月下旬</strong>、それまで織田方として秀吉に従っていた<strong>三木城主・別所長治</strong>が、東播磨の諸城主と示し合わせて<strong>織田信長に反旗を翻し、毛利方に寝返りました</strong><a href="https://ja.wikipedia.org/wiki/%E4%B8%AD%E5%9B%BD%E6%94%BB%E3%82%81">中国攻め - Wikipedia</a>、<a href="https://ja.wikipedia.org/wiki/%E4%B8%89%E6%9C%A8%E5%90%88%E6%88%A6">三木合戦 - Wikipedia</a>。</p>
+</li>
+<li>
+<p>離反の理由は諸説ありますが、</p>
+<ul>
+<li>下賤の出である秀吉への反感</li>
+<li>信長の強権的な支配への反発</li>
+<li>浄土真宗（一向宗）勢力の突き上げ</li>
+<li>毛利方の調略<br>
+などが複合したとされ、いずれにせよ<strong>播磨の要衝・三木城を拠点とした大規模反乱</strong>となりました<a href="https://www.weblio.jp/content/%E5%88%A5%E6%89%80%E9%95%B7%E6%B2%BB">別所長治とは - Weblio辞書</a>。</li>
+</ul>
+</li>
+<li>
+<p>この離反により、秀吉は<strong>播磨平定どころか、後方の播磨で大規模な反乱を抱える</strong>ことになり、中国攻めの進軍が大きく阻まれました。</p>
+</li>
+</ul>
+<h3 id="2-特に大きな出来事上月城の陥落と尼子再興軍の壊滅1578年7月">2. 特に大きな出来事：上月城の陥落と尼子再興軍の壊滅（1578年7月）</h3>
+<p>別所長治の離反が、さらに大きな悲劇を生みます。</p>
+<ul>
+<li>
+<p><strong>天正6年（1578）7月</strong>、毛利軍（吉川元春・小早川隆景ら）が<strong>上月城を大軍で包囲</strong>します<a href="https://ja.wikipedia.org/wiki/%E4%B8%AD%E5%9B%BD%E6%94%BB%E3%82%81">中国攻め - Wikipedia</a>。</p>
+</li>
+<li>
+<p>上月城には、秀吉が入れて<strong>尼子氏再興の旗印</strong>としていた<strong>尼子勝久</strong>と、その忠臣・<strong>山中鹿介（幸盛）</strong> らが籠城していました<a href="https://serai.jp/hobby/1269509">上月城合戦とは？ - サライ.jp</a>。</p>
+</li>
+<li>
+<p>しかし、秀吉は<strong>三木城の別所長治討伐に手を取られており、上月城に十分な援軍を送れませんでした</strong><a href="https://www.sengoku-battle-history.net/arioka-castle">有岡城の戦い - 戦国バトルヒストリー</a>。</p>
+</li>
+<li>
+<p>さらに、信長は<strong>石山本願寺・荒木村重・別所長治</strong>など複数の敵を抱え、上月城救援よりも<strong>三木城の攻略を優先</strong>するよう秀吉に命じたとされます<a href="https://ja.wikipedia.org/wiki/%E4%B8%AD%E5%9B%BD%E6%94%BB%E3%82%81">中国攻め - Wikipedia</a>。</p>
+</li>
+<li>
+<p>その結果、<strong>上月城は孤立無援となり、毛利軍の猛攻の末に陥落</strong>。</p>
+<ul>
+<li>尼子勝久は自害</li>
+<li>山中鹿介は捕らえられ、護送中に殺害される<br>
+という形で、<strong>尼子再興の夢は完全に潰えました</strong><a href="https://serai.jp/hobby/1269509">上月城合戦とは？ - サライ.jp</a>。</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-なぜこれが特に大きな出来事なのか">3. なぜこれが「特に大きな出来事」なのか</h3>
+<ul>
+<li>
+<p><strong>軍事面</strong>：上月城は播磨・備前・美作の国境に位置する<strong>最前線の重要拠点</strong>でした。ここを失ったことで、秀吉は<strong>山陰方面への前進基地を失い、毛利軍の反攻を許す</strong>ことになりました<a href="https://ja.wikipedia.org/wiki/%E4%B8%AD%E5%9B%BD%E6%94%BB%E3%82%81">中国攻め - Wikipedia</a>。</p>
+</li>
+<li>
+<p><strong>政治・象徴面</strong>：</p>
+<ul>
+<li>尼子勝久・山中鹿介は、<strong>「尼子再興」という大義名分</strong>を掲げる存在でした。</li>
+<li>彼らを見殺しにした形になったことで、<strong>秀吉（織田方）の信頼性が揺らぎ</strong>、播磨・山陰の国人衆の動揺を招きました<a href="https://serai.jp/hobby/1269509">上月城合戦とは？ - サライ.jp</a>。</li>
+</ul>
+</li>
+<li>
+<p><strong>秀吉自身の評価</strong>：<br>
+秀吉はこの時期、<strong>三木城の別所長治</strong>と<strong>摂津の荒木村重</strong>、そして<strong>上月城の尼子勝久</strong>を同時に抱え、兵力が分散。<br>
+信長からは「上月城は捨て駒」と見なされ、<strong>自分の味方を見殺しにせざるを得ない状況</strong>に追い込まれました<a href="https://ameblo.jp/hidekifukunaga/entry-12878836433.html">秀吉の忠誠心を砕いた信長の上月城捨駒命令｜福永英樹ブログ</a>。</p>
+</li>
+</ul>
+<h3 id="4-まとめ">4. まとめ</h3>
+<ul>
+<li>
+<p><strong>きっかけ</strong>：播磨の有力国人・<strong>別所長治の離反</strong>（1578年2月）<br>
+→ 秀吉は後方で大規模な反乱を抱え、中国攻めの進軍が大きく遅れました。</p>
+</li>
+<li>
+<p><strong>特に大きな出来事</strong>：<strong>上月城の陥落と尼子再興軍の壊滅</strong>（1578年7月）<br>
+→ 最前線の拠点を失い、尼子再興の大義も失われ、秀吉は播磨で長期の包囲戦（三木の干殺し）を強いられることになりました。</p>
+</li>
+</ul>
+<p>この二つが重なったことで、秀吉の中国攻めは<strong>初期から長期の苦戦</strong>を強いられることになった、と整理できます。</p>
+<h2 id="戦況の好転">戦況の好転</h2>
+<p>播磨における戦況が改善し、最終的に平定が完了するまでの経緯は、おおむね次のような流れです。</p>
+<h3 id="1-戦況改善の第一段階三木城の陥落1580年1月">1. 戦況改善の第一段階：三木城の陥落（1580年1月）</h3>
+<p>大きかったのは最大の抵抗勢力だった別所長治を攻略したことです。別所に対する毛利からの援軍も上手に防ぎ、優秀な幕僚の尽力により大きなダメージを負うことなく別所を滅亡させました。</p>
+<ul>
+<li>
+<p><strong>兵糧攻めの徹底</strong><br>
+秀吉は三木城への補給路を断つため、周辺の支城（野口城・神吉城・志方城など）を次々と攻略し、<strong>三木城を完全に孤立</strong>させます<a href="https://ja.wikipedia.org/wiki/%E4%B8%89%E6%9C%A8%E5%90%88%E6%88%A6">三木合戦 - Wikipedia</a>。</p>
+</li>
+<li>
+<p><strong>天正8年（1580）1月17日、三木城陥落</strong><br>
+約20か月に及ぶ兵糧攻めの末、城内の食料が尽き、別所長治は<strong>城兵の助命と引き換えに自害</strong>し、三木城は開城します<a href="https://ja.wikipedia.org/wiki/%E4%B8%89%E6%9C%A8%E5%90%88%E6%88%A6">三木合戦 - Wikipedia</a>、<a href="https://www.homemate-research-castle.com/useful/16974_tour_055">三木城の戦いとは／ホームメイト</a>。</p>
+</li>
+<li>
+<p><strong>戦況改善の意味</strong><br>
+播磨最大の反乱拠点である<strong>三木城が落ちたことで、東播磨・中播磨の抵抗勢力はほぼ壊滅</strong>し、秀吉はようやく<strong>播磨平定に本腰を入れられる状況</strong>になりました。</p>
+</li>
+</ul>
+<h3 id="2-戦況改善の第二段階播磨西部宇野氏英賀の平定1580年46月">2. 戦況改善の第二段階：播磨西部（宇野氏・英賀）の平定（1580年4〜6月）</h3>
+<p>三木城陥落後、秀吉は播磨西部の残存勢力を一掃します。
+どんな勢力でもそうですが、勢力の小さい状態から一つ大きな障害を抑えると拡大期に入ります。そんな布石になる播磨の完全制覇でした。</p>
+<ul>
+<li>
+<p><strong>長水城の支城攻略（1580年4月）</strong><br>
+秀吉は宍粟郡に入り、<strong>宇野一族</strong>が守る長水城の支城（林田松山城・常屋城・香山城・篠の丸城など）を短期間で攻略します<a href="https://indoor-mama.cocolog-nifty.com/turedure/2015/04/424-65ec.html">秀吉の播磨平定～宇野祐清の最期</a>、<a href="https://sengoku.jimdofree.com/%E4%BF%A1%E9%95%B7%E5%8F%B2/1574-1581-%E5%A4%A9%E4%B8%8B%E5%B8%83%E6%AD%A6%E7%B7%A8/1580%E2%91%A1-%E7%A7%80%E5%90%89%E3%81%AE%E6%92%AD%E7%A3%A8%E5%B9%B3%E5%AE%9A">【信長史】1580② 秀吉の播磨平定</a>。</p>
+</li>
+<li>
+<p><strong>英賀城の無血占領（1580年4月）</strong><br>
+続いて秀吉は<strong>英賀（現在の姫路市英賀）</strong> へ進軍。<br>
+別所氏や本願寺の残党は抵抗せず毛利領へ逃亡し、秀吉は<strong>無血で英賀の寺内町を占領</strong>します<a href="https://sengoku.jimdofree.com/%E4%BF%A1%E9%95%B7%E5%8F%B2/1574-1581-%E5%A4%A9%E4%B8%8B%E5%B8%83%E6%AD%A6%E7%B7%A8/1580%E2%91%A1-%E7%A7%80%E5%90%89%E3%81%AE%E6%92%AD%E7%A3%A8%E5%B9%B3%E5%AE%9A">【信長史】1580② 秀吉の播磨平定</a>。</p>
+</li>
+<li>
+<p><strong>長水城の落城（1580年5月）</strong><br>
+長水城では、宇野政頼の息子たちの内紛を利用した調略が進められ、<strong>5月9日に内通者の手引きで秀吉軍が城内へ侵入し、5月10日に落城</strong>します<a href="https://sengoku.jimdofree.com/%E4%BF%A1%E9%95%B7%E5%8F%B2/1574-1581-%E5%A4%A9%E4%B8%8B%E5%B8%83%E6%AD%A6%E7%B7%A8/1580%E2%91%A1-%E7%A7%80%E5%90%89%E3%81%AE%E6%92%AD%E7%A3%A8%E5%B9%B3%E5%AE%9A">【信長史】1580② 秀吉の播磨平定</a>。</p>
+</li>
+<li>
+<p><strong>宇野政頼・祐清父子の討死（1580年6月5日）</strong><br>
+潜伏していた宇野政頼・祐清父子らが追撃を受けて討ち死にし、<strong>播磨一国は完全に平定</strong>されます<a href="https://sengoku.jimdofree.com/%E4%BF%A1%E9%95%B7%E5%8F%B2/1574-1581-%E5%A4%A9%E4%B8%8B%E5%B8%83%E6%AD%A6%E7%B7%A8/1580%E2%91%A1-%E7%A7%80%E5%90%89%E3%81%AE%E6%92%AD%E7%A3%A8%E5%B9%B3%E5%AE%9A">【信長史】1580② 秀吉の播磨平定</a>。</p>
+</li>
+</ul>
+<p>姫路城年表でも、<strong>1577年に秀吉が播磨に派遣され、1580年に三木城・英賀城・長水山城が落城して播磨平定が完了</strong>したことが確認できます<a href="https://rekihaku.pref.hyogo.lg.jp/castle/himeji-chronology">姫路城 年表</a>。</p>
+<h3 id="3-播磨平定後の戦況改善1580年以降">3. 播磨平定後の戦況改善（1580年以降）</h3>
+<ul>
+<li>
+<p><strong>但馬・因幡への進出</strong><br>
+播磨平定後、秀吉は<strong>但馬の有子山城</strong>を攻略し（1580年5月）、続いて<strong>因幡の鳥取城</strong>を攻め（第一次・第二次鳥取城攻め）、山陰方面への進出を本格化させます<a href="https://ja.wikipedia.org/wiki/%E4%B8%AD%E5%9B%BD%E6%94%BB%E3%82%81">中国攻め - Wikipedia</a>。</p>
+</li>
+<li>
+<p><strong>備中高松城攻め（1582年）</strong><br>
+播磨を安定した後方拠点として確保したことで、秀吉は<strong>備中高松城の水攻め</strong>に集中でき、毛利氏の本拠に迫る段階まで進みました<a href="https://ja.wikipedia.org/wiki/%E5%82%99%E4%B8%AD%E9%AB%98%E6%9D%BE%E5%9F%8E%E3%81%AE%E6%88%A6%E3%81%84">備中高松城の戦い - Wikipedia</a>。</p>
+</li>
+</ul>
+<h2 id="中国地方の攻略">中国地方の攻略</h2>
+<p>播磨平定（1580年）以降の中国攻めは、**山陰（但馬・因幡）<strong>と</strong>山陽（備前・備中）**の二正面で進むことになります。
+秀吉と秀長はそれぞれ次のような役割を担いながら戦況を展開させていきました。</p>
+<h3 id="1-山陰方面但馬平定と因幡鳥取城攻め15801581年">1. 山陰方面：但馬平定と因幡鳥取城攻め（1580〜1581年）</h3>
+<p><strong>秀吉の役割（総司令官・戦略立案）</strong></p>
+<ul>
+<li>
+<p><strong>但馬平定（1580年5月）</strong><br>
+播磨平定の直後、秀吉は<strong>但馬の有子山城</strong>を攻略し、但馬を平定します<a href="https://ja.wikipedia.org/wiki/%E4%B8%AD%E5%9B%BD%E6%94%BB%E3%82%81">中国攻め - Wikipedia</a>。<br>
+これにより、<strong>播磨〜但馬〜因幡</strong>と連なる山陰ルートの後方確保が進みました。</p>
+</li>
+<li>
+<p><strong>因幡侵攻と第一次鳥取城攻め（1580年6月）</strong><br>
+秀吉は<strong>2万の大軍</strong>で因幡に侵攻し、<strong>鳥取城</strong>を包囲します（第一次鳥取城攻め）<a href="https://www.tabi-samurai-japan.com/story/event/610">鳥取城の戦い〜史上最悪の籠城戦による「渇え殺し」</a>。<br>
+この時点では、まだ本格的な兵糧攻めには至らず、周辺の支城を落として<strong>因幡の国人衆を織田方に引き込む</strong>ことを重視しました。</p>
+</li>
+<li>
+<p><strong>第二次鳥取城攻め（1581年6〜10月）</strong><br>
+翌年、秀吉は<strong>本格的な兵糧攻め</strong>を仕掛けます。それも鳥取城攻めの前段階から入念な準備の上で攻城を進めました。</p>
+<ul>
+<li>鳥取城周辺の米を<strong>高値で買い占め</strong>、城への補給を物理的に断つ<a href="https://www.tabi-samurai-japan.com/story/event/610">鳥取城の戦い〜史上最悪の籠城戦による「渇え殺し」</a>。</li>
+<li>城を完全に包囲し、<strong>食料を一切入れない</strong>ことで、城内は飢餓地獄と化します。</li>
+<li><strong>1581年10月25日</strong>、城主・<strong>吉川経家</strong>が自害し、城は開城（「鳥取の渇え殺し」）<a href="https://ja.wikipedia.org/wiki/%E4%B8%AD%E5%9B%BD%E6%94%BB%E3%82%81">中国攻め - Wikipedia</a>。</li>
+</ul>
+</li>
+</ul>
+<p><strong>秀長の役割（但馬担当・後方・一部戦場指揮）</strong></p>
+<ul>
+<li>
+<p><strong>但馬平定と竹田城入り</strong><br>
+秀長は<strong>但馬平定を担当</strong>し、<strong>竹田城</strong>を攻め落として<strong>城代として入城</strong>します<a href="https://www.waseda-up.co.jp/newpub/post-902.html">豊臣秀長 秀吉と泰平の世をめざした、もう一人の天下人</a>。<br>
+これにより、<strong>山陰ルートの要衝を押さえ、秀吉の因幡侵攻を後方から支える</strong>役割を果たしました。</p>
+</li>
+<li>
+<p><strong>因幡鳥取城攻めでの役割</strong><br>
+秀長は<strong>鳥取城攻めにも参加</strong>し、秀吉の補佐役として<strong>包囲網の維持や兵站・後方支援</strong>を担ったとされます<a href="https://www.waseda-up.co.jp/newpub/post-902.html">豊臣秀長 秀吉と泰平の世をめざした、もう一人の天下人</a>。<br>
+秀吉が前線で戦略を指揮する一方、秀長は<strong>兵糧・物資の調達や陣地構築</strong>を担当し、長期戦を支えました。</p>
+</li>
+</ul>
+<h3 id="2-山陽方面備前備中への進出15811582年">2. 山陽方面：備前・備中への進出（1581〜1582年）</h3>
+<p><strong>秀吉の役割（総司令官・外交・大規模攻城）</strong></p>
+<ul>
+<li>
+<p><strong>備前・美作の宇喜多直家の服属</strong><br>
+播磨平定後、秀吉は<strong>備前の宇喜多直家</strong>を調略し、織田方に引き込みます<a href="https://ja.wikipedia.org/wiki/%E4%B8%AD%E5%9B%BD%E6%94%BB%E3%82%81">中国攻め - Wikipedia</a>。<br>
+これにより、<strong>山陽道の要衝・岡山周辺を味方に付け、毛利の本拠・安芸へ向かう道筋が開けました</strong>。</p>
+</li>
+<li>
+<p><strong>備中高松城の水攻め（1582年4〜6月）</strong></p>
+<ul>
+<li><strong>1582年3月</strong>、秀吉は姫路城から<strong>2万の軍勢</strong>で備中へ出陣し、途中で<strong>宇喜多勢1万</strong>を加えて<strong>総勢3万</strong>で備中へ入ります<a href="https://ja.wikipedia.org/wiki/%E5%82%99%E4%B8%AD%E9%AB%98%E6%9D%BE%E5%9F%8E%E3%81%AE%E6%88%A6%E3%81%84">備中高松城の戦い - Wikipedia</a>。</li>
+<li><strong>4月15日</strong>、<strong>備中高松城</strong>を包囲。城は低湿地の沼城で攻めにくいため、<strong>黒田官兵衛の献策</strong>により<strong>足守川の水を利用した水攻め</strong>を実施します<a href="https://love-japanese-history.com/ikusa-bittyuutakamatujyou_mizuzeme">備中高松城水攻め</a>。</li>
+<li>城は完全に孤立し、毛利本軍（吉川元春・小早川隆景）も救援に動きますが、秀吉は<strong>講和交渉と包囲を並行</strong>して進めました。</li>
+</ul>
+</li>
+</ul>
+<p><strong>秀長の役割（包囲戦の一翼・後方支援）</strong></p>
+<ul>
+<li>
+<p><strong>備中高松城包囲の一員として参加</strong><br>
+秀長は<strong>備中高松城の包囲戦に参加</strong>し、秀吉の指揮下で<strong>包囲網の一角を担当</strong>したとされます<a href="https://www.waseda-up.co.jp/newpub/post-902.html">豊臣秀長 秀吉と泰平の世をめざした、もう一人の天下人</a>。<br>
+水攻めに必要な<strong>堤防工事や兵站の管理</strong>など、実務面で秀吉を支えました。</p>
+</li>
+<li>
+<p><strong>外交・講和への関与</strong><br>
+秀長は、<strong>毛利方との交渉や情報収集</strong>にも関与し、秀吉の<strong>外交戦略を補佐</strong>したとされています<a href="https://www.waseda-up.co.jp/newpub/post-902.html">豊臣秀長 秀吉と泰平の世をめざした、もう一人の天下人</a>。<br>
+秀吉が前線で軍事行動を指揮する一方、秀長は<strong>後方・兵站・外交</strong>を担い、**長期戦を支える「縁の下の力持ち」**として機能しました。</p>
+</li>
+</ul>
+<h2 id="本能寺の変">本能寺の変</h2>
+<p>中国地方の攻略が順調に進み、毛利本軍との直接対決直前というところまで進みました。
+そんな中で起こったのが本能寺の変でした。</p>
+<h3 id="1-備中高松城の水攻めと講和交渉1582年46月初旬">1. 備中高松城の水攻めと講和交渉（1582年4〜6月初旬）</h3>
+<ul>
+<li><strong>1582年4月15日</strong>、秀吉は<strong>備中高松城</strong>を包囲し、<strong>水攻め</strong>を開始します<a href="https://ja.wikipedia.org/wiki/%E5%82%99%E4%B8%AD%E9%AB%98%E6%9D%BE%E5%9F%8E%E3%81%AE%E6%88%A6%E3%81%84">備中高松城の戦い - Wikipedia</a>。</li>
+<li>毛利方（吉川元春・小早川隆景）は大軍で救援に向かい、秀吉は<strong>講和交渉と包囲を並行</strong>して進めていました<a href="https://www.touken-world.jp/tips/10365">山崎の戦い／ホームメイト</a>。</li>
+<li>交渉では、
+<ul>
+<li>毛利側：<strong>中国5か国（備中・備後・美作・伯耆・出雲）の割譲と城兵の助命</strong></li>
+<li>秀吉側：<strong>中国5か国の割譲と城主・清水宗治の切腹</strong><br>
+という条件がぶつかり、なかなかまとまりませんでした<a href="https://www.touken-world.jp/tips/10365">山崎の戦い／ホームメイト</a>。</li>
+</ul>
+</li>
+</ul>
+<p>この時点で、秀吉は<strong>信長から明智光秀を援軍として送る</strong>と知らされていましたが、<strong>本能寺の変の情報はまだ届いていません</strong>でした。</p>
+<h3 id="2-本能寺の変の情報入手1582年6月3日">2. 本能寺の変の情報入手（1582年6月3日）</h3>
+<ul>
+<li>
+<p><strong>6月2日</strong>、京都で<strong>本能寺の変</strong>が発生し、織田信長が明智光秀に討たれます<a href="https://ja.wikipedia.org/wiki/%E6%9C%AC%E8%83%BD%E5%AF%BA%E3%81%AE%E5%A4%89">本能寺の変 - Wikipedia</a>。</p>
+</li>
+<li>
+<p><strong>6月3日夜</strong>、秀吉のもとに<strong>信長横死の第一報</strong>が届きます<a href="https://ja.wikipedia.org/wiki/%E4%B8%AD%E5%9B%BD%E5%A4%A7%E8%BF%94%E3%81%97">中国大返し - Wikipedia</a>、<a href="https://mainichi.jp/premier/business/articles/20170216/biz/00m/010/006000c">毎日新聞「中国大返し」</a>。</p>
+<ul>
+<li>情報源は、<strong>毛利方から光秀に送られた密使を捕らえた</strong>という説や、<strong>秀吉独自の情報網</strong>によるものなど諸説あります<a href="https://nomurakakejiku.jp/news/post-20251.html">豊臣秀長: 史上最強のNo.2</a>。</li>
+</ul>
+</li>
+<li>
+<p>秀吉はこの情報を<strong>毛利方には秘匿</strong>し、<strong>講和を急ぐ</strong>方針を決めます<a href="https://ameblo.jp/bukenotoryo1118/entry-11910182388.html">毛利との国境交渉</a>。</p>
+</li>
+</ul>
+<h3 id="3-毛利との急ぎの講和と清水宗治の自害1582年6月4日">3. 毛利との急ぎの講和と清水宗治の自害（1582年6月4日）</h3>
+<ul>
+<li>
+<p>秀吉は、<strong>安国寺恵瓊（毛利方の外交僧）</strong> を介して、<strong>信長の死を伏せたまま</strong>講和を急ぎます<a href="https://banzai2161.web.fc2.com/simizumuneharu.html">清水宗治 - FC2</a>、<a href="https://ja.wikipedia.org/wiki/%E4%B8%AD%E5%9B%BD%E5%A4%A7%E8%BF%94%E3%81%97">中国大返し - Wikipedia</a>。</p>
+</li>
+<li>
+<p><strong>6月4日</strong>、講和が成立し、条件はおおむね次の通りとされます<a href="https://ja.wikipedia.org/wiki/%E4%B8%AD%E5%9B%BD%E5%A4%A7%E8%BF%94%E3%81%97">中国大返し - Wikipedia</a>、<a href="https://rekishikaido.php.co.jp/detail/3970">清水宗治の切腹</a>：</p>
+<ul>
+<li><strong>城主・清水宗治の切腹</strong></li>
+<li><strong>城兵の助命</strong></li>
+<li><strong>備中・備後・美作・伯耆・出雲のうち、一部を毛利領として残す</strong>（諸説あり）</li>
+</ul>
+</li>
+<li>
+<p>同日、<strong>清水宗治が舟で湖面を進み、秀吉本陣前で切腹</strong>し、<strong>備中高松城は開城</strong>します<a href="https://rekishikaido.php.co.jp/detail/3970">清水宗治の切腹</a>。</p>
+</li>
+<li>
+<p>秀吉は<strong>杉原家次を検使として城の請け取り</strong>を行い、<strong>6月6日頃に備中高松を引き上げる</strong>とされます<a href="https://sengokumap.net/history/1582-3">1582年(後半) 西国 中国大返しと山崎の戦い</a>。</p>
+</li>
+</ul>
+<p>そして有名な中国大返しを行い、秀吉の中国攻めは御仕舞となりました。</p>
+<h2 id="中国攻めでの秀吉の力量">中国攻めでの秀吉の力量</h2>
+<p>中国攻め（1577〜1582年）における秀吉の力量は、<strong>軍事・政治・外交・兵站・人心掌握</strong>のすべての面で、当時の武将としては非常に高い水準にあったと評価できます。<br>
+特に「<strong>長期戦を支える総合的な戦略能力</strong>」と「<strong>状況変化への対応力</strong>」が際立っています。</p>
+<h3 id="1-軍事面攻城戦術の巧みさと三大城攻め">1. 軍事面：攻城戦術の巧みさと「三大城攻め」</h3>
+<p><strong>兵糧攻め・水攻めの徹底</strong></p>
+<ul>
+<li><strong>三木城（1578〜1580）</strong>：別所長治の離反後、約20か月にわたる<strong>兵糧攻め</strong>を行い、支城を次々と落として補給路を断ち、「三木の干殺し」と呼ばれる徹底した籠城戦を完遂しました<a href="https://ja.wikipedia.org/wiki/%E4%B8%89%E6%9C%A8%E5%90%88%E6%88%A6">三木合戦 - Wikipedia</a>。</li>
+<li><strong>鳥取城（1581）</strong>：城周辺の米を<strong>高値で買い占め</strong>、城への補給を物理的に断つことで、城内を飢餓地獄に追い込み、城主・吉川経家の自害を引き出しました<a href="https://www.tabi-samurai-japan.com/story/event/610">鳥取城の戦い〜史上最悪の籠城戦による「渇え殺し」</a>。</li>
+<li><strong>備中高松城（1582）</strong>：低湿地の立地を逆手に取り、<strong>足守川の水を引き込む水攻め</strong>で城を孤立させ、城主・清水宗治の切腹と講和を実現しました<a href="https://ja.wikipedia.org/wiki/%E5%82%99%E4%B8%AD%E9%AB%98%E6%9D%BE%E5%9F%8E%E3%81%AE%E6%88%A6%E3%81%84">備中高松城の戦い - Wikipedia</a>。</li>
+</ul>
+<p><strong>評価</strong>：</p>
+<ul>
+<li>正面からの強攻を避け、<strong>補給路と士気を断つ</strong>という独創的な攻城戦術を一貫して採用しています。</li>
+<li>これは単に「残忍」というだけでなく、<strong>自軍の損耗を最小限に抑えつつ、敵の抵抗を長期で崩す</strong>という、<strong>効率的な戦略</strong>として評価できます。</li>
+</ul>
+<h3 id="2-政治外交面国人衆の掌握と毛利への圧力">2. 政治・外交面：国人衆の掌握と毛利への圧力</h3>
+<p><strong>播磨国人衆の服属と離反への対応</strong></p>
+<ul>
+<li><strong>1577年10月の播磨入り</strong>では、多くの播磨国人が秀吉に服属し、<strong>姫路城を拠点にした調略</strong>で短期間で播磨をほぼ平定しました<a href="https://ja.wikipedia.org/wiki/%E4%B8%AD%E5%9B%BD%E6%94%BB%E3%82%81">中国攻め - Wikipedia</a>。</li>
+<li>しかし<strong>1578年2月の別所長治の離反</strong>で情勢は一変。秀吉は<strong>三木城の長期包囲</strong>に追い込まれますが、<strong>支城攻略と兵糧攻め</strong>で粘り強く対処し、最終的に平定に成功しました<a href="https://ja.wikipedia.org/wiki/%E4%B8%89%E6%9C%A8%E5%90%88%E6%88%A6">三木合戦 - Wikipedia</a>。</li>
+</ul>
+<p><strong>宇喜多直家の服属と毛利の孤立化</strong></p>
+<ul>
+<li><strong>備前の宇喜多直家</strong>を調略し、織田方に引き込むことで、<strong>山陽道の要衝・岡山周辺を味方に付け、毛利の本拠・安芸への圧力を高めました</strong><a href="https://ja.wikipedia.org/wiki/%E4%B8%AD%E5%9B%BD%E6%94%BB%E3%82%81">中国攻め - Wikipedia</a>。</li>
+<li>また、<strong>毛利水軍の一部（来島・能島村上氏）を帰順させる</strong>など、海上ルートでも毛利を圧迫しました<a href="https://ja.wikipedia.org/wiki/%E4%B8%AD%E5%9B%BD%E5%A4%A7%E8%BF%94%E3%81%97">中国大返し - Wikipedia</a>。</li>
+</ul>
+<p><strong>評価</strong>：</p>
+<ul>
+<li>秀吉は<strong>軍事行動と並行して、調略・外交を駆使し、敵勢力を分断・孤立化させる</strong>ことに長けていました。</li>
+<li>これは単なる「戦上手」ではなく、<strong>戦国大名としての政治力・外交力</strong>が高いことを示しています。</li>
+</ul>
+<h3 id="3-兵站組織運営長期戦を支える実務能力">3. 兵站・組織運営：長期戦を支える実務能力</h3>
+<p><strong>兵站と後方支援</strong></p>
+<ul>
+<li>中国攻めは<strong>足かけ6年</strong>に及ぶ長期戦でしたが、秀吉は<strong>姫路城を拠点に兵站を整備</strong>し、<strong>播磨・但馬・因幡・備中</strong>へと進軍を続けました<a href="https://ja.wikipedia.org/wiki/%E4%B8%AD%E5%9B%BD%E6%94%BB%E3%82%81">中国攻め - Wikipedia</a>。</li>
+<li>弟・<strong>秀長</strong>を但馬平定や後方支援に起用し、<strong>兵站・物資配分・陣地構築</strong>を担当させました<a href="https://www.waseda-up.co.jp/newpub/post-902.html">豊臣秀長 秀吉と泰平の世をめざした、もう一人の天下人</a>。</li>
+</ul>
+<p><strong>評価</strong>：</p>
+<ul>
+<li>秀吉は<strong>自ら戦略を立案するだけでなく、兵站・後方の実務を信頼できる人物（秀長・黒田官兵衛ら）に任せる</strong>ことで、<strong>長期戦を支える組織運営</strong>に成功しています。</li>
+<li>これは「<strong>総司令官としてのマネジメント能力</strong>」が高いことを示しています。</li>
+</ul>
+<h3 id="4-人心掌握と情報戦本能寺の変への対応">4. 人心掌握と情報戦：本能寺の変への対応</h3>
+<p><strong>情報収集と秘匿</strong></p>
+<ul>
+<li><strong>本能寺の変の情報</strong>をいち早く入手し、<strong>毛利方には秘匿したまま講和を急ぎ</strong>、清水宗治の切腹を条件に講和を成立させました<a href="https://ja.wikipedia.org/wiki/%E4%B8%AD%E5%9B%BD%E5%A4%A7%E8%BF%94%E3%81%97">中国大返し - Wikipedia</a>、<a href="https://ameblo.jp/bukenotoryo1118/entry-11910182388.html">毛利との国境交渉</a>。</li>
+<li>これは<strong>情報戦と外交の駆け引き</strong>に秀吉が長けていたことを示します。</li>
+</ul>
+<p><strong>中国大返しと士気高揚</strong></p>
+<ul>
+<li>姫路城で<strong>兵糧・弾薬・金銀を家臣に分け与え</strong>、<strong>士気を最大限に高める演出</strong>をしたと伝えられています<a href="https://ja.wikipedia.org/wiki/%E4%B8%AD%E5%9B%BD%E5%A4%A7%E8%BF%94%E3%81%97">中国大返し - Wikipedia</a>。</li>
+<li>約200kmを<strong>8日間ほどで踏破する強行軍</strong>を成功させ、<strong>山崎の戦いで明智光秀を破りました</strong><a href="https://rekishikaido.php.co.jp/detail/3977">戦国屈指の強行軍。秀吉の中国大返し</a>。</li>
+</ul>
+<p><strong>評価</strong>：</p>
+<ul>
+<li>秀吉は<strong>危機的状況でも冷静に情報を扱い、軍を迅速に再編・移動させる</strong>能力を持っていました。</li>
+<li>さらに<strong>人心掌握に優れ、家臣の士気を高める演出</strong>も得意で、これが「中国大返し」の成功につながりました。</li>
+</ul>
+<h3 id="5-総合評価中国攻めでの秀吉の力量">5. 総合評価：中国攻めでの秀吉の力量</h3>
+<p>中国攻めにおける秀吉の力量は、次のようにまとめられます。</p>
+<ol>
+<li>
+<p><strong>戦略立案力</strong>：</p>
+<ul>
+<li>正面強攻を避け、<strong>補給路と士気を断つ攻城戦術</strong>を一貫して採用。</li>
+<li>播磨平定後は、<strong>山陰（但馬・因幡）と山陽（備前・備中）の二正面から毛利を圧迫</strong>する戦略を展開。</li>
+</ul>
+</li>
+<li>
+<p><strong>政治・外交力</strong>：</p>
+<ul>
+<li>播磨国人衆の服属、宇喜多直家の調略、毛利水軍の一部帰順など、<strong>敵勢力の分断・孤立化</strong>に成功。</li>
+<li>本能寺の変後も、<strong>情報を秘匿したまま講和をまとめる</strong>など、外交手腕が高い。</li>
+</ul>
+</li>
+<li>
+<p><strong>兵站・組織運営力</strong>：</p>
+<ul>
+<li>長期戦を支える<strong>兵站・後方支援体制</strong>を構築。</li>
+<li>秀長・黒田官兵衛らを適材適所に配置し、<strong>組織としての戦闘力を最大化</strong>。</li>
+</ul>
+</li>
+<li>
+<p><strong>危機対応力</strong>：</p>
+<ul>
+<li>別所長治の離反や上月城の陥落といった苦戦を経験しながらも、<strong>粘り強く戦況を立て直し</strong>、最終的に播磨平定・但馬・因幡・備中への進出を実現。</li>
+<li>本能寺の変という最大の危機に対し、<strong>中国大返しという歴史的な決断と行動</strong>で切り抜けた。</li>
+</ul>
+</li>
+</ol>
+<p><strong>結論として</strong>、中国攻めでの秀吉は、単なる「戦上手」ではなく、<strong>軍事・政治・外交・兵站・人心掌握を総合的に駆使できる、戦国時代でも屈指の総合的な戦略家</strong>であったと評価できます。<br>
+この経験が、その後の<strong>天下統一への基盤</strong>となったかなというのが著者の認識です。</p>
+<div class="shop-card">
+    <div class="shop-card-image">
+        <img src="https://m.media-amazon.com/images/I/91sV-SDRJuL._SL1500_.jpg" alt="商品画像">
+    </div>
+    <div class="shop-card-content">
+        <div class="shop-card-title">歴史が苦手でもよくわかる！秀吉・秀長、戦国を生きた兄弟の軌跡をたどる旅</div>
+        <div class="shop-card-description">2026年より大河ドラマ「豊臣兄弟！」が放送されます。この本は、農家の生まれから天下人へと昇りつめた豊臣秀吉のサクセスストーリーを支えた補佐役であり、戦国時代最強の参謀ともいわれる弟・豊臣秀長のエピソードと、ゆかりの地探訪をまとめた１冊です。</div>
+        <div class="shop-card-link">
+            <a href="https://www.amazon.co.jp/%E6%AD%B4%E5%8F%B2%E3%81%8C%E8%8B%A6%E6%89%8B%E3%81%A7%E3%82%82%E3%82%88%E3%81%8F%E3%82%8F%E3%81%8B%E3%82%8B%EF%BC%81%E7%A7%80%E5%90%89%E3%83%BB%E7%A7%80%E9%95%B7%E3%80%81%E6%88%A6%E5%9B%BD%E3%82%92%E7%94%9F%E3%81%8D%E3%81%9F%E5%85%84%E5%BC%9F%E3%81%AE%E8%BB%8C%E8%B7%A1%E3%82%92%E3%81%9F%E3%81%A9%E3%82%8B%E6%97%85-%E3%82%A4%E3%82%AB%E3%83%AD%E3%82%B9MOOK-%E3%82%A4%E3%82%AB%E3%83%AD%E3%82%B9%E5%87%BA%E7%89%88/dp/4802217064?__mk_ja_JP=%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A&crid=KT0KCMRHX3QC&dib=eyJ2IjoiMSJ9.4H70Lo2hC5Ra_UUaJ69r3MPBC8tMj8TzhoBZQ6L50uS6hts3GQYDnxX5imKRRo4VRyWEQ2k2xuAfBr-WZVvUEn4nbrkhWeN2j_RDYCwvpFLyeB1gmvluVo2kBSJnYWonOhtaQiDCwA4AAjVDTcCXv-mteqG9QAHJAZI8xVTKoF8Sn9CFy77DuPHIoRX1BpVZYejP6ypEnmiKHVHUhM1k7gmsK5ek2dkKGOl6K1kQ-U2ls1vCgM1YZ0YL_SlX9kH-9ireu3IlhTSol72LYoA43VX6kKfRkDNdDH0EiOMvB3k.7x1LgimIxPgVJvVQ9pdGQg6SvOVZvFCFdWgfG_-Q38c&dib_tag=se&keywords=%E7%A7%80%E5%90%89&qid=1780707567&sprefix=%E7%A7%80%E5%90%89%2Caps%2C189&sr=8-22-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9tdGY&psc=1&linkCode=ll2&tag=yoshishinnze-22&linkId=607dbaa0a8a20549d5a9ed5998d81544&ref_=as_li_ss_tl" target="_blank" rel="noopener">Amazonで詳細を見る</a>
+        </div>
+    </div>
+</div>
+
+
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+</script>
+            
+        </body>
+        </html>
