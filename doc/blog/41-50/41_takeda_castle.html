@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&#x7af9;&#x7530;&#x57ce;&#x653b;&#x3081;&#x306e;&#x6982;&#x8981;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+/* 目次全体のコンテナ */
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+
+/* 記事タイトル (h1) */
+h1 {
+    font-size: 2rem;
+    color: #24292f;
+    line-height: 1.3;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 3px double #e1e4e8; /* 二重線で上品に */
+    text-align: center; /* タイトルを中央に寄せて特別感を出す */
+}
+
+/* セクション見出し (h2) */
+h2 {
+    font-size: 1.5rem;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(transparent 70%, #e8f0fe 70%); /* 下側に薄い色のアクセント */
+    border-left: 6px solid #0969da; /* 目次のテーマカラーと合わせる */
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* 強調文字 (strong) */
+strong {
+    font-weight: bold;
+    color: #cf222e; /* ホバー時の赤色と合わせて統一感を出す */
+    background: linear-gradient(transparent 60%, #fff2cc 60%); /* 黄色のマーカー風 */
+    padding: 0 2px;
+}
+
+/* 引用のコンテナ */
+blockquote {
+    position: relative;
+    padding: 20px 30px;
+    margin: 30px 0;
+    background-color: #f6f8fa; /* 目次の背景より少しだけ濃いグレー */
+    border-left: 5px solid #d0d7de; /* 落ち着いたグレーの境界線 */
+    color: #57606a; /* 文字色は少し薄くして引用らしさを出す */
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 引用符のアイコンを装飾として追加 */
+blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    font-size: 40px;
+    color: #d0d7de;
+    font-family: serif;
+    line-height: 1;
+}
+
+/* 読者になるボタンのデザイン */
+.btn-subscribe {
+    display: inline-block;
+    padding: 12px 35px; /* 横幅を広めにとって存在感を出します */
+    background-color: #383838; /* お好みの色に変更してください */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #555555;
+    text-decoration: none;
+}
+
+/* はてなブログで見えてしまう数式データを非表示にする */
+.katex-html {
+    display: none !important;
+}
+
+.katex-mathml {
+    display: inline !important;
+}
+/* Amazonカード型のオシャレなデザイン */
+.shop-card {
+    display: flex;
+    max-width: 500px;
+    margin: 20px auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* マウスホップした時の動き */
+.shop-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.shop-card-image {
+    width: 150px;
+    min-width: 150px;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shop-card-image img {
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+}
+
+.shop-card-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.shop-card-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.shop-card-description {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+/* Amazonらしいオレンジボタン */
+.shop-card-link a {
+    display: inline-block;
+    background-color: #ff9900;
+    color: #fff !important;
+    text-decoration: none !important;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.shop-card-link a:hover {
+    background-color: #e68a00;
+}
+
+/* スマホ対応：縦並びにする */
+@media (max-width: 480px) {
+    .shop-card {
+        flex-direction: column;
+        max-width: 100%;
+    }
+    .shop-card-image {
+        width: 100%;
+        height: 200px;
+    }
+}
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+            <span id="markdown-mermaid" aria-hidden="true" data-config="{&quot;darkModeTheme&quot;:&quot;vscode&quot;,&quot;lightModeTheme&quot;:&quot;vscode&quot;,&quot;maxTextSize&quot;:50000,&quot;clickDrag&quot;:&quot;alt&quot;,&quot;showControls&quot;:&quot;onHoverOrFocus&quot;,&quot;resizable&quot;:true,&quot;maxHeight&quot;:&quot;&quot;}"></span>
+				<p>秀吉の弟である秀長は、秀吉の<a href="https://yoshishinnze.hatenablog.com/entry/2026/06/11/043000">中国攻め</a>の際には、羽柴軍の副将格として後方統治や補給に当たることが多かったようです。
+しかし、そんな秀長が一軍を率いて攻略をした戦いがあります。
+そんな戦いの一つが竹田城の攻略戦です。</p>
+<p>本日テーマ：</p>
+<blockquote>
+<p>本日は秀長が一軍を指揮した戦いである竹田城について解説していきます。</p>
+</blockquote>
+
+
+<button id="bgm-trigger" style="padding: 10px 20px; font-size: 16px; background-color: #008cba; color: white; border: none; border-radius: 5px; cursor: pointer;">
+  🎵 BGMを再生する
+</button>
+
+<h2 id="竹田城攻めの概要">竹田城攻めの概要</h2>
+<p>羽柴秀長が行った竹田城攻めは、<strong>織田信長の「中国攻め（中国征伐）」の一環として行われた但馬平定作戦の一部</strong>です。以下に、中国攻めとの関係も含めて概要を整理します。</p>
+<h3 id="1-背景中国攻めと竹田城の重要性">1. 背景：中国攻めと竹田城の重要性</h3>
+<ul>
+<li>天正5年（1577年）、織田信長は毛利輝元の勢力圏（山陽・山陰）を攻めるため、羽柴秀吉に<strong>中国攻め</strong>を命じます<a href="https://ja.wikipedia.org/wiki/%E4%B8%AD%E5%9B%BD%E6%94%BB%E3%82%81">Wikipedia</a>。</li>
+<li>但馬国（現在の兵庫県北部）は、<strong>山名氏や太田垣氏ら国衆が支配する地域</strong>で、その中でも竹田城は、<strong>生野銀山を押さえる軍事・経済の要衝</strong>として重要視されていました<a href="https://serai.jp/hobby/1269520">サライ.jp</a>。</li>
+<li>生野銀山は信長政権にとっても重要な収入源であり、<strong>毛利方に傾く但馬勢力を切り崩し、銀山を確保する</strong>ことが中国攻めの重要な戦略目標でした。</li>
+</ul>
+<h3 id="2-羽柴秀長の但馬侵攻と竹田城攻略天正5年1577年">2. 羽柴秀長の但馬侵攻と竹田城攻略（天正5年・1577年）</h3>
+<p><strong>秀長の役割</strong></p>
+<ul>
+<li>秀吉は播磨平定を進めつつ、<strong>弟・羽柴秀長（小一郎）を先鋒として但馬侵攻を担当</strong>させます<a href="https://serai.jp/hobby/1269520">サライ.jp</a>。</li>
+<li>これは、中国攻め全体の中で、<strong>但馬方面の平定と生野銀山の確保を任せる</strong>という位置づけでした。</li>
+</ul>
+<p><strong>侵攻ルートと前哨戦</strong></p>
+<ul>
+<li>天正5年（1577年）11月、秀長軍は<strong>真弓峠を越えて但馬へ侵攻</strong>します<a href="https://serai.jp/hobby/1269520">サライ.jp</a>。</li>
+<li>まず<strong>岩洲城（いわすじょう）を攻略</strong>し、その後、<strong>竹田城を本格的に攻めます</strong><a href="https://serai.jp/hobby/1269520">サライ.jp</a>。</li>
+</ul>
+<p><strong>竹田城攻めの様子</strong></p>
+<ul>
+<li>戦いは<strong>3日間にわたって続いた</strong>と伝えられ、最終的に<strong>城主・太田垣輝延が降伏</strong>し、竹田城は陥落しました<a href="https://serai.jp/hobby/1269520">サライ.jp</a>。</li>
+</ul>
+<h3 id="3-中国攻めの一環としての位置づけ">3. 中国攻めの一環としての位置づけ</h3>
+<ul>
+<li>この竹田城攻略は、<strong>秀吉の中国攻めにおける「但馬平定」の重要な一戦</strong>でした。</li>
+<li>竹田城を落とすことで、
+<ul>
+<li>生野銀山の支配権を確保し、</li>
+<li>毛利方に与する但馬国衆（太田垣氏ら）の抵抗拠点を奪い、</li>
+<li>山陰方面への進軍路と補給路を安定させる
+という戦略的意義がありました<a href="https://serai.jp/hobby/1269520">サライ.jp</a>。</li>
+</ul>
+</li>
+</ul>
+<h2 id="より詳細な背景">より詳細な背景</h2>
+<p>竹田城攻めが開始された当時について状況の説明を行います。</p>
+<h3 id="1-中国攻めの開始と播磨平定天正5年1577年10月">1. 中国攻めの開始と播磨平定（天正5年・1577年10月〜）</h3>
+<ul>
+<li>天正5年（1577年）10月、羽柴秀吉は<strong>北陸戦線から離れ、織田信長から中国攻め（毛利攻め）を命じられ、播磨に入りました</strong><a href="https://ja.wikipedia.org/wiki/%E4%B8%AD%E5%9B%BD%E6%94%BB%E3%82%81">Wikipedia</a>。</li>
+<li>秀吉は黒田孝高から提供された<strong>姫路山城を本拠</strong>とし、<strong>赤松則房ら多くの国人衆を調略で降伏させ、西播磨全域をほぼ支配下に置きました</strong><a href="https://ja.wikipedia.org/wiki/%E4%B8%AD%E5%9B%BD%E6%94%BB%E3%82%81">Wikipedia</a>。</li>
+<li>11月〜12月にかけては、<strong>福原城</strong>や<strong>上月城（第一次上月城の戦い）</strong> といった毛利方の拠点を攻略し、播磨平定を進めました<a href="https://ja.wikipedia.org/wiki/%E4%B8%AD%E5%9B%BD%E6%94%BB%E3%82%81">Wikipedia</a>。</li>
+</ul>
+<p>この時点で、<strong>秀吉は播磨をほぼ掌握し、毛利氏との前線を固めつつ、次の戦略として但馬・因幡方面への進出を視野に入れていました。</strong>
+(因みにこの後別所氏や荒木村重の離反により播磨の情勢はみるみる悪化していくことになりますが)</p>
+<h3 id="2-但馬侵攻の開始と竹田城攻めの位置づけ">2. 但馬侵攻の開始と竹田城攻めの位置づけ</h3>
+<ul>
+<li>中国攻めの記事によれば、<strong>但馬侵攻も天正5年（1577年）の同時期に行われ、岩洲城や竹田城を攻略し、羽柴秀長を城代として配置した</strong>とされています<a href="https://ja.wikipedia.org/wiki/%E4%B8%AD%E5%9B%BD%E6%94%BB%E3%82%81">Wikipedia</a>。</li>
+<li>ただし、<strong>『信長公記』によれば、信長の命令はあくまで「播磨攻略」であり、但馬侵攻は秀吉の独断であった</strong>と記されています<a href="https://ja.wikipedia.org/wiki/%E4%B8%AD%E5%9B%BD%E6%94%BB%E3%82%81">Wikipedia</a>。</li>
+<li><strong>竹田城攻めは、秀吉が播磨平定を進める中で、自らの判断で但馬方面にも戦線を広げた一環</strong>として始まりました。</li>
+</ul>
+<h3 id="3-竹田城攻め開始当時の具体的な状況">3. 竹田城攻め開始当時の具体的な状況</h3>
+<p><strong>但馬側の状況</strong></p>
+<ul>
+<li>但馬は山名氏や太田垣氏ら国衆が支配していましたが、<strong>毛利氏の影響力が強まり、織田方から離反する動き</strong>が出ていました<a href="https://serai.jp/hobby/1269520">サライ.jp</a>。</li>
+<li>竹田城は、<strong>生野銀山を押さえる軍事・経済の要衝</strong>であり、<strong>毛利方に与する太田垣輝延が城主</strong>でした<a href="https://serai.jp/hobby/1269520">サライ.jp</a>。</li>
+</ul>
+<p><strong>秀吉・秀長側の動き</strong></p>
+<ul>
+<li>秀吉は播磨平定をほぼ終えた後、<strong>弟・羽柴秀長を先鋒として但馬侵攻を命じます</strong><a href="https://serai.jp/hobby/1269520">サライ.jp</a>。</li>
+<li>秀長軍は<strong>真弓峠を越えて但馬に入り、まず岩洲城を攻略</strong>し、その後<strong>竹田城を攻撃対象</strong>としました<a href="https://serai.jp/hobby/1269520">サライ.jp</a>。</li>
+</ul>
+<h3 id="4-竹田城立地">4. 竹田城立地</h3>
+<p>竹田城は兵庫県の但馬地方の中央付近に位置します。
+これは現在の地図ベースの竹田城の位置です。</p>
+<p><img src="file:///d:\PycharmProjects\ScienceCalculation\image\41_takeda_castle\1781348225928.png" alt="1781348225928"></p>
+<p>竹田城は山の峰に建てられた城で典型的な山城です。
+太田垣氏が140年の支配をしたとなっているのですが、恐らくここまで戦火に見舞われることがなかったと思われます。
+実質、竹田城始まって以来初めての戦いだったのでは、と思います。</p>
+<img src="https://asago-kanko.com/wp-content/uploads/2014/10/takedajyo_p01.jpg" >
+<p>秀長の軍は播磨の姫路を発ち、北上して真弓峠を越えて但馬に入ったと考えられます。</p>
+<h2 id="軍勢の比較">軍勢の比較</h2>
+<p>秀長軍と太田垣氏（竹田城側）の軍勢を比較するにあたっては、<strong>秀長軍については但馬侵攻全体の兵力が分かっている一方、太田垣氏側の具体的な兵力数は一次史料ではほとんど確認できない</strong>という制約があります。そのため、<strong>史料に基づく数字と、城の規模・籠城戦の様子からの推定</strong>を組み合わせて比較します。</p>
+<h3 id="1-秀長軍の軍勢">1. 秀長軍の軍勢</h3>
+<p><strong>但馬侵攻全体の兵力</strong></p>
+<ul>
+<li>秀長の但馬侵攻については、<strong>秀長軍は約6,500の兵力を有していた</strong>とする記述があります<a href="https://tota8.net/toudoutakatora.html">大屋山遊会（藤堂高虎関連記事）</a>。</li>
+<li>これは、<strong>但馬平定全体（岩洲城・竹田城など複数の城攻め）に投入された兵力</strong>と理解するのが妥当です。</li>
+</ul>
+<p><strong>竹田城攻めに投入された兵力</strong></p>
+<ul>
+<li>竹田城攻めは、<strong>真弓峠越えで但馬に入った秀長軍が、まず岩洲城を落とし、次いで竹田城を攻めた</strong>とされています<a href="https://serai.jp/hobby/1269520">サライ.jp</a>。</li>
+<li>岩洲城攻略にも兵力を割いているため、<strong>竹田城攻めに直接投入された兵力は、6,500のうちの一部</strong>と考えられます。</li>
+<li>ただし、<strong>竹田城は生野銀山を管轄する最重要拠点</strong>であり、秀長隊の第一目標とされたことから、<strong>主力部隊が集中した</strong>と見るのが自然です<a href="https://ja.wikipedia.org/wiki/%E7%AB%B9%E7%94%B0%E5%9F%8E">Wikipedia（竹田城）</a>。</li>
+</ul>
+<p><strong>まとめると：</strong></p>
+<ul>
+<li>但馬侵攻全体：<strong>約6,500</strong>（秀長軍の総兵力）</li>
+<li>竹田城攻め：<strong>その主力が投入されたと推定されるが、具体的な数字は史料に明記されていない</strong></li>
+</ul>
+<h3 id="2-太田垣氏竹田城側の軍勢">2. 太田垣氏（竹田城側）の軍勢</h3>
+<p><strong>史料上の制約</strong></p>
+<ul>
+<li>太田垣輝延が率いた竹田城側の兵力については、<strong>一次史料で具体的な数字がほとんど確認できません</strong>。</li>
+<li>ただし、竹田城は<strong>山城で非常に堅固</strong>であり、<strong>籠城戦を前提とした防衛</strong>が行われたとされています。</li>
+</ul>
+<p><strong>城の規模と防衛力からの推定</strong></p>
+<ul>
+<li>竹田城は、標高約350mの山頂に築かれた山城で、<strong>石垣や曲輪が広がる大規模な城郭</strong>です。</li>
+<li>戦国時代の山城としては、<strong>数百〜1,000人規模の兵が籠城できる</strong>と推定されることが多いです。</li>
+<li>太田垣氏は但馬の有力国衆で、山名氏の重臣として一定の兵力を動員できたと考えられますが、<strong>織田・羽柴軍に比べれば兵力は劣勢</strong>だったと見るのが一般的です。</li>
+</ul>
+<p><strong>まとめると：</strong></p>
+<ul>
+<li>太田垣氏側の兵力：<strong>数百〜1,000人程度の籠城兵と推定されるが、具体的な数字は不明</strong></li>
+<li>防衛面では、<strong>山城の堅固さと籠城戦で対抗</strong>した</li>
+</ul>
+<h3 id="3-両軍の比較兵力戦力戦い方">3. 両軍の比較（兵力・戦力・戦い方）</h3>
+<p><strong>兵力規模の比較</strong></p>
+<ul>
+<li><strong>秀長軍（但馬侵攻全体）</strong>：約6,500（複数の城攻めに投入）</li>
+<li><strong>太田垣氏（竹田城側）</strong>：数百〜1,000人程度と推定（籠城兵）</li>
+</ul>
+<p>→ <strong>兵力面では秀長軍が圧倒的に優勢</strong>だったと考えられます。</p>
+<p><strong>戦い方の比較</strong></p>
+<ul>
+<li><strong>秀長軍</strong>：
+<ul>
+<li>真弓峠越えで但馬に侵攻し、岩洲城を落とした後、<strong>竹田城を強襲</strong>。</li>
+<li>鉄砲を多用した<strong>積極的な攻城戦</strong>を展開。</li>
+</ul>
+</li>
+<li><strong>太田垣氏</strong>：
+<ul>
+<li>山城の堅固さを活かし、<strong>籠城戦で時間を稼ぎつつ抵抗</strong>。</li>
+<li>3日間の戦闘の末、<strong>降伏・退去</strong>したと伝えられています<a href="https://takayama.tonosama.jp/html/takeda.html">古城の歴史 竹田城</a>。</li>
+</ul>
+</li>
+</ul>
+<h2 id="戦闘の経過">戦闘の経過</h2>
+<p>竹田城攻め（天正5年・1577年）の<strong>開始から終結までの展開</strong>については、ざっと以下のようなものです。</p>
+<h3 id="1-竹田城攻めの開始秀長軍の進軍と包囲">1. 竹田城攻めの開始（秀長軍の進軍と包囲）</h3>
+<ul>
+<li>秀吉は播磨平定を進めた後、<strong>弟・羽柴秀長を先鋒として但馬侵攻を開始</strong>させます<a href="https://serai.jp/hobby/1269520">サライ.jp</a>。</li>
+<li>秀長軍は<strong>真弓峠を越えて但馬に入り、まず岩洲城（いわすじょう）を攻略</strong>しました<a href="https://serai.jp/hobby/1269520">サライ.jp</a>。</li>
+<li>岩洲城を落とした後、秀長軍は<strong>竹田城へ進軍</strong>します<a href="https://serai.jp/hobby/1269520">サライ.jp</a>。</li>
+<li>竹田城は<strong>標高約350mの山城で天然の要害</strong>であり、太田垣輝延は<strong>籠城戦で対抗</strong>する構えでした。</li>
+<li>秀長軍は<strong>城の周囲を包囲し、攻城戦を開始</strong>します。
+<ul>
+<li>史料によれば、<strong>鉄砲300挺を投入するなど、強力な火力で攻撃</strong>したと伝えられています<a href="https://serai.jp/hobby/1269520">サライ.jp</a>。</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-戦闘の展開3日間の攻防">2. 戦闘の展開（3日間の攻防）</h3>
+<p>なんと秀長は攻めづらい山城を3日で攻略してしまいました。</p>
+<ul>
+<li>竹田城では<strong>3日間にわたる激しい攻防戦</strong>が繰り広げられたとされています<a href="https://serai.jp/hobby/1269520">サライ.jp</a>。</li>
+<li>秀長軍は<strong>鉄砲隊による射撃や、山城への突入を繰り返し、城兵を圧迫</strong>しました。</li>
+<li>一方、太田垣輝延側は<strong>山城の地形を活かして防衛し、籠城戦で時間を稼ぎつつ抵抗</strong>しましたが、<strong>兵力・装備の面で秀長軍に劣勢</strong>だったと考えられます。</li>
+</ul>
+<p>戦力や装備が良かったとは言え、効率よく竹田城を攻めたことは間違いないと思います。
+鉄砲の射撃を巧みに使った攻城戦だったと推定出来ます。</p>
+<h3 id="3-太田垣輝延の降伏と竹田城の陥落">3. 太田垣輝延の降伏と竹田城の陥落</h3>
+<ul>
+<li>3日間の戦闘の末、<strong>城主・太田垣輝延は降伏し、竹田城から退去</strong>したと伝えられています<a href="https://takayama.tonosama.jp/html/takeda.html">古城の歴史 竹田城</a>。</li>
+<li>これにより、<strong>竹田城は秀長軍の手に落ち、但馬平定の重要な一歩</strong>となりました。</li>
+</ul>
+<h2 id="4-戦後の展開秀長の城代就任と但馬支配">4. 戦後の展開（秀長の城代就任と但馬支配）</h2>
+<p>竹田城を攻略することで但馬攻略の重要な橋頭保を確保したことになります。
+そして、秀長はこの重要な拠点の城代として支配を任されることになります。</p>
+<ul>
+<li>竹田城陥落後、<strong>秀長は城代として竹田城に入り、但馬支配の拠点としました</strong><a href="https://serai.jp/hobby/1269520">サライ.jp</a>。</li>
+<li>秀長は<strong>城の普請（補修・拡張）や道路整備、生野銀山の経営</strong>にも関わり、<strong>実戦指揮官としてだけでなく、行政・経済面でも能力を発揮</strong>したと評価されています<a href="https://serai.jp/hobby/1269520">サライ.jp</a>。</li>
+<li>その後も但馬では旧勢力の反発がありましたが、<strong>天正8年（1580年）に秀長が再び但馬へ出陣し、完全な平定を実現</strong>します<a href="https://serai.jp/hobby/1269520">サライ.jp</a>。</li>
+</ul>
+<p>秀長はこの後但馬の攻略を進め、但馬の2郡の統治を任されることになります。</p>
+<h2 id="総括">総括</h2>
+<p>秀長は、竹田城攻めにおいて、</p>
+<ul>
+<li>中国攻めの但馬方面における実戦指揮官として前線を切り開き、</li>
+<li>火力を集中させた積極的な攻城戦で3日という短期間に堅城を落とし、</li>
+<li>生野銀山の確保と但馬平定の基盤を築くという戦略的役割を果たし、</li>
+<li>戦後は城代として統治・経営面でも能力を発揮しました。</li>
+</ul>
+<p>この戦いは、秀長がそれまでの秀吉の補佐役としての仕事が多かったですが、軍事・行政の両面で実力を示した転機の一つとなりました。
+そういう意味では、その後の豊臣政権における補佐役としての地位を確立するうえで重要な役割を果たしたと言えます。</p>
+<p>今日はそんな秀長が一皮むけた竹田城についての話でした。</p>
+<div class="shop-card">
+    <div class="shop-card-image">
+        <img src="https://m.media-amazon.com/images/I/91sV-SDRJuL._SL1500_.jpg" alt="商品画像">
+    </div>
+    <div class="shop-card-content">
+        <div class="shop-card-title">歴史が苦手でもよくわかる！秀吉・秀長、戦国を生きた兄弟の軌跡をたどる旅</div>
+        <div class="shop-card-description">2026年より大河ドラマ「豊臣兄弟！」が放送されます。この本は、農家の生まれから天下人へと昇りつめた豊臣秀吉のサクセスストーリーを支えた補佐役であり、戦国時代最強の参謀ともいわれる弟・豊臣秀長のエピソードと、ゆかりの地探訪をまとめた１冊です。</div>
+        <div class="shop-card-link">
+            <a href="https://www.amazon.co.jp/%E6%AD%B4%E5%8F%B2%E3%81%8C%E8%8B%A6%E6%89%8B%E3%81%A7%E3%82%82%E3%82%88%E3%81%8F%E3%82%8F%E3%81%8B%E3%82%8B%EF%BC%81%E7%A7%80%E5%90%89%E3%83%BB%E7%A7%80%E9%95%B7%E3%80%81%E6%88%A6%E5%9B%BD%E3%82%92%E7%94%9F%E3%81%8D%E3%81%9F%E5%85%84%E5%BC%9F%E3%81%AE%E8%BB%8C%E8%B7%A1%E3%82%92%E3%81%9F%E3%81%A9%E3%82%8B%E6%97%85-%E3%82%A4%E3%82%AB%E3%83%AD%E3%82%B9MOOK-%E3%82%A4%E3%82%AB%E3%83%AD%E3%82%B9%E5%87%BA%E7%89%88/dp/4802217064?__mk_ja_JP=%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A&crid=KT0KCMRHX3QC&dib=eyJ2IjoiMSJ9.4H70Lo2hC5Ra_UUaJ69r3MPBC8tMj8TzhoBZQ6L50uS6hts3GQYDnxX5imKRRo4VRyWEQ2k2xuAfBr-WZVvUEn4nbrkhWeN2j_RDYCwvpFLyeB1gmvluVo2kBSJnYWonOhtaQiDCwA4AAjVDTcCXv-mteqG9QAHJAZI8xVTKoF8Sn9CFy77DuPHIoRX1BpVZYejP6ypEnmiKHVHUhM1k7gmsK5ek2dkKGOl6K1kQ-U2ls1vCgM1YZ0YL_SlX9kH-9ireu3IlhTSol72LYoA43VX6kKfRkDNdDH0EiOMvB3k.7x1LgimIxPgVJvVQ9pdGQg6SvOVZvFCFdWgfG_-Q38c&dib_tag=se&keywords=%E7%A7%80%E5%90%89&qid=1780707567&sprefix=%E7%A7%80%E5%90%89%2Caps%2C189&sr=8-22-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9tdGY&psc=1&linkCode=ll2&tag=yoshishinnze-22&linkId=607dbaa0a8a20549d5a9ed5998d81544&ref_=as_li_ss_tl" target="_blank" rel="noopener">Amazonで詳細を見る</a>
+        </div>
+    </div>
+</div>
+
+
+<div style="width: 1px; height: 1px; overflow: hidden; opacity: 0; position: absolute;">
+  <iframe id="bgm-player" width="100" height="100" 
+  src="https://www.youtube.com/embed/tVyxRx70C4E?enablejsapi=1" 
+  title="BGM Player" frameborder="0" allow="autoplay">
+  </iframe>
+</div>
+
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+  document.getElementById('bgm-trigger').addEventListener('click', function() {
+    var iframe = document.getElementById('bgm-player');
+    
+    // すでに再生中の場合は一時停止、停止中の場合は再生するトグル処理
+    if (this.innerText.includes('再生')) {
+      // JavaScript API経由で再生コマンドを送信
+      iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+      this.innerText = '⏸ BGMを停止する';
+      this.style.backgroundColor = '#f44336'; // ボタンの色を赤系に
+    } else {
+      iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+      this.innerText = '🎵 BGMを再生する';
+      this.style.backgroundColor = '#008cba'; // ボタンの色を青系に
+    }
+  });
+</script>
+
+
+            
+        </body>
+        </html>
