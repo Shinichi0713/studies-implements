@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&#x6982;&#x8981;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+/* 目次全体のコンテナ */
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+
+/* 記事タイトル (h1) */
+h1 {
+    font-size: 2rem;
+    color: #24292f;
+    line-height: 1.3;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 3px double #e1e4e8; /* 二重線で上品に */
+    text-align: center; /* タイトルを中央に寄せて特別感を出す */
+}
+
+/* セクション見出し (h2) */
+h2 {
+    font-size: 1.5rem;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(transparent 70%, #e8f0fe 70%); /* 下側に薄い色のアクセント */
+    border-left: 6px solid #0969da; /* 目次のテーマカラーと合わせる */
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* 強調文字 (strong) */
+strong {
+    font-weight: bold;
+    color: #cf222e; /* ホバー時の赤色と合わせて統一感を出す */
+    background: linear-gradient(transparent 60%, #fff2cc 60%); /* 黄色のマーカー風 */
+    padding: 0 2px;
+}
+
+/* 引用のコンテナ */
+blockquote {
+    position: relative;
+    padding: 20px 30px;
+    margin: 30px 0;
+    background-color: #f6f8fa; /* 目次の背景より少しだけ濃いグレー */
+    border-left: 5px solid #d0d7de; /* 落ち着いたグレーの境界線 */
+    color: #57606a; /* 文字色は少し薄くして引用らしさを出す */
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 引用符のアイコンを装飾として追加 */
+blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    font-size: 40px;
+    color: #d0d7de;
+    font-family: serif;
+    line-height: 1;
+}
+
+/* 読者になるボタンのデザイン */
+.btn-subscribe {
+    display: inline-block;
+    padding: 12px 35px; /* 横幅を広めにとって存在感を出します */
+    background-color: #383838; /* お好みの色に変更してください */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #555555;
+    text-decoration: none;
+}
+
+/* はてなブログで見えてしまう数式データを非表示にする */
+.katex-html {
+    display: none !important;
+}
+
+.katex-mathml {
+    display: inline !important;
+}
+/* Amazonカード型のオシャレなデザイン */
+.shop-card {
+    display: flex;
+    max-width: 500px;
+    margin: 20px auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* マウスホップした時の動き */
+.shop-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.shop-card-image {
+    width: 150px;
+    min-width: 150px;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shop-card-image img {
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+}
+
+.shop-card-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.shop-card-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.shop-card-description {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+/* Amazonらしいオレンジボタン */
+.shop-card-link a {
+    display: inline-block;
+    background-color: #ff9900;
+    color: #fff !important;
+    text-decoration: none !important;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.shop-card-link a:hover {
+    background-color: #e68a00;
+}
+
+/* スマホ対応：縦並びにする */
+@media (max-width: 480px) {
+    .shop-card {
+        flex-direction: column;
+        max-width: 100%;
+    }
+    .shop-card-image {
+        width: 100%;
+        height: 200px;
+    }
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+            <span id="markdown-mermaid" aria-hidden="true" data-config="{&quot;darkModeTheme&quot;:&quot;vscode&quot;,&quot;lightModeTheme&quot;:&quot;vscode&quot;,&quot;maxTextSize&quot;:50000,&quot;clickDrag&quot;:&quot;alt&quot;,&quot;showControls&quot;:&quot;onHoverOrFocus&quot;,&quot;resizable&quot;:true,&quot;maxHeight&quot;:&quot;&quot;}"></span>
+				<p>中国攻めは秀吉が大軍を率いて序盤の<a href="https://yoshishinnze.hatenablog.com/entry/2026/06/11/043000">播磨での苦境</a>を挽回して、徐々に戦いの主導権を奪っていく様子を見ていくことが出来ます。</p>
+<p>そして、大軍を分けて山陰と山陽をうまく攻めていく戦いでもありました。
+また、侵攻作戦を進めると徐々に中国地方の大国毛利の本拠地に近づいていくことになります。</p>
+<p>そして、毛利の本体との直接戦闘を行った戦いで、秀吉の妙手が光った戦いであった戦いについて本日は扱っていきます。</p>
+<p>本日テーマ：</p>
+<blockquote>
+<p>鳥取城の戦いについて調査・説明していきます。</p>
+</blockquote>
+
+<button id="bgm-trigger" style="padding: 10px 20px; font-size: 16px; background-color: #008cba; color: white; border: none; border-radius: 5px; cursor: pointer;">
+  🎵 BGMを再生する
+</button>
+
+<h2 id="概要">概要</h2>
+<p>羽柴秀吉（のちの豊臣秀吉）が織田信長の命で行った「中国攻め」の一環として実施した<strong>鳥取城攻め</strong>は、<strong>天正9年（1581年）</strong> に起こった、<strong>兵糧攻めを徹底した苛烈な攻城戦</strong>として知られています。</p>
+<p>以下、概要を整理いたします。</p>
+<h3 id="1-背景秀吉の中国攻めと毛利氏との対立">1. 背景：秀吉の「中国攻め」と毛利氏との対立</h3>
+<ul>
+<li>織田信長は、西国平定のため羽柴秀吉を中国地方攻略の総司令官に任命しました。</li>
+<li>中国地方の大大名・毛利氏は、織田方に対抗するため、山陰の要衝である<strong>鳥取城</strong>を重要拠点としていました。</li>
+<li>鳥取城は、<strong>吉川経家</strong>が城主として入り、毛利方の重要拠点として守備を固めていました。</li>
+</ul>
+<h3 id="2-秀吉の戦略徹底した兵糧攻め">2. 秀吉の戦略：徹底した「兵糧攻め」</h3>
+<p>秀吉は、鳥取城を力攻めで落とすのではなく、<strong>兵糧を絶つことで城内を飢えさせる</strong>という戦略を採用しました。</p>
+<ul>
+<li><strong>事前の兵糧買い占め</strong><br>
+秀吉は開戦の1年以上前から、周辺地域の米を大量に買い占めさせ、鳥取城に兵糧が入らないようにしました。</li>
+<li><strong>周辺の村々を焼き払い、住民を城内に追い込む</strong><br>
+城下の村々を焼き払い、住民を無理やり鳥取城内に追い込みました。これにより、城内の食糧消費人口を増やし、飢えを加速させました。</li>
+<li><strong>包囲陣の徹底</strong><br>
+鳥取城を完全に包囲し、外部からの補給路を完全に遮断しました。</li>
+</ul>
+<h3 id="3-鳥取城内の惨状">3. 鳥取城内の惨状</h3>
+<ul>
+<li>兵糧が尽き、城内では<strong>人肉を食べる</strong>という記録が残るほど、飢餓が深刻化しました。</li>
+<li>餓死者が続出し、城内は地獄のような状況になったと伝えられています。</li>
+<li>毛利方からの援軍も、秀吉の包囲網によって城に近づくことができませんでした。</li>
+</ul>
+<h3 id="4-吉川経家の降伏と自刃">4. 吉川経家の降伏と自刃</h3>
+<ul>
+<li>城主・吉川経家は、城内の兵や住民の命を救うため、<strong>自らの命と引き換えに城を明け渡す</strong>ことを決意しました。</li>
+<li>秀吉は経家の申し出を受け入れ、<strong>経家は切腹</strong>、その代わりに城内の兵や住民の命は助けられました。</li>
+<li>この経家の行動は、武士としての名誉と城内の民を救う自己犠牲として後世に語られています。</li>
+</ul>
+<h3 id="5-鳥取城攻めの特徴と歴史的意義">5. 鳥取城攻めの特徴と歴史的意義</h3>
+<ul>
+<li><strong>兵糧攻めの典型例</strong><br>
+力攻めではなく、経済・補給を絶つことで敵を屈服させる戦い方の典型として、日本戦国史でしばしば取り上げられます。</li>
+<li><strong>秀吉の戦略的センスの高さを示す戦い</strong><br>
+兵力の消耗を抑えつつ、確実に城を落とした点で、秀吉の戦略眼の高さが評価されています。</li>
+<li><strong>中国攻めにおける重要な一歩</strong><br>
+鳥取城の攻略により、山陰の要衝を織田方（秀吉）が掌握し、その後の毛利氏との戦い（備中高松城攻めなど）へとつながっていきます。</li>
+</ul>
+<h2 id="背景">背景</h2>
+<p>鳥取城攻めが行われた<strong>経緯</strong>は、大きく次の流れで整理できます。</p>
+<h3 id="1-織田信長の天下統一と中国地方攻略">1. 織田信長の「天下統一」と中国地方攻略</h3>
+<p>中国攻めの発端などの序盤に関しての詳細は<a href="https://yoshishinnze.hatenablog.com/entry/2026/06/11/043000">この記事</a>をご覧ください。</p>
+<ul>
+<li>織田信長は、畿内をほぼ平定した後、<strong>西国平定</strong>を本格化させました。</li>
+<li>中国地方は、<strong>毛利氏</strong>が強大な勢力を築いており、織田政権にとって大きな障害でした。</li>
+<li>信長は、羽柴秀吉を中国方面軍の総司令官に任命し、<strong>「中国攻め」</strong> を開始させます。</li>
+</ul>
+<h3 id="2-毛利氏の防衛線と鳥取城の重要性">2. 毛利氏の防衛線と鳥取城の重要性</h3>
+<ul>
+<li>毛利氏は、山陽・山陰の要衝に城を築き、織田軍の西進を防ごうとしていました。</li>
+<li>山陰の要衝である<strong>鳥取城</strong>は、毛利氏にとって<strong>山陰の防衛拠点</strong>として極めて重要でした。
+<ul>
+<li>鳥取城を抑えれば、山陰一帯の支配が容易になります。</li>
+<li>逆に、鳥取城を失えば、毛利氏の山陰支配は大きく揺らぎます。</li>
+</ul>
+</li>
+<li>毛利氏は、鳥取城を重要視し、有力武将を送り込んで守備を固めていました。</li>
+</ul>
+<h3 id="3-秀吉の中国攻めと鳥取城攻略の位置づけ">3. 秀吉の中国攻めと鳥取城攻略の位置づけ</h3>
+<ul>
+<li>秀吉は、播磨（現在の兵庫県西部）を平定した後、<strong>但馬・因幡方面（山陰）</strong> へ進出します。</li>
+<li>山陰の拠点である鳥取城を落とせば、
+<ul>
+<li>毛利氏の山陰支配を分断できる</li>
+<li>山陽方面（備前・備中など）への進軍の背後を固められる</li>
+<li>毛利本拠地（安芸・周防）への圧力を強められる
+という戦略的メリットがありました。</li>
+</ul>
+</li>
+<li>そのため、秀吉は<strong>鳥取城攻略を中国攻めの重要作戦</strong>と位置づけました。</li>
+</ul>
+<h3 id="4-鳥取城の城主交代と守備強化">4. 鳥取城の城主交代と守備強化</h3>
+<ul>
+<li>当初、鳥取城は山名氏の支配下にありましたが、織田方に通じる動きもあり、毛利氏は警戒を強めます。</li>
+<li>毛利氏は、<strong>吉川経家</strong>を鳥取城の城主として派遣し、守備を強化しました。
+<ul>
+<li>吉川経家は、毛利家の重臣・吉川元春の一族で、信頼できる武将でした。</li>
+</ul>
+</li>
+<li>秀吉は、鳥取城が毛利方の重要拠点として本格的に固められる前に、<strong>攻略を急ぐ必要がある</strong>と判断しました。</li>
+</ul>
+<h3 id="5-秀吉の兵糧攻め作戦の立案と準備">5. 秀吉の「兵糧攻め」作戦の立案と準備</h3>
+<ul>
+<li>秀吉は、鳥取城を力攻めで落とそうとすると、多大な損耗を覚悟しなければならないと考えました。</li>
+<li>そこで、<strong>兵糧を絶って城内を飢えさせる</strong>という「兵糧攻め」を徹底する方針を立てます。</li>
+<li>具体的な準備として：
+<ul>
+<li>開戦の1年以上前から、周辺地域の米を<strong>大量に買い占め</strong>させ、鳥取城に兵糧が入らないようにしました。</li>
+<li>城下の村々を焼き払い、住民を城内に追い込むことで、<strong>城内の人口を増やし、食糧消費を加速</strong>させました。</li>
+<li>鳥取城を完全に包囲し、外部からの補給路を遮断しました。</li>
+</ul>
+</li>
+</ul>
+<h2 id="吉川経家とは">吉川経家とは</h2>
+<p>毛利から山名の本拠・鳥取城に派遣された吉川経家とはどんな人物だったのでしょう。
+吉川経家の<strong>毛利家での実績</strong>と<strong>戦闘指揮能力</strong>について、史料に残る範囲で整理すると、以下のような特徴が挙げられます。</p>
+<h3 id="1-毛利家での立場と経歴">1. 毛利家での立場と経歴</h3>
+<ul>
+<li>吉川経家は、<strong>毛利家の家臣・吉川経安の嫡男</strong>として生まれ、毛利元就・毛利輝元に仕えた武将です<a href="https://dic.pixiv.net/a/%E5%90%89%E5%B7%9D%E7%B5%8C%E5%AE%B6">pixiv百科事典</a>。</li>
+<li>家系としては<strong>安芸の名族・吉川家の血筋</strong>を引く人物で、名門としての評価は高かったとされます<a href="https://www.kk-bestsellers.com/articles/-/708">KKベストセラーズ</a>。</li>
+<li>一方で、当時の吉川家当主・吉川元春は毛利家から養子に入った人物であり、経家とは血縁がありませんでした。そのため、経家は「吉川家を乗っ取った元春」に対して複雑な感情を持っていた可能性もあり、<strong>「微妙な立場の代理城主」</strong> と評されることもあります<a href="https://www.kk-bestsellers.com/articles/-/708">KKベストセラーズ</a>。</li>
+</ul>
+<h3 id="2-若年期の武勇と実績">2. 若年期の武勇と実績</h3>
+<ul>
+<li>永禄4年（1561年）、経家は<strong>15歳の若さ</strong>で、尼子氏に寝返った福屋隆兼らの大軍を撃退する戦功を挙げたと伝えられています<a href="https://dic.pixiv.net/a/%E5%90%89%E5%B7%9D%E7%B5%8C%E5%AE%B6">pixiv百科事典</a>。</li>
+<li>この戦いでの活躍により、<strong>「武勇は中国地方に轟いた」</strong> と評されるほど、若くして武名を上げたとされています<a href="https://dic.pixiv.net/a/%E5%90%89%E5%B7%9D%E7%B5%8C%E5%AE%B6">pixiv百科事典</a>。</li>
+<li>こうした若年期の戦功から、<strong>武勇に優れた将</strong>として毛利家中で一定の評価を受けていたことがうかがえます。</li>
+</ul>
+<h3 id="3-鳥取城以前の戦歴役割">3. 鳥取城以前の戦歴・役割</h3>
+<ul>
+<li>鳥取城以前の具体的な戦歴については、史料が限られており、詳細な戦闘指揮の記録は多く残っていません。</li>
+<li>しかし、<strong>名門吉川家の血筋であり、若年期に武勇を認められた武将</strong>として、毛利家（特に吉川元春）から一定の信頼を得ていたと考えられます<a href="https://www.kk-bestsellers.com/articles/-/708">KKベストセラーズ</a>。</li>
+<li>鳥取城への派遣は、山名豊国が追放され、後任の牛尾春重が負傷したという<strong>緊急事態</strong>を受けてのものであり、<strong>「代理城主」としての能力・信頼性が認められていた</strong>ことを示しています<a href="https://dic.pixiv.net/a/%E5%90%89%E5%B7%9D%E7%B5%8C%E5%AE%B6">pixiv百科事典</a>。</li>
+</ul>
+<h3 id="4-鳥取城籠城戦での指揮能力">4. 鳥取城籠城戦での指揮能力</h3>
+<p><strong>指揮官としての評価</strong></p>
+<ul>
+<li>鳥取城では、羽柴秀吉による<strong>徹底した兵糧攻め（鳥取の飢え殺し）</strong> に直面し、約4か月にわたる籠城戦を指揮しました<a href="https://dic.pixiv.net/a/%E5%90%89%E5%B7%9D%E7%B5%8C%E5%AE%B6">pixiv百科事典</a>。</li>
+<li>城内では、前城主・山名豊国の家老である<strong>森下道誉・中村春続</strong>らと反りが合わず、結束力に欠ける苦境に立たされました<a href="https://dic.pixiv.net/a/%E5%90%89%E5%B7%9D%E7%B5%8C%E5%AE%B6">pixiv百科事典</a>。
+<ul>
+<li>これは、経家が <strong>「外部から派遣された代理城主」</strong> であり、地元の家臣団との統制に苦労したことを示しています。</li>
+</ul>
+</li>
+<li>それでも、極限状態の籠城戦を続け、秀吉軍に対して一定期間持ちこたえたことから、<strong>籠城戦の指揮能力自体は一定の水準にあった</strong>と評価できます。</li>
+</ul>
+<p><strong>敵方からの評価</strong></p>
+<ul>
+<li>秀吉は経家の奮戦ぶりを評価し、<strong>「経家は帰還させてもよい」</strong> と助命を申し出たと伝えられています<a href="https://dic.pixiv.net/a/%E5%90%89%E5%B7%9D%E7%B5%8C%E5%AE%B6">pixiv百科事典</a>。</li>
+<li>これは、敵将から見ても不憫と映っていた可能性があるかもしれません。秀吉からは頑張っても力を発揮できない状況に置かれた部将と見えていたかもしれません。</li>
+</ul>
+<h2 id="鳥取城の規模">鳥取城の規模</h2>
+<p>鳥取城は、<strong>戦国時代から江戸時代にかけて、山陰地方を代表する大規模な城郭</strong>でした。<br>
+当時の城の規模としては、<strong>中規模～大規模クラス</strong>に属し、特に山陰地方では<strong>最重要級の城</strong>と言えます。</p>
+<h3 id="1-鳥取城の物理的な規模">1. 鳥取城の物理的な規模</h3>
+<p><strong>城地の広さ</strong></p>
+<ul>
+<li>鳥取城の城地は、<strong>東西約500m、南北約1100m</strong>、面積は<strong>約47ヘクタール</strong>とされています<a href="https://ja.wikipedia.org/wiki/%E9%B3%A5%E5%8F%96%E5%9F%8E">鳥取城 - Wikipedia</a>。</li>
+<li>これは、<strong>久松山（標高263m）の山全体を利用した山城部分</strong>と、<strong>山麓に広がる近世城郭部分</strong>を合わせた広さです<a href="https://www.tabi-samurai-japan.com/area/chugoku/tottori/tottori">日本の旅侍</a>。</li>
+</ul>
+<p><strong>城郭の構成</strong></p>
+<ul>
+<li>戦国時代：久松山の自然地形を利用した**山城（山上ノ丸）**が中心で、防御重視の縄張りでした。</li>
+<li>江戸時代：池田氏の時代に<strong>山麓の二の丸・三の丸などが拡張</strong>され、**近世城郭としての機能（行政・居住）**が強化されました<a href="https://news.yahoo.co.jp/articles/5550171c47fe0a863a6d1b0cd3a7f658a4d6df47">Yahoo!ニュース</a>。</li>
+</ul>
+<h3 id="2-当時の城としての位置づけ">2. 当時の城としての位置づけ</h3>
+<p><strong>全国的な規模感</strong></p>
+<ul>
+<li>47haという面積は、<strong>全国的に見ても中規模～大規模クラス</strong>の城郭です。
+<ul>
+<li>例：姫路城（約23ha）、松本城（約39ha）などと比較すると、<strong>やや大きめ～同程度</strong>の規模感です。</li>
+</ul>
+</li>
+<li>特に<strong>山陰地方</strong>では、これだけの広さと堅固な縄張りを持つ城は少なく、<strong>地域の要衝として突出した規模</strong>でした。</li>
+</ul>
+<p><strong>戦国時代の鳥取城の役割</strong></p>
+<ul>
+<li>因幡国の中心に位置し、<strong>山名氏・武田氏・尼子氏・毛利氏・織田氏</strong>が争奪戦を繰り返した舞台でした<a href="https://ja.wikipedia.org/wiki/%E9%B3%A5%E5%8F%96%E5%9F%8E">鳥取城 - Wikipedia</a>。</li>
+<li>山陰地方の支配を左右する<strong>戦略上の最重要拠点</strong>であり、その規模もそれに見合ったものとなっています。</li>
+</ul>
+<h3 id="3-規模のイメージ比較">3. 規模のイメージ（比較）</h3>
+<ul>
+<li><strong>面積約47ha</strong>とは、<strong>東京ドーム約10個分</strong>に相当する広さです。</li>
+<li>山頂の山上ノ丸から山麓の二の丸・三の丸まで、<strong>高低差を活かした縄張り</strong>が展開され、防御力と居住・行政機能を兼ね備えていました。</li>
+<li>江戸時代には、<strong>鳥取藩32万石の居城</strong>として整備され、その石高に見合う<strong>大藩の城</strong>としての規模を持っていました<a href="https://news.yahoo.co.jp/articles/5550171c47fe0a863a6d1b0cd3a7f658a4d6df47">Yahoo!ニュース</a>。</li>
+</ul>
+<h2 id="戦闘の展開">戦闘の展開</h2>
+<p>鳥取城攻め（天正9年・1581年）は、<strong>秀吉軍による徹底した兵糧攻め</strong>と、<strong>毛利軍が救援に動いたものの、最終的には城を救えなかった</strong>という構図で展開しました。<br>
+以下、時系列で整理します。</p>
+<h3 id="1-開戦前の状況1581年春まで">1. 開戦前の状況（1581年春まで）</h3>
+<p><strong>秀吉軍</strong></p>
+<p>戦闘が表面化する前に、鳥取攻めのイメージを持っていた。
+結果周到な戦闘準備を行った上で作戦が実行されることになりました。</p>
+<ul>
+<li>羽柴秀吉は、織田信長の命による<strong>中国攻め</strong>の一環として、播磨平定後に<strong>但馬・因幡方面（山陰）</strong> へ進出。</li>
+<li>鳥取城は山陰の要衝であり、ここを落とせば毛利氏の山陰支配を分断できるため、<strong>攻略の最重要目標</strong>と位置づけ。</li>
+<li>秀吉は、<strong>兵糧攻め</strong>を前提に、<strong>事前の米買い占め</strong>や城下の村々の焼き払いなど、周到な準備を進めます<a href="https://manareki.com/tottori-mizuzeme">まなれき</a>。</li>
+</ul>
+<p><strong>毛利軍</strong></p>
+<p>対する毛利は後手に回った可能性があります。
+吉川経家は鳥取城に入城した後に兵糧の備蓄が少ないことに驚いたとのことのようです。</p>
+<ul>
+<li>毛利氏は、山陰の要衝である鳥取城を<strong>重要拠点</strong>として重視。</li>
+<li>前城主・山名豊国が織田方に通じた疑いで追放され、後任の牛尾春重が負傷したため、<strong>吉川経家</strong>を城代として派遣<a href="https://dic.pixiv.net/a/%E5%90%89%E5%B7%9D%E7%B5%8C%E5%AE%B6">pixiv百科事典</a>。</li>
+<li>毛利家の山陰方面総大将・<strong>吉川元春</strong>は、鳥取城の防衛強化と救援体制の準備を進めます。</li>
+</ul>
+<h3 id="2-1581年7月秀吉軍による包囲開始">2. 1581年7月：秀吉軍による包囲開始</h3>
+<p>鳥取城に侵攻した秀吉軍はすぐに防衛を前提とした陣地構築を開始します。
+毛利は救援に躍起になる展開となりました。</p>
+<p><strong>秀吉軍の動き</strong></p>
+<ul>
+<li>天正9年7月、秀吉は<strong>鳥取城を完全包囲</strong>します。</li>
+<li>城の周囲に<strong>深さ約8メートル、全長約12kmの空堀</strong>を築き、塀・柵・櫓を幾重にも設けて、<strong>外部からの補給を完全に遮断</strong>しました<a href="https://ja.wikipedia.org/wiki/%E4%B8%AD%E5%9B%BD%E6%94%BB%E3%82%81">中国攻め - Wikipedia</a>。</li>
+<li>夜間も監視を怠らず、<strong>兵糧攻め（鳥取の渇え殺し）</strong> を本格化させます<a href="https://manareki.com/tottori-mizuzeme">まなれき</a>。</li>
+</ul>
+<p><strong>毛利軍の動き</strong></p>
+<ul>
+<li>吉川元春らは、鳥取城救援のため<strong>山陰方面から軍を進めようとします</strong>が、秀吉の包囲網は堅固で、<strong>城に近づくことが困難</strong>でした。</li>
+<li>毛利軍は、鳥取城周辺で秀吉軍と小規模な戦闘を繰り返すものの、<strong>包囲を破る決定打には至りません</strong>。</li>
+</ul>
+<h3 id="3-1581年8月9月籠城の長期化と飢餓の深刻化">3. 1581年8月～9月：籠城の長期化と飢餓の深刻化</h3>
+<p>包囲の1カ月経過で城に餓死が出始めます。
+この間に行った戦闘は毛利が防衛陣に対する攻撃を行った程度で、大規模戦にはなりません。</p>
+<p><strong>秀吉軍の動き</strong></p>
+<ul>
+<li>秀吉は包囲を継続し、<strong>外部からの補給路を完全に断ち切ります</strong>。</li>
+<li>事前の米買い占めにより、鳥取城への兵糧流入はほぼ不可能となっていました<a href="https://manareki.com/tottori-mizuzeme">まなれき</a>。</li>
+<li>秀吉は、<strong>心理戦</strong>も用い、城内の士気低下を狙います。</li>
+</ul>
+<p><strong>毛利軍の動き</strong></p>
+<ul>
+<li>吉川元春・小早川隆景らは、<strong>鳥取城救援の軍勢を集結</strong>させますが、秀吉軍の陣地は堅固で、<strong>正面突破は困難</strong>。</li>
+<li>毛利軍は、包囲網の弱点を探るなど試みますが、<strong>大規模な救援戦は成功せず</strong>、鳥取城は孤立したままとなります。</li>
+</ul>
+<p><strong>鳥取城内の状況</strong></p>
+<ul>
+<li>兵糧が尽き、<strong>餓死者が続出</strong>します。</li>
+<li>人肉を食べるという記録が残るほど、飢餓が深刻化<a href="https://dic.pixiv.net/a/%E5%90%89%E5%B7%9D%E7%B5%8C%E5%AE%B6">pixiv百科事典</a>。</li>
+<li>城主・吉川経家は、前城主の家老・森下道誉・中村春続らと不和もあり、<strong>結束力に欠ける苦境</strong>に立たされます<a href="https://dic.pixiv.net/a/%E5%90%89%E5%B7%9D%E7%B5%8C%E5%AE%B6">pixiv百科事典</a>。</li>
+</ul>
+<h3 id="4-1581年10月経家の降伏決断と開城">4. 1581年10月：経家の降伏決断と開城</h3>
+<p><strong>秀吉軍の動き</strong></p>
+<ul>
+<li>秀吉は、城内の惨状を見て、<strong>経家の奮戦ぶりを評価</strong>し、<strong>「経家は帰還させてもよい」</strong> と助命を申し出ます<a href="https://dic.pixiv.net/a/%E5%90%89%E5%B7%9D%E7%B5%8C%E5%AE%B6">pixiv百科事典</a>。</li>
+<li>しかし、経家はこれを固辞し、<strong>自らの命と引き換えに城兵と領民の助命</strong>を要求。</li>
+</ul>
+<p><strong>毛利軍の動き</strong></p>
+<ul>
+<li>毛利軍は、依然として鳥取城救援を試みますが、<strong>包囲を破れず</strong>、城の開城を黙認せざるを得ません。</li>
+<li>吉川元春らは、経家の決断を尊重し、<strong>城兵の助命を条件に降伏を受け入れる</strong>形となります。</li>
+</ul>
+<p><strong>経家の切腹と開城</strong></p>
+<ul>
+<li>天正9年10月25日、吉川経家は<strong>切腹</strong>し、鳥取城は開城<a href="https://dic.pixiv.net/a/%E5%90%89%E5%B7%9D%E7%B5%8C%E5%AE%B6">pixiv百科事典</a>。</li>
+<li>秀吉は、経家の武勇を惜しみつつも、<strong>城兵と領民の命は助ける</strong>という条件で城を接収します。</li>
+</ul>
+<h3 id="5-戦後の影響">5. 戦後の影響</h3>
+<p><strong>秀吉軍</strong></p>
+<ul>
+<li>鳥取城の攻略により、<strong>山陰の要衝を掌握</strong>し、中国攻めにおける大きな前進を果たします。</li>
+<li>この勝利を足がかりに、翌年の<strong>備中高松城攻め</strong>へと進み、中国地方での優位を確立していきます<a href="https://ja.wikipedia.org/wiki/%E4%B8%AD%E5%9B%BD%E6%94%BB%E3%82%81">中国攻め - Wikipedia</a>。</li>
+</ul>
+<p><strong>毛利軍</strong></p>
+<ul>
+<li>鳥取城の喪失により、<strong>山陰支配の拠点を失い</strong>、織田方（秀吉）への後退を余儀なくされます。</li>
+<li>吉川経家の死は、毛利家中でも大きな衝撃となり、<strong>山陰防衛の弱体化</strong>を招きます。</li>
+</ul>
+<h3 id="時系列の流れ">時系列の流れ</h3>
+<ol>
+<li><strong>1581年春まで</strong>：秀吉が兵糧攻めの準備、毛利が吉川経家を鳥取城代に派遣。</li>
+<li><strong>1581年7月</strong>：秀吉軍が鳥取城を完全包囲し、兵糧攻めを開始。</li>
+<li><strong>1581年8月～9月</strong>：毛利軍が救援を試みるも包囲を破れず、城内は飢餓地獄に。</li>
+<li><strong>1581年10月25日</strong>：吉川経家が切腹し、鳥取城開城。</li>
+<li><strong>戦後</strong>：秀吉は山陰を掌握し、毛利は山陰防衛の拠点を失う。</li>
+</ol>
+<p>このように、鳥取城攻めは<strong>秀吉軍の徹底した兵糧攻め</strong>と、<strong>毛利軍の救援失敗</strong>が重なって展開した、約4か月にわたる苛烈な籠城戦でした。
+先述の通り、鳥取城自体は山陰地方では指折りの城郭を持ちます。4ヶ月で攻略したこと自体が快勝したとして良いと思います。</p>
+<h2 id="総括">総括</h2>
+<p>鳥取城攻めは軍司令官として習熟してきていた秀吉が行った周到な作戦計画のもとに行われた攻城戦だったといえると思います。
+作戦前から鳥取城は秀吉軍が使った商人により、兵糧の買い上げと、周辺村落の焼き払いにより、鳥取城の城員の増加を行い、短期間で兵糧が減少するようにされていました。
+更には毛利の援軍を防御すれば、城は勝手に落ちると、確度の高い勝利条件を定義の上で、包囲後すぐに防衛陣を構築し、毛利の侵攻を想定通りに防御しました。</p>
+<p>毛利はなす術なく鳥取城を失ったことになります。
+この戦いは秀吉が戦闘の司令官としての能力が高いということを示す十分な根拠になります。
+これ以降の戦いも秀吉は戦略家として、より習熟していくことになります。</p>
+<p>本日の鳥取城攻めの詳細は以下の本が非常にわかりやすいです。
+それ以外にも秀吉のエピソード満載で夢中になる本でした。</p>
+<div class="shop-card">
+    <div class="shop-card-image">
+        <img src="https://m.media-amazon.com/images/I/912HIJbErnL._SL1500_.jpg" alt="商品画像">
+    </div>
+    <div class="shop-card-content">
+        <div class="shop-card-title">図説 豊臣秀吉</div>
+        <div class="shop-card-description">天下人にのぼりつめた激動の生涯を最新の研究成果をもとに解明。出世話の実像、凄惨をきわめた城攻めの様相、全国統一から東アジアに目を向けたもくろみなど、いまもっとも新しい秀吉像を提示します。 さらに、古文書・城郭などの写真や地図・系図をあわせて約200点の図版も掲載。</div>
+        <div class="shop-card-link">
+            <a href="https://www.amazon.co.jp/%E5%9B%B3%E8%AA%AC-%E8%B1%8A%E8%87%A3%E7%A7%80%E5%90%89-%E3%80%90%E3%82%AA%E3%83%BC%E3%83%AB%E3%82%AB%E3%83%A9%E3%83%BC%E3%80%91-%E6%9F%B4%E8%A3%95%E4%B9%8B/dp/4864033552?__mk_ja_JP=%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A&crid=3N11948WLRDDL&dib=eyJ2IjoiMSJ9.PJHRUVTlF8K_hePbEGSb2kHVlZg7v-3J_O_6QTReYn3iuPE0V5g28EeiQFMclDXIsW6vAijPWUh1SzXp21pFyUtepEwPqXfd5EMBh3ob8L2DJ5JPPFDCD-G_PutYtpc25z2jO_pYupN6sM5Dgvi5TNgRLw1vSlGWPukKiKpbIXo9x795FncDViQVAITNPkoB-8BMcQa7sMsE7VqloKOaUhVpuwR4-g3Pa-6MAMFrzbiFBqp7xH3Z87cnTOjFWGxNifBi52Yf4k4raJBlGAhZhFQGw7f26r7rzdoVpwaRYQw.pLh-vEQgIEg5tINVAgds2PJ2-fHPlbUh0nSEtq-pjK0&dib_tag=se&keywords=%E7%A7%80%E5%90%89&qid=1782522213&sprefix=%E7%A7%80%E5%90%89%2Caps%2C176&sr=8-2-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&psc=1&linkCode=ll2&tag=yoshishinnze-22&linkId=3b02b2ccd544e6ecf0a33580e853db1b&ref_=as_li_ss_tl" target="_blank" rel="noopener">Amazonで詳細を見る</a>
+        </div>
+    </div>
+</div>
+
+ 
+<div style="width: 1px; height: 1px; overflow: hidden; opacity: 0; position: absolute;">
+  <iframe id="bgm-player" width="100" height="100" 
+  src="https://www.youtube.com/embed/hHC-8jTWOhA?enablejsapi=1" 
+  title="BGM Player" frameborder="0" allow="autoplay">
+  </iframe>
+</div>
+
+
+
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+  document.getElementById('bgm-trigger').addEventListener('click', function() {
+    var iframe = document.getElementById('bgm-player');
+    
+    // すでに再生中の場合は一時停止、停止中の場合は再生するトグル処理
+    if (this.innerText.includes('再生')) {
+      // JavaScript API経由で再生コマンドを送信
+      iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+      this.innerText = '⏸ BGMを停止する';
+      this.style.backgroundColor = '#f44336'; // ボタンの色を赤系に
+    } else {
+      iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+      this.innerText = '🎵 BGMを再生する';
+      this.style.backgroundColor = '#008cba'; // ボタンの色を青系に
+    }
+  });
+</script>
+            
+        </body>
+        </html>
