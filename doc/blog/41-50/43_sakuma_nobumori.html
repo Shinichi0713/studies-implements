@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&#x6982;&#x8981;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+/* 目次全体のコンテナ */
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+
+/* 記事タイトル (h1) */
+h1 {
+    font-size: 2rem;
+    color: #24292f;
+    line-height: 1.3;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 3px double #e1e4e8; /* 二重線で上品に */
+    text-align: center; /* タイトルを中央に寄せて特別感を出す */
+}
+
+/* セクション見出し (h2) */
+h2 {
+    font-size: 1.5rem;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(transparent 70%, #e8f0fe 70%); /* 下側に薄い色のアクセント */
+    border-left: 6px solid #0969da; /* 目次のテーマカラーと合わせる */
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* 強調文字 (strong) */
+strong {
+    font-weight: bold;
+    color: #cf222e; /* ホバー時の赤色と合わせて統一感を出す */
+    background: linear-gradient(transparent 60%, #fff2cc 60%); /* 黄色のマーカー風 */
+    padding: 0 2px;
+}
+
+/* 引用のコンテナ */
+blockquote {
+    position: relative;
+    padding: 20px 30px;
+    margin: 30px 0;
+    background-color: #f6f8fa; /* 目次の背景より少しだけ濃いグレー */
+    border-left: 5px solid #d0d7de; /* 落ち着いたグレーの境界線 */
+    color: #57606a; /* 文字色は少し薄くして引用らしさを出す */
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 引用符のアイコンを装飾として追加 */
+blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    font-size: 40px;
+    color: #d0d7de;
+    font-family: serif;
+    line-height: 1;
+}
+
+/* 読者になるボタンのデザイン */
+.btn-subscribe {
+    display: inline-block;
+    padding: 12px 35px; /* 横幅を広めにとって存在感を出します */
+    background-color: #383838; /* お好みの色に変更してください */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #555555;
+    text-decoration: none;
+}
+
+/* はてなブログで見えてしまう数式データを非表示にする */
+.katex-html {
+    display: none !important;
+}
+
+.katex-mathml {
+    display: inline !important;
+}
+/* Amazonカード型のオシャレなデザイン */
+.shop-card {
+    display: flex;
+    max-width: 500px;
+    margin: 20px auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* マウスホップした時の動き */
+.shop-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.shop-card-image {
+    width: 150px;
+    min-width: 150px;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shop-card-image img {
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+}
+
+.shop-card-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.shop-card-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.shop-card-description {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+/* Amazonらしいオレンジボタン */
+.shop-card-link a {
+    display: inline-block;
+    background-color: #ff9900;
+    color: #fff !important;
+    text-decoration: none !important;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.shop-card-link a:hover {
+    background-color: #e68a00;
+}
+
+/* スマホ対応：縦並びにする */
+@media (max-width: 480px) {
+    .shop-card {
+        flex-direction: column;
+        max-width: 100%;
+    }
+    .shop-card-image {
+        width: 100%;
+        height: 200px;
+    }
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+            <span id="markdown-mermaid" aria-hidden="true" data-config="{&quot;darkModeTheme&quot;:&quot;vscode&quot;,&quot;lightModeTheme&quot;:&quot;vscode&quot;,&quot;maxTextSize&quot;:50000,&quot;clickDrag&quot;:&quot;alt&quot;,&quot;showControls&quot;:&quot;onHoverOrFocus&quot;,&quot;resizable&quot;:true,&quot;maxHeight&quot;:&quot;&quot;}"></span>
+				<p>戦国の織田家は尾張から勢力が拡大したこともあり、譜代と外様・新参が入り乱れていました。</p>
+<p>外様・新参層（勢力拡大に伴って取り込まれた家臣）の内訳はこんなところでしょうか。</p>
+<ul>
+<li>美濃平定後：斎藤家旧臣（稲葉一鉄、氏家卜全、安藤守就 など）</li>
+<li>上洛後：近江・畿内・北陸・中国地方の国衆（六角・浅井・朝倉・三好・本願寺周辺の国人など）</li>
+<li>他勢力からの転属・降伏組：滝川一益、明智光秀、羽柴秀吉など</li>
+</ul>
+<p>そして、譜代組は親以前の代から織田に仕官していた家臣です。</p>
+<p>柴田勝家、丹羽長秀、林秀貞・・・
+そして、本日話する佐久間信盛です。</p>
+<p>本日テーマ：</p>
+<blockquote>
+<p>織田譜代の家臣・佐久間信盛とはどんな人物か調べてみました。</p>
+</blockquote>
+
+<button id="bgm-trigger" style="padding: 10px 20px; font-size: 16px; background-color: #008cba; color: white; border: none; border-radius: 5px; cursor: pointer;">
+  🎵 BGMを再生する
+</button>
+
+<h2 id="概要">概要</h2>
+<p>佐久間信盛（さくま・のぶもり、1528年頃〜1582年）は、戦国時代から安土桃山時代にかけて織田信長に仕えた<strong>筆頭家老級の重臣</strong>です。</p>
+<img src="https://image.dailynewsonline.jp/media/c/0/c0b70caa690e0e2ce62332642b947e537d0b1f9a_w=666_hs=933d12256f2ce33cf851ff344eb31abd.png" >
+<h3 id="出自と織田家での立場">出自と織田家での立場</h3>
+<ul>
+<li>尾張国（現在の愛知県西部）の<strong>尾張佐久間氏</strong>の当主で、父は佐久間信晴とされます<a href="https://ja.wikipedia.org/wiki/%E4%BD%90%E4%B9%85%E9%96%93%E4%BF%A1%E7%9B%9B">Wikipedia</a>。</li>
+<li>信長の父・織田信秀の代から織田家に仕え、信長が若い頃から側近として支え、<strong>宿老（家臣団のトップ）</strong> として家中をまとめる立場にありました<a href="https://ja.wikipedia.org/wiki/%E4%BD%90%E4%B9%85%E9%96%93%E4%BF%A1%E7%9B%9B">Wikipedia</a>。</li>
+</ul>
+<h3 id="戦場での役割と評価">戦場での役割と評価</h3>
+<ul>
+<li>戦では <strong>「退き佐久間（しりがりさくま）」</strong> と呼ばれ、撤退戦の <strong>殿（しんがり）</strong> を得意としたとされます<a href="https://ja.wikipedia.org/wiki/%E4%BD%90%E4%B9%85%E9%96%93%E4%BF%A1%E7%9B%9B">Wikipedia</a>。</li>
+<li>観音寺城の戦い、長篠の戦いなど多くの合戦に参加し、戦功も挙げています。</li>
+<li>一方で、<strong>三方ヶ原の戦い</strong>では徳川家康の援軍として出陣しながら消極的で敗走したとされ、朝倉攻め後の追撃失敗の際には信長に口答えして怒りを買うなど、評価が分かれる場面もありました<a href="https://ja.wikipedia.org/wiki/%E4%BD%90%E4%B9%85%E9%96%93%E4%BF%A1%E7%9B%9B">Wikipedia</a>。</li>
+</ul>
+<h3 id="追放の経緯と理由">追放の経緯と理由</h3>
+<ul>
+<li>天正8年（1580年）、石山本願寺との<strong>石山合戦</strong>が長引く中、本願寺との和睦直後に信長から<strong>19ヶ条にわたる折檻状</strong>を突きつけられ、追放されます<a href="https://ja.wikipedia.org/wiki/%E4%BD%90%E4%B9%85%E9%96%93%E4%BF%A1%E7%9B%9B">Wikipedia</a>。</li>
+<li>主な理由は、
+<ul>
+<li>5年以上にわたる石山本願寺攻めで目立った成果を上げなかったこと</li>
+<li>与力を使いこなさず、自前の家臣を増やさなかった怠慢</li>
+<li>不当な蓄財</li>
+<li>過去の失態（三方ヶ原や朝倉戦での対応）
+などとされています<a href="https://ja.wikipedia.org/wiki/%E4%BD%90%E4%B9%85%E9%96%93%E4%BF%A1%E7%9B%9B">Wikipedia</a>。</li>
+</ul>
+</li>
+</ul>
+<h3 id="最期">最期</h3>
+<ul>
+<li>追放後は<strong>高野山</strong>へ送られ、その後、紀伊国熊野（あるいは高野山）で<strong>天正10年（1582年）に病死</strong>したと伝えられています<a href="https://ja.wikipedia.org/wiki/%E4%BD%90%E4%B9%85%E9%96%93%E4%BF%A1%E7%9B%9B">Wikipedia</a>。</li>
+</ul>
+<h2 id="生い立ち">生い立ち</h2>
+<p>佐久間信盛の生い立ちについて、現存する史料は多くありませんが、おおよそ次のように伝えられています。</p>
+<h3 id="1-出生地と家柄">1. 出生地と家柄</h3>
+<p>佐久間信盛は、<strong>尾張国愛知郡山崎（現在の愛知県名古屋市南区）</strong> で生まれたとされています。</p>
+<blockquote>
+<p>「佐久間信盛は尾張国（現在の愛知県西部）の愛知郡山崎（現在の名古屋市南区）にて誕生」<br>
+（刀剣ワールド「佐久間信盛の歴史」）<a href="https://www.touken-world.jp/tips/97902">刀剣ワールド</a></p>
+</blockquote>
+<p>また、佐久間氏は尾張の<strong>名門武家</strong>で、信盛はその<strong>宗家の嫡男</strong>とされています。</p>
+<blockquote>
+<p>「佐久間信盛は、織田家の家中でも名門佐久間宗家の嫡男」<br>
+（刀剣ワールド「佐久間信盛の歴史」）<a href="https://www.touken-world.jp/tips/97902">刀剣ワールド</a></p>
+</blockquote>
+<p>Wikipediaでも、父は<strong>佐久間信晴</strong>とされ、尾張佐久間氏の当主であったことが記されています<a href="https://ja.wikipedia.org/wiki/%E4%BD%90%E4%B9%85%E9%96%93%E4%BF%A1%E7%9B%9B">Wikipedia</a>。</p>
+<h3 id="2-幼少期若年期">2. 幼少期〜若年期</h3>
+<p>信盛は幼い頃から織田家に仕え、<strong>若い織田信長を支える立場</strong>にあったとされます。</p>
+<blockquote>
+<p>「佐久間信盛は織田信長を幼いころからサポートし、戦いにおいても高い信頼を得ていた」<br>
+（刀剣ワールド「佐久間信盛の歴史」）<a href="https://www.touken-world.jp/tips/97902">刀剣ワールド</a></p>
+</blockquote>
+<p>Wikipediaでも、信秀の代から仕え、<strong>信長の幼少期に重臣として付けられた</strong>とされています<a href="https://ja.wikipedia.org/wiki/%E4%BD%90%E4%B9%85%E9%96%93%E4%BF%A1%E7%9B%9B">Wikipedia</a>。</p>
+<h3 id="3-織田家への仕官と家督争いでの立場">3. 織田家への仕官と家督争いでの立場</h3>
+<p>成長した信盛は、まず<strong>織田信秀（信長の父）に仕え</strong>、その後、信長の家臣として活躍します。</p>
+<blockquote>
+<p>「成長した佐久間信盛は織田信長の父『織田信秀』に仕え、のちに若き織田信長の重臣となります」<br>
+（刀剣ワールド「佐久間信盛の歴史」）<a href="https://www.touken-world.jp/tips/97902">刀剣ワールド</a></p>
+</blockquote>
+<p>信秀の死後、織田家では<strong>信長と弟・信勝（信勝）の家督争い</strong>が起きますが、信盛は<strong>一貫して信長側を支持</strong>しました。</p>
+<blockquote>
+<p>「織田信秀が42歳で急死。織田家中は騒然となり、うつけ者に織田家を任せて良いものかと家中が割れてしまいました。織田信長の弟『織田信勝』は品行方正で賢く評判も良かったため、織田信長派と織田信勝派に分かれて、争いが発生。しかし佐久間信盛は、一貫して織田信長に味方していました」<br>
+（刀剣ワールド「佐久間信盛の歴史」）<a href="https://www.touken-world.jp/tips/97902">刀剣ワールド</a></p>
+</blockquote>
+<p>この家督争いでの信長支持が、その後の<strong>筆頭家老級の地位</strong>につながったとされています<a href="https://ja.wikipedia.org/wiki/%E4%BD%90%E4%B9%85%E9%96%93%E4%BF%A1%E7%9B%9B">Wikipedia</a>。</p>
+<p>ここまでくると若き日の信長を支えた頼りになる家臣だったような気がしてきます。
+なんといっても、織田を継承した後に起こった弟との闘いは信長の劣勢でした。この劣勢時代から一貫して信長を支持していた訳です。</p>
+<h2 id="織田の勃興期">織田の勃興期</h2>
+<p>佐久間信盛は、<strong>桶狭間の戦い（1560年）から上洛（1568年）までの約8年間</strong>で、織田家の<strong>筆頭家老級</strong>として多くの戦功と実務を積み重ねています。主な実績を時系列でまとめます。</p>
+<h3 id="1-桶狭間の戦い1560年での役割">1. 桶狭間の戦い（1560年）での役割</h3>
+<p>桶狭間の戦いでは、信盛は<strong>善照寺砦の守備</strong>を担当し、今川方の重要拠点・鳴海城を封じる役割を担いました。</p>
+<blockquote>
+<p>「織田信長の名が一躍世に広まった『桶狭間の戦い』では、『今川義元』の重要拠点である鳴海城の攻略のために、善照寺砦の守備を担当」<br>
+（刀剣ワールド「佐久間信盛の歴史」）<a href="https://www.touken-world.jp/tips/97902">刀剣ワールド</a></p>
+</blockquote>
+<p>この戦いの後、信長から<strong>尾張国・鳴海城を拝領</strong>したとされ、以後は鳴海城主として織田家の東部防衛を担う立場になります<a href="https://www.touken-world.jp/tips/97902">刀剣ワールド</a>。</p>
+<h3 id="2-美濃攻略戦での活躍">2. 美濃攻略戦での活躍</h3>
+<p>尾張統一後、信長は美濃（斎藤氏）攻略に乗り出しますが、信盛もこの過程で戦功を挙げています。</p>
+<ul>
+<li>美濃攻略戦では、<strong>鳴海城を拠点としつつ美濃方面への出陣・攻略戦に参加</strong>したとされています<a href="https://www.touken-world.jp/tips/97902">刀剣ワールド</a>。</li>
+<li>美濃平定（1567年）後、信長は「天下布武」の印を用い、上洛に向けた体制を整えますが、その過程で信盛は<strong>宿老として家中を率いる立場</strong>にありました<a href="https://ja.wikipedia.org/wiki/%E4%BD%90%E4%B9%85%E9%96%93%E4%BF%A1%E7%9B%9B">Wikipedia</a>。</li>
+</ul>
+<h3 id="3-上洛1568年と近江六角氏との戦い">3. 上洛（1568年）と近江・六角氏との戦い</h3>
+<p>永禄11年（1568年）、信長は足利義昭を奉じて上洛します。この際、信盛は<strong>近江の六角氏との戦いで重要な役割</strong>を果たします。</p>
+<blockquote>
+<p>「1568年、『観音寺城の戦い』で六角義賢・義治父子との戦に参加。箕作城を攻略する」<br>
+（刀剣ワールド「佐久間信盛の歴史」）<a href="https://www.touken-world.jp/tips/97902">刀剣ワールド</a></p>
+</blockquote>
+<p>Wikipediaでも、<strong>観音寺城の戦い</strong>で戦功を挙げたことが記されています<a href="https://ja.wikipedia.org/wiki/%E4%BD%90%E4%B9%85%E9%96%93%E4%BF%A1%E7%9B%9B">Wikipedia</a>。</p>
+<h3 id="4-上洛後の京都での政務交渉役">4. 上洛後の京都での政務・交渉役</h3>
+<p>上洛後、信盛は<strong>京都での政務・治安維持・交渉役</strong>としても重きをなします。</p>
+<ul>
+<li>上洛直後、信長は<strong>丹羽長秀、明智光秀、木下（豊臣）秀吉、中川重政らとともに京都で政務を行う</strong>とされ、その中に信盛も含まれています<a href="https://www.touken-world.jp/tips/97902">刀剣ワールド</a>。</li>
+<li>また、<strong>松永久秀を織田氏に従属させる</strong>際にも、信盛が関与したとされています<a href="https://www.touken-world.jp/tips/97902">刀剣ワールド</a>。</li>
+</ul>
+<p>さらに、<strong>将軍・足利義昭との交渉役</strong>としても活躍します。</p>
+<blockquote>
+<p>「天正元年（1573年）4月、信長の名代として織田信広、細川藤孝と共に二条御所に派遣され、将軍・足利義昭と和睦の交渉を行った」<br>
+（Wikipedia「佐久間信盛」）<a href="https://ja.wikipedia.org/wiki/%E4%BD%90%E4%B9%85%E9%96%93%E4%BF%A1%E7%9B%9B">Wikipedia</a></p>
+</blockquote>
+<p>この時期、義昭と信長家臣との間で交わされた起請文では、<strong>義昭側の宛名に佐久間信盛・滝川一益・塙直政が挙げられ、信長側の発給者にも林秀貞・佐久間信盛・柴田勝家らが含まれる</strong>とされ、信盛が<strong>重臣中の重臣</strong>であったことが示されています<a href="https://ja.wikipedia.org/wiki/%E4%BD%90%E4%B9%85%E9%96%93%E4%BF%A1%E7%9B%9B">Wikipedia</a>。</p>
+<h2 id="織田包囲網以降">織田包囲網以降</h2>
+<p>「織田包囲網」が本格化する<strong>元亀元年（1570年）以降</strong>の佐久間信盛の活躍については以下のようになりました。
+少しずつ活躍が薄れているような気もしてきます。</p>
+<h3 id="1-姉川の戦い1570年と近江畿内での戦い">1. 姉川の戦い（1570年）と近江・畿内での戦い</h3>
+<ul>
+<li>元亀元年（1570年）、浅井・朝倉連合軍との<strong>姉川の戦い</strong>に参加し、織田軍の主力武将として戦功を挙げています<a href="https://www.touken-world.jp/tips/97902">刀剣ワールド</a>。</li>
+<li>同じ頃、<strong>近江国・永原城に入城</strong>し、六角氏や浅井・朝倉勢に対する前線基地の守備を担当しました<a href="https://www.touken-world.jp/tips/97902">刀剣ワールド</a>。</li>
+<li>また、<strong>野田城・福島城の戦い</strong>（三好三人衆との戦い）や<strong>志賀の陣</strong>（比叡山延暦寺に籠る浅井・朝倉勢との戦い）にも参加し、畿内平定の一翼を担っています<a href="https://www.touken-world.jp/tips/97902">刀剣ワールド</a>。</li>
+</ul>
+<h3 id="2-三方ヶ原の戦い1572年での評価">2. 三方ヶ原の戦い（1572年）での評価</h3>
+<ul>
+<li>元亀3年（1572年）、武田信玄の西上作戦に対し、信盛は<strong>徳川家康の援軍として三方ヶ原の戦い</strong>に参戦します。</li>
+<li>しかし、<strong>武田軍の前に大敗し、浜名湖まで潰走した</strong>とされ、この敗戦は信盛の軍事的評価に影を落としたとされています<a href="https://ja.wikipedia.org/wiki/%E4%BD%90%E4%B9%85%E9%96%93%E4%BF%A1%E7%9B%9B">Wikipedia</a>。</li>
+<li>また、一乗谷の戦い（朝倉攻め）後の追撃失敗の際には、<strong>信長に口答えして怒りを買う</strong>など、この時期から信長との間に微妙な確執が生じていたとされます<a href="https://ja.wikipedia.org/wiki/%E4%BD%90%E4%B9%85%E9%96%93%E4%BF%A1%E7%9B%9B">Wikipedia</a>。</li>
+</ul>
+<h3 id="3-長篠の戦い1575年での役割">3. 長篠の戦い（1575年）での役割</h3>
+<ul>
+<li>天正3年（1575年）の<strong>長篠の戦い</strong>では、信盛は<strong>滝川一益とともに鉄砲隊を指揮</strong>したとされています<a href="https://www.touken-world.jp/tips/97902">刀剣ワールド</a>。</li>
+<li>織田・徳川連合軍が武田勝頼軍を破ったこの戦いで、信盛は<strong>鉄砲戦術の運用面で一定の役割を果たした</strong>と評価されています。</li>
+</ul>
+<h3 id="4-石山本願寺攻め石山合戦と天王寺砦1576年以降">4. 石山本願寺攻め（石山合戦）と天王寺砦（1576年以降）</h3>
+<ul>
+<li>石山本願寺との<strong>石山合戦</strong>では、信盛は<strong>天王寺砦の城番</strong>として本願寺勢と対峙します。</li>
+<li>元亀元年（1570年）頃から本格化した石山合戦は長期化し、信盛は<strong>天王寺砦に5年間在城しながら目立った成果を挙げられなかった</strong>とされ、これが後の追放の大きな理由となります<a href="https://ja.wikipedia.org/wiki/%E4%BD%90%E4%B9%85%E9%96%93%E4%BF%A1%E7%9B%9B">Wikipedia</a>。</li>
+<li>1576年の<strong>天王寺の戦い</strong>では、本願寺勢に包囲された天王寺砦を救援するため、信長自らが小軍を率いて出陣し、信盛も<strong>松永久秀、細川藤孝らとともに先陣を務めた</strong>と記録されています<a href="https://ja.wikipedia.org/wiki/%E4%BD%90%E4%B9%85%E9%96%93%E4%BF%A1%E7%9B%9B">Wikipedia</a>。</li>
+<li>この戦いで織田軍は危うい戦況を挽回し、籠城衆を救援することに成功しましたが、その後も<strong>石山本願寺攻略は進まず、5年間の在城で目立った成果がなかった</strong>と、折檻状で厳しく指摘されています<a href="https://ja.wikipedia.org/wiki/%E4%BD%90%E4%B9%85%E9%96%93%E4%BF%A1%E7%9B%9B">Wikipedia</a>。</li>
+</ul>
+<h3 id="5-外交政務面での役割包囲網期">5. 外交・政務面での役割（包囲網期）</h3>
+<ul>
+<li>織田包囲網期には、<strong>将軍・足利義昭との交渉役</strong>としても活躍しました。</li>
+<li>天正元年（1573年）4月、信長の名代として<strong>織田信広、細川藤孝とともに二条御所に派遣され、義昭と和睦の交渉を行った</strong>と記録されています<a href="https://ja.wikipedia.org/wiki/%E4%BD%90%E4%B9%85%E9%96%93%E4%BF%A1%E7%9B%9B">Wikipedia</a>。</li>
+<li>また、義昭と信長家臣との間で交わされた起請文では、<strong>義昭側の宛名に佐久間信盛・滝川一益・塙直政が挙げられ、信長側の発給者にも林秀貞・佐久間信盛・柴田勝家らが含まれる</strong>など、信盛が<strong>重臣中の重臣</strong>として扱われていたことが示されています<a href="https://ja.wikipedia.org/wiki/%E4%BD%90%E4%B9%85%E9%96%93%E4%BF%A1%E7%9B%9B">Wikipedia</a>。</li>
+</ul>
+<p>ここまでで、戦場では目覚ましい、という活躍は少なくなったという印象です。
+特に近畿の軍団長として本願寺の戦いでは終始、積極的な攻勢が見られず、逆に立ち回りが上手だった本願寺に先手を取られることが多かったかもしれません。
+軍団長としての技量に違和感という感じでしょうか。</p>
+<p>但し、この時期であっても織田を代表する重臣だった、という立場は継続していたように見受けられます。</p>
+<h2 id="追放">追放</h2>
+<p>最終的に、佐久間信盛は<strong>織田信長から追放され、高野山へ送られたのち、紀伊国で病死した</strong>という結末をたどっています。</p>
+<h3 id="1-追放の経緯と理由">1. 追放の経緯と理由</h3>
+<ul>
+<li>天正8年（1580年）、石山本願寺との<strong>石山合戦が和睦で終結</strong>した直後、信長から<strong>19ヶ条にわたる折檻状</strong>を突きつけられ、<strong>織田家を離れる（追放）</strong> ことになりました<a href="https://ja.wikipedia.org/wiki/%E4%BD%90%E4%B9%85%E9%96%93%E4%BF%A1%E7%9B%9B">Wikipedia</a>。</li>
+<li>主な理由は、
+<ul>
+<li><strong>石山本願寺攻めで5年以上在城しながら目立った成果を挙げなかったこと</strong></li>
+<li>与力を使いこなさず、自前の家臣を増やさなかった<strong>怠慢</strong></li>
+<li><strong>不当な蓄財</strong></li>
+<li>過去の失態（三方ヶ原の敗走や朝倉攻め後の追撃失敗など）
+などとされています<a href="https://ja.wikipedia.org/wiki/%E4%BD%90%E4%B9%85%E9%96%93%E4%BF%A1%E7%9B%9B">Wikipedia</a>。</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-追放後の行き先と最期">2. 追放後の行き先と最期</h3>
+<ul>
+<li>追放後、信盛は<strong>高野山へ送られ</strong>、その後、<strong>紀伊国熊野（あるいは高野山）で病死</strong>したと伝えられています<a href="https://ja.wikipedia.org/wiki/%E4%BD%90%E4%B9%85%E9%96%93%E4%BF%A1%E7%9B%9B">Wikipedia</a>。</li>
+<li>没年は<strong>天正10年（1582年）</strong>、享年は<strong>55歳前後</strong>とされています<a href="https://ja.wikipedia.org/wiki/%E4%BD%90%E4%B9%85%E9%96%93%E4%BF%A1%E7%9B%9B">Wikipedia</a>。</li>
+<li>嫡男の<strong>佐久間信栄</strong>も父とともに追放され、信盛の死後、信長の死（本能寺の変）を経て赦免され、織田家に復帰したとされています<a href="https://ja.wikipedia.org/wiki/%E4%BD%90%E4%B9%85%E9%96%93%E4%BF%A1%E7%9B%9B">Wikipedia</a>。</li>
+</ul>
+<p>そこまですることあるか・・・。という気もしますが、結局追放されることになりました。
+吝嗇だったといわれています。
+この時期の織田の軍団長は秀吉、勝家、光秀、滝川一益などのメンツで、良い家臣を集めることに躍起になっている人物たちでした。
+比較すると信盛の家臣団は浅井政貞、山田勝盛、長谷川与次、和田定利・・・。どの人物も与力で、統治を任され、その地の国衆といった方々です。
+自分の軍団に優秀な人物を招いて、より良い仕事をする、という姿勢には欠けていたように映ります。</p>
+<h2 id="力量評価">力量評価</h2>
+<p>佐久間信盛の力量をまとめると、次のようになります。</p>
+<h3 id="1-軍事面">1. 軍事面</h3>
+<ul>
+<li><strong>長所</strong>
+<ul>
+<li>「退き佐久間」と呼ばれ、<strong>殿軍（しんがり）・守備戦の名手</strong>。</li>
+<li>桶狭間・観音寺城・長篠・天王寺の戦いなど、<strong>主要合戦で一定の戦功</strong>を挙げた<a href="https://ja.wikipedia.org/wiki/%E4%BD%90%E4%B9%85%E9%96%93%E4%BF%A1%E7%9B%9B">Wikipedia</a>。</li>
+</ul>
+</li>
+<li><strong>短所</strong>
+<ul>
+<li>三方ヶ原で大敗・潰走、朝倉戦後の追撃失敗など、<strong>大戦での消極性・失態</strong>が目立つ<a href="https://ja.wikipedia.org/wiki/%E4%BD%90%E4%B9%85%E9%96%93%E4%BF%A1%E7%9B%9B">Wikipedia</a>。</li>
+<li>石山本願寺攻めで<strong>5年在城しながら目立った成果なし</strong>と折檻状で批判される<a href="https://ja.wikipedia.org/wiki/%E4%BD%90%E4%B9%85%E9%96%93%E4%BF%A1%E7%9B%9B">Wikipedia</a>。</li>
+</ul>
+</li>
+</ul>
+<p><strong>評価</strong>：<strong>守りは強いが、攻め・大戦での突破力に欠ける</strong>。</p>
+<h3 id="2-政務外交面">2. 政務・外交面</h3>
+<ul>
+<li><strong>長所</strong>
+<ul>
+<li>上洛後、丹羽・明智・秀吉らと<strong>京都での政務・治安維持</strong>を担い、<strong>筆頭家老級の重臣</strong>として家中をまとめた<a href="https://www.touken-world.jp/tips/97902">刀剣ワールド</a>。</li>
+<li>将軍・足利義昭との<strong>和睦交渉の名代</strong>を務めるなど、<strong>外交・政務の要</strong>として活躍<a href="https://ja.wikipedia.org/wiki/%E4%BD%90%E4%B9%85%E9%96%93%E4%BF%A1%E7%9B%9B">Wikipedia</a>。</li>
+</ul>
+</li>
+</ul>
+<p><strong>評価</strong>：<strong>政務・外交では有能で、信長政権の屋台骨</strong>。</p>
+<h3 id="3-人的マネジメント">3. 人的マネジメント</h3>
+<ul>
+<li><strong>長所</strong>
+<ul>
+<li>三河・尾張・近江・大和・河内・和泉・紀伊など<strong>7ヶ国から与力を与えられ、最大規模の軍団</strong>を統率<a href="https://ja.wikipedia.org/wiki/%E4%BD%90%E4%B9%85%E9%96%93%E4%BF%A1%E7%9B%9B">Wikipedia</a>。</li>
+</ul>
+</li>
+<li><strong>短所</strong>
+<ul>
+<li>折檻状で「<strong>与力を使いこなさず、自前の家臣を増やさなかった怠慢</strong>」と指摘<a href="https://ja.wikipedia.org/wiki/%E4%BD%90%E4%B9%85%E9%96%93%E4%BF%A1%E7%9B%9B">Wikipedia</a>。</li>
+<li>秀吉・勝家・光秀らが<strong>精鋭家臣を育てた</strong>のに対し、<strong>与力依存で終始</strong>。</li>
+</ul>
+</li>
+</ul>
+<p><strong>評価</strong>：<strong>大軍団は維持できたが、攻めの組織づくりには弱かった</strong>。</p>
+<h3 id="4-性格信長との関係">4. 性格・信長との関係</h3>
+<ul>
+<li><strong>長所</strong>
+<ul>
+<li>信秀の代から仕え、<strong>若き信長を一貫して支持</strong>し、<strong>忠臣として30年以上筆頭家老</strong>を務めた<a href="https://www.touken-world.jp/tips/97902">刀剣ワールド</a>。</li>
+</ul>
+</li>
+<li><strong>短所</strong>
+<ul>
+<li>消極的な戦いぶり・吝嗇（蓄財）の噂が信長の不満を招く<a href="https://ja.wikipedia.org/wiki/%E4%BD%90%E4%B9%85%E9%96%93%E4%BF%A1%E7%9B%9B">Wikipedia</a>。</li>
+</ul>
+</li>
+</ul>
+<p><strong>評価</strong>：<strong>忠義は厚いが、成果主義の信長の前では評価が下がった</strong>。</p>
+<h3 id="5-総合評価一言">5. 総合評価（一言）</h3>
+<blockquote>
+<p><strong>「守りと政務に優れた織田家の屋台骨。しかし、攻めと組織改革に弱く、成果主義の信長の前で評価が急落した武将」</strong></p>
+</blockquote>
+<ul>
+<li><strong>創業期〜上洛期</strong>：信長を支える<strong>最重要の重臣</strong>。</li>
+<li><strong>天下統一期</strong>：秀吉・勝家・光秀らが台頭する中で<strong>軍団長としての限界が露呈</strong>し、折檻状で追放される<strong>栄枯盛衰の人生</strong>。</li>
+</ul>
+<p>織田の家臣の特徴を調べたい、となると色んな本が出ています。
+そんな中面白くまとまっていたのは以下です。
+織田は信長一代ではなく、父信秀から形成されていった経緯があります。
+そんな経緯を理解する上で良い本だと思いました。</p>
+<div class="shop-card">
+    <div class="shop-card-image">
+        <img src="https://m.media-amazon.com/images/I/81itIr05yVL._SL1500_.jpg" alt="商品画像">
+    </div>
+    <div class="shop-card-content">
+        <div class="shop-card-title">織田家臣団の系図</div>
+        <div class="shop-card-description">父・信秀時代、家督相続から本能寺の変まで、激動の戦国を駆け抜けた織田家臣団を地域別に徹底分析。羽柴秀吉・柴田勝家・明智光秀・荒木村重……天下統一を目指した組織の実態に迫る! 家系図多数掲載。</div>
+        <div class="shop-card-link">
+            <a href="https://www.amazon.co.jp/%E7%B9%94%E7%94%B0%E5%AE%B6%E8%87%A3%E5%9B%A3%E3%81%AE%E7%B3%BB%E5%9B%B3-%E8%A7%92%E5%B7%9D%E6%96%B0%E6%9B%B8-%E8%8F%8A%E5%9C%B0-%E6%B5%A9%E4%B9%8B/dp/4040823249?__mk_ja_JP=%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A&crid=2QIINSE1K6V6K&dib=eyJ2IjoiMSJ9.-24YrsQBjaVm8rgvJ6Owelqr1-LbDOGyBkiHH7C9uD8.oBzS0_BLyNGYkyWRaTkd1d6RHBYZdtu_q2GZAMWnPa4&dib_tag=se&keywords=%E7%B9%94%E7%94%B0%E5%AE%B6+%E5%AE%B6%E8%87%A3&qid=1782166292&sprefix=%E7%B9%94%E7%94%B0+%E5%AE%B6%E8%87%A3%2Caps%2C184&sr=8-3-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9tdGY&psc=1&linkCode=ll2&tag=yoshishinnze-22&linkId=7afa4c2bfa688c60492476186be5bb67&ref_=as_li_ss_tl" target="_blank" rel="noopener">Amazonで詳細を見る</a>
+        </div>
+    </div>
+</div>
+
+
+<div style="width: 1px; height: 1px; overflow: hidden; opacity: 0; position: absolute;">
+  <iframe id="bgm-player" width="100" height="100" 
+  src="https://www.youtube.com/embed/dovkMozp5Ck?enablejsapi=1" 
+  title="BGM Player" frameborder="0" allow="autoplay">
+  </iframe>
+</div>
+
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+  document.getElementById('bgm-trigger').addEventListener('click', function() {
+    var iframe = document.getElementById('bgm-player');
+    
+    // すでに再生中の場合は一時停止、停止中の場合は再生するトグル処理
+    if (this.innerText.includes('再生')) {
+      // JavaScript API経由で再生コマンドを送信
+      iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+      this.innerText = '⏸ BGMを停止する';
+      this.style.backgroundColor = '#f44336'; // ボタンの色を赤系に
+    } else {
+      iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+      this.innerText = '🎵 BGMを再生する';
+      this.style.backgroundColor = '#008cba'; // ボタンの色を青系に
+    }
+  });
+</script>
+
+            
+        </body>
+        </html>
