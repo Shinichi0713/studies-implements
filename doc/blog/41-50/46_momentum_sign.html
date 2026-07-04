@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&#x7814;&#x7a76;&#x7d50;&#x679c;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+/* 目次全体のコンテナ */
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+
+/* 記事タイトル (h1) */
+h1 {
+    font-size: 2rem;
+    color: #24292f;
+    line-height: 1.3;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 3px double #e1e4e8; /* 二重線で上品に */
+    text-align: center; /* タイトルを中央に寄せて特別感を出す */
+}
+
+/* セクション見出し (h2) */
+h2 {
+    font-size: 1.5rem;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(transparent 70%, #e8f0fe 70%); /* 下側に薄い色のアクセント */
+    border-left: 6px solid #0969da; /* 目次のテーマカラーと合わせる */
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* 強調文字 (strong) */
+strong {
+    font-weight: bold;
+    color: #cf222e; /* ホバー時の赤色と合わせて統一感を出す */
+    background: linear-gradient(transparent 60%, #fff2cc 60%); /* 黄色のマーカー風 */
+    padding: 0 2px;
+}
+
+/* 引用のコンテナ */
+blockquote {
+    position: relative;
+    padding: 20px 30px;
+    margin: 30px 0;
+    background-color: #f6f8fa; /* 目次の背景より少しだけ濃いグレー */
+    border-left: 5px solid #d0d7de; /* 落ち着いたグレーの境界線 */
+    color: #57606a; /* 文字色は少し薄くして引用らしさを出す */
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 引用符のアイコンを装飾として追加 */
+blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    font-size: 40px;
+    color: #d0d7de;
+    font-family: serif;
+    line-height: 1;
+}
+
+/* 読者になるボタンのデザイン */
+.btn-subscribe {
+    display: inline-block;
+    padding: 12px 35px; /* 横幅を広めにとって存在感を出します */
+    background-color: #383838; /* お好みの色に変更してください */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #555555;
+    text-decoration: none;
+}
+
+/* はてなブログで見えてしまう数式データを非表示にする */
+.katex-html {
+    display: none !important;
+}
+
+.katex-mathml {
+    display: inline !important;
+}
+/* Amazonカード型のオシャレなデザイン */
+.shop-card {
+    display: flex;
+    max-width: 500px;
+    margin: 20px auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* マウスホップした時の動き */
+.shop-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.shop-card-image {
+    width: 150px;
+    min-width: 150px;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shop-card-image img {
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+}
+
+.shop-card-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.shop-card-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.shop-card-description {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+/* Amazonらしいオレンジボタン */
+.shop-card-link a {
+    display: inline-block;
+    background-color: #ff9900;
+    color: #fff !important;
+    text-decoration: none !important;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.shop-card-link a:hover {
+    background-color: #e68a00;
+}
+
+/* スマホ対応：縦並びにする */
+@media (max-width: 480px) {
+    .shop-card {
+        flex-direction: column;
+        max-width: 100%;
+    }
+    .shop-card-image {
+        width: 100%;
+        height: 200px;
+    }
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+
+            <span id="markdown-mermaid" aria-hidden="true" data-config="{&quot;darkModeTheme&quot;:&quot;vscode&quot;,&quot;lightModeTheme&quot;:&quot;vscode&quot;,&quot;maxTextSize&quot;:50000,&quot;clickDrag&quot;:&quot;alt&quot;,&quot;showControls&quot;:&quot;onHoverOrFocus&quot;,&quot;resizable&quot;:true,&quot;maxHeight&quot;:&quot;&quot;}"></span>
+				<p>株価の底値を狙う投資スタイルを「逆張り（コントラリアン）」と言います。
+逆に株価が上がっている段階で株価に乗る投資スタイルを「順張り（モメンタム）」と呼びます。</p>
+<p>コントラリアンとモメンタムのどちらが儲けやすいかについては、<strong>市場・期間・リスクの取り方によって結果が変わる</strong>ため、「どちらが常に勝つ」とは言えません。<br>
+ただし、<strong>実証研究で明らかになっている傾向</strong>はありますので、今日は整理してお伝えしようと思います。</p>
+
+<button id="bgm-trigger" style="padding: 10px 20px; font-size: 16px; background-color: #008cba; color: white; border: none; border-radius: 5px; cursor: pointer;">
+  🎵 BGMを再生する
+</button>
+
+
+<h2 id="研究結果">研究結果</h2>
+<h3 id="1-代表的な研究の結論ざっくり">1. 代表的な研究の結論（ざっくり）</h3>
+<p><strong>(1) モメンタム（順張り）の実証的根拠</strong></p>
+<ul>
+<li>
+<p><strong>Jegadeesh &amp; Titman (1993)</strong> の研究が代表的で、<br>
+「過去3〜12か月で上昇した銘柄を買い、下落した銘柄を売る」という<strong>モメンタム戦略</strong>が、米国株式市場で<strong>統計的に有意な超過リターン</strong>を生み出すことを示しました<a href="https://www.sciencedirect.com/science/article/abs/pii/S1059056010000304">ScienceDirect</a>。</p>
+</li>
+<li>
+<p>その後、香港市場など他国市場でも同様の<strong>モメンタム効果</strong>が確認されています<a href="https://www.sciencedirect.com/science/article/abs/pii/S1059056010000304">ScienceDirect</a>。</p>
+</li>
+<li>
+<p>150年以上の米国株式データを用いた分析では、モメンタム戦略（勝ち組銘柄を買い、負け組銘柄を売るポートフォリオ）が<strong>長期にわたって高い累積リターンを示す</strong>ことが報告されています<a href="https://rpc.cfainstitute.org/blogs/enterprising-investor/2025/momentum-investing-a-stronger-more-resilient-framework-for-long-term-allocators">CFA Institute</a>。</p>
+</li>
+</ul>
+<p><strong>要点：</strong></p>
+<ul>
+<li>モメンタム戦略は<strong>短期〜中期（数か月〜1年程度）</strong> で有効なことが多い。</li>
+<li>ただし、<strong>モメンタム・クラッシュ</strong>と呼ばれる急落局面では大きな損失を被るリスクも高い。</li>
+</ul>
+<p><strong>(2) コントラリアン（逆張り）の実証的根拠</strong></p>
+<ul>
+<li>
+<p><strong>De Bondt &amp; Thaler (1985)</strong> の研究では、「過去3〜5年で大きく下落した銘柄（負け組）を買い、上昇した銘柄（勝ち組）を売る」という<br>
+<strong>長期コントラリアン戦略</strong>が、米国市場で超過リターンを生むことが示されました。</p>
+</li>
+<li>
+<p>その後、各国市場で<strong>短期のコントラリアン戦略</strong>も検証され、一部の市場では<strong>短期の逆張りが有効</strong>であることが報告されています<a href="https://www.sciencedirect.com/science/article/abs/pii/S1042444X03000173">ScienceDirect</a>。</p>
+</li>
+<li>
+<p>ただし、コントラリアン戦略の利益の一部は、<strong>流動性の低い銘柄（取引しづらい株）へのリスクプレミアム</strong>による可能性も指摘されています<a href="https://www.econstor.eu/bitstream/10419/176472/1/10.1186_s40854-017-0082-9.pdf">EconStor</a>。</p>
+</li>
+</ul>
+<p><strong>要点：</strong></p>
+<ul>
+<li>コントラリアン戦略は**長期（数年スパン）**で有効なことが多い。</li>
+<li>短期でも一部市場で利益が出るが、<strong>流動性リスクや倒産リスク</strong>を伴うことがある。</li>
+</ul>
+<h3 id="2-どちらが儲けが多いかを比較した研究の傾向">2. 「どちらが儲けが多いか」を比較した研究の傾向</h3>
+<p><strong>(1) 時系列での特徴</strong></p>
+<ul>
+<li>
+<p><strong>Sudirman (2023)</strong> によるシステマティック・レビュー（1993–2023年の25本の論文を対象）では、</p>
+<ul>
+<li><strong>モメンタム戦略</strong>は<strong>短期で優位</strong>なことが多く、<br>
+特に「情報効率が低〜中程度の市場」で強い。</li>
+<li><strong>コントラリアン戦略</strong>は<strong>長期で優位</strong>なことが多く、<br>
+「過剰反応が起こりやすく、個人投資家が多い市場」で有効<a href="https://jurnal.glowscien.com/index.php/JFAE/article/view/150">JFAE</a>。</li>
+</ul>
+</li>
+<li>
+<p>スペイン市場の研究でも、<br>
+<strong>短期ではモメンタムが有効、長期ではコントラリアンが有効</strong>という傾向が確認されています<a href="https://ideas.repec.org/a/bla/eufman/v9y2003i1p67-88.html">European Financial Management</a>。</p>
+</li>
+</ul>
+<p><strong>(2) 市場環境への依存</strong></p>
+<ul>
+<li>
+<p><strong>モメンタム戦略</strong>は、</p>
+<ul>
+<li>トレンドが続く「ブルマーケット」や安定上昇相場で強い。</li>
+<li>一方で、<strong>急落後の反転局面（ベアマーケットの反発）では大損</strong>しやすい。</li>
+</ul>
+</li>
+<li>
+<p><strong>コントラリアン戦略</strong>は、</p>
+<ul>
+<li>市場が過剰反応して大きく売られた局面で、<br>
+その後「正常化」する過程で利益が出やすい。</li>
+<li>ただし、<strong>構造的な業績悪化や倒産リスク</strong>がある銘柄を拾ってしまうと、<br>
+さらに下落するリスクがある。</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-実務的なまとめ">3. 実務的なまとめ</h3>
+<p><strong>(1) 「どちらが儲けが多いか」の答え方</strong></p>
+<ul>
+<li>
+<p><strong>短期（数か月〜1年程度）</strong> で見ると、<br>
+多くの市場で<strong>モメンタム（順張り）の方が利益が出やすい</strong>という研究が多いです。</p>
+</li>
+<li>
+<p><strong>長期（数年単位）</strong> で見ると、<br>
+<strong>コントラリアン（逆張り）も十分に利益を上げうる</strong>ことが示されています。</p>
+</li>
+<li>
+<p>ただし、どちらも<strong>市場環境・銘柄選別・リスク管理</strong>に大きく依存し、<br>
+「常にモメンタムが勝つ」「常にコントラリアンが勝つ」という単純な結論はありません。</p>
+</li>
+</ul>
+<p><strong>(2) リスク面の違い</strong></p>
+<ul>
+<li>
+<p><strong>モメンタム戦略</strong></p>
+<ul>
+<li>利益が出やすい一方で、<strong>急なトレンド転換（モメンタム・クラッシュ）</strong> で大損するリスクが高い。</li>
+<li>取引コスト（売買手数料・スリッページ）も大きくなりがち。</li>
+</ul>
+</li>
+<li>
+<p><strong>コントラリアン戦略</strong></p>
+<ul>
+<li>「底を拾う」ため、<strong>さらに下落するリスク</strong>がある。</li>
+<li>流動性の低い銘柄や財務不安のある銘柄を選びがちで、<br>
+<strong>倒産リスク・流動性リスク</strong>を伴う。</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-ここまでのまとめ">4. ここまでのまとめ</h3>
+<ul>
+<li>
+<p><strong>実証研究の傾向としては</strong>：</p>
+<ul>
+<li><strong>短期〜中期</strong>では、<strong>モメンタム（順張り）の方が利益が出やすい</strong>ことが多い。</li>
+<li><strong>長期</strong>では、<strong>コントラリアン（逆張り）も有効</strong>で、市場環境によってはモメンタムを上回ることもある。</li>
+</ul>
+</li>
+<li>
+<p>ただし、どちらも<strong>リスクとトレードオフ</strong>の関係にあり、<br>
+単純に「どちらが儲けが多い」と断言することはできません。</p>
+</li>
+<li>
+<p>実務的には、</p>
+<ul>
+<li>モメンタム：トレンドフォロー型、短期〜中期</li>
+<li>コントラリアン：バリュー・底拾い型、長期<br>
+という位置づけで、<strong>自分の投資スタイルやリスク許容度に合わせて組み合わせる</strong>のが現実的です。</li>
+</ul>
+</li>
+</ul>
+<h2 id="モメンタムでの収益の根拠">モメンタムでの収益の根拠</h2>
+<p>本日ではモメンタムが優位な面に対して考察してきます。</p>
+<p>「過去の勝ち組銘柄を買い、負け組銘柄を売る」というモメンタム戦略がうまくいく理由は、<strong>行動ファイナンス（投資家心理）の研究によってかなり詳しく説明されています</strong>。<br>
+主なメカニズムは以下の3つです。</p>
+<h3 id="1-過小反応underreactionと過剰反応overreactionの組み合わせ">1. 過小反応（Underreaction）と過剰反応（Overreaction）の組み合わせ</h3>
+<p><strong>(1) 過小反応：情報がゆっくり価格に反映される</strong></p>
+<ul>
+<li>
+<p>新しい情報（決算好調・新製品発表など）が出ても、<br>
+投資家は<strong>すぐには価格に反映させない</strong>ことがあります。</p>
+</li>
+<li>
+<p>これは、</p>
+<ul>
+<li>保守主義バイアス（過去の信念に固執する）</li>
+<li>アンカリング（過去の価格に引きずられる）</li>
+<li>注意力の限界（すべての情報を追えない）
+といった心理的要因によるものです。</li>
+</ul>
+</li>
+<li>
+<p>その結果、<strong>良いニュースが出た銘柄は徐々に上昇し続け</strong>、<br>
+モメンタム戦略が利益を生みやすくなります。</p>
+</li>
+</ul>
+<p><strong>(2) 過剰反応：後から感情的に買いすぎ・売りすぎる</strong></p>
+<ul>
+<li>
+<p>一方で、ある程度トレンドが続くと、<br>
+投資家は<strong>群集心理（バンドワゴン効果）</strong> で<br>
+「みんなが買っているから自分も買う」「みんなが売っているから自分も売る」という行動を取りがちです。</p>
+</li>
+<li>
+<p>これにより、<strong>勝ち組は買われすぎ、負け組は売られすぎ</strong>になり、<br>
+モメンタム戦略がさらに利益を生みやすくなります。</p>
+</li>
+</ul>
+<p><strong>(3) 実証研究での裏付け</strong></p>
+<ul>
+<li>
+<p>Quantpediaのレビューでは、<br>
+モメンタム利益の多くが<strong>投資家の過小反応・過剰反応</strong>に起因することが示されています<a href="https://quantpedia.com/is-momentum-effect-in-stocks-result-of-over-of-under-reaction">Quantpedia</a>。</p>
+</li>
+<li>
+<p>Review of Quantitative Finance and Accounting の論文では、<br>
+モメンタム利益が<strong>行動モデルが予測する過剰反応パターンと一致する</strong>と報告されています<a href="https://ideas.repec.org/a/kap/rqfnac/v46y2016i2p261-289.html">Springer</a>。</p>
+</li>
+</ul>
+<h3 id="2-自己実現的予言self-fulfilling-prophecy">2. 自己実現的予言（Self-Fulfilling Prophecy）</h3>
+<ul>
+<li>
+<p>Robecoのレポートでは、<br>
+<strong>モメンタムは「自己実現的予言」として機能する</strong>と指摘されています<a href="https://www.robeco.com/en-us/insights/2021/09/momentum-is-a-self-fulfilling-prophecy-and-therein-lies-its-strength">Robeco</a>。</p>
+</li>
+<li>
+<p>具体的には：</p>
+<ul>
+<li>ある銘柄が上昇トレンドに入ると、<br>
+テクニカル投資家やトレンドフォロワーが <strong>「上昇トレンドだから買う」</strong> と判断。</li>
+<li>その買いがさらに価格を押し上げ、<br>
+他の投資家も「上がっているから買う」と追随。</li>
+<li>この連鎖により、<strong>モメンタム戦略が実際に利益を生む</strong>。</li>
+</ul>
+</li>
+<li>
+<p>つまり、<strong>「モメンタムがあるから買う → 買うからモメンタムが続く」</strong> という<br>
+フィードバックループが形成されるわけです。</p>
+</li>
+</ul>
+<h3 id="3-認知バイアスと損失回避">3. 認知バイアスと損失回避</h3>
+<p><strong>(1) 損失回避（Loss Aversion）</strong></p>
+<ul>
+<li>
+<p>Kahneman &amp; Tversky のプロスペクト理論によれば、<br>
+人は<strong>利益より損失を強く嫌う</strong>傾向があります。</p>
+</li>
+<li>
+<p>その結果、</p>
+<ul>
+<li>含み益が出ている銘柄は<strong>早く利益確定したがる</strong>（利益確定バイアス）</li>
+<li>含み損が出ている銘柄は<strong>損切りを先延ばしにする</strong>（ディスポジション効果）</li>
+</ul>
+</li>
+<li>
+<p>モメンタム戦略は、</p>
+<ul>
+<li>勝ち組（上昇トレンド）を<strong>利益確定されにくいタイミングで買う</strong></li>
+<li>負け組（下落トレンド）を<strong>損切りされにくいタイミングで売る</strong><br>
+という形で、こうしたバイアスを逆手に取る側面があります。</li>
+</ul>
+</li>
+</ul>
+<p><strong>(2) 自信過剰・代表性バイアス</strong></p>
+<ul>
+<li>
+<p>投資家は<strong>直近のパフォーマンスを過大評価</strong>しがちです（代表性バイアス）。</p>
+</li>
+<li>
+<p>「最近よく上がっているから、これからも上がるだろう」と考える人が増え、<br>
+勝ち組銘柄への資金流入が続きます。</p>
+</li>
+<li>
+<p>逆に、負け組銘柄は**「もうダメだ」と過度に悲観視**され、<br>
+売り圧力が続きやすくなります。</p>
+</li>
+</ul>
+<h3 id="4-リスクベースの説明行動ファイナンス以外の視点">4. リスクベースの説明（行動ファイナンス以外の視点）</h3>
+<ul>
+<li>
+<p>AQRのホワイトペーパーでは、<br>
+モメンタム利益の一部は<strong>リスクプレミアム</strong>として説明できると指摘されています<a href="https://www.aqr.com/-/media/AQR/Documents/Insights/White-Papers/Explanations-for-the-Momentum-Premium.pdf">AQR</a>。</p>
+</li>
+<li>
+<p>具体的には、</p>
+<ul>
+<li>モメンタム戦略は<strong>急落局面（クラッシュ）で大きな損失を被りやすい</strong></li>
+<li>投資家は<strong>テールリスク（大きな損失）を嫌う</strong>ため、<br>
+そのリスクを取る対価としてモメンタム・プレミアムが生じる<br>
+という考え方です。</li>
+</ul>
+</li>
+<li>
+<p>つまり、モメンタム戦略は**「平時はいいが、急落時には痛い」<strong>という<br>
+リスク特性を持っており、そのリスクに対する</strong>正当な報酬**と見なすこともできます。</p>
+</li>
+</ul>
+<h3 id="5-まとめ心理面から見たモメンタム戦略の根拠">5. まとめ：心理面から見たモメンタム戦略の根拠</h3>
+<ul>
+<li>
+<p><strong>過小反応と過剰反応</strong><br>
+新しい情報への反応が遅く、その後トレンドに乗って過剰に反応する投資家行動が、<br>
+モメンタム利益を生む<a href="https://quantpedia.com/is-momentum-effect-in-stocks-result-of-over-of-under-reaction">Quantpedia</a>。</p>
+</li>
+<li>
+<p><strong>自己実現的予言</strong><br>
+「上がっているから買う → 買うからさらに上がる」というフィードバックが、<br>
+モメンタム戦略を有効にする<a href="https://www.robeco.com/en-us/insights/2021/09/momentum-is-a-self-fulfilling-prophecy-and-therein-lies-its-strength">Robeco</a>。</p>
+</li>
+<li>
+<p><strong>損失回避・ディスポジション効果</strong><br>
+利益確定バイアスや損切り遅延が、<br>
+勝ち組の上昇トレンドと負け組の下落トレンドを延長する。</p>
+</li>
+<li>
+<p><strong>リスクプレミアム</strong><br>
+モメンタム戦略は急落時に大きな損失を被りやすいため、<br>
+そのリスクに対する報酬としてモメンタム・プレミアムが存在する<a href="https://www.aqr.com/-/media/AQR/Documents/Insights/White-Papers/Explanations-for-the-Momentum-Premium.pdf">AQR</a>。</p>
+</li>
+</ul>
+<p>これらはすべて、<strong>投資家の心理や行動パターンに基づく客観的な説明</strong>であり、<br>
+「過去の勝ち組を買い、負け組を売る」戦略がうまくいく理由を裏付けています。<br>
+ただし、これは<strong>長期・平均的な傾向</strong>であり、<br>
+個別銘柄や短期のタイミングで常に勝てるという意味ではない点には注意が必要です。</p>
+<h2 id="モメンタムが勝ちやすい場所">モメンタムが勝ちやすい場所</h2>
+<p>次にモメンタム戦略の勝ち筋について分析していきます。
+モメンタム戦略が特に「勝ちやすい」条件は、<strong>実証研究によってかなり明確に示されています</strong>。<br>
+主に以下の4つの観点で整理できそうでした。</p>
+<h3 id="1-市場環境マクロ市場状態">1. 市場環境（マクロ・市場状態）</h3>
+<p><strong>(1) トレンドが続く相場（ブルマーケット・安定上昇）</strong></p>
+<ul>
+<li>モメンタム戦略は<strong>トレンドが続く市場</strong>で最も力を発揮します。</li>
+<li>一方、<strong>急な反転相場（ベアマーケットの急反発や急落後のV字回復）</strong> では、<br>
+モメンタム・クラッシュと呼ばれる<strong>大きな損失</strong>を被りやすいことが知られています<a href="https://www.sciencedirect.com/science/article/abs/pii/S1042443118303093">ScienceDirect</a>。</li>
+</ul>
+<p><strong>(2) 市場の情報効率が低〜中程度</strong></p>
+<ul>
+<li>
+<p>Sudirman (2023) のシステマティック・レビューでは、<br>
+<strong>モメンタム戦略は「情報効率が低〜中程度の市場」で特に有効</strong>であると報告されています<a href="https://jurnal.glowscien.com/index.php/JFAE/article/view/150">JFAE</a>。</p>
+</li>
+<li>
+<p>情報効率が低い市場では、</p>
+<ul>
+<li>アナリストの予測が遅れる</li>
+<li>個人投資家が多く、ニュースの解釈が遅い<br>
+といった要因から、<strong>過小反応・過剰反応が起きやすく</strong>、モメンタム利益が生まれやすくなります。</li>
+</ul>
+</li>
+</ul>
+<p><strong>(3) ボラティリティが中程度で安定している局面</strong></p>
+<ul>
+<li>極端にボラティリティが高い市場では、<br>
+トレンドが短命で、モメンタム戦略が機能しにくくなります。</li>
+<li>逆に、<strong>中程度のボラティリティでトレンドが安定している局面</strong>では、<br>
+モメンタム戦略が最も利益を上げやすいとされています。</li>
+</ul>
+<h3 id="2-銘柄特性サイズ流動性セクター">2. 銘柄特性（サイズ・流動性・セクター）</h3>
+<p><strong>(1) 小型株・中堅株</strong></p>
+<ul>
+<li>多くの研究で、<strong>小型株〜中堅株</strong>でモメンタム効果が強いことが示されています。</li>
+<li>大型株は情報効率が高く、ニュースがすぐに価格に反映されやすいため、<br>
+モメンタム利益が小さくなりがちです。</li>
+</ul>
+<p><strong>(2) 流動性が中程度の銘柄</strong></p>
+<ul>
+<li>流動性が極端に低い銘柄では、<br>
+売買スリッページや取引コストが大きく、実現可能な利益が小さくなります。</li>
+<li>一方、流動性が高すぎる大型株は、<br>
+情報がすぐに価格に反映され、モメンタム利益が薄くなりがちです。</li>
+<li>そのため、<strong>中程度の流動性を持つ銘柄</strong>がモメンタム戦略には向いているとされています。</li>
+</ul>
+<p><strong>(3) 成長セクター・テクノロジーなど</strong></p>
+<ul>
+<li>成長期待が高く、ニュースが続くセクター（テクノロジー、ヘルスケアなど）では、<br>
+<strong>ニュースの連続性</strong>からトレンドが続きやすく、モメンタム戦略が有効になりやすいです。</li>
+</ul>
+<h3 id="3-時間軸ホライゾン">3. 時間軸（ホライゾン）</h3>
+<p><strong>(1) 中期モメンタム（3〜12か月）</strong></p>
+<ul>
+<li>
+<p>Jegadeesh &amp; Titman (1993) をはじめとする研究では、<br>
+<strong>3〜12か月の過去リターンに基づくモメンタム戦略</strong>が最も強い利益を示すことが報告されています<a href="https://www.sciencedirect.com/science/article/abs/pii/S1059056010000304">ScienceDirect</a>。</p>
+</li>
+<li>
+<p>短期（数日〜数週間）ではノイズが多く、<br>
+長期（数年）ではリバーサル（逆転）が起きやすく、<br>
+モメンタム利益は<strong>中期で最も安定</strong>します。</p>
+</li>
+</ul>
+<p><strong>(2) ホールディング期間も中期（数か月）</strong></p>
+<ul>
+<li>モメンタム戦略のホールディング期間も、<br>
+<strong>数か月程度</strong>が最も効果的とされています。</li>
+<li>あまり短いと取引コストがかさみ、<br>
+あまり長いとトレンドが終わって逆転するリスクが高まります。</li>
+</ul>
+<h3 id="4-投資家構成行動特性">4. 投資家構成・行動特性</h3>
+<p><strong>(1) 個人投資家が多い市場</strong></p>
+<ul>
+<li>
+<p>Sudirman (2023) のレビューでは、<br>
+<strong>個人投資家が多い市場</strong>でモメンタム戦略が有効になりやすいと指摘されています<a href="https://jurnal.glowscien.com/index.php/JFAE/article/view/150">JFAE</a>。</p>
+</li>
+<li>
+<p>個人投資家は、</p>
+<ul>
+<li>情報への反応が遅い（過小反応）</li>
+<li>群集心理でトレンドに乗りやすい（過剰反応）
+といった行動を取りがちで、<br>
+これがモメンタム利益の源泉になります。</li>
+</ul>
+</li>
+</ul>
+<p><strong>(2) アナリスト・機関投資家のカバレッジが薄い銘柄</strong></p>
+<ul>
+<li>アナリストのカバレッジが薄い銘柄では、<br>
+情報が十分に価格に反映されず、<strong>過小反応が起きやすい</strong>。</li>
+<li>その結果、モメンタム戦略が利益を生みやすい環境になります。</li>
+</ul>
+<h2 id="総括">総括</h2>
+<p>本日の要点に絞って説明していきます。</p>
+<h3 id="1-モメンタム-vs-コントラリアンどちらが儲けやすいか">1. モメンタム vs コントラリアン：どちらが儲けやすいか</h3>
+<ul>
+<li>
+<p><strong>短期〜中期（数か月〜1年程度）</strong><br>
+→ 多くの市場で<strong>モメンタム（順張り）が利益を出しやすい</strong></p>
+<ul>
+<li>Jegadeesh &amp; Titman (1993) 以降、各国市場でモメンタム効果が確認されている<a href="https://www.sciencedirect.com/science/article/abs/pii/S1059056010000304">ScienceDirect</a>。</li>
+<li>150年以上の米国データでもモメンタム・ファクターが長期にわたり高い累積リターンを示す<a href="https://rpc.cfainstitute.org/blogs/enterprising-investor/2025/momentum-investing-a-stronger-more-resilient-framework-for-long-term-allocators">CFA Institute</a>。</li>
+</ul>
+</li>
+<li>
+<p><strong>長期（数年単位）</strong><br>
+→ <strong>コントラリアン（逆張り）も有効</strong>なことが多い</p>
+<ul>
+<li>De Bondt &amp; Thaler (1985) など、長期コントラリアン戦略が超過リターンを生むことを示す研究がある<a href="https://www.sciencedirect.com/science/article/abs/pii/S1042444X03000173">ScienceDirect</a>。</li>
+<li>Sudirman (2023) のレビューでは、短期でモメンタム、長期でコントラリアンが優位という傾向がまとめられている<a href="https://jurnal.glowscien.com/index.php/JFAE/article/view/150">JFAE</a>。</li>
+</ul>
+</li>
+<li>
+<p><strong>結論</strong>：</p>
+<ul>
+<li>「常にどちらが勝つ」とは言えないが、<strong>短期ではモメンタム、長期ではコントラリアンが有利</strong>という傾向が強い。</li>
+<li>どちらもリスク（モメンタム・クラッシュ、底拾い失敗リスク）を伴うため、<strong>自分の投資スタイルとリスク許容度に合わせて使い分ける</strong>のが現実的。</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-モメンタムがうまくいく根拠投資家心理">2. モメンタムがうまくいく根拠（投資家心理）</h3>
+<ul>
+<li>
+<p><strong>過小反応（Underreaction）</strong></p>
+<ul>
+<li>新しい情報が出ても、投資家はすぐに価格に反映させない（保守主義・アンカリング）。</li>
+<li>良いニュースが出た銘柄が<strong>徐々に上昇し続ける</strong>ことでモメンタム利益が生まれる。</li>
+</ul>
+</li>
+<li>
+<p><strong>過剰反応（Overreaction）</strong></p>
+<ul>
+<li>トレンドが続くと、群集心理で「上がっているから買う」「下がっているから売る」が加速。</li>
+<li><strong>勝ち組は買われすぎ、負け組は売られすぎ</strong>になり、モメンタム戦略がさらに利益を生む。</li>
+</ul>
+</li>
+<li>
+<p><strong>自己実現的予言</strong></p>
+<ul>
+<li>「上がっているから買う → 買うからさらに上がる」というフィードバックが働く<a href="https://www.robeco.com/en-us/insights/2021/09/momentum-is-a-self-fulfilling-prophecy-and-therein-lies-its-strength">Robeco</a>。</li>
+</ul>
+</li>
+<li>
+<p><strong>損失回避・ディスポジション効果</strong></p>
+<ul>
+<li>含み益は早く確定したがる、含み損は切りたがらない。</li>
+<li>モメンタム戦略は、<strong>利益確定されにくいタイミングで勝ち組を買い、損切りされにくいタイミングで負け組を売る</strong>ことで、こうしたバイアスを逆手に取る。</li>
+</ul>
+</li>
+<li>
+<p><strong>リスクプレミアム</strong></p>
+<ul>
+<li>モメンタム戦略は急落時に大きな損失を被りやすいため、そのリスクに対する報酬としてモメンタム・プレミアムが存在する<a href="https://www.aqr.com/-/media/AQR/Documents/Insights/White-Papers/Explanations-for-the-Momentum-Premium.pdf">AQR</a>。</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-モメンタムが勝ちやすい条件">3. モメンタムが「勝ちやすい」条件</h3>
+<ul>
+<li>
+<p><strong>市場環境</strong></p>
+<ul>
+<li>トレンドが続くブルマーケット・安定上昇相場</li>
+<li>情報効率が低〜中程度の市場（アナリスト・機関投資家のカバレッジが薄い）</li>
+<li>ボラティリティが中程度で安定している局面</li>
+</ul>
+</li>
+<li>
+<p><strong>銘柄特性</strong></p>
+<ul>
+<li>小型〜中堅株（情報反映が遅く、モメンタム効果が強い）</li>
+<li>中程度の流動性（取引コストと情報効率のバランスが良い）</li>
+<li>成長セクター（テクノロジーなど）でニュースが連続する銘柄</li>
+</ul>
+</li>
+<li>
+<p><strong>時間軸</strong></p>
+<ul>
+<li>過去3〜12か月のリターンに基づく<strong>中期モメンタム</strong>が最も強い<a href="https://www.sciencedirect.com/science/article/abs/pii/S1059056010000304">ScienceDirect</a>。</li>
+<li>ホールディング期間も<strong>数か月程度</strong>が効果的。</li>
+</ul>
+</li>
+<li>
+<p><strong>投資家構成</strong></p>
+<ul>
+<li>個人投資家が多い市場（過小反応・過剰反応が起きやすい）<a href="https://jurnal.glowscien.com/index.php/JFAE/article/view/150">JFAE</a>。</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-つまり">4. つまり</h3>
+<ul>
+<li><strong>短期ではモメンタム、長期ではコントラリアンが有利</strong>という傾向が、多くの実証研究で確認されている。</li>
+<li>モメンタムは、<strong>投資家の過小反応・過剰反応・自己実現的予言・損失回避</strong>といった心理的要因によって支えられている。</li>
+<li>モメンタムが特に勝ちやすいのは、<strong>トレンド相場・情報効率が低い市場・小型〜中堅株・中期ホライゾン</strong>といった条件が揃ったとき。</li>
+</ul>
+<p>これらはあくまで<strong>平均的な傾向</strong>であり、<br>
+実際の投資では取引コスト・リスク管理・市場の急変も考慮する必要があります。</p>
+<p>本日話した内容は以下の本の分析結果です。
+ですが、内容はかなり多岐にわたり、本文に触れることが一番理解につながると考えています。
+投資の戦略が気になられるのでしたら是非、本文を読んでみてください。</p>
+<div class="shop-card">
+    <div class="shop-card-image">
+        <img src="https://m.media-amazon.com/images/I/71a40vnLrTL._SL1500_.jpg" alt="商品画像">
+    </div>
+    <div class="shop-card-content">
+        <div class="shop-card-title">Dual Momentum Investing: An Innovative Strategy for Higher Returns With Lower Risk</div>
+        <div class="shop-card-description">「相対モメンタム」と「絶対モメンタム」を組み合わせたデュアル・モメンタム戦略により、大きな下落を避けつつ市場を上回るリターンを目指す、実践的な投資手法を解説した本です。
+        理論・歴史データ・実践的な手法をバランスよく解説し、なぜデュアル・モメンタムが機能するのかを理解できる構成になっています。是非実際の本で理論に触れてください。
+        </div>
+        <div class="shop-card-link">
+            <a href="https://www.amazon.co.jp/Dual-Momentum-Investing-Innovative-Strategy/dp/0071849440?__mk_ja_JP=%E3%82%AB%E3%82%BF%E3%82%AB%E3%83%8A&crid=2BD21Q4GM4UDH&dib=eyJ2IjoiMSJ9.oebDYEhcpELQaCJ-jGIXoB34FxpG6RqKkLFM1tTY-o5s_CYM3vmXw5AXy-OLzsipLQYZNR-7vJHIO6BI01q3cSeJcTBZ3TyHgkqodJMEeUzYGhOR-8rEMCzvepY92EBdf2eVqL4lKQmWaaEYbpYpGkjUNqb3FijlyF7rH6BHiC1yB-izgsUwf6FdgHeVTIUQk_goDHs7bzUPeoaQQL1Nk-V8Am0su6BHvey552QbutxBZyRkhYNanHz9oR6eNyV6Td6G9xZqotDTH1tz2-6UR8aMePTvVA3bQu5wYEkgSmw.qMbTQXsqYvLKPCmNsgdQFVyp7F82Ch9uQtC4oBfYW70&dib_tag=se&keywords=Momentum+Investing&qid=1782822896&sprefix=momentum+investing%2Caps%2C188&sr=8-1&linkCode=ll2&tag=yoshishinnze-22&linkId=54f2cc665b7744c58fa6176ff54539ed&ref_=as_li_ss_tl" target="_blank" rel="noopener">Amazonで詳細を見る</a>
+        </div>
+    </div>
+</div>
+
+
+<div style="width: 1px; height: 1px; overflow: hidden; opacity: 0; position: absolute;">
+  <iframe id="bgm-player" width="100" height="100" 
+  src="https://www.youtube.com/embed/ETzUKUZ6l8c?enablejsapi=1" 
+  title="BGM Player" frameborder="0" allow="autoplay">
+  </iframe>
+</div>
+
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+  document.getElementById('bgm-trigger').addEventListener('click', function() {
+    var iframe = document.getElementById('bgm-player');
+    
+    // すでに再生中の場合は一時停止、停止中の場合は再生するトグル処理
+    if (this.innerText.includes('再生')) {
+      // JavaScript API経由で再生コマンドを送信
+      iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+      this.innerText = '⏸ BGMを停止する';
+      this.style.backgroundColor = '#f44336'; // ボタンの色を赤系に
+    } else {
+      iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+      this.innerText = '🎵 BGMを再生する';
+      this.style.backgroundColor = '#008cba'; // ボタンの色を青系に
+    }
+  });
+</script>
+            
+        </body>
+        </html>
