@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&#x6982;&#x8981;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+/* 目次全体のコンテナ */
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+
+/* 記事タイトル (h1) */
+h1 {
+    font-size: 2rem;
+    color: #24292f;
+    line-height: 1.3;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 3px double #e1e4e8; /* 二重線で上品に */
+    text-align: center; /* タイトルを中央に寄せて特別感を出す */
+}
+
+/* セクション見出し (h2) */
+h2 {
+    font-size: 1.5rem;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(transparent 70%, #e8f0fe 70%); /* 下側に薄い色のアクセント */
+    border-left: 6px solid #0969da; /* 目次のテーマカラーと合わせる */
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* 強調文字 (strong) */
+strong {
+    font-weight: bold;
+    color: #cf222e; /* ホバー時の赤色と合わせて統一感を出す */
+    background: linear-gradient(transparent 60%, #fff2cc 60%); /* 黄色のマーカー風 */
+    padding: 0 2px;
+}
+
+/* 引用のコンテナ */
+blockquote {
+    position: relative;
+    padding: 20px 30px;
+    margin: 30px 0;
+    background-color: #f6f8fa; /* 目次の背景より少しだけ濃いグレー */
+    border-left: 5px solid #d0d7de; /* 落ち着いたグレーの境界線 */
+    color: #57606a; /* 文字色は少し薄くして引用らしさを出す */
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 引用符のアイコンを装飾として追加 */
+blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    font-size: 40px;
+    color: #d0d7de;
+    font-family: serif;
+    line-height: 1;
+}
+
+/* 読者になるボタンのデザイン */
+.btn-subscribe {
+    display: inline-block;
+    padding: 12px 35px; /* 横幅を広めにとって存在感を出します */
+    background-color: #383838; /* お好みの色に変更してください */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #555555;
+    text-decoration: none;
+}
+
+/* はてなブログで見えてしまう数式データを非表示にする */
+.katex-html {
+    display: none !important;
+}
+
+.katex-mathml {
+    display: inline !important;
+}
+/* Amazonカード型のオシャレなデザイン */
+.shop-card {
+    display: flex;
+    max-width: 500px;
+    margin: 20px auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* マウスホップした時の動き */
+.shop-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.shop-card-image {
+    width: 150px;
+    min-width: 150px;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shop-card-image img {
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+}
+
+.shop-card-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.shop-card-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.shop-card-description {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+/* Amazonらしいオレンジボタン */
+.shop-card-link a {
+    display: inline-block;
+    background-color: #ff9900;
+    color: #fff !important;
+    text-decoration: none !important;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.shop-card-link a:hover {
+    background-color: #e68a00;
+}
+
+/* スマホ対応：縦並びにする */
+@media (max-width: 480px) {
+    .shop-card {
+        flex-direction: column;
+        max-width: 100%;
+    }
+    .shop-card-image {
+        width: 100%;
+        height: 200px;
+    }
+}
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+            <span id="markdown-mermaid" aria-hidden="true" data-config="{&quot;darkModeTheme&quot;:&quot;vscode&quot;,&quot;lightModeTheme&quot;:&quot;vscode&quot;,&quot;maxTextSize&quot;:50000,&quot;clickDrag&quot;:&quot;alt&quot;,&quot;showControls&quot;:&quot;onHoverOrFocus&quot;,&quot;resizable&quot;:true,&quot;maxHeight&quot;:&quot;&quot;}"></span>
+				<p>安土桃山時代で地方で台頭した大名は有名どころは毛利、北条、島津などが挙げられます。
+その一角が四国の長曾我部で、かつ、長曾我部を土佐の豪族から四国を束ねる戦国大名に導いたのが本日のテーマになる長曾我部元親です。</p>
+<p>本日テーマ：</p>
+<blockquote>
+<p>織田・豊臣に抗した長曾我部元親について語ってみた。</p>
+</blockquote>
+<button id="bgm-trigger" style="padding: 10px 20px; font-size: 16px; background-color: #008cba; color: white; border: none; border-radius: 5px; cursor: pointer;">
+  🎵 BGMを再生する
+</button>
+<h2 id="概要">概要</h2>
+<p>長曾我部元親（ちょうそかべ もとちか、1539–1599）は、戦国時代から安土桃山時代にかけて活躍した武将で、土佐国（現在の高知県）を本拠として四国をほぼ統一した人物です。</p>
+<h3 id="1-人物像の概要">1. 人物像の概要</h3>
+<ul>
+<li><strong>生没年</strong>：1539年（天文8年）– 1599年（慶長4年）</li>
+<li><strong>出身</strong>：土佐国（現在の高知県）</li>
+<li><strong>主な活動</strong>：土佐統一 → 四国統一を目指す → 豊臣政権下で大名として存続</li>
+<li><strong>通称・あだ名</strong>：
+<ul>
+<li>若い頃は「姫若子（ひめわこ）」と呼ばれ、大人しい印象だったと伝わる</li>
+<li>初陣以降は「土佐の出来人（できびと）」として恐れられるようになる</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-生涯の主な流れ">2. 生涯の主な流れ</h3>
+<p><strong>(1) 家督相続と土佐統一</strong></p>
+<ul>
+<li>元親は長曾我部国親の嫡男として生まれ、1560年に父の死により家督を継ぎます。</li>
+<li>当初は「姫若子」と呼ばれるほどおとなしい性格と見られていましたが、初陣で勇猛さを見せて家中の評価を一変させました。</li>
+<li>その後、本山氏・安芸氏・津野氏など土佐の有力豪族を次々と従え、1575年頃までに土佐一国を統一します。</li>
+</ul>
+<p><strong>(2) 四国統一への野望</strong></p>
+<ul>
+<li>土佐統一後、元親は伊予（愛媛）・讃岐（香川）・阿波（徳島）へ勢力を拡大し、四国統一を目指します。</li>
+<li>特に阿波の三好氏・十河氏との戦いが激しく、一時は四国の大半を支配下に置くほどの勢いを見せました。</li>
+</ul>
+<p><strong>(3) 豊臣秀吉との対立と降伏</strong></p>
+<ul>
+<li>1585年、天下統一を進める豊臣秀吉が四国平定の軍を起こし、元親はこれと対峙します。</li>
+<li>兵力差・物量差が大きく、元親は秀吉に降伏し、土佐一国のみを安堵される形で所領を大幅に縮小されました。</li>
+<li>これにより、四国統一の夢は断たれますが、長曾我部家は大名として存続することになります。</li>
+</ul>
+<p><strong>(4) 豊臣政権下での活動</strong></p>
+<ul>
+<li>秀吉に従った後は、九州征伐や小田原征伐、文禄・慶長の役（朝鮮出兵）などに参加します。</li>
+<li>特に文禄の役では、嫡男・長曾我部信親が戦死し、大きな打撃を受けました。</li>
+</ul>
+<p><strong>(5) 後継者問題と晩年</strong></p>
+<ul>
+<li>信親の死後、後継者をめぐって家中が二分され、四男・長曾我部盛親が跡継ぎとなります。</li>
+<li>1599年、元親は病死し、その後は関ヶ原の戦いで長曾我部家が西軍に属したため、改易（取り潰し）となりました。</li>
+</ul>
+<h3 id="3-元親の政策と特徴">3. 元親の政策と特徴</h3>
+<p><strong>(1) 一領具足（いちりょうぐそく）</strong></p>
+<ul>
+<li>元親は農民も含めた兵士組織「一領具足」を整備しました。</li>
+<li>平時は農業に従事し、戦時にはすぐに武装して動員できる体制で、土佐の軍事力を大きく高めました。</li>
+</ul>
+<p><strong>(2) 家臣団の統制と法度</strong></p>
+<ul>
+<li>家臣団の統制を強め、分国法「長曾我部元親百箇条」を制定したとされます（実際には後世の編纂も含まれるとされるが、元親の統治理念を反映）。</li>
+<li>家中の秩序維持や領民統治に力を入れました。</li>
+</ul>
+<p><strong>(3) 経済・文化面</strong></p>
+<ul>
+<li>土佐の特産である和紙・木材などを活かし、経済基盤を強化。</li>
+<li>南蛮貿易にも関心を持ち、キリシタン大名との交流もあったとされます。</li>
+</ul>
+<h3 id="4-評価と後世への影響">4. 評価と後世への影響</h3>
+<ul>
+<li>
+<p><strong>戦国大名としての評価</strong>：</p>
+<ul>
+<li>もともと弱小勢力から出発し、四国統一まであと一歩というところまで勢力を伸ばした点で、優れた戦略家・組織者と評価されています。</li>
+<li>秀吉という強大な中央権力の前に敗れたものの、その軍事力・統治力は高く評価されています。</li>
+</ul>
+</li>
+<li>
+<p><strong>土佐への影響</strong>：</p>
+<ul>
+<li>土佐の戦国大名としてのイメージを強く形作り、その後の土佐藩（山内家）の時代にも、長曾我部時代の記憶が残りました。</li>
+<li>幕末の土佐藩士（坂本龍馬ら）にも、長曾我部元親は英雄的な存在として語られることがあります。</li>
+</ul>
+</li>
+</ul>
+<h2 id="生い立ち">生い立ち</h2>
+<p>長曾我部元親の生い立ちについて、幼少期から家督相続までを時系列で整理すると、以下のようになります。</p>
+<h3 id="1-出生と幼少期1539年頃">1. 出生と幼少期（1539年頃〜）</h3>
+<ul>
+<li>
+<p><strong>生年</strong>：1539年（天文8年）<br>
+土佐国長岡郡岡豊（おこう）城（現在の高知県南国市）で、長曾我部国親の嫡男として生まれました。</p>
+</li>
+<li>
+<p><strong>幼名</strong>：幼い頃の元親は「<strong>姫若子（ひめわこ）</strong>」と呼ばれ、大人しく、色白で女性的な印象があったと伝えられています。<br>
+このため、周囲からは「戦国武将として頼りないのではないか」と見られていたとも言われます。</p>
+</li>
+<li>
+<p><strong>家庭環境</strong>：<br>
+父・国親は、当時はまだ土佐の一豪族に過ぎませんでしたが、周辺勢力との争いの中で勢力拡大を図っていました。<br>
+元親はそのような戦乱の時代に育ちながらも、当初は目立った武勇を示すような描写は少なく、むしろ内気な性格として描かれることが多いです。</p>
+</li>
+</ul>
+<h3 id="2-初陣と土佐の出来人と呼ばれるまで">2. 初陣と「土佐の出来人」と呼ばれるまで</h3>
+<ul>
+<li>
+<p><strong>初陣</strong>：1560年（永禄3年）頃、長浜の戦い（本山氏との合戦）で初めて戦場に出たとされます。このとき、元親はそれまでの「姫若子」というイメージを覆す活躍を見せ、家臣たちを驚かせました。</p>
+</li>
+<li>
+<p><strong>評価の変化</strong>：<br>
+初陣での勇猛さや戦術眼が認められ、元親は「<strong>土佐の出来人（できびと）</strong>」と呼ばれるようになります。「出来人」とは「立派に成長した人物」「器量人」といった意味で、これ以降、家中での信頼と評価が一気に高まりました。</p>
+</li>
+</ul>
+<h3 id="3-父国親の死と家督相続">3. 父・国親の死と家督相続</h3>
+<ul>
+<li>
+<p><strong>父・国親の死去</strong>：初陣からまもない1560年（永禄3年）に父・国親が病死します。<br>
+この時点で、長曾我部家はまだ土佐統一には至っておらず、周辺の本山氏・安芸氏・津野氏などとの抗争が続いていました。</p>
+</li>
+<li>
+<p><strong>家督相続</strong>：<br>
+元親は父の死を受けて家督を継ぎ、長曾我部家当主となります。<br>
+当初は「姫若子」という印象もあり、家臣や周辺勢力から侮られることもあったようですが、初陣以降の活躍で家中の結束を強め、土佐統一に向けて本格的に動き出します。</p>
+</li>
+</ul>
+<h3 id="4-生い立ちから見える元親の性格">4. 生い立ちから見える元親の性格</h3>
+<ul>
+<li>
+<p><strong>内気な少年期</strong>：<br>
+幼少期は大人しく、目立たない存在だったと伝えられていますが、その一方で、父・国親の戦略や家中の動きをよく観察していたとも考えられます。</p>
+</li>
+<li>
+<p><strong>初陣での豹変</strong>：<br>
+初陣で一気に評価を変えたことから、元親は「いざという時に力を発揮するタイプ」であったことがうかがえます。この経験が、後の四国統一を目指す強力なリーダーシップの土台になったとも言えます。</p>
+</li>
+</ul>
+<h2 id="家督相続から土佐での台頭">家督相続から土佐での台頭</h2>
+<p>長曾我部元親が家督を継いでから土佐を統一するまでの主なイベントを、年代順に整理します。</p>
+<h3 id="1-家督相続1560年頃">1. 家督相続（1560年頃）</h3>
+<ul>
+<li><strong>1560年（永禄3年）</strong>：父・長曾我部国親が死去し、元親が家督を継ぎます。<br>
+この時点で、長曾我部家は岡豊城を本拠とする土佐の一豪族に過ぎず、周辺には本山氏・安芸氏・津野氏などの有力勢力が存在していました。</li>
+</ul>
+<h3 id="2-本山氏との戦い">2. 本山氏との戦い</h3>
+<ul>
+<li>
+<p><strong>1562年（永禄5年）</strong>：本山氏の支城・長浜城を攻略し、本山氏の勢力を後退させます。</p>
+</li>
+<li>
+<p><strong>1568年（永禄11年）</strong>：本山氏の本拠・本山城を攻め落とし、本山氏を事実上降伏させます。<br>
+本山氏の当主・本山茂辰は病死し、その子・本山親茂は元親に従属しました。</p>
+</li>
+</ul>
+<h3 id="3-安芸氏との戦い">3. 安芸氏との戦い</h3>
+<ul>
+<li>
+<p><strong>1574年（天正2年）</strong>：安芸国虎（安芸氏）との戦いが本格化します。安芸氏は土佐東部の有力勢力で、長曾我部家にとって大きな敵でした。</p>
+</li>
+<li>
+<p><strong>1575年（天正3年）</strong>：安芸城を攻め落とし、安芸国虎を自害に追い込みます。これにより、土佐東部も長曾我部氏の支配下に入りました。</p>
+</li>
+</ul>
+<h3 id="4-津野氏その他の勢力の従属">4. 津野氏・その他の勢力の従属</h3>
+<ul>
+<li>
+<p><strong>津野氏</strong>：<br>
+津野氏は土佐西部の有力豪族でしたが、元親は津野氏の内紛に介入し、津野勝興を擁立して実質的に支配下に置きます。その後、津野氏は長曾我部家に従属しました。</p>
+</li>
+<li>
+<p><strong>その他の小豪族</strong>：<br>
+土佐各地の小豪族も、元親の軍事力と調略によって次々と従属していきます。元親は婚姻政策や養子縁組も積極的に用い、武力だけでなく外交・政略も駆使して土佐統一を進めました。</p>
+</li>
+</ul>
+<h3 id="5-土佐統一の完成1575年頃">5. 土佐統一の完成（1575年頃）</h3>
+<p>家督相続からおよそ15年で土佐一国を統一しました。規模で抜けることが勢力拡大の必須条件ですが、この時点での四国で規模は随一と言える規模まで勢力を広げたことになると思います。</p>
+<ul>
+<li><strong>1575年（天正3年）頃</strong>：<br>
+本山氏・安芸氏・津野氏といった主要勢力をすべて従属させ、土佐一国をほぼ統一します。<br>
+これにより、長曾我部家は土佐の戦国大名としての地位を確立しました。</li>
+</ul>
+<h2 id="四国統一に向けて">四国統一に向けて</h2>
+<p>長曾我部元親が土佐を統一した後、四国統一を目指して進めた主な戦いを、史料・記事の記述を引用しながら年代順に整理します。</p>
+<h3 id="1-阿波侵攻と主要な戦い15781582年">1. 阿波侵攻と主要な戦い（1578–1582年）</h3>
+<p><strong>(1) 阿波・白地城の攻略（1578年）</strong></p>
+<p>土佐統一後、元親は阿波（現在の徳島県）へ侵攻を開始します。<br>
+阿波侵攻の初期段階として、土佐と国境付近に位置する白地城攻略が開始されました。</p>
+<blockquote>
+<p>1578年（天正6年）2月に阿波・白地城を攻略。<a href="https://ja.wikipedia.org/wiki/%E9%95%B7%E5%AE%97%E6%88%91%E9%83%A8%E5%85%83%E8%A6%AA">Wikipedia</a></p>
+</blockquote>
+<p>白地城は阿波西部の要衝で、ここを落としたことで阿波侵攻の足がかりを得たとされます。</p>
+<p><strong>(2) 重清城・岩倉城での勝利（1579年）</strong></p>
+<p>続いて、阿波の三好勢力との戦いが本格化します。</p>
+<blockquote>
+<p>1579年（天正7年）夏、阿波・重清城を奪い十河軍に大勝、岩倉城の三好康俊を降伏させた。<a href="https://ja.wikipedia.org/wiki/%E9%95%B7%E5%AE%97%E6%88%91%E9%83%A8%E5%85%83%E8%A6%AA">Wikipedia</a></p>
+</blockquote>
+<p>ここで「十河軍に大勝」「三好康俊を降伏させた」とあり、阿波での優位を確立したことが分かります。</p>
+<p><strong>(3) 中富川の戦いと阿波平定（1582年）</strong></p>
+<p>阿波平定の決定的な戦いが「中富川の戦い」です。<br>
+三好を支える十河存保に対して、長曾我部軍が有利に戦いを進めていきます。</p>
+<blockquote>
+<p>1582年（天正10年）8月、中富川の戦いで十河存保を破り、9月に阿波を完全に平定。<a href="https://ja.wikipedia.org/wiki/%E9%95%B7%E5%AE%97%E6%88%91%E9%83%A8%E5%85%83%E8%A6%AA">Wikipedia</a></p>
+</blockquote>
+<p>ゆるっと戦国史の年表でも、この戦いの重要性が示されています。</p>
+<blockquote>
+<p>1582年「中富川の戦い」（阿波の大部分を支配）<a href="https://yururito-sengoku.com/sengokubushiu/chousokabenenpyou.html">ゆるっと戦国史</a></p>
+</blockquote>
+<p>中富川の戦いで十河存保（三好方）を破り、阿波を「完全に平定」したとされるため、四国統一に向けた大きな一歩となりました。
+この段階で三好は単独で、長曾我部と戦う力は無くなったとみてよいと思います。</p>
+<h3 id="2-讃岐侵攻と平定15801584年">2. 讃岐侵攻と平定（1580–1584年）</h3>
+<h4 id="1-讃岐への圧力1580年">(1) 讃岐への圧力（1580年）</h4>
+<p>三好方の讃岐に対して勢力を伸ばそうとします。
+讃岐（現在の香川県）への侵攻準備として、次の記述があります。</p>
+<blockquote>
+<p>1580年（天正8年）に讃岐の十河城や羽床城を包囲。<a href="https://ja.wikipedia.org/wiki/%E9%95%B7%E5%AE%97%E6%88%91%E9%83%A8%E5%85%83%E8%A6%AA">Wikipedia</a></p>
+</blockquote>
+<p>十河城は十河存保の本拠であり、これを包囲することで讃岐支配に向けた圧力を強めました。</p>
+<h4 id="2-引田の戦い1583年">(2) 引田の戦い（1583年）</h4>
+<p>讃岐平定の過程で重要な戦いが「引田の戦い」です。</p>
+<blockquote>
+<p>1583年（天正11年）4月、引田の戦いで仙石秀久を破る。<a href="https://ja.wikipedia.org/wiki/%E9%95%B7%E5%AE%97%E6%88%91%E9%83%A8%E5%85%83%E8%A6%AA">Wikipedia</a></p>
+</blockquote>
+<p>仙石秀久は豊臣秀吉の家臣で、秀吉が讃岐に介入しようとした動きを、元親が押し返した形になります。
+秀吉の本軍でなければ、元親軍単体でも対抗できるという状況だっとと考えられます。</p>
+<h4 id="3-第二次十河城の戦いと讃岐平定1584年">(3) 第二次十河城の戦いと讃岐平定（1584年）</h4>
+<p>讃岐平定の決着は、十河城の再攻略でつきます。</p>
+<blockquote>
+<p>1584年（天正12年）6月、第二次十河城の戦いで十河城を落とし、讃岐を平定。<a href="https://ja.wikipedia.org/wiki/%E9%95%B7%E5%AE%97%E6%88%91%E9%83%A8%E5%85%83%E8%A6%AA">Wikipedia</a></p>
+</blockquote>
+<p>ゆるっと戦国史の年表でも、1584年を四国統一の節目としています。</p>
+<blockquote>
+<p>1584年に三好氏（十河存保）の最後の拠点である阿波の虎丸城を落としたことで、讃岐・阿波を手中に収め四国統一を果たしたと記述されています。<a href="https://yururito-sengoku.com/sengokubushiu/chousokabenenpyou.html">ゆるっと戦国史</a></p>
+</blockquote>
+<p>ここでは「虎丸城」を落としたとされていますが、いずれにせよ1584年頃に讃岐・阿波をほぼ掌握したと解釈できます。
+1584年時点では四国の3つの国を抑えたと思われます。</p>
+<h3 id="3-伊予侵攻と四国統一15841585年">3. 伊予侵攻と四国統一（1584–1585年）</h3>
+<p>四国最後の国が伊予です。伊予は小勢力が割拠する状態の国でした。
+この戦いがうまく進んだのは、土佐から四国全体に戦域を広げず確保撃破に努めたことだと思います。
+ここまで来たら、四国で元親に対抗できる勢力は無くなっていました。</p>
+<h4 id="1-伊予黒瀬城の攻略1584年">(1) 伊予・黒瀬城の攻略（1584年）</h4>
+<p>伊予（現在の愛媛県）では、西園寺氏の拠点を落とします。</p>
+<blockquote>
+<p>1584年（天正12年）10月、伊予西園寺氏の黒瀬城を攻略。<a href="https://ja.wikipedia.org/wiki/%E9%95%B7%E5%AE%97%E6%88%91%E9%83%A8%E5%85%83%E8%A6%AA">Wikipedia</a></p>
+</blockquote>
+<p>これにより伊予西部への支配を強めました。</p>
+<h4 id="2-河野氏の降伏と四国統一1585年春">(2) 河野氏の降伏と四国統一（1585年春）</h4>
+<p>伊予の有力大名・河野氏の降伏が、四国統一の決定的な出来事とされています。</p>
+<blockquote>
+<p>1585年（天正13年）春、河野通直が降伏を申し入れたことで四国を統一したとされる（諸説あり）。<a href="https://ja.wikipedia.org/wiki/%E9%95%B7%E5%AE%97%E6%88%91%E9%83%A8%E5%85%83%E8%A6%AA">Wikipedia</a></p>
+</blockquote>
+<p>サライ.jpの記事でも、同様の流れが簡潔にまとめられています。</p>
+<blockquote>
+<p>本能寺の変後の混乱に乗じて阿波で十河存保を破り、1585年春には伊予の河野通直を降して四国全土を制覇しました。<a href="https://serai.jp/hobby/1144083">サライ.jp</a></p>
+</blockquote>
+<p>ここで「四国全土を制覇」と表現されており、1585年春を以て四国統一が成ったとされています。</p>
+<h2 id="豊臣への臣従以降">豊臣への臣従以降</h2>
+<p>長曾我部元親の「四国統一」から豊臣政権への臣従までの経緯を、時系列で整理します。</p>
+<h3 id="1-豊臣秀吉の四国征伐1585年夏">1. 豊臣秀吉の四国征伐（1585年夏）</h3>
+<ul>
+<li>元親の四国統一の直後、豊臣秀吉は四国征伐を開始します。<br>
+サライ.jpでは「直後の1585年夏、豊臣秀吉の四国征伐により降伏し、土佐一国の領有のみを認められることとなりました」と記されています。<a href="https://serai.jp/hobby/1144083">サライ.jp</a></li>
+<li>ゆるっと戦国史の年表でも「1585年『豊臣秀吉による四国征伐』」とあり、その結果として元親が降伏したことが示されています。<a href="https://yururito-sengoku.com/sengokubushiu/chousokabenenpyou.html">ゆるっと戦国史</a></li>
+</ul>
+<p>この時点の秀吉は大軍を分散運用するという戦略家としては日本屈指というべきスキルがあったと考えてます。
+送られた秀吉の大軍を四国相手に、元親は兵力差・物量差から抗戦を断念し、降伏を選びます。</p>
+<h3 id="2-降伏と所領の大幅削減">2. 降伏と所領の大幅削減</h3>
+<ul>
+<li>降伏後、元親は秀吉から<strong>土佐一国のみ</strong>を安堵され、それ以外の阿波・讃岐・伊予は没収されました。<a href="https://serai.jp/hobby/1144083">サライ.jp</a></li>
+<li>Wikipediaでも「豊臣秀吉の四国征伐によって降伏し、土佐一国の領有を許された」と記されています。<a href="https://ja.wikipedia.org/wiki/%E9%95%B7%E5%AE%97%E6%88%91%E9%83%A8%E5%85%83%E8%A6%AA">Wikipedia</a></li>
+</ul>
+<p>これにより、元親は「四国統一」の夢を断たれ、土佐一国の大名として豊臣政権に組み込まれます。</p>
+<h3 id="3-豊臣政権下での臣従と従軍">3. 豊臣政権下での臣従と従軍</h3>
+<ul>
+<li>
+<p>四国征伐後、元親は豊臣政権の大名として、以下の主要な軍事行動に従軍します。</p>
+<ul>
+<li><strong>九州征伐</strong>（1586–1587年）</li>
+<li><strong>小田原征伐</strong>（1590年）</li>
+<li><strong>文禄・慶長の役</strong>（朝鮮出兵、1592–1598年）<a href="https://ja.wikipedia.org/wiki/%E9%95%B7%E5%AE%97%E6%88%91%E9%83%A8%E5%85%83%E8%A6%AA">Wikipedia</a></li>
+</ul>
+</li>
+<li>
+<p>特に文禄の役では、嫡男・長曾我部信親が戸次川の戦いで戦死し、元親は大きな打撃を受けました。<a href="https://yururito-sengoku.com/sengokubushiu/chousokabenenpyou.html">ゆるっと戦国史</a></p>
+</li>
+</ul>
+<h3 id="4-晩年と後継者問題">4. 晩年と後継者問題</h3>
+<ul>
+<li>信親の死後、後継者をめぐって家中が二分され、四男・長曾我部盛親が跡継ぎとなります。</li>
+<li>1599年（慶長4年）、元親は病死します。<a href="https://ja.wikipedia.org/wiki/%E9%95%B7%E5%AE%97%E6%88%91%E9%83%A8%E5%85%83%E8%A6%AA">Wikipedia</a></li>
+<li>その後、関ヶ原の戦いで長曾我部家は西軍に属したため、改易（取り潰し）となりました。</li>
+</ul>
+<h2 id="信長とのやりとり">信長とのやりとり</h2>
+<p>長曾我部元親と織田信長の関係は、<strong>同盟から対立へ</strong>という流れで整理できます。以下、主なやり取りを時系列でまとめます。</p>
+<h3 id="1-同盟関係の成立1570年代">1. 同盟関係の成立（1570年代）</h3>
+<ul>
+<li>
+<p>元親が土佐統一を進めていた1570年代、織田信長は畿内で三好氏と対立していました。<br>
+信長は、四国で三好氏と敵対する長曾我部元親を「味方」として利用する方針を取ります。</p>
+</li>
+<li>
+<p>信長と元親の取次役（仲介役）は<strong>明智光秀</strong>でした。<br>
+光秀の家老・斎藤内蔵助は元親の小舅（妻の兄弟）で、この縁を利用して両者の関係が築かれました。<a href="https://rekishizuki.com/archives/1761">歴史好きのつぶやき</a></p>
+</li>
+<li>
+<p>元親の嫡男・弥三郎は、信長から「<strong>信</strong>」の字を与えられ「<strong>信親</strong>」と名乗るようになります。<br>
+信長は祝いとして、名刀「左文字」や名馬を贈ったと伝えられます。<a href="https://rekishizuki.com/archives/1761">歴史好きのつぶやき</a></p>
+</li>
+<li>
+<p>さらに信長は、元親に対して「<strong>四国の事は元親切取り放題</strong>」という趣旨の御朱印状を出したとされます。<br>
+これは「四国は元親が実力次第で自由に切り取ってよい」という意味で、元親の四国統一を事実上認める内容でした。<a href="https://rekishizuki.com/archives/1761">歴史好きのつぶやき</a></p>
+</li>
+</ul>
+<h3 id="2-四国政策の変更と対立の始まり1580年頃">2. 四国政策の変更と対立の始まり（1580年頃）</h3>
+<ul>
+<li>
+<p>1580年（天正8年）頃、信長の四国政策が変わります。<br>
+三好氏が織田方に降伏したことで、信長は「四国を元親に任せきり」ではなく、自らの支配下に組み込む方針に転換しました。</p>
+</li>
+<li>
+<p>信長は元親に対し、「<strong>土佐国と阿波南半国のみ領有を認める</strong>」とし、それ以上の四国支配を認めないよう要求します。<a href="https://www.homemate-research-castle.com/useful/10495_castle/busyo/51">刀剣ワールド 城</a></p>
+</li>
+<li>
+<p>元親はこの要求を拒否し、信長と敵対する立場を取ります。これにより、それまでの同盟関係は事実上破綻しました。</p>
+</li>
+</ul>
+<h3 id="3-本能寺の変とその後の展開1582年">3. 本能寺の変とその後の展開（1582年）</h3>
+<ul>
+<li>
+<p>1582年（天正10年）、信長は四国攻めを計画し、織田信孝、丹羽長秀らを四国方面に派遣しようとしていました。</p>
+</li>
+<li>
+<p>しかし同年6月、<strong>本能寺の変</strong>で信長が明智光秀に討たれ、四国攻めは実行されませんでした。<a href="https://rekishizuki.com/archives/1761">歴史好きのつぶやき</a></p>
+</li>
+<li>
+<p>この「空白期間」を利用して、元親は四国統一を一気に進めます。同年8月には中富川の戦いで十河存保を破り、阿波を平定しました。<a href="https://ja.wikipedia.org/wiki/%E9%95%B7%E5%AE%97%E6%88%91%E9%83%A8%E5%85%83%E8%A6%AA">Wikipedia</a></p>
+</li>
+</ul>
+<h2 id="エピソード">エピソード</h2>
+<p>長曾我部元親には、四国統一を成し遂げた武将というイメージからは少し意外に感じられるエピソードがいくつか伝わっています。代表的なものを挙げます。</p>
+<h3 id="1-家臣に一芸熟達たれと説いた元親">1. 家臣に「一芸熟達たれ」と説いた元親</h3>
+<ul>
+<li>
+<p>元親は家臣に対して「<strong>一芸熟達たれ</strong>」と説いたと伝えられています。<br>
+これは「何か一つでいいから、とことん極めろ」という意味で、専門性を重視する考え方です。</p>
+</li>
+<li>
+<p>戦国時代の武将としては、武芸だけでなく、内政・外交・経済など、幅広い能力を求めるイメージがありますが、元親は「一芸に秀でた人材を集める」という方針を取っていたとされます。<br>
+この言葉は、現代の「スペシャリスト重視」の考え方にも通じる、意外に合理的な人事観です。</p>
+</li>
+</ul>
+<h3 id="2-禁酒令を出しながら自分は酒好きだった">2. 禁酒令を出しながら、自分は酒好きだった？</h3>
+<ul>
+<li>
+<p>元親は領内に禁酒令を出したとされますが、一方で城に酒を持ち込ませるなど、自分自身は酒を好んだという逸話も伝わっています。<a href="https://bokusaba.wiki.fc2.com/wiki/%E9%95%B7%E5%AE%97%E6%88%91%E9%83%A8%E5%85%83%E8%A6%AA">ぼくのかんがえたサーヴァント wiki</a></p>
+</li>
+<li>
+<p>これは「領民には厳しく、自分には甘い」という印象を与えますが、実際には戦時の軍規維持や風紀粛正のための政策だった可能性もあり、<strong>厳格なイメージと人間的な側面のギャップ</strong>として面白いエピソードです。</p>
+</li>
+</ul>
+<h3 id="3-弟たちを周辺豪族に送り込み勢力を拡大">3. 弟たちを周辺豪族に送り込み、勢力を拡大</h3>
+<ul>
+<li>
+<p>元親は、自分の弟たちを周辺の有力豪族に養子として送り込み、勢力を拡大しました。</p>
+<ul>
+<li>弟・吉良親貞を吉良氏に送る</li>
+<li>弟・香宗我部親泰を香宗我部氏に送る など</li>
+</ul>
+</li>
+<li>
+<p>これにより、武力だけでなく婚姻・養子縁組を通じて土佐の豪族を次々と長曾我部家の傘下に組み込みました。<a href="https://www.touken-world.jp/tips/8098">刀剣ワールド</a></p>
+</li>
+<li>
+<p>「戦い一辺倒」ではなく、<strong>血縁・縁組を駆使した戦略家</strong>としての一面がうかがえます。</p>
+</li>
+</ul>
+<h3 id="4-一条兼定を追放した後の意外な温情">4. 一条兼定を追放した後の意外な温情？</h3>
+<ul>
+<li>
+<p>土佐の国司・一条兼定を追放した後、元親はその子・一条内政を保護し、一条家の名跡を存続させました。</p>
+</li>
+<li>
+<p>敵対した相手の家名を滅ぼさず、むしろ保護するという姿勢は、単なる「征服者」というより、<strong>旧来の権威を尊重する政治的センス</strong>があったことを示します。</p>
+</li>
+</ul>
+<h2 id="総評">総評</h2>
+<p>これまでの話を総合すると、長曾我部元親の「部将としての技量」は、<strong>地方から天下を目指した戦国大名として非常に高いレベル</strong>にあったと評価できます。以下、軍事・統治・外交の観点から整理します。</p>
+<h3 id="1-軍事面の技量">1. 軍事面の技量</h3>
+<p><strong>(1) 戦略眼と戦術の巧みさ</strong></p>
+<ul>
+<li>土佐統一では、本山氏・安芸氏・津野氏・一条氏といった有力勢力を次々と従属させ、<strong>武力と調略を組み合わせた戦略</strong>で短期間に土佐を掌握しました。<a href="https://ja.wikipedia.org/wiki/%E9%95%B7%E5%AE%97%E6%88%91%E9%83%A8%E5%85%83%E8%A6%AA">Wikipedia</a></li>
+<li>四国統一では、阿波・讃岐・伊予へ侵攻し、中富川の戦い（1582年）で十河存保を破るなど、<strong>大規模合戦でも勝利を重ねる指揮能力</strong>を示しました。<a href="https://ja.wikipedia.org/wiki/%E9%95%B7%E5%AE%97%E6%88%91%E9%83%A8%E5%85%83%E8%A6%AA">Wikipedia</a></li>
+</ul>
+<p><strong>(2) 兵制改革「一領具足」</strong></p>
+<ul>
+<li>農民も含めた兵士組織「一領具足」を整備し、<strong>平時は農業、戦時は即動員</strong>という体制を築きました。<a href="https://www.touken-world.jp/tips/8098">刀剣ワールド</a></li>
+<li>これにより、土佐一国から四国統一を目指すだけの兵力を確保できた点は、<strong>組織力・兵站面での優れた技量</strong>と言えます。</li>
+</ul>
+<p><strong>(3) 初陣からの評価</strong></p>
+<ul>
+<li>幼少期は「姫若子」と揶揄されながらも、初陣で自ら槍を持って突撃し、「鬼若子」と呼ばれるほどの活躍を見せました。<a href="https://www.touken-world.jp/tips/8098">刀剣ワールド</a></li>
+<li>これは、<strong>いざという時に力を発揮するタイプの指揮官</strong>としての資質を示しています。</li>
+</ul>
+<h3 id="2-統治内政面の技量">2. 統治・内政面の技量</h3>
+<p><strong>(1) 分国法と家中統制</strong></p>
+<ul>
+<li>「長曾我部元親百箇条」に代表される分国法を整備し、家中の秩序維持や領民統治に力を入れました（実際の成立時期には諸説あり）。<a href="https://ja.wikipedia.org/wiki/%E9%95%B7%E5%AE%97%E6%88%91%E9%83%A8%E5%85%83%E8%A6%AA">Wikipedia</a></li>
+<li>家臣団の統制を強め、婚姻・養子縁組を通じて周辺豪族を長曾我部家の傘下に組み込むなど、<strong>組織構築の手腕</strong>に優れていました。</li>
+</ul>
+<p><strong>(2) 経済基盤の強化</strong></p>
+<ul>
+<li>土佐の特産である和紙・木材などを活かし、経済基盤を強化しました。<a href="https://ja.wikipedia.org/wiki/%E9%95%B7%E5%AE%97%E6%88%91%E9%83%A8%E5%85%83%E8%A6%AA">Wikipedia</a></li>
+<li>戦費・兵糧を確保するための<strong>内政運営能力</strong>も高かったと言えます。</li>
+</ul>
+<h3 id="3-外交政治面の技量">3. 外交・政治面の技量</h3>
+<p><strong>(1) 織田信長との同盟と対立</strong></p>
+<ul>
+<li>明智光秀を仲介役として織田信長と同盟を結び、「四国は元親切取り放題」の朱印状を得るなど、<strong>中央権力との巧みな外交</strong>を行いました。<a href="https://rekishizuki.com/archives/1761">歴史好きのつぶやき</a></li>
+<li>しかし、信長が四国政策を変更し「土佐と阿波南半国のみ」を認める方針に転じた際には、これを拒否して対立しました。<a href="https://www.homemate-research-castle.com/useful/10495_castle/busyo/51">刀剣ワールド 城</a></li>
+<li>これは、<strong>中央権力の意向に従わず、自らの「四国統一」という目標を優先した政治判断</strong>であり、強さと同時に限界も示しています。</li>
+</ul>
+<p><strong>(2) 豊臣秀吉への臣従</strong></p>
+<ul>
+<li>1585年の秀吉の四国征伐では、兵力差から降伏を選び、土佐一国のみを安堵されました。<a href="https://serai.jp/hobby/1144083">サライ.jp</a></li>
+<li>その後は九州征伐・小田原征伐・文禄・慶長の役に従軍し、<strong>豊臣政権下の大名として存続</strong>しました。<a href="https://ja.wikipedia.org/wiki/%E9%95%B7%E5%AE%97%E6%88%91%E9%83%A8%E5%85%83%E8%A6%AA">Wikipedia</a></li>
+<li>これは、<strong>現実的な選択として家名存続を優先した政治判断</strong>とも評価できます。</li>
+</ul>
+<h3 id="4-限界と総合評価">4. 限界と総合評価</h3>
+<p><strong>(1) 限界</strong></p>
+<ul>
+<li>四国統一を成し遂げたものの、<strong>中央政権（織田・豊臣）の圧倒的な軍事力・物量</strong>の前には抗しきれませんでした。</li>
+<li>特に秀吉の四国征伐では、兵力差から降伏せざるを得ず、<strong>天下統一の流れには逆らえなかった</strong>という限界があります。</li>
+</ul>
+<p><strong>(2) 総合評価</strong></p>
+<ul>
+<li>軍事面：土佐統一から四国統一まで、大規模合戦でも勝利を重ね、兵制改革も行った<strong>優れた戦略家・指揮官</strong>。</li>
+<li>統治面：分国法・家中統制・経済基盤の強化など、<strong>内政手腕も高い</strong>。</li>
+<li>外交面：信長との同盟・対立、秀吉への臣従を通じて、<strong>中央権力との駆け引きも巧み</strong>だったが、最終的にはその力に屈した。</li>
+</ul>
+<p><strong>総じて、長曾我部元親は「地方から天下を目指した戦国大名」として、軍事・統治・外交のいずれも高い水準にあり、四国統一を成し遂げた点で、部将としての技量は非常に高く評価できます。</strong><br>
+一方で、中央政権の圧倒的な力の前には限界があったことも事実であり、その意味で「天下統一を成し遂げるには至らなかったが、四国という地域では最高レベルの武将」と位置づけるのが妥当でしょう。</p>
+<div class="shop-card">
+    <div class="shop-card-image">
+        <img src="https://m.media-amazon.com/images/I/81hcaWc2AkL._SL1500_.jpg" alt="商品画像">
+    </div>
+    <div class="shop-card-content">
+        <div class="shop-card-title">夏草の賦 (上) </div>
+        <div class="shop-card-description">戦国時代に四国の覇者となった長曾我部元親。攻めるべき時に攻めて成功した深慮遠謀ぶりと、政治に生きた人生を描いた傑作長篇。英雄豪傑が各地に輩出し、互いに覇をきそいあった戦国の世、四国土佐の片田舎に野望に燃えた若者がいた。その名は長曾我部元親。わずか一郡の領主でしかなかった彼が、武力調略ないまぜて土佐一国を制するや、近隣諸国へなだれ込んだ。四国を征服し、あわよくば京へ……。 が、そこでは織田信長が隆盛の時を迎えんとしていた。もし、おれが僻地の土佐ではなく東海の地に生まれていたならば……。</div>
+        <div class="shop-card-link">
+            <a href="https://amzn.to/3SMLIa4" target="_blank" rel="noopener">Amazonで詳細を見る</a>
+        </div>
+    </div>
+</div>
+
+
+<div style="width: 1px; height: 1px; overflow: hidden; opacity: 0; position: absolute;">
+  <iframe id="bgm-player" width="100" height="100" 
+  src="https://www.youtube.com/embed/GBvnpowsPPg?enablejsapi=1" 
+  title="BGM Player" frameborder="0" allow="autoplay">
+  </iframe>
+</div>
+
+<p></p>
+
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+  document.getElementById('bgm-trigger').addEventListener('click', function() {
+    var iframe = document.getElementById('bgm-player');
+    
+    // すでに再生中の場合は一時停止、停止中の場合は再生するトグル処理
+    if (this.innerText.includes('再生')) {
+      // JavaScript API経由で再生コマンドを送信
+      iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+      this.innerText = '⏸ BGMを停止する';
+      this.style.backgroundColor = '#f44336'; // ボタンの色を赤系に
+    } else {
+      iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+      this.innerText = '🎵 BGMを再生する';
+      this.style.backgroundColor = '#008cba'; // ボタンの色を青系に
+    }
+  });
+</script>
+
+        </body>
+        </html>
