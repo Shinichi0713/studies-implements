@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&#x6982;&#x8981;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+/* 目次全体のコンテナ */
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+
+/* 記事タイトル (h1) */
+h1 {
+    font-size: 2rem;
+    color: #24292f;
+    line-height: 1.3;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 3px double #e1e4e8; /* 二重線で上品に */
+    text-align: center; /* タイトルを中央に寄せて特別感を出す */
+}
+
+/* セクション見出し (h2) */
+h2 {
+    font-size: 1.5rem;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(transparent 70%, #e8f0fe 70%); /* 下側に薄い色のアクセント */
+    border-left: 6px solid #0969da; /* 目次のテーマカラーと合わせる */
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* 強調文字 (strong) */
+strong {
+    font-weight: bold;
+    color: #cf222e; /* ホバー時の赤色と合わせて統一感を出す */
+    background: linear-gradient(transparent 60%, #fff2cc 60%); /* 黄色のマーカー風 */
+    padding: 0 2px;
+}
+
+/* 引用のコンテナ */
+blockquote {
+    position: relative;
+    padding: 20px 30px;
+    margin: 30px 0;
+    background-color: #f6f8fa; /* 目次の背景より少しだけ濃いグレー */
+    border-left: 5px solid #d0d7de; /* 落ち着いたグレーの境界線 */
+    color: #57606a; /* 文字色は少し薄くして引用らしさを出す */
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 引用符のアイコンを装飾として追加 */
+blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    font-size: 40px;
+    color: #d0d7de;
+    font-family: serif;
+    line-height: 1;
+}
+
+/* 読者になるボタンのデザイン */
+.btn-subscribe {
+    display: inline-block;
+    padding: 12px 35px; /* 横幅を広めにとって存在感を出します */
+    background-color: #383838; /* お好みの色に変更してください */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #555555;
+    text-decoration: none;
+}
+
+/* はてなブログで見えてしまう数式データを非表示にする */
+.katex-html {
+    display: none !important;
+}
+
+.katex-mathml {
+    display: inline !important;
+}
+/* Amazonカード型のオシャレなデザイン */
+.shop-card {
+    display: flex;
+    max-width: 500px;
+    margin: 20px auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* マウスホップした時の動き */
+.shop-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.shop-card-image {
+    width: 150px;
+    min-width: 150px;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shop-card-image img {
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+}
+
+.shop-card-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.shop-card-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.shop-card-description {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+/* Amazonらしいオレンジボタン */
+.shop-card-link a {
+    display: inline-block;
+    background-color: #ff9900;
+    color: #fff !important;
+    text-decoration: none !important;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.shop-card-link a:hover {
+    background-color: #e68a00;
+}
+
+/* スマホ対応：縦並びにする */
+@media (max-width: 480px) {
+    .shop-card {
+        flex-direction: column;
+        max-width: 100%;
+    }
+    .shop-card-image {
+        width: 100%;
+        height: 200px;
+    }
+}
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+            <span id="markdown-mermaid" aria-hidden="true" data-config="{&quot;darkModeTheme&quot;:&quot;vscode&quot;,&quot;lightModeTheme&quot;:&quot;vscode&quot;,&quot;maxTextSize&quot;:50000,&quot;clickDrag&quot;:&quot;alt&quot;,&quot;showControls&quot;:&quot;onHoverOrFocus&quot;,&quot;resizable&quot;:true,&quot;maxHeight&quot;:&quot;&quot;}"></span>
+				<p>秀吉は信長亡き後、天下を分けて<a href="https://yoshishinnze.hatenablog.com/entry/2026/03/11/000000">柴田勝家</a>と対立を深めていきました。
+この対立は、折衝や調整に長けた秀吉が戦略的には勝家を圧倒していきます。
+最終的に秀吉が、勝家の同盟者・織田信孝を降伏させた段階で、勝家が軍を動かし始め賤ケ岳で秀吉軍と争うことになります。</p>
+<p>この戦いの緒戦で戦いのリードをとったのが佐久間盛政（さくま・もりまさ）です。</p>
+<p>本日はこの佐久間盛政について話していきます。</p>
+<button id="bgm-trigger" style="padding: 10px 20px; font-size: 16px; background-color: #008cba; color: white; border: none; border-radius: 5px; cursor: pointer;">
+  🎵 BGMを再生する
+</button>
+
+<h2 id="概要">概要</h2>
+<p>佐久間盛政は、戦国時代から安土桃山時代にかけて活躍した武将で、織田信長・柴田勝家に仕えた「鬼玄蕃」として知られる猛将です。</p>
+<h3 id="1-基本情報">1. 基本情報</h3>
+<ul>
+<li><strong>生没年</strong>：天文23年（1554年）〜天正11年（1583年）5月7日または12日</li>
+<li><strong>出身</strong>：尾張国愛知郡御器所（現在の名古屋市）の佐久間氏</li>
+<li><strong>父</strong>：佐久間盛次</li>
+<li><strong>母</strong>：柴田勝家の姉（または妹）</li>
+<li><strong>主君</strong>：織田信長 → 柴田勝家</li>
+<li><strong>通称・異名</strong>：玄蕃允（げんばのじょう）、<strong>鬼玄蕃</strong>、夜叉玄蕃
+<ul>
+<li>「玄蕃」は官職名「玄蕃允」に由来し、その勇猛さから「鬼」「夜叉」と恐れられました。</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-主な活躍と経歴">2. 主な活躍と経歴</h3>
+<p><strong>織田信長の家臣として</strong></p>
+<ul>
+<li>織田家の有力家臣として、北陸方面の一向一揆平定などで武功を挙げました。</li>
+<li>加賀一向一揆の鎮圧に功績があり、<strong>金沢城（尾山城）の初代城主</strong>となっています。</li>
+</ul>
+<p><strong>柴田勝家の甥としての立場</strong></p>
+<ul>
+<li>母が柴田勝家の姉（または妹）であるため、勝家にとっては甥にあたります。</li>
+<li>本能寺の変後は、勝家の北陸軍団の中核として活躍し、賤ヶ岳の戦いでは先鋒的な役割を担いました。</li>
+</ul>
+<p><strong>賤ヶ岳の戦いでの活躍と失敗</strong></p>
+<ul>
+<li>1583年の賤ヶ岳の戦いでは、緒戦で秀吉方の砦を急襲し、中川清秀を討ち取るなど、大きな戦果を挙げました。</li>
+<li>しかし、その後の戦況判断を誤り、<strong>柴田勝家からの撤退命令を聞き入れずに深入り</strong>したことが、柴田軍敗北の一因になったとされています。</li>
+</ul>
+<h3 id="3-性格評価">3. 性格・評価</h3>
+<ul>
+<li><strong>猛将としての評価</strong>
+<ul>
+<li>「尾張一の勇者」「鬼玄蕃」と称されるほど武勇に優れ、信長もその勇猛さを高く評価していました。</li>
+</ul>
+</li>
+<li><strong>剛勇だが短慮？</strong>
+<ul>
+<li>賤ヶ岳の戦いでは、戦功にこだわりすぎて退却の機を逸したとされ、勇猛さと同時に「猪突猛進」「短慮」といった評価も伝わります。</li>
+</ul>
+</li>
+<li><strong>忠義の人</strong>
+<ul>
+<li>捕らえられた後、秀吉から九州一国を与えるという破格の条件で仕官を勧められましたが、<strong>主君・柴田勝家への忠義を貫き、死を選んだ</strong>と伝えられています。</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-最期">4. 最期</h3>
+<ul>
+<li>賤ヶ岳の戦いで敗れた後、越前山中で捕らえられ、京都に送られました。</li>
+<li>京の市中を引き回されたのち、槇島（または三条河原・六条河原）で斬首されました。</li>
+<li>その死に際は「武士としての意地を見せた」とされ、後世の軍記物などでも、剛直で忠義に厚い武将として描かれることが多い人物です。</li>
+</ul>
+<h3 id="5-子孫">5. 子孫</h3>
+<ul>
+<li>娘の<strong>虎姫</strong>は、のちに中川秀成（豊後岡藩主）の正室となり、その血筋は豊後岡藩に受け継がれました。</li>
+</ul>
+<h2 id="生い立ち">生い立ち</h2>
+<p>佐久間盛政の生い立ちについて、現存する「正式な一次史料」で直接・詳細に記録されているものはほとんどなく、多くの部分は家譜・軍記物・系図類など後世の二次史料に依拠しています。
+というくらい、この時代の人の話というのは、よほどのことがない限り、詳細は分かりません。</p>
+<h3 id="1-出生と出自史料に基づく一般的な理解">1. 出生と出自（史料に基づく一般的な理解）</h3>
+<p>先程の再掲に近いですが。</p>
+<ul>
+<li><strong>生年</strong>：天文23年（1554年）
+<ul>
+<li>多くの系図・軍記類・人物事典でこの生年が採用されていますが、一次史料での明確な記載は確認されていません。</li>
+</ul>
+</li>
+<li><strong>出生地</strong>：尾張国愛知郡御器所（現在の名古屋市）
+<ul>
+<li>佐久間氏の所領・居城があったとされる地域で、系図や地誌類から推定されています。</li>
+</ul>
+</li>
+<li><strong>父</strong>：佐久間盛次（さくま・もりつぐ）
+<ul>
+<li>織田信長の家臣で、<a href="https://yoshishinnze.hatenablog.com/entry/2026/07/01/043000#google_vignette">佐久間信盛</a>の従兄弟とされる人物。</li>
+<li>盛政が幼少の頃に亡くなったと伝えられますが、これも家譜・軍記類に基づく記述です。</li>
+</ul>
+</li>
+<li><strong>母</strong>：柴田勝家の姉（または妹）
+<ul>
+<li>これにより盛政は柴田勝家の甥にあたるとされます。</li>
+<li>この関係は系図類・軍記物で繰り返し記され、信憑性は高いと見なされていますが、一次史料での明確な記録は限定的です。</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-幼少期の状況史料に基づく一般的な理解">2. 幼少期の状況（史料に基づく一般的な理解）</h3>
+<ul>
+<li>父・盛次が早くに亡くなったため、<strong>柴田勝家の庇護のもとで育った</strong>と伝えられます。
+<ul>
+<li>これは『賤ヶ岳合戦記』などの軍記物や、佐久間氏・柴田氏の系図に基づく記述です。</li>
+</ul>
+</li>
+<li>勝家の甥として、織田家中でも比較的恵まれた立場で武芸を学び、若くして信長の家臣として仕えたとされています。
+<ul>
+<li>ただし、幼少期の具体的な逸話（何歳で元服したか、どこで教育を受けたか等）は、一次史料ではほとんど確認できません。</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-史料上の限界と注意点">3. 史料上の限界と注意点</h3>
+<ul>
+<li>盛政の生い立ちに関する情報は、主に以下のような<strong>二次史料・系図類</strong>に基づいています。
+<ul>
+<li>佐久間氏・柴田氏の家譜・系図</li>
+<li>『賤ヶ岳合戦記』などの軍記物</li>
+<li>江戸期以降の地誌・人物伝</li>
+</ul>
+</li>
+<li>これらは「伝承」や「後世の整理」を含むため、<strong>どこまでが厳密な史実かは断定しにくい</strong>部分があります。</li>
+<li>一方で、盛政が「柴田勝家の甥」「佐久間盛次の子」であることは、複数の系図・軍記で一致しており、歴史研究上も概ね受け入れられています。</li>
+</ul>
+<h2 id="仕官から勝家の与力となるまで">仕官から勝家の与力となるまで</h2>
+<p>佐久間盛政が「仕官してから柴田勝家の与力となるまで」の経緯は、**軍記物（『佐久間軍記』など）に描かれる“物語的な経歴”**と、**一次史料で確認できる“確かな経歴”**でかなり扱いが異なります。両方を区別して説明します。</p>
+<h3 id="1-軍記物に描かれる仕官初期の活躍">1. 軍記物に描かれる「仕官〜初期の活躍」</h3>
+<p><strong>初陣と仕官の時期（『佐久間軍記』など）</strong></p>
+<ul>
+<li>『佐久間軍記』によれば、盛政は<strong>永禄11年（1568年）の観音寺城の戦い（箕作城攻め）で初陣</strong>を飾ったとされます。
+<ul>
+<li>父・佐久間盛次に従い、六角承禎方の箕作城攻めに参加したと伝えられます。</li>
+</ul>
+</li>
+<li>その後も、元亀元年（1570年）の越前朝倉攻め（手筒山城攻め）や、槇島城の戦いなどで信長の軍勢に加わり、勇名を挙げたと記されています。</li>
+</ul>
+<p><strong>ただし</strong>、1568年当時、盛政は15歳前後であり、他史料での裏付けも乏しいため、<strong>この初陣・初期活躍の記述は「不確かな前歴」として扱われることが多い</strong>とされています<a href="https://ja.wikipedia.org/wiki/%E4%BD%90%E4%B9%85%E9%96%93%E7%9B%9B%E6%94%BF">佐久間盛政 - Wikipedia</a>。</p>
+<h3 id="2-一次史料で確認できる仕官与力配属の経緯">2. 一次史料で確認できる「仕官〜与力配属」の経緯</h3>
+<p><strong>確かな初見</strong></p>
+<ul>
+<li>公的に確認できる盛政の史料上の初見は、<strong>天正4年（1576年）5月23日付の柴田勝家書状への副状</strong>です<a href="https://ja.wikipedia.org/wiki/%E4%BD%90%E4%B9%85%E9%96%93%E7%9B%9B%E6%94%BF">佐久間盛政 - Wikipedia</a>。
+<ul>
+<li>この時点で、すでに<strong>柴田勝家の与力として活動している</strong>ことが確認できます。</li>
+</ul>
+</li>
+</ul>
+<p><strong>与力配属の時期と背景</strong></p>
+<ul>
+<li>一般的な理解として、盛政が<strong>柴田勝家の与力として正式に配属されたのは天正3年（1575年）9月頃</strong>とされています<a href="https://hajimete-sangokushi.com/2020/07/01/sakumamorimasa">佐久間盛政とはどんな人？尾張一の勇者鬼玄蕃の活躍</a>。</li>
+<li>背景としては、以下の流れが挙げられます。
+<ol>
+<li><strong>天正3年（1575年）</strong>、織田信長は越前一向一揆を鎮圧し、その平定後、<strong>柴田勝家に越前8郡と北ノ庄城を与えた</strong>。</li>
+<li>勝家は北陸方面軍の総司令官として、前田利家・佐々成政らとともに北陸経略を担うことになる。</li>
+<li>このとき、<strong>甥である佐久間盛政も勝家の与力として北陸方面軍に配属された</strong>と伝えられる<a href="https://hajimete-sangokushi.com/2020/07/01/sakumamorimasa">佐久間盛政とはどんな人？尾張一の勇者鬼玄蕃の活躍</a>。</li>
+</ol>
+</li>
+</ul>
+<p><strong>血縁関係と与力配属の理由</strong></p>
+<ul>
+<li>先述の通り盛政の母は<strong>柴田勝家の姉（または妹）</strong> であり、勝家にとっては甥にあたります<a href="https://ja.wikipedia.org/wiki/%E4%BD%90%E4%B9%85%E9%96%93%E7%9B%9B%E6%94%BF">佐久間盛政 - Wikipedia</a>。</li>
+<li>勝家は盛政を「父子のような親密な関係」で育てたとされ、そのため北陸方面軍の中核として与力に配属したと考えられています。</li>
+<li>つまり、<strong>仕官当初から織田信長の家臣団の一員として活動しつつ、叔父・勝家の庇護のもとで育ち、北陸平定のタイミングで正式に勝家の与力として組み込まれた</strong>という流れです。</li>
+</ul>
+<h3 id="3-まとめ仕官与力となるまでの流れ">3. まとめ（仕官〜与力となるまでの流れ）</h3>
+<ol>
+<li>
+<p><strong>仕官・初期の活動（軍記物ベース）</strong></p>
+<ul>
+<li>1568年頃から父・盛次に従い、織田軍の合戦に参加したとされる（『佐久間軍記』など）。</li>
+<li>ただし、一次史料での裏付けは乏しく、史実として確定はしていません。</li>
+</ul>
+</li>
+<li>
+<p><strong>確かな史料での登場（1576年）</strong></p>
+<ul>
+<li>天正4年（1576年）5月23日付の柴田勝家書状への副状で、すでに<strong>勝家の与力として活動している</strong>ことが確認できる<a href="https://ja.wikipedia.org/wiki/%E4%BD%90%E4%B9%85%E9%96%93%E7%9B%9B%E6%94%BF">佐久間盛政 - Wikipedia</a>。</li>
+</ul>
+</li>
+<li>
+<p><strong>与力配属の時期（1575年頃）</strong></p>
+<ul>
+<li>天正3年（1575年）の越前一向一揆平定後、柴田勝家が北ノ庄城主・北陸方面軍司令官となった際、甥である盛政も<strong>与力として配属された</strong>と理解されています<a href="https://hajimete-sangokushi.com/2020/07/01/sakumamorimasa">佐久間盛政とはどんな人？尾張一の勇者鬼玄蕃の活躍</a>。</li>
+</ul>
+</li>
+<li>
+<p><strong>背景</strong></p>
+<ul>
+<li>血縁関係（勝家の甥）と、勝家との親密な師弟関係が、与力配属の大きな理由とされています。</li>
+</ul>
+</li>
+</ol>
+<p>ここまでの経緯を追うと、仕官してからしばらく派手な活躍があったかというと少し疑問が残ります。
+譜代であった佐久間一族として織田に仕官、そして佐久間一族としての順当な経歴を歩んだということになると思います。</p>
+<h2 id="勝家の与力として">勝家の与力として</h2>
+<p>佐久間盛政が活躍が目立つようになるのは勝家の与力となってからです。
+佐久間盛政は、天正3年（1575年）頃に柴田勝家の与力として北陸方面軍に配属されてから、<strong>北陸平定の最前線で「鬼玄蕃」の異名を轟かせる活躍</strong>をしています。主な活躍は以下の通りです。</p>
+<h3 id="1-北陸一向一揆平定での活躍1575年">1. 北陸一向一揆平定での活躍（1575年〜）</h3>
+<ul>
+<li>天正3年（1575年）、織田信長は越前一向一揆を鎮圧し、柴田勝家に越前8郡と北ノ庄城を与えました。</li>
+<li>このとき、甥である<strong>盛政も勝家の与力として北陸方面軍に配属され、柴田軍の先鋒を務める</strong>ようになります<a href="https://hajimete-sangokushi.com/2020/07/01/sakumamorimasa">佐久間盛政とはどんな人？尾張一の勇者鬼玄蕃の活躍</a>。</li>
+<li>一向一揆勢との戦いで目覚ましい戦功を挙げ、信長から感状を賜ったと伝えられます<a href="https://r-ijin.com/sakuma-morimasa">佐久間盛政ってどんな人物？鬼玄蕃には柴田勝家もドン引き！</a>。</li>
+</ul>
+<h3 id="2-加賀平定と金沢城尾山城の初代城主">2. 加賀平定と金沢城（尾山城）の初代城主</h3>
+<ul>
+<li>勝家の北陸方面軍として、<strong>加賀一向一揆の平定に従軍</strong>し、加賀国内の要衝を次々と攻略していきます。</li>
+<li>平定後、<strong>加賀金沢城（尾山城）の初代城主</strong>に任じられ、加賀支配の要を担いました<a href="https://ja.wikipedia.org/wiki/%E4%BD%90%E4%B9%85%E9%96%93%E7%9B%9B%E6%94%BF">佐久間盛政 - Wikipedia</a>。</li>
+<li>これは、北陸平定における盛政の軍功が高く評価された結果であり、勝家の与力としての地位を確固たるものにしました。</li>
+</ul>
+<h3 id="3-北陸戦線での鬼玄蕃としての勇名">3. 北陸戦線での「鬼玄蕃」としての勇名</h3>
+<ul>
+<li>北陸での一連の戦いで、盛政は<strong>常に先陣を切って敵陣に突入する勇猛さ</strong>を見せ、「<strong>鬼玄蕃</strong>」「<strong>夜叉玄蕃</strong>」と恐れられるようになります<a href="https://ja.wikipedia.org/wiki/%E4%BD%90%E4%B9%85%E9%96%93%E7%9B%9B%E6%94%BF">佐久間盛政 - Wikipedia</a>。</li>
+<li>特に加賀平定の過程では、一揆勢に対する弾圧が熾烈を極めたとされ、山内7ヵ村の門徒衆を磔刑にした、あるいは石川郡八邑を火攻めにしたなど、苛烈な戦いぶりが伝えられています<a href="https://ja.wikipedia.org/wiki/%E4%BD%90%E4%B9%85%E9%96%93%E7%9B%9B%E6%94%BF">佐久間盛政 - Wikipedia</a>。</li>
+</ul>
+<h2 id="秀吉勢力との対立">秀吉勢力との対立</h2>
+<p>柴田勝家と豊臣秀吉の対立が深まる中での佐久間盛政の立ち位置・動向は、おおむね以下のように整理できます。</p>
+<h3 id="1-対立の構図と盛政の立場">1. 対立の構図と盛政の立場</h3>
+<ul>
+<li>
+<p><strong>対立の構図</strong></p>
+<ul>
+<li>本能寺の変（1582年）後、清洲会議で織田家の後継者・遺領配分をめぐり、<strong>柴田勝家派</strong>と<strong>羽柴秀吉派</strong>の対立が表面化します。</li>
+<li>勝家は信長の三男・織田信孝を推し、秀吉は信長の孫・三法師（後の秀信）を推しましたが、最終的に秀吉側が優位となり、両者の対立は決定的になります。</li>
+</ul>
+</li>
+<li>
+<p><strong>盛政の立場</strong></p>
+<ul>
+<li>盛政は<strong>勝家の甥</strong>であり、北陸方面軍の与力として勝家を支えてきた武将です。</li>
+<li>この対立構造では、<strong>盛政は一貫して「勝家派」の最前線の武将</strong>として位置づけられます。</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-対立激化賤ヶ岳の戦いまでの動向">2. 対立激化〜賤ヶ岳の戦いまでの動向</h3>
+<p><strong>（1）秀吉による長浜城攻撃と美濃・伊勢制圧（1582年末〜1583年初）</strong></p>
+<ul>
+<li>秀吉は勝家の養子・柴田勝豊が守る<strong>長浜城</strong>を攻撃し、短期間で降伏させます。</li>
+<li>さらに美濃に進駐し、稲葉一鉄らから人質を取って織田信孝を孤立させ、岐阜城を降伏させました。</li>
+<li>この間、北陸は雪深く、勝家は大軍を動かせず、<strong>盛政ら北陸軍は冬の間、北陸に釘付け</strong>にされました。</li>
+</ul>
+<p><strong>（2）賤ヶ岳の戦いにおける盛政の役割</strong></p>
+<ul>
+<li>天正11年（1583年）4月、近江の賤ヶ岳で秀吉軍と勝家軍が激突します。</li>
+<li>盛政は<strong>柴田軍の先鋒</strong>として、行市山に陣を構え、秀吉方の砦を次々と攻撃しました。
+<ul>
+<li>特に、秀吉方の<strong>中川清秀</strong>が守る砦を急襲し、清秀を討ち取るなど、緒戦では大きな戦果を挙げています<a href="https://ja.wikipedia.org/wiki/%E8%B3%A4%E3%83%B6%E5%B2%B3%E3%81%AE%E6%88%A6%E3%81%84">賤ヶ岳の戦い - Wikipedia</a>。</li>
+</ul>
+</li>
+<li>この時点では、<strong>盛政は勝家軍の「切り込み隊長」として秀吉軍を圧倒する役割</strong>を担っていました。</li>
+</ul>
+<h3 id="3-盛政の判断ミスと柴田軍敗北">3. 盛政の判断ミスと柴田軍敗北</h3>
+<ul>
+<li>盛政は緒戦の勝利に勢いづき、<strong>勝家からの撤退命令を聞き入れずに深入り</strong>したとされます<a href="https://ja.wikipedia.org/wiki/%E4%BD%90%E4%B9%85%E9%96%93%E7%9B%9B%E6%94%BF">佐久間盛政 - Wikipedia</a>。</li>
+<li>一方、秀吉は盛政の動きを察知すると、得意の「大返し」で本隊を素早く移動させ、盛政軍を逆襲します。</li>
+<li>結果として、<strong>盛政軍は孤立し、柴田軍全体の敗北の一因</strong>となりました。</li>
+<li>この点について、後世の軍記などでは「愚将」「猪突猛進」と評されることもありますが、実際には秀吉の機動力と戦略に翻弄された側面も大きいと見られています。</li>
+</ul>
+<h3 id="4-敗北後の盛政の動向と最期">4. 敗北後の盛政の動向と最期</h3>
+<ul>
+<li>賤ヶ岳の敗北後、勝家は北ノ庄城で自害し、柴田政権は崩壊します。</li>
+<li>盛政は越前山中に逃れますが、<strong>秀吉方に捕らえられ</strong>ました。</li>
+<li>秀吉は盛政の武勇を惜しみ、<strong>九州一国を与えるという破格の条件で仕官を勧めた</strong>と伝えられます<a href="https://rekishikaido.php.co.jp/detail/4909">佐久間盛政～「鬼玄蕃」と呼ばれた硬骨漢の逸話 | WEB歴史街道</a>。</li>
+<li>しかし盛政は、<strong>主君・勝家への忠義を貫き、秀吉の誘いを拒否</strong>。</li>
+<li>その後、京の市中を引き回されたのち、<strong>槇島（または三条河原・六条河原）で斬首</strong>されました<a href="https://ja.wikipedia.org/wiki/%E4%BD%90%E4%B9%85%E9%96%93%E7%9B%9B%E6%94%BF">佐久間盛政 - Wikipedia</a>。</li>
+</ul>
+<p>ここまで佐久間盛政についてまとめてきました。
+秀吉や信長であれば、これ以外に個人の性格が分かるようなエピソードが存在します。
+盛政に関しては、恐らくこれがすべてです。
+活躍の解像度が上がるのは賤ケ岳の戦いであり、はっきりと話が分かるのはあくまで勝家の与力となって以降の史跡のみでした。
+時代の勝者側につかなかった場合、勢力のトップが抱える随筆家の目に留まりません。
+結果、ほとんどの話が逸失してしまうということを感じさせられました。</p>
+<h2 id="力量評価">力量評価</h2>
+<p>佐久間盛政の力量については、<strong>軍事面での突出した能力</strong>と、<strong>政治・戦略面での限界</strong>がはっきり分かれる人物として評価できます。</p>
+<h3 id="1-軍事的能力武勇戦闘指揮">1. 軍事的能力（武勇・戦闘指揮）</h3>
+<p><strong>強み</strong></p>
+<ul>
+<li><strong>「鬼玄蕃」「夜叉玄蕃」の異名で知られるほどの猛将</strong>
+<ul>
+<li>北陸一向一揆平定や加賀平定で、常に先陣を切って敵陣に突入し、大きな戦果を挙げたと伝えられます<a href="https://ja.wikipedia.org/wiki/%E4%BD%90%E4%B9%85%E9%96%93%E7%9B%9B%E6%94%BF">佐久間盛政 - Wikipedia</a>。</li>
+<li>その勇猛さから、信長や勝家からも高く評価され、<strong>加賀金沢城（尾山城）の初代城主</strong>に任じられています<a href="https://ja.wikipedia.org/wiki/%E4%BD%90%E4%B9%85%E9%96%93%E7%9B%9B%E6%94%BF">佐久間盛政 - Wikipedia</a>。</li>
+</ul>
+</li>
+<li><strong>賤ヶ岳の緒戦での活躍</strong>
+<ul>
+<li>賤ヶ岳の戦いでは、秀吉方の砦を急襲し、中川清秀を討ち取るなど、<strong>柴田軍の先鋒として秀吉軍を一時的に圧倒する戦果</strong>を挙げました<a href="https://ja.wikipedia.org/wiki/%E8%B3%A4%E3%83%B6%E5%B2%B3%E3%81%AE%E6%88%A6%E3%81%84">賤ヶ岳の戦い - Wikipedia</a>。</li>
+</ul>
+</li>
+</ul>
+<p><strong>評価</strong></p>
+<ul>
+<li>戦場での突撃力・士気の高さは、<strong>織田家中でも随一のレベル</strong>と評価できます。</li>
+<li>北陸平定の過程で、<strong>勝家の与力として前線を支えた実績</strong>は確かであり、武将としての「軍事的能力」は非常に高いと言えます。</li>
+</ul>
+<h3 id="2-政治戦略的判断力">2. 政治・戦略的判断力</h3>
+<p><strong>限界</strong></p>
+<ul>
+<li><strong>賤ヶ岳での判断ミス</strong>
+<ul>
+<li>緒戦の勝利に勢いづき、<strong>勝家からの撤退命令を聞き入れずに深入り</strong>したことが、柴田軍敗北の一因になったとされています<a href="https://ja.wikipedia.org/wiki/%E4%BD%90%E4%B9%85%E9%96%93%E7%9B%9B%E6%94%BF">佐久間盛政 - Wikipedia</a>。</li>
+<li>秀吉の「大返し」による逆襲を受け、孤立して敗走しました。</li>
+</ul>
+</li>
+<li><strong>大局観の不足</strong>
+<ul>
+<li>秀吉との対立が決定的になる中、<strong>局所的な戦果にこだわりすぎて、戦略的な撤退の機を逸した</strong>と見なされることが多いです。</li>
+<li>軍記物などでは「猪突猛進」「短慮」と評されることもあります。</li>
+</ul>
+</li>
+</ul>
+<p><strong>評価</strong></p>
+<ul>
+<li>戦術的な突撃力は高いものの、<strong>戦略的な判断力・大局観は秀吉や勝家に比べて劣っていた</strong>と評価せざるを得ません。</li>
+<li>特に、<strong>主君・勝家の指示を無視して深入りした点</strong>は、武将としての力量に疑問符がつく部分です。</li>
+</ul>
+<h3 id="3-忠義人柄">3. 忠義・人柄</h3>
+<p><strong>強み</strong></p>
+<ul>
+<li><strong>秀吉からの仕官誘いを断ったエピソード</strong>
+<ul>
+<li>捕らえられた後、秀吉から「九州一国を与える」という破格の条件で仕官を勧められましたが、<strong>主君・柴田勝家への忠義を貫き、死を選んだ</strong>と伝えられます<a href="https://rekishikaido.php.co.jp/detail/4909">佐久間盛政～「鬼玄蕃」と呼ばれた硬骨漢の逸話 | WEB歴史街道</a>。</li>
+</ul>
+</li>
+<li><strong>武士としての意地</strong>
+<ul>
+<li>処刑に際し、自ら市中引き回しを望んだという話もあり、<strong>武士としての誇りと忠義を最後まで貫いた人物</strong>として評価されています。</li>
+</ul>
+</li>
+</ul>
+<p><strong>評価</strong></p>
+<ul>
+<li>軍事・政治面での限界はあるものの、<strong>忠義心と武士としての気概は非常に高く評価できる</strong>人物です。</li>
+<li>後世の軍記物や人物伝では、「勇猛だが一途な武将」「忠義の猛将」として語られることが多いです。</li>
+</ul>
+<h3 id="4-総合的な評価">4. 総合的な評価</h3>
+<ul>
+<li><strong>軍事的能力</strong>：★★★★☆（非常に高い突撃力・士気、前線指揮官として優秀）</li>
+<li><strong>戦略的判断力</strong>：★★☆☆☆（局所的な戦果にこだわり、大局を見失いがち）</li>
+<li><strong>忠義・人柄</strong>：★★★★★（主君への忠義を最後まで貫いた点は高く評価）</li>
+</ul>
+<p><strong>総評</strong>としては、<br>
+「<strong>前線の切り込み隊長としては最高クラスの能力を持つが、戦略家としては限界があり、忠義心の強さが際立つ武将</strong>」<br>
+と評価できます。<br>
+秀吉のような天下人タイプとは異なり、<strong>主君に忠義を尽くす「猛将型」の武将</strong>としての力量は十分に高いと言えるでしょう。</p>
+<div class="shop-card">
+    <div class="shop-card-image">
+        <img src="https://m.media-amazon.com/images/I/516tXBOyUlL.jpg" alt="商品画像">
+    </div>
+    <div class="shop-card-content">
+        <div class="shop-card-title">賤ヶ岳の鬼神 佐久間盛政</div>
+        <div class="shop-card-description">この本を調べて見つけたときは衝撃でした。勝家や利家なら分かりますが、佐久間盛政です。明確な活躍が分かりづらい盛政の貴重なエピソードを参照できる貴重な本です。</div>
+        <div class="shop-card-link">
+            <a href="https://amzn.to/3SLQg0z" target="_blank" rel="noopener">Amazonで詳細を見る</a>
+        </div>
+    </div>
+</div>
+<p></p>
+            
+
+
+<div style="width: 1px; height: 1px; overflow: hidden; opacity: 0; position: absolute;">
+  <iframe id="bgm-player" width="100" height="100" 
+  src="https://www.youtube.com/embed/MEmvk3ZSs0M?enablejsapi=1" 
+  title="BGM Player" frameborder="0" allow="autoplay">
+  </iframe>
+</div>
+
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+  document.getElementById('bgm-trigger').addEventListener('click', function() {
+    var iframe = document.getElementById('bgm-player');
+    
+    // すでに再生中の場合は一時停止、停止中の場合は再生するトグル処理
+    if (this.innerText.includes('再生')) {
+      // JavaScript API経由で再生コマンドを送信
+      iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+      this.innerText = '⏸ BGMを停止する';
+      this.style.backgroundColor = '#f44336'; // ボタンの色を赤系に
+    } else {
+      iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+      this.innerText = '🎵 BGMを再生する';
+      this.style.backgroundColor = '#008cba'; // ボタンの色を青系に
+    }
+  });
+</script>
+
+        </body>
+        </html>
