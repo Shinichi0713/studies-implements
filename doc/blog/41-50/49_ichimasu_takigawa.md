@@ -152,4 +152,149 @@
 鉄甲船は、従来の船よりも装甲が厚く、大砲や鉄砲の攻撃に強く、毛利水軍の小早船や関船を圧倒しました。一益は水軍の指揮官として、鉄甲船の運用や艦隊の陣形、敵船への攻撃タイミングなどを統括し、毛利水軍を撃破して石山本願寺への海上補給路を断つことに貢献しました。これにより、石山本願寺は兵糧補給を絶たれ、織田軍は石山合戦を有利に進めることができました[Wikipedia](https://ja.wikipedia.org/wiki/%E6%BB%9D%E5%B7%9D%E4%B8%80%E7%9B%8A)[刀剣ワールド](https://www.touken-world.jp/tips/46490)。
 
 
+## 織田遊撃軍団の軍団長として
 
+
+甲州征伐（1582年3月）から本能寺の変（1582年6月）直前までの滝川一益の活躍は、武田氏討伐での軍功と、その後の関東統治という二つの大きな局面で見ることができます。
+
+
+### 1. 甲州征伐（1582年3月）での活躍
+
+__（1）副将格としての役割__
+- 天正10年（1582年）3月、織田信長は武田勝頼を討つため**甲州征伐**を開始します。
+- 一益はこの戦いで**副将格**として活躍し、織田軍の主力部隊の一つを率いて武田領に侵攻しました[Wikipedia](https://ja.wikipedia.org/wiki/%E6%BB%9D%E5%B7%9D%E4%B8%80%E7%9B%8A)。
+- 武田方の諸城を次々と攻略し、勝頼を追い詰めて自害に追い込む一因となりました[Wikipedia](https://ja.wikipedia.org/wiki/%E6%BB%9D%E5%B7%9D%E4%B8%80%E7%9B%8A)。
+
+__（2）信長からの評価と恩賞__
+- 武田氏滅亡後、信長は一益の功績を高く評価し、東国経営の先陣として抜擢します。
+- 具体的には、一益に**上野一国**と**信濃国小県・佐久二郡**を与え、**関東管領**に準じる地位に任じました[前橋市](https://www.city.maebashi.gunma.jp/soshiki/bunkasupotsukanko/bunkakokusai/gyomu/8/19885.html)[ジャパンナレッジ](https://japanknowledge.com/introduction/keyword.html?i=1613)。
+- これにより一益は、織田家の東国支配を一手に担う立場となります。
+
+
+### 2. 関東管領就任と上野・信濃支配
+
+__（1）厩橋城を拠点とした統治__
+- 一益は**厩橋城（現在の前橋市）** を拠点に関東平定を進めました[前橋市](https://www.city.maebashi.gunma.jp/soshiki/bunkasupotsukanko/bunkakokusai/gyomu/8/19885.html)。
+- 上野一国と信濃2郡の支配者として、軍事的な統制だけでなく、**指出検地（土地調査）** など行政面でも役割を果たしました[ジャパンナレッジ](https://japanknowledge.com/introduction/keyword.html?i=1613)。
+
+__（2）配下の諸将との関係構築__
+- 1582年5月、一益は配下となった諸将を厩橋城に招き、自ら能『玉鬘』を舞いました[前橋市](https://www.city.maebashi.gunma.jp/soshiki/bunkasupotsukanko/bunkakokusai/gyomu/8/19885.html)。
+- これは単なる娯楽ではなく、**関東の諸将との結束を強めるための政治的・文化的な儀式**としての意味合いが強かったと考えられます。
+
+__（3）能興行と文化的統治__
+- 同年6月には、長昌寺に能舞台をつくり、本格的な能興行を催しました。  
+  これが**記録に残る群馬県での最初の演能**とされています[前橋市](https://www.city.maebashi.gunma.jp/soshiki/bunkasupotsukanko/bunkakokusai/gyomu/8/19885.html)。
+- 一益は茶の湯も嗜み、「珠光小茄子」を所望したエピソードも知られており、武将としてだけでなく**文化人としての側面**も持ち合わせていました[Wikipedia](https://ja.wikipedia.org/wiki/%E6%BB%9D%E5%B7%9D%E4%B8%80%E7%9B%8A)。
+
+
+### 3. 本能寺の変直前後の動向
+
+__（1）関東での立場__
+- 一益は関東管領として上野・信濃の支配を進め、厩橋城を拠点に東国経営の責任者として活動していました。
+- 北条氏・上杉氏・佐竹氏など周辺勢力との関係を調整しつつ、織田家の東国支配を確立しようとしていました。
+
+__（2）本能寺の変の発生__
+- **天正10年6月2日（1582年6月21日）**、京都で本能寺の変が発生し、織田信長が死去します。
+- この報は関東にも伝わり、一益は関東で孤立することになります。
+
+
+## 本能寺の変後
+本能寺の変後、関東で織田勢力を排除しようと北条氏が一益の上野に迫ります。両勢力は神流川合戦で争うことになります。
+
+
+### 1. 神流川合戦（1582年6月）の背景と経過
+
+__（1）背景__
+- 天正10年（1582年）3月、一益は甲州征伐の功績で**関東管領**に任じられ、**上野一国**と**信濃国小県・佐久二郡**を与えられました[前橋市](https://www.city.maebashi.gunma.jp/soshiki/bunkasupotsukanko/bunkakokusai/gyomu/8/19885.html)[ジャパンナレッジ](https://japanknowledge.com/introduction/keyword.html?i=1613)。  
+- 一益は**厩橋城（現在の前橋市）** を拠点に関東平定を進め、配下の諸将を招いて能を舞うなど、文化的な統治も行っていました[前橋市](https://www.city.maebashi.gunma.jp/soshiki/bunkasupotsukanko/bunkakokusai/gyomu/8/19885.html)。  
+- しかし同年6月2日、本能寺の変で信長が死去すると、一益は関東で孤立します。北条氏政・氏直父子はこの機に乗じて上野への侵攻を開始しました。
+
+__（2）戦闘の経過__
+- 一益は配下の諸将を従え、上野・武蔵国境の**神流川（かんながわ）** で北条軍と対決します[前橋市](https://www.city.maebashi.gunma.jp/soshiki/bunkasupotsukanko/bunkakokusai/gyomu/8/19885.html)[ジャパンナレッジ](https://japanknowledge.com/introduction/keyword.html?i=1613)。  
+- 一度は北条軍を退けたものの、最終的に**大敗**を喫し、上野を放棄せざるを得なくなりました[ジャパンナレッジ](https://japanknowledge.com/introduction/keyword.html?i=1613)。  
+- 撤退の際にも、一益は諸将を厩橋城に集めて酒宴を開き、能『羅生門』と能『源氏供養』の一節を謡い合って別離の情を交わしたと伝えられています[前橋市](https://www.city.maebashi.gunma.jp/soshiki/bunkasupotsukanko/bunkakokusai/gyomu/8/19885.html)。
+
+
+### 2. 伊勢長島への帰還と清洲会議への遅参
+
+__（1）伊勢長島への撤退__
+- 神流川合戦での敗北後、一益は本領の**伊勢長島**へ逃げ戻りました[ジャパンナレッジ](https://japanknowledge.com/introduction/keyword.html?i=1613)。  
+- 関東管領としての地位と上野・信濃の領地を失い、織田家内での政治的影響力も大きく低下します。
+
+__（2）清洲会議への遅参__
+- 本能寺の変後、織田家の後継者を決める**清洲会議**が開かれましたが、一益は神流川合戦と撤退の影響で**出席が遅れました**[ジャパンナレッジ](https://japanknowledge.com/introduction/keyword.html?i=1613)。  
+- その結果、羽柴秀吉（後の豊臣秀吉）が主導権を握り、一益は織田家内での政治的立場を大きく失いました。
+
+
+### 3. 賤ヶ岳の戦い（1583年）以降の動向
+
+__（1）柴田勝家・織田信孝方としての立場__
+
+- 清洲会議後、一益は**織田信孝**と**柴田勝家**と結び、秀吉に対抗する立場をとります[ジャパンナレッジ](https://japanknowledge.com/introduction/keyword.html?i=1613)。  
+- 賤ヶ岳の戦い（1583年）では勝家方に加担しますが、秀吉軍に敗北します[Wikipedia](https://ja.wikipedia.org/wiki/%E6%BB%9D%E5%B7%9D%E4%B8%80%E7%9B%8A)。
+
+__（2）秀吉への降伏と出家__
+
+- 賤ヶ岳の戦いでの敗北後、一益は秀吉に降伏し、**出家して「益氏」と名乗ります**[Wikipedia](https://ja.wikipedia.org/wiki/%E6%BB%9D%E5%B7%9D%E4%B8%80%E7%9B%8A)。  
+- その後、秀吉に仕え、小牧・長久手の戦いや蟹江城合戦に参加しますが、最終的には**3,000石程度の隠居生活**となりました[刀剣ワールド](https://www.touken-world.jp/tips/46490)[Wikipedia](https://ja.wikipedia.org/wiki/%E6%BB%9D%E5%B7%9D%E4%B8%80%E7%9B%8A)。
+- この時の一益の戦いぶりは少ない手勢で徳川の意表をつきはすれど、相手は家康でした。ほぼすべての手で家康に先手を打たれてなす術なく家康に降伏することとなりました。この一連の戦いを知ると家康の力量の方が上かしらと思わずにはおられません。
+
+__（3）晩年__
+- 一益は天正14年（1586年）に**越前大野**で生涯を閉じました[Wikipedia](https://ja.wikipedia.org/wiki/%E6%BB%9D%E5%B7%9D%E4%B8%80%E7%9B%8A)。  
+- 甲州征伐後、「西の秀吉、東の一益」と称されるほどの地位に上りましたが、本能寺の変後の政治的混乱の中で関東を維持できず、晩年は不遇に終わることとなりました[刀剣ワールド](https://www.touken-world.jp/tips/46490)。
+
+
+## 力量
+
+毎回恒例の力量評価です。
+
+### 1. 軍事面での力量
+
+__（1）鉄砲運用と水軍指揮__
+- 若い頃に堺で鉄砲の製造法や射撃技術を学び、信長の前で約50m離れた的に100発中72発を命中させたという逸話が残るほど、**鉄砲の名手**でした[刀剣ワールド](https://www.touken-world.jp/tips/46490)。  
+- 長篠の戦いでは**鉄砲隊の総指揮**を務め、武田騎馬隊を撃破する重要な役割を果たしました[刀剣ワールド](https://www.touken-world.jp/tips/46490)。  
+- 第二次木津川口の戦いでは九鬼嘉隆とともに水軍を率い、**鉄甲船**を活用して毛利水軍を撃破し、石山本願寺への海上補給路を断つことに貢献しました[Wikipedia](https://ja.wikipedia.org/wiki/%E6%BB%9D%E5%B7%9D%E4%B8%80%E7%9B%8A)[刀剣ワールド](https://www.touken-world.jp/tips/46490)。
+
+__（2）陸戦・撤退戦の巧さ__
+- 「進めば柴田、退かば滝川」と評されるほど、**撤退戦や後方の押さえ**にも長けていました[Wikipedia](https://ja.wikipedia.org/wiki/%E6%BB%9D%E5%B7%9D%E4%B8%80%E7%9B%8A)。  
+- 伊勢侵攻や長島一向一揆鎮圧では、海上からの包囲や陸上戦の両面で活躍し、長島城主として国境の要衝を押さえる立場を確立しました[ジャパンナレッジ](https://japanknowledge.com/introduction/keyword.html?i=1613)。
+
+### 2. 行政・外交面での力量
+
+__（1）行政能力__
+- 伊勢侵攻後、北伊勢五郡を与えられ、付近一帯の**指出検地（土地調査）** を行っています[ジャパンナレッジ](https://japanknowledge.com/introduction/keyword.html?i=1613)。  
+- 関東管領として上野一国と信濃2郡を支配し、厩橋城を拠点に関東平定を進めるなど、**軍事と行政の両面**で織田家の基盤強化に貢献しました[前橋市](https://www.city.maebashi.gunma.jp/soshiki/bunkasupotsukanko/bunkakokusai/gyomu/8/19885.html)。
+
+__（2）外交・調略能力__
+- 織田信長と徳川家康の**清洲同盟（1562年）の交渉役**を務めたとされ、外交面でも重要な役割を果たしました[刀剣ワール드](https://www.touken-world.jp/tips/44324)。  
+- 蟹江城の謀略では、服部友貞に城を築かせてから乗っ取るなど、**調略・工作**にも優れた能力を発揮しています[刀剣ワールド](https://www.touken-world.jp/tips/44324)。
+
+### 3. 文化面での力量
+
+- 関東管領として厩橋城を拠点に、配下の諸将を招いて能『玉鬘』を舞い、長昌寺に能舞台をつくって能興行を催すなど、**文化的な統治**も行いました[前橋市](https://www.city.maebashi.gunma.jp/soshiki/bunkasupotsukanko/bunkakokusai/gyomu/8/19885.html)。  
+- 茶の湯も嗜み、「珠光小茄子」を所望したエピソードも知られており、武将としてだけでなく**文化人としての側面**も持ち合わせていました[Wikipedia](https://ja.wikipedia.org/wiki/%E6%BB%9D%E5%B7%9D%E4%B8%80%E7%9B%8A)。
+
+### 4. 総合的な評価
+
+- **軍事面**では、鉄砲運用・水軍指揮・陸戦・撤退戦と、あらゆる戦い方をこなす「万能型の武将」でした。  
+- **行政・外交面**では、検地や同盟交渉、調略を通じて織田家の基盤強化に貢献しました。  
+- **文化面**でも能や茶の湯を嗜み、関東統治において文化的な統合を図るなど、**教養と統治能力を兼ね備えた人物**でした。
+
+一方で、  
+- 本能寺の変後の政治的混乱の中で関東を維持できず、神流川合戦で敗北し、清洲会議にも遅参したことで政治的影響力を失いました[ジャパンナレッジ](https://japanknowledge.com/introduction/keyword.html?i=1613)。  
+- 晩年は秀吉に降伏し、3,000石程度の隠居生活となり、天正14年（1586年）に越前大野で生涯を閉じました[刀剣ワールド](https://www.touken-world.jp/tips/46490)[Wikipedia](https://ja.wikipedia.org/wiki/%E6%BB%9D%E5%B7%9D%E4%B8%80%E7%9B%8A)。
+
+
+
+<div class="shop-card">
+    <div class="shop-card-image">
+        <img src="https://m.media-amazon.com/images/I/918verkqC4L._SL1500_.jpg" alt="商品画像">
+    </div>
+    <div class="shop-card-content">
+        <div class="shop-card-title">乱世をゆけ　織田の徒花、滝川一益</div>
+        <div class="shop-card-description">甲賀の忍びあがりの土豪、滝川久助は、里の陰謀で父を失い、兄を殺め出奔。久助は名を一益と改め、諸国を放浪中に織田信長と運命的な出会いをする。一益は、射撃や忍びの腕だけでなく、武将としても力をつけ、信長の寵臣として存在を大きくしていく。謎多き武将、滝川一益の波乱に満ちた生涯を描く。選考委員が大絶賛した、第九回角川春樹小説賞受賞作。</div>
+        <div class="shop-card-link">
+            <a href="https://amzn.to/4pu2PcX" target="_blank" rel="noopener">Amazonで詳細を見る</a>
+        </div>
+    </div>
+</div>
