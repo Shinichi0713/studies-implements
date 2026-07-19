@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&#x6982;&#x8981;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+/* 目次全体のコンテナ */
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+
+/* 記事タイトル (h1) */
+h1 {
+    font-size: 2rem;
+    color: #24292f;
+    line-height: 1.3;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 3px double #e1e4e8; /* 二重線で上品に */
+    text-align: center; /* タイトルを中央に寄せて特別感を出す */
+}
+
+/* セクション見出し (h2) */
+h2 {
+    font-size: 1.5rem;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(transparent 70%, #e8f0fe 70%); /* 下側に薄い色のアクセント */
+    border-left: 6px solid #0969da; /* 目次のテーマカラーと合わせる */
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* 強調文字 (strong) */
+strong {
+    font-weight: bold;
+    color: #cf222e; /* ホバー時の赤色と合わせて統一感を出す */
+    background: linear-gradient(transparent 60%, #fff2cc 60%); /* 黄色のマーカー風 */
+    padding: 0 2px;
+}
+
+/* 引用のコンテナ */
+blockquote {
+    position: relative;
+    padding: 20px 30px;
+    margin: 30px 0;
+    background-color: #f6f8fa; /* 目次の背景より少しだけ濃いグレー */
+    border-left: 5px solid #d0d7de; /* 落ち着いたグレーの境界線 */
+    color: #57606a; /* 文字色は少し薄くして引用らしさを出す */
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 引用符のアイコンを装飾として追加 */
+blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    font-size: 40px;
+    color: #d0d7de;
+    font-family: serif;
+    line-height: 1;
+}
+
+/* 読者になるボタンのデザイン */
+.btn-subscribe {
+    display: inline-block;
+    padding: 12px 35px; /* 横幅を広めにとって存在感を出します */
+    background-color: #383838; /* お好みの色に変更してください */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #555555;
+    text-decoration: none;
+}
+
+/* はてなブログで見えてしまう数式データを非表示にする */
+.katex-html {
+    display: none !important;
+}
+
+.katex-mathml {
+    display: inline !important;
+}
+/* Amazonカード型のオシャレなデザイン */
+.shop-card {
+    display: flex;
+    max-width: 500px;
+    margin: 20px auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* マウスホップした時の動き */
+.shop-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.shop-card-image {
+    width: 150px;
+    min-width: 150px;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shop-card-image img {
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+}
+
+.shop-card-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.shop-card-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.shop-card-description {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+/* Amazonらしいオレンジボタン */
+.shop-card-link a {
+    display: inline-block;
+    background-color: #ff9900;
+    color: #fff !important;
+    text-decoration: none !important;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.shop-card-link a:hover {
+    background-color: #e68a00;
+}
+
+/* スマホ対応：縦並びにする */
+@media (max-width: 480px) {
+    .shop-card {
+        flex-direction: column;
+        max-width: 100%;
+    }
+    .shop-card-image {
+        width: 100%;
+        height: 200px;
+    }
+}
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+            <span id="markdown-mermaid" aria-hidden="true" data-config="{&quot;darkModeTheme&quot;:&quot;vscode&quot;,&quot;lightModeTheme&quot;:&quot;vscode&quot;,&quot;maxTextSize&quot;:50000,&quot;clickDrag&quot;:&quot;alt&quot;,&quot;showControls&quot;:&quot;onHoverOrFocus&quot;,&quot;resizable&quot;:true,&quot;maxHeight&quot;:&quot;&quot;}"></span>
+				<p>信長が亡き後、織田の中枢に座ったのは秀吉でした。
+ハングリーマインドで付けた経営や大軍統率、調略の才能から独立した組織運営として日本最高権力者となりました。
+他方、信長生前は輝いていたが、信長の没後輝きを失っていった人物もいます。
+滝川一益はもしかしたら代表例かもしれません。</p>
+<p>本日テーマ：</p>
+<blockquote>
+<p>滝川一益の一生とはどんなものだったか調べてみる。</p>
+</blockquote>
+<button id="bgm-trigger" style="padding: 10px 20px; font-size: 16px; background-color: #008cba; color: white; border: none; border-radius: 5px; cursor: pointer;">
+  🎵 BGMを再生する
+</button>
+<h2 id="概要">概要</h2>
+<p>滝川一益（たきがわ かずます／いちます、1525–1586）は、戦国時代から安土桃山時代にかけて活躍した武将・大名で、織田信長の宿老として「織田四天王」の一人に数えられる人物です。</p>
+<h3 id="1-生没年と出自">1. 生没年と出自</h3>
+<ul>
+<li>生年：大永5年（1525年）</li>
+<li>没年：天正14年9月9日（1586年10月21日）<a href="https://ja.wikipedia.org/wiki/%E6%BB%9D%E5%B7%9D%E4%B8%80%E7%9B%8A">Wikipedia</a></li>
+<li>出自については諸説ありますが、
+<ul>
+<li>紀氏の流れをくむ河内国高安庄司の子孫とする説</li>
+<li>近江国甲賀郡の国人（甲賀衆）の一族とする説<br>
+などが有力とされています<a href="https://ja.wikipedia.org/wiki/%E6%BB%9D%E5%B7%9D%E4%B8%80%E7%9B%8A">Wikipedia</a>。</li>
+</ul>
+</li>
+<li>若い頃は浪人でしたが、鉄砲の腕前を信長に認められて仕官したと伝えられています<a href="https://ja.wikipedia.org/wiki/%E6%BB%9D%E5%B7%9D%E4%B8%80%E7%9B%8A">Wikipedia</a>。</li>
+</ul>
+<h3 id="2-織田家での役割と人物像">2. 織田家での役割と人物像</h3>
+<ul>
+<li>織田家の宿老として、軍事・政治の両面で重用され、「進めば柴田、退かば滝川」と評されるほど、撤退戦や後方の押さえも得意な武将でした<a href="https://ja.wikipedia.org/wiki/%E6%BB%9D%E5%B7%9D%E4%B8%80%E7%9B%8A">Wikipedia</a>。</li>
+<li>鉄砲の名手として知られ、堺で鉄砲の製造法や射撃技術を学び、信長の前で約50m離れた的に100発中72発を命中させたことで召し抱えられたとされます<a href="https://www.touken-world.jp/tips/46490">刀剣ワールド</a>。</li>
+<li>水軍の運用にも長け、長島一向一揆や第二次木津川口の戦いでは九鬼嘉隆と共に水軍を率いて活躍しました<a href="https://www.touken-world.jp/tips/46490">刀剣ワールド</a>。</li>
+<li>調略（交渉・工作）にも優れ、徳川家康との清洲同盟の締結交渉、北伊勢攻略、荒木村重の有岡城開城などで手腕を発揮しています<a href="https://www.touken-world.jp/tips/46490">刀剣ワールド</a>。</li>
+</ul>
+<h3 id="3-主な戦歴">3. 主な戦歴</h3>
+<ul>
+<li><strong>伊勢攻略・長島一向一揆鎮圧</strong><br>
+伊勢平定や長島一向一揆の鎮圧で大きな功績を挙げ、北伊勢の支配を任されました<a href="https://ja.wikipedia.org/wiki/%E6%BB%9D%E5%B7%9D%E4%B8%80%E7%9B%8A">Wikipedia</a>。</li>
+<li><strong>長篠の戦い（1575年）</strong><br>
+織田・徳川連合軍と武田軍の戦いでは、鉄砲隊の総指揮を務め、武田軍の騎馬隊を撃破する役割を担いました<a href="https://www.touken-world.jp/tips/46490">刀剣ワールド</a>。</li>
+<li><strong>第二次木津川口の戦い</strong><br>
+九鬼嘉隆とともに水軍を率い、鉄甲船の建造にも関与して石山本願寺への海上補給路を断つことに貢献しました<a href="https://ja.wikipedia.org/wiki/%E6%BB%9D%E5%B7%9D%E4%B8%80%E7%9B%8A">Wikipedia</a>。</li>
+<li><strong>甲州征伐（1582年）</strong><br>
+武田氏討伐では副将格として活躍し、武田勝頼を自害に追い込む一因となりました<a href="https://ja.wikipedia.org/wiki/%E6%BB%9D%E5%B7%9D%E4%B8%80%E7%9B%8A">Wikipedia</a>。</li>
+</ul>
+<h3 id="4-関東管領就任と本能寺の変後の動向">4. 関東管領就任と本能寺の変後の動向</h3>
+<ul>
+<li>天正10年（1582年）3月、武田氏滅亡後、信長は一益を「関東管領」に任じ、<strong>上野一国と信濃国小県・佐久二郡</strong>を与えました<a href="https://www.city.maebashi.gunma.jp/soshiki/bunkasupotsukanko/bunkakokusai/gyomu/8/19885.html">前橋市</a>。</li>
+<li>一益は厩橋城（現在の前橋市）を拠点に関東平定を進め、配下の諸将を招いて能『玉鬘』を舞うなど、文化的な統治も行いました<a href="https://www.city.maebashi.gunma.jp/soshiki/bunkasupotsukanko/bunkakokusai/gyomu/8/19885.html">前橋市</a>。</li>
+<li>しかし同年6月の本能寺の変後、北条軍と神流川で交戦（神流川合戦）し敗北。上野を失い、伊勢へ退却しました<a href="https://www.city.maebashi.gunma.jp/soshiki/bunkasupotsukanko/bunkakokusai/gyomu/8/19885.html">前橋市</a><a href="https://ja.wikipedia.org/wiki/%E6%BB%9D%E5%B7%9D%E4%B8%80%E7%9B%8A">Wikipedia</a>。</li>
+<li>清洲会議には遅参し、織田家内での政治的影響力を大きく失いました<a href="https://ja.wikipedia.org/wiki/%E6%BB%9D%E5%B7%9D%E4%B8%80%E7%9B%8A">Wikipedia</a>。</li>
+</ul>
+<h3 id="5-晩年">5. 晩年</h3>
+<ul>
+<li>賤ヶ岳の戦い（1583年）では柴田勝家方に加担し敗北、出家して「益氏」と名乗ります<a href="https://ja.wikipedia.org/wiki/%E6%BB%9D%E5%B7%9D%E4%B8%80%E7%9B%8A">Wikipedia</a>。</li>
+<li>その後、豊臣秀吉に降伏し、小牧・長久手の戦いや蟹江城合戦に参加しますが、最終的には3,000石程度の隠居生活となり、天正14年（1586年）に越前大野で生涯を閉じました<a href="https://www.touken-world.jp/tips/46490">刀剣ワールド</a><a href="https://ja.wikipedia.org/wiki/%E6%BB%9D%E5%B7%9D%E4%B8%80%E7%9B%8A">Wikipedia</a>。</li>
+</ul>
+<h2 id="生い立ち">生い立ち</h2>
+<p>滝川一益の生い立ちは、史料が少なく不明な点も多いものの、以下のような内容がよく見られます。</p>
+<h3 id="1-生年と出身地">1. 生年と出身地</h3>
+<ul>
+<li>生年は<strong>大永5年（1525年）</strong> とされています<a href="https://ja.wikipedia.org/wiki/%E6%BB%9D%E5%B7%9D%E4%B8%80%E7%9B%8A">Wikipedia</a>。</li>
+<li>出身地については諸説ありますが、
+<ul>
+<li>紀氏の流れをくむ<strong>河内国高安庄司の子孫</strong>とする説</li>
+<li><strong>近江国甲賀郡</strong>（現在の滋賀県甲賀市周辺）の国人・甲賀衆の一族とする説<br>
+などが有力とされています<a href="https://ja.wikipedia.org/wiki/%E6%BB%9D%E5%B7%9D%E4%B8%80%E7%9B%8A">Wikipedia</a>。<br>
+刀剣ワールドでは「近江国南部、甲賀郡の郷士（農業を営む地侍）であった滝川一勝の次男」として紹介されています<a href="https://www.touken-world.jp/tips/46490">刀剣ワールド</a>。</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-若年期のエピソード">2. 若年期のエピソード</h3>
+<ul>
+<li>若い頃は浪人で、素行があまり良くなかったとも伝えられています<a href="https://www.touken-world.jp/tips/46490">刀剣ワールド</a>。</li>
+<li>河内国（現在の大阪府東部）の親類宅に居候していたとき、<br>
+<strong>叔父の側室に不貞を働いた</strong>ことがあり、怒った叔父に切りつけられそうになったところを返り討ちにして出奔した、という逸話が残っています<a href="https://www.touken-world.jp/tips/46490">刀剣ワールド</a>。</li>
+<li>その後、<strong>堺（現在の大阪府堺市）</strong> に流れ着き、そこで<strong>鉄砲の製造法や射撃技術を学んだ</strong>とされています<a href="https://www.touken-world.jp/tips/46490">刀剣ワールド</a>。</li>
+</ul>
+<h3 id="3-織田信長への仕官">3. 織田信長への仕官</h3>
+<p>織田家への仕官は鉄砲からだった、でしょうか。</p>
+<ul>
+<li>一益は、織田家の重臣・<strong>池田恒興</strong>の仲介で織田信長と出会ったとされています。池田恒興は一益の従兄弟にあたる縁戚でした<a href="https://www.touken-world.jp/tips/46490">刀剣ワールド</a>。</li>
+<li>信長は一益の鉄砲の腕前を聞きつけ、自ら立会いのもとで射撃の検分を行いました。<br>
+このとき、約50m離れた約30cm四方の的に、火縄銃の弾丸を<strong>100発撃ち込み、72発が命中</strong>したと伝えられ、この実力を見込まれて信長に召し抱えられたとされています<a href="https://www.touken-world.jp/tips/46490">刀剣ワールド</a>。</li>
+<li>こうして一益は織田家の家臣となり、その後の伊勢平定や長島一向一揆鎮圧、長篠の戦いなどで目覚ましい活躍を見せ、「織田四天王」の一人に数えられるまで出世していきます<a href="https://www.touken-world.jp/tips/46490">刀剣ワールド</a><a href="https://ja.wikipedia.org/wiki/%E6%BB%9D%E5%B7%9D%E4%B8%80%E7%9B%8A">Wikipedia</a>。</li>
+</ul>
+<h3 id="4-生い立ちの特徴">4. 生い立ちの特徴</h3>
+<p>一益は尾張出身ではなく、甲賀出身者であり、織田からすると外様です。
+流れ着いて、興隆期だった織田に仕官したころから彼の部将としてのキャリアがスタートします。</p>
+<ul>
+<li>出自は甲賀の地侍（郷士）とされ、甲賀衆＝忍者というイメージから「一益も忍者だったのではないか」という説も生まれていますが、史料的な裏付けは限定的です<a href="https://www.touken-world.jp/tips/46490">刀剣ワールド</a>。</li>
+<li>若い頃の素行不良や叔父殺害の逸話は、後世の軍記物などに多く見られる「乱暴者だったが、才能を信長に見出されて出世する」という典型的なパターンでもあり、どこまで史実かは不明です。</li>
+<li>いずれにせよ、<strong>鉄砲の技術を身につけた浪人から、信長の前でその腕前を披露して仕官する</strong>という点は、複数の資料で共通して語られており、一益の生い立ちを象徴するエピソードと言えます<a href="https://www.touken-world.jp/tips/46490">刀剣ワールド</a><a href="https://ja.wikipedia.org/wiki/%E6%BB%9D%E5%B7%9D%E4%B8%80%E7%9B%8A">Wikipedia</a>。</li>
+</ul>
+<h2 id="仕官から伊勢侵攻">仕官から伊勢侵攻</h2>
+<p>滝川一益が織田信長に仕官してから、伊勢侵攻（伊勢平定）で活躍するまでの経緯は、おおむね次のような流れです。</p>
+<h3 id="1-仕官直後の役割1560年代前半">1. 仕官直後の役割（1560年代前半）</h3>
+<ul>
+<li>一益は、親戚筋にあたる織田家重臣・池田恒興の仲介で信長に仕官し、鉄砲の腕前を買われて召し抱えられました<a href="https://www.touken-world.jp/tips/44324">刀剣ワールド</a>。</li>
+<li>永禄5年（1562年）には、<strong>織田信長と徳川家康の「清洲同盟」の交渉役</strong>を務めたとされています<a href="https://www.touken-world.jp/tips/44324">刀剣ワールド</a>。<br>
+これにより織田家は東側の脅威を減らし、美濃・伊勢方面への侵攻に集中できるようになりました。</li>
+</ul>
+<h3 id="2-北伊勢侵攻と蟹江城の謀略1567年頃">2. 北伊勢侵攻と蟹江城の謀略（1567年頃）</h3>
+<ul>
+<li>美濃平定（1567年）の前後、信長は伊勢国司・北畠氏の支配する伊勢への侵攻を開始します。</li>
+<li>このとき一益は、<strong>北伊勢の攻略拠点づくり</strong>を任されました。
+<ul>
+<li>北伊勢で織田家に敵対していた<strong>服部友貞</strong>に対し、乱破（忍者・諜報員）を使って「織田軍の侵略は蟹江に城を築かなければ防げない」と噂を流し、服部に<strong>蟹江城</strong>を築城させます<a href="https://www.touken-world.jp/tips/44324">刀剣ワールド</a>。</li>
+<li>その後、服部友貞を追い出して城を乗っ取り、北伊勢攻略の前線基地を確保しました。</li>
+<li>この功績により、一益は<strong>尾張国蟹江城主</strong>となります<a href="https://www.touken-world.jp/tips/44324">刀剣ワールド</a>。</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-伊勢侵攻15671569年と大河内城の戦い">3. 伊勢侵攻（1567–1569年）と大河内城の戦い</h3>
+<ul>
+<li>永禄10〜11年（1567–1568年）にかけて、信長は伊勢侵攻を本格化させます。
+<ul>
+<li>永禄10年（1567年）、一益は<strong>4,000の兵を率いて北伊勢に侵攻</strong>し、信長本軍の進軍路を確保する役割を担いました<a href="https://www.homemate-research-castle.com/useful/10495_castle/busyo/21">ホームメイト城一覧</a>。</li>
+<li>桑名周辺では、楠城（桑名の南西約19km）を攻撃し、城主・楠正具を降伏させたとされます<a href="https://ameblo.jp/hiibon33/entry-11207446306.html">城めぐりん</a>。</li>
+</ul>
+</li>
+<li><strong>大河内城の戦い（1569年）</strong>
+<ul>
+<li>永禄12年（1569年）、信長は伊勢国司・北畠具教の本拠である<strong>大河内城</strong>を攻撃します。</li>
+<li>一益はこの戦いで活躍し、大河内城攻撃の功によって、<strong>北伊勢五郡を与えられ</strong>、付近一帯の指出検地（土地調査）も行っています<a href="https://japanknowledge.com/introduction/keyword.html?i=1613">ジャパンナレッジ</a>。</li>
+<li>大河内城の戦いでは、一益と津田一安が<strong>城の受け取り</strong>に出向いたと記録されています<a href="https://ja.wikipedia.org/wiki/%E5%A4%A7%E6%B2%B3%E5%86%85%E5%9F%8E%E3%81%AE%E6%88%A6%E3%81%84">Wikipedia</a>。</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-伊勢侵攻での一益の役割の特徴">4. 伊勢侵攻での一益の役割の特徴</h3>
+<ul>
+<li>一益は、単なる戦闘指揮官というより、
+<ul>
+<li>交渉役（清洲同盟）</li>
+<li>謀略・工作（蟹江城の奪取）</li>
+<li>前線基地の確保と検地（北伊勢五郡の支配）<br>
+といった<strong>軍事・行政・情報戦のトータルな役割</strong>を担っていました。この当時、独立した部隊運用ができる人物としては織田の中でも指折りだったのではと思います。</li>
+</ul>
+</li>
+<li>伊勢侵攻を通じて、一益は<strong>北伊勢の支配者</strong>としての地位を確立し、その後の長島一向一揆鎮圧や長篠の戦いなど、織田軍の主要戦役で重く用いられる土台を作りました<a href="https://japanknowledge.com/introduction/keyword.html?i=1613">ジャパンナレッジ</a><a href="https://www.touken-world.jp/tips/44324">刀剣ワールド</a>。</li>
+</ul>
+<h2 id="鉄砲第一人者として">鉄砲第一人者として</h2>
+<p>伊勢の支配権を確保してから、織田が畿内の支配権を確保するまでの動向について説明していきます。</p>
+<h3 id="1-長島一向一揆の鎮圧1574年">1. 長島一向一揆の鎮圧（1574年）</h3>
+<p>伊勢長島を拠点とする一向一揆は、織田信長にとって長年の懸案でした。一揆勢は尾張・伊勢国境の要衝に築かれた長島城を中心に、周辺の寺内町や砦を拠点として抵抗を続け、織田軍は何度も苦戦を強いられていました。</p>
+<p>滝川一益は、伊勢侵攻で得た北伊勢の拠点（長島城など）を基盤に、長島一向一揆との戦いを続けます。特に<strong>天正2年（1574年）</strong> には、長島の要塞を<strong>海上から包囲</strong>し、多数の門徒農民を殺害するなど、一揆の鎮圧に大きく貢献したとされています<a href="https://japanknowledge.com/introduction/keyword.html?i=1613">ジャパンナレッジ</a>。</p>
+<p>この戦いでは、織田軍は陸上と海上の両面から長島一帯を完全に包囲し、兵糧攻めと同時に海上からの攻撃を加えました。一益は水軍の運用にも長けていたため、九鬼嘉隆らとともに海上からの攻撃・封鎖を担い、一揆勢の退路を断つ役割を果たしたと考えられます。その結果、長島一向一揆は鎮圧され、一益はこの功績で<strong>長島城主</strong>となり、伊勢・尾張国境の要衝を押さえる立場を確立しました<a href="https://japanknowledge.com/introduction/keyword.html?i=1613">ジャパンナレッジ</a>。</p>
+<h3 id="2-長篠の戦い1575年と鉄砲隊指揮">2. 長篠の戦い（1575年）と鉄砲隊指揮</h3>
+<p>長篠の戦いは、織田・徳川連合軍と武田勝頼率いる武田軍が戦った合戦で、強力とされていた武田騎馬隊と日本の中央を抑えた織田軍が正面からぶつかった戦いとして知られています。</p>
+<p>滝川一益は、この戦いで<strong>鉄砲隊の総指揮</strong>を務めました<a href="https://www.touken-world.jp/tips/46490">刀剣ワールド</a>。一益は若い頃に堺で鉄砲の製造法や射撃技術を学び、信長の前で約50m離れた的に100発中72発を命中させたという逸話が残るほど、鉄砲の名手として知られていました<a href="https://www.touken-world.jp/tips/46490">刀剣ワールド</a>。</p>
+<p>長篠の戦いでは、織田軍は設楽ヶ原に<strong>馬防柵</strong>を築き、その背後に鉄砲隊を三段構えで配置する戦術をとりました。一益はこの鉄砲隊の配置・射撃指揮を統括し、武田騎馬隊が柵に突入するたびに集中射撃を浴びせ、騎馬隊の突撃力を削いでいきました。その結果、織田・徳川連合軍は武田軍に大勝し、一益の鉄砲運用能力が大きく評価されることになりました<a href="https://www.touken-world.jp/tips/46490">刀剣ワールド</a>。</p>
+<h3 id="3-第二次木津川口の戦い1578年と水軍運用">3. 第二次木津川口の戦い（1578年）と水軍運用</h3>
+<p>石山本願寺の強みは石山城と呼ばれる現在の大阪中心を城郭で囲った頑強な城でした。城を守る上で、一向宗徒という十分な人員で防御が可能であったため、普通に攻撃しても攻略が困難です。ただし城で防御を行う＝補給のinputは限定されている状況でした。
+ですが石山本願寺との石山合戦では、本願寺側は毛利水軍の支援を受けて海上から兵糧や物資を補給していました。長年織田を拒み続けたのもこの補給の続いたという点が要因に挙げられます。これを断つため、織田信長は九鬼嘉隆に命じて<strong>鉄甲船</strong>を建造させ、毛利水軍との海上決戦に臨みます。</p>
+<p>滝川一益は、この<strong>第二次木津川口の戦い</strong>で九鬼嘉隆とともに水軍を率い、活躍しました<a href="https://ja.wikipedia.org/wiki/%E6%BB%9D%E5%B7%9D%E4%B8%80%E7%9B%8A">Wikipedia</a><a href="https://www.touken-world.jp/tips/46490">刀剣ワールド</a>。</p>
+<p>鉄甲船は、従来の船よりも装甲が厚く、大砲や鉄砲の攻撃に強く、毛利水軍の小早船や関船を圧倒しました。一益は水軍の指揮官として、鉄甲船の運用や艦隊の陣形、敵船への攻撃タイミングなどを統括し、毛利水軍を撃破して石山本願寺への海上補給路を断つことに貢献しました。これにより、石山本願寺は兵糧補給を絶たれ、織田軍は石山合戦を有利に進めることができました<a href="https://ja.wikipedia.org/wiki/%E6%BB%9D%E5%B7%9D%E4%B8%80%E7%9B%8A">Wikipedia</a><a href="https://www.touken-world.jp/tips/46490">刀剣ワールド</a>。</p>
+<h2 id="織田遊撃軍団の軍団長として">織田遊撃軍団の軍団長として</h2>
+<p>甲州征伐（1582年3月）から本能寺の変（1582年6月）直前までの滝川一益の活躍は、武田氏討伐での軍功と、その後の関東統治という二つの大きな局面で見ることができます。</p>
+<h3 id="1-甲州征伐1582年3月での活躍">1. 甲州征伐（1582年3月）での活躍</h3>
+<p><strong>（1）副将格としての役割</strong></p>
+<ul>
+<li>天正10年（1582年）3月、織田信長は武田勝頼を討つため<strong>甲州征伐</strong>を開始します。</li>
+<li>一益はこの戦いで<strong>副将格</strong>として活躍し、織田軍の主力部隊の一つを率いて武田領に侵攻しました<a href="https://ja.wikipedia.org/wiki/%E6%BB%9D%E5%B7%9D%E4%B8%80%E7%9B%8A">Wikipedia</a>。</li>
+<li>武田方の諸城を次々と攻略し、勝頼を追い詰めて自害に追い込む一因となりました<a href="https://ja.wikipedia.org/wiki/%E6%BB%9D%E5%B7%9D%E4%B8%80%E7%9B%8A">Wikipedia</a>。</li>
+</ul>
+<p><strong>（2）信長からの評価と恩賞</strong></p>
+<ul>
+<li>武田氏滅亡後、信長は一益の功績を高く評価し、東国経営の先陣として抜擢します。</li>
+<li>具体的には、一益に<strong>上野一国</strong>と<strong>信濃国小県・佐久二郡</strong>を与え、<strong>関東管領</strong>に準じる地位に任じました<a href="https://www.city.maebashi.gunma.jp/soshiki/bunkasupotsukanko/bunkakokusai/gyomu/8/19885.html">前橋市</a><a href="https://japanknowledge.com/introduction/keyword.html?i=1613">ジャパンナレッジ</a>。</li>
+<li>これにより一益は、織田家の東国支配を一手に担う立場となります。</li>
+</ul>
+<h3 id="2-関東管領就任と上野信濃支配">2. 関東管領就任と上野・信濃支配</h3>
+<p><strong>（1）厩橋城を拠点とした統治</strong></p>
+<ul>
+<li>一益は<strong>厩橋城（現在の前橋市）</strong> を拠点に関東平定を進めました<a href="https://www.city.maebashi.gunma.jp/soshiki/bunkasupotsukanko/bunkakokusai/gyomu/8/19885.html">前橋市</a>。</li>
+<li>上野一国と信濃2郡の支配者として、軍事的な統制だけでなく、<strong>指出検地（土地調査）</strong> など行政面でも役割を果たしました<a href="https://japanknowledge.com/introduction/keyword.html?i=1613">ジャパンナレッジ</a>。</li>
+</ul>
+<p><strong>（2）配下の諸将との関係構築</strong></p>
+<ul>
+<li>1582年5月、一益は配下となった諸将を厩橋城に招き、自ら能『玉鬘』を舞いました<a href="https://www.city.maebashi.gunma.jp/soshiki/bunkasupotsukanko/bunkakokusai/gyomu/8/19885.html">前橋市</a>。</li>
+<li>これは単なる娯楽ではなく、<strong>関東の諸将との結束を強めるための政治的・文化的な儀式</strong>としての意味合いが強かったと考えられます。</li>
+</ul>
+<p><strong>（3）能興行と文化的統治</strong></p>
+<ul>
+<li>同年6月には、長昌寺に能舞台をつくり、本格的な能興行を催しました。<br>
+これが<strong>記録に残る群馬県での最初の演能</strong>とされています<a href="https://www.city.maebashi.gunma.jp/soshiki/bunkasupotsukanko/bunkakokusai/gyomu/8/19885.html">前橋市</a>。</li>
+<li>一益は茶の湯も嗜み、「珠光小茄子」を所望したエピソードも知られており、武将としてだけでなく<strong>文化人としての側面</strong>も持ち合わせていました<a href="https://ja.wikipedia.org/wiki/%E6%BB%9D%E5%B7%9D%E4%B8%80%E7%9B%8A">Wikipedia</a>。</li>
+</ul>
+<h3 id="3-本能寺の変直前後の動向">3. 本能寺の変直前後の動向</h3>
+<p><strong>（1）関東での立場</strong></p>
+<ul>
+<li>一益は関東管領として上野・信濃の支配を進め、厩橋城を拠点に東国経営の責任者として活動していました。</li>
+<li>北条氏・上杉氏・佐竹氏など周辺勢力との関係を調整しつつ、織田家の東国支配を確立しようとしていました。</li>
+</ul>
+<p><strong>（2）本能寺の変の発生</strong></p>
+<ul>
+<li><strong>天正10年6月2日（1582年6月21日）</strong>、京都で本能寺の変が発生し、織田信長が死去します。</li>
+<li>この報は関東にも伝わり、一益は関東で孤立することになります。</li>
+</ul>
+<h2 id="本能寺の変後">本能寺の変後</h2>
+<p>本能寺の変後、関東で織田勢力を排除しようと北条氏が一益の上野に迫ります。両勢力は神流川合戦で争うことになります。</p>
+<h3 id="1-神流川合戦1582年6月の背景と経過">1. 神流川合戦（1582年6月）の背景と経過</h3>
+<p><strong>（1）背景</strong></p>
+<ul>
+<li>天正10年（1582年）3月、一益は甲州征伐の功績で<strong>関東管領</strong>に任じられ、<strong>上野一国</strong>と<strong>信濃国小県・佐久二郡</strong>を与えられました<a href="https://www.city.maebashi.gunma.jp/soshiki/bunkasupotsukanko/bunkakokusai/gyomu/8/19885.html">前橋市</a><a href="https://japanknowledge.com/introduction/keyword.html?i=1613">ジャパンナレッジ</a>。</li>
+<li>一益は<strong>厩橋城（現在の前橋市）</strong> を拠点に関東平定を進め、配下の諸将を招いて能を舞うなど、文化的な統治も行っていました<a href="https://www.city.maebashi.gunma.jp/soshiki/bunkasupotsukanko/bunkakokusai/gyomu/8/19885.html">前橋市</a>。</li>
+<li>しかし同年6月2日、本能寺の変で信長が死去すると、一益は関東で孤立します。北条氏政・氏直父子はこの機に乗じて上野への侵攻を開始しました。</li>
+</ul>
+<p><strong>（2）戦闘の経過</strong></p>
+<ul>
+<li>一益は配下の諸将を従え、上野・武蔵国境の<strong>神流川（かんながわ）</strong> で北条軍と対決します<a href="https://www.city.maebashi.gunma.jp/soshiki/bunkasupotsukanko/bunkakokusai/gyomu/8/19885.html">前橋市</a><a href="https://japanknowledge.com/introduction/keyword.html?i=1613">ジャパンナレッジ</a>。</li>
+<li>一度は北条軍を退けたものの、最終的に<strong>大敗</strong>を喫し、上野を放棄せざるを得なくなりました<a href="https://japanknowledge.com/introduction/keyword.html?i=1613">ジャパンナレッジ</a>。</li>
+<li>撤退の際にも、一益は諸将を厩橋城に集めて酒宴を開き、能『羅生門』と能『源氏供養』の一節を謡い合って別離の情を交わしたと伝えられています<a href="https://www.city.maebashi.gunma.jp/soshiki/bunkasupotsukanko/bunkakokusai/gyomu/8/19885.html">前橋市</a>。</li>
+</ul>
+<h3 id="2-伊勢長島への帰還と清洲会議への遅参">2. 伊勢長島への帰還と清洲会議への遅参</h3>
+<p><strong>（1）伊勢長島への撤退</strong></p>
+<ul>
+<li>神流川合戦での敗北後、一益は本領の<strong>伊勢長島</strong>へ逃げ戻りました<a href="https://japanknowledge.com/introduction/keyword.html?i=1613">ジャパンナレッジ</a>。</li>
+<li>関東管領としての地位と上野・信濃の領地を失い、織田家内での政治的影響力も大きく低下します。</li>
+</ul>
+<p><strong>（2）清洲会議への遅参</strong></p>
+<ul>
+<li>本能寺の変後、織田家の後継者を決める<strong>清洲会議</strong>が開かれましたが、一益は神流川合戦と撤退の影響で<strong>出席が遅れました</strong><a href="https://japanknowledge.com/introduction/keyword.html?i=1613">ジャパンナレッジ</a>。</li>
+<li>その結果、羽柴秀吉（後の豊臣秀吉）が主導権を握り、一益は織田家内での政治的立場を大きく失いました。</li>
+</ul>
+<h3 id="3-賤ヶ岳の戦い1583年以降の動向">3. 賤ヶ岳の戦い（1583年）以降の動向</h3>
+<p><strong>（1）柴田勝家・織田信孝方としての立場</strong></p>
+<ul>
+<li>清洲会議後、一益は<strong>織田信孝</strong>と<strong>柴田勝家</strong>と結び、秀吉に対抗する立場をとります<a href="https://japanknowledge.com/introduction/keyword.html?i=1613">ジャパンナレッジ</a>。</li>
+<li>賤ヶ岳の戦い（1583年）では勝家方に加担しますが、秀吉軍に敗北します<a href="https://ja.wikipedia.org/wiki/%E6%BB%9D%E5%B7%9D%E4%B8%80%E7%9B%8A">Wikipedia</a>。</li>
+</ul>
+<p><strong>（2）秀吉への降伏と出家</strong></p>
+<ul>
+<li>賤ヶ岳の戦いでの敗北後、一益は秀吉に降伏し、<strong>出家して「益氏」と名乗ります</strong><a href="https://ja.wikipedia.org/wiki/%E6%BB%9D%E5%B7%9D%E4%B8%80%E7%9B%8A">Wikipedia</a>。</li>
+<li>その後、秀吉に仕え、小牧・長久手の戦いや蟹江城合戦に参加しますが、最終的には<strong>3,000石程度の隠居生活</strong>となりました<a href="https://www.touken-world.jp/tips/46490">刀剣ワールド</a><a href="https://ja.wikipedia.org/wiki/%E6%BB%9D%E5%B7%9D%E4%B8%80%E7%9B%8A">Wikipedia</a>。</li>
+<li>この時の一益の戦いぶりは少ない手勢で徳川の意表をつきはすれど、相手は家康でした。ほぼすべての手で家康に先手を打たれてなす術なく家康に降伏することとなりました。この一連の戦いを知ると家康の力量の方が上かしらと思わずにはおられません。</li>
+</ul>
+<p><strong>（3）晩年</strong></p>
+<ul>
+<li>一益は天正14年（1586年）に<strong>越前大野</strong>で生涯を閉じました<a href="https://ja.wikipedia.org/wiki/%E6%BB%9D%E5%B7%9D%E4%B8%80%E7%9B%8A">Wikipedia</a>。</li>
+<li>甲州征伐後、「西の秀吉、東の一益」と称されるほどの地位に上りましたが、本能寺の変後の政治的混乱の中で関東を維持できず、晩年は不遇に終わることとなりました<a href="https://www.touken-world.jp/tips/46490">刀剣ワールド</a>。</li>
+</ul>
+<h2 id="力量">力量</h2>
+<p>毎回恒例の力量評価です。</p>
+<h3 id="1-軍事面での力量">1. 軍事面での力量</h3>
+<p><strong>（1）鉄砲運用と水軍指揮</strong></p>
+<ul>
+<li>若い頃に堺で鉄砲の製造法や射撃技術を学び、信長の前で約50m離れた的に100発中72発を命中させたという逸話が残るほど、<strong>鉄砲の名手</strong>でした<a href="https://www.touken-world.jp/tips/46490">刀剣ワールド</a>。</li>
+<li>長篠の戦いでは<strong>鉄砲隊の総指揮</strong>を務め、武田騎馬隊を撃破する重要な役割を果たしました<a href="https://www.touken-world.jp/tips/46490">刀剣ワールド</a>。</li>
+<li>第二次木津川口の戦いでは九鬼嘉隆とともに水軍を率い、<strong>鉄甲船</strong>を活用して毛利水軍を撃破し、石山本願寺への海上補給路を断つことに貢献しました<a href="https://ja.wikipedia.org/wiki/%E6%BB%9D%E5%B7%9D%E4%B8%80%E7%9B%8A">Wikipedia</a><a href="https://www.touken-world.jp/tips/46490">刀剣ワールド</a>。</li>
+</ul>
+<p><strong>（2）陸戦・撤退戦の巧さ</strong></p>
+<ul>
+<li>「進めば柴田、退かば滝川」と評されるほど、<strong>撤退戦や後方の押さえ</strong>にも長けていました<a href="https://ja.wikipedia.org/wiki/%E6%BB%9D%E5%B7%9D%E4%B8%80%E7%9B%8A">Wikipedia</a>。</li>
+<li>伊勢侵攻や長島一向一揆鎮圧では、海上からの包囲や陸上戦の両面で活躍し、長島城主として国境の要衝を押さえる立場を確立しました<a href="https://japanknowledge.com/introduction/keyword.html?i=1613">ジャパンナレッジ</a>。</li>
+</ul>
+<h3 id="2-行政外交面での力量">2. 行政・外交面での力量</h3>
+<p><strong>（1）行政能力</strong></p>
+<ul>
+<li>伊勢侵攻後、北伊勢五郡を与えられ、付近一帯の<strong>指出検地（土地調査）</strong> を行っています<a href="https://japanknowledge.com/introduction/keyword.html?i=1613">ジャパンナレッジ</a>。</li>
+<li>関東管領として上野一国と信濃2郡を支配し、厩橋城を拠点に関東平定を進めるなど、<strong>軍事と行政の両面</strong>で織田家の基盤強化に貢献しました<a href="https://www.city.maebashi.gunma.jp/soshiki/bunkasupotsukanko/bunkakokusai/gyomu/8/19885.html">前橋市</a>。</li>
+</ul>
+<p><strong>（2）外交・調略能力</strong></p>
+<ul>
+<li>織田信長と徳川家康の<strong>清洲同盟（1562年）の交渉役</strong>を務めたとされ、外交面でも重要な役割を果たしました<a href="https://www.touken-world.jp/tips/44324">刀剣ワール드</a>。</li>
+<li>蟹江城の謀略では、服部友貞に城を築かせてから乗っ取るなど、<strong>調略・工作</strong>にも優れた能力を発揮しています<a href="https://www.touken-world.jp/tips/44324">刀剣ワールド</a>。</li>
+</ul>
+<h3 id="3-文化面での力量">3. 文化面での力量</h3>
+<ul>
+<li>関東管領として厩橋城を拠点に、配下の諸将を招いて能『玉鬘』を舞い、長昌寺に能舞台をつくって能興行を催すなど、<strong>文化的な統治</strong>も行いました<a href="https://www.city.maebashi.gunma.jp/soshiki/bunkasupotsukanko/bunkakokusai/gyomu/8/19885.html">前橋市</a>。</li>
+<li>茶の湯も嗜み、「珠光小茄子」を所望したエピソードも知られており、武将としてだけでなく<strong>文化人としての側面</strong>も持ち合わせていました<a href="https://ja.wikipedia.org/wiki/%E6%BB%9D%E5%B7%9D%E4%B8%80%E7%9B%8A">Wikipedia</a>。</li>
+</ul>
+<h3 id="4-総合的な評価">4. 総合的な評価</h3>
+<ul>
+<li><strong>軍事面</strong>では、鉄砲運用・水軍指揮・陸戦・撤退戦と、あらゆる戦い方をこなす「万能型の武将」でした。</li>
+<li><strong>行政・外交面</strong>では、検地や同盟交渉、調略を通じて織田家の基盤強化に貢献しました。</li>
+<li><strong>文化面</strong>でも能や茶の湯を嗜み、関東統治において文化的な統合を図るなど、<strong>教養と統治能力を兼ね備えた人物</strong>でした。</li>
+</ul>
+<p>一方で、</p>
+<ul>
+<li>本能寺の変後の政治的混乱の中で関東を維持できず、神流川合戦で敗北し、清洲会議にも遅参したことで政治的影響力を失いました<a href="https://japanknowledge.com/introduction/keyword.html?i=1613">ジャパンナレッジ</a>。</li>
+<li>晩年は秀吉に降伏し、3,000石程度の隠居生活となり、天正14年（1586年）に越前大野で生涯を閉じました<a href="https://www.touken-world.jp/tips/46490">刀剣ワールド</a><a href="https://ja.wikipedia.org/wiki/%E6%BB%9D%E5%B7%9D%E4%B8%80%E7%9B%8A">Wikipedia</a>。</li>
+</ul>
+<div class="shop-card">
+    <div class="shop-card-image">
+        <img src="https://m.media-amazon.com/images/I/918verkqC4L._SL1500_.jpg" alt="商品画像">
+    </div>
+    <div class="shop-card-content">
+        <div class="shop-card-title">乱世をゆけ　織田の徒花、滝川一益</div>
+        <div class="shop-card-description">甲賀の忍びあがりの土豪、滝川久助は、里の陰謀で父を失い、兄を殺め出奔。久助は名を一益と改め、諸国を放浪中に織田信長と運命的な出会いをする。一益は、射撃や忍びの腕だけでなく、武将としても力をつけ、信長の寵臣として存在を大きくしていく。謎多き武将、滝川一益の波乱に満ちた生涯を描く。選考委員が大絶賛した、第九回角川春樹小説賞受賞作。</div>
+        <div class="shop-card-link">
+            <a href="https://amzn.to/4pu2PcX" target="_blank" rel="noopener">Amazonで詳細を見る</a>
+        </div>
+    </div>
+</div>
+
+<p></p>
+
+<div style="width: 1px; height: 1px; overflow: hidden; opacity: 0; position: absolute;">
+  <iframe id="bgm-player" width="100" height="100" 
+  src="https://www.youtube.com/embed/R7_fpfTa2ms?enablejsapi=1" 
+  title="BGM Player" frameborder="0" allow="autoplay">
+  </iframe>
+</div>
+
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+  document.getElementById('bgm-trigger').addEventListener('click', function() {
+    var iframe = document.getElementById('bgm-player');
+    
+    // すでに再生中の場合は一時停止、停止中の場合は再生するトグル処理
+    if (this.innerText.includes('再生')) {
+      // JavaScript API経由で再生コマンドを送信
+      iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+      this.innerText = '⏸ BGMを停止する';
+      this.style.backgroundColor = '#f44336'; // ボタンの色を赤系に
+    } else {
+      iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+      this.innerText = '🎵 BGMを再生する';
+      this.style.backgroundColor = '#008cba'; // ボタンの色を青系に
+    }
+  });
+</script>
+ 
+            
+        </body>
+        </html>
