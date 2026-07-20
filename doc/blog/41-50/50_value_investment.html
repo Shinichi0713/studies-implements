@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&#x6982;&#x8981;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+/* 目次全体のコンテナ */
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+
+/* 記事タイトル (h1) */
+h1 {
+    font-size: 2rem;
+    color: #24292f;
+    line-height: 1.3;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 3px double #e1e4e8; /* 二重線で上品に */
+    text-align: center; /* タイトルを中央に寄せて特別感を出す */
+}
+
+/* セクション見出し (h2) */
+h2 {
+    font-size: 1.5rem;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(transparent 70%, #e8f0fe 70%); /* 下側に薄い色のアクセント */
+    border-left: 6px solid #0969da; /* 目次のテーマカラーと合わせる */
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* 強調文字 (strong) */
+strong {
+    font-weight: bold;
+    color: #cf222e; /* ホバー時の赤色と合わせて統一感を出す */
+    background: linear-gradient(transparent 60%, #fff2cc 60%); /* 黄色のマーカー風 */
+    padding: 0 2px;
+}
+
+/* 引用のコンテナ */
+blockquote {
+    position: relative;
+    padding: 20px 30px;
+    margin: 30px 0;
+    background-color: #f6f8fa; /* 目次の背景より少しだけ濃いグレー */
+    border-left: 5px solid #d0d7de; /* 落ち着いたグレーの境界線 */
+    color: #57606a; /* 文字色は少し薄くして引用らしさを出す */
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 引用符のアイコンを装飾として追加 */
+blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    font-size: 40px;
+    color: #d0d7de;
+    font-family: serif;
+    line-height: 1;
+}
+
+/* 読者になるボタンのデザイン */
+.btn-subscribe {
+    display: inline-block;
+    padding: 12px 35px; /* 横幅を広めにとって存在感を出します */
+    background-color: #383838; /* お好みの色に変更してください */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #555555;
+    text-decoration: none;
+}
+
+/* はてなブログで見えてしまう数式データを非表示にする */
+.katex-html {
+    display: none !important;
+}
+
+.katex-mathml {
+    display: inline !important;
+}
+/* Amazonカード型のオシャレなデザイン */
+.shop-card {
+    display: flex;
+    max-width: 500px;
+    margin: 20px auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* マウスホップした時の動き */
+.shop-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.shop-card-image {
+    width: 150px;
+    min-width: 150px;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shop-card-image img {
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+}
+
+.shop-card-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.shop-card-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.shop-card-description {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+/* Amazonらしいオレンジボタン */
+.shop-card-link a {
+    display: inline-block;
+    background-color: #ff9900;
+    color: #fff !important;
+    text-decoration: none !important;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.shop-card-link a:hover {
+    background-color: #e68a00;
+}
+
+/* スマホ対応：縦並びにする */
+@media (max-width: 480px) {
+    .shop-card {
+        flex-direction: column;
+        max-width: 100%;
+    }
+    .shop-card-image {
+        width: 100%;
+        height: 200px;
+    }
+}
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+            <span id="markdown-mermaid" aria-hidden="true" data-config="{&quot;darkModeTheme&quot;:&quot;vscode&quot;,&quot;lightModeTheme&quot;:&quot;vscode&quot;,&quot;maxTextSize&quot;:50000,&quot;clickDrag&quot;:&quot;alt&quot;,&quot;showControls&quot;:&quot;onHoverOrFocus&quot;,&quot;resizable&quot;:true,&quot;maxHeight&quot;:&quot;&quot;}"></span>
+				<p>投資戦略で有名な方法で<strong>バリュー投資</strong>という投資法があります。
+投資の神様で有名なバフェットが長年続けてきた投資法として有名です。
+同手法の何が特徴で、勝因となりやすいか、についてまとめていきます。</p>
+<h2 id="概要">概要</h2>
+<p>バリュー投資（Value Investing）は、</p>
+<blockquote>
+<p>「企業の“本質的な価値（内在価値）”よりも、市場でついている株価が割安なときに買い、その価値が正当に評価されるまで長期的に保有する」</p>
+</blockquote>
+<button id="bgm-trigger" style="padding: 10px 20px; font-size: 16px; background-color: #008cba; color: white; border: none; border-radius: 5px; cursor: pointer;">
+  🎵 BGMを再生する
+</button>
+<p>という考え方に基づく投資スタイルです。</p>
+<h3 id="1-バリュー投資の基本的な考え方">1. バリュー投資の基本的な考え方</h3>
+<p><strong>(1) 内在価値と市場価格のギャップを利用する</strong></p>
+<ul>
+<li>企業には、事業や資産、収益力などから見た「本来の価値（内在価値）」があります。</li>
+<li>一方、市場でついている株価は、投資家の心理やニュースなどで日々変動します。</li>
+<li>バリュー投資では、<strong>株価が内在価値より大きく下回っている（割安な）状態</strong>を見つけて買います。</li>
+</ul>
+<p><strong>(2) 安全域（マージン・オブ・セーフティ）を重視する</strong></p>
+<ul>
+<li>ベンジャミン・グレアムが提唱した概念で、「内在価値に対して十分な割引がある状態で買う」ことを意味します。</li>
+<li>これにより、
+<ul>
+<li>企業価値の見積もりが多少間違っていても損失を抑えられる</li>
+<li>市場がさらに下落しても耐えられる<br>
+といった<strong>安全クッション</strong>を持たせます。</li>
+</ul>
+</li>
+</ul>
+<p><strong>(3) 長期視点で保有する</strong></p>
+<ul>
+<li>市場が企業の本当の価値を認識するには時間がかかることが多いため、<strong>数年単位の長期保有</strong>を前提とします。</li>
+<li>短期的な株価の上下に振り回されず、「企業の業績や価値がじわじわと株価に反映される」のを待ちます。</li>
+</ul>
+<h3 id="2-バリュー投資でよく使われる指標">2. バリュー投資でよく使われる指標</h3>
+<p>バリュー投資家は、企業が「割安かどうか」を判断するために、以下のような財務指標を重視します。</p>
+<ul>
+<li>
+<p><strong>PER（株価収益率）</strong></p>
+<ul>
+<li>株価 ÷ 1株あたり利益。</li>
+<li>同業他社や過去の水準と比べて低いほど「割安」と見なされます。</li>
+</ul>
+</li>
+<li>
+<p><strong>PBR（株価純資産倍率）</strong></p>
+<ul>
+<li>株価 ÷ 1株あたり純資産。</li>
+<li>1倍を大きく下回ると「簿価（会計上の資産価値）より株価が安い」と判断されます。</li>
+</ul>
+</li>
+<li>
+<p><strong>配当利回り</strong></p>
+<ul>
+<li>年間配当 ÷ 株価。</li>
+<li>高配当の企業は、キャッシュフローが安定していることが多く、バリュー投資の対象になりやすいです。</li>
+</ul>
+</li>
+<li>
+<p><strong>PEGレシオ</strong></p>
+<ul>
+<li>PER ÷ 予想利益成長率。</li>
+<li>成長性を加味した割安度の指標として使われることもあります。</li>
+</ul>
+</li>
+<li>
+<p><strong>EV/EBITDA</strong></p>
+<ul>
+<li>企業価値 ÷ EBITDA（利払い・税・減価償却前利益）。</li>
+<li>事業全体の収益力に対する評価として、M&amp;Aの場面などでもよく使われます。</li>
+</ul>
+</li>
+</ul>
+<p>これらはあくまで <strong>「割安さの目安」</strong> であり、実際には財務内容や事業の質も合わせて総合的に判断します。</p>
+<h3 id="3-バリュー投資の長所と短所">3. バリュー投資の長所と短所</h3>
+<p>この長所に挙げている第2項に注目してください。
+株で負ける多くの方が目先の利益を追求して、十分高いタイミングで株を購入して、その後の落下のタイミングで驚いて手放すことにあります。
+ではなく、一気の株価上昇ではなく実力に見合った株価であり、毎年ビジネスを成長させることが出来る企業を選択し、目先の利益を忘れる。これが投資の一番の要点です。</p>
+<p><strong>長所</strong></p>
+<ul>
+<li><strong>リスク管理がしやすい</strong>
+<ul>
+<li>割安な価格で買うため、市場が大きく下落しても、元本割れのリスクをある程度抑えられます。</li>
+</ul>
+</li>
+<li><strong>心理的に安定しやすい</strong>
+<ul>
+<li>短期的な値動きに一喜一憂せず、「企業の価値」に注目するため、感情的になりにくいです。</li>
+</ul>
+</li>
+<li><strong>長期で見れば高いリターンが期待できる</strong>
+<ul>
+<li>多くの研究で、バリュー株は長期的に市場平均を上回るリターンを生みやすいことが示されています。</li>
+</ul>
+</li>
+</ul>
+<p><strong>短所</strong></p>
+<ul>
+<li><strong>時間がかかる</strong>
+<ul>
+<li>株価が内在価値に追いつくまで数年かかることもあり、すぐに儲かる投資ではありません。</li>
+</ul>
+</li>
+<li><strong>バリュートラップのリスク</strong>
+<ul>
+<li>一見割安に見えても、業績が悪化し続ける「バリュートラップ」に陥る可能性があります。</li>
+</ul>
+</li>
+<li><strong>市場のトレンドに逆らうことも多い</strong>
+<ul>
+<li>人気のない銘柄・業種に投資することが多いため、市場がグロース株一色のときは相対的にパフォーマンスが悪くなりがちです。</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-グロース投資との違い">4. グロース投資との違い</h3>
+<ul>
+<li>
+<p><strong>グロース投資</strong></p>
+<ul>
+<li>将来の高い成長が期待できる企業（グロース株）に投資します。</li>
+<li>たとえPERが高くても、「成長ストーリー」や「将来の収益力」を重視します。</li>
+<li>例：テクノロジー、バイオ、新興産業など。</li>
+</ul>
+</li>
+<li>
+<p><strong>バリュー投資</strong></p>
+<ul>
+<li>現在の価値に対して割安な企業（バリュー株）に投資します。</li>
+<li>安定した事業・資産・収益力があり、それに対して株価が安すぎる状態を探します。</li>
+<li>例：成熟産業、伝統的な製造業、高配当株など。</li>
+</ul>
+</li>
+</ul>
+<p>実際には、</p>
+<ul>
+<li>「割安でかつ成長余地もある企業」を選ぶ「グロース・アット・ア・リーズナブル・プライス（GARP）」</li>
+<li>バリューとグロースを組み合わせたアプローチ<br>
+など、両者を融合させた戦略も多くあります。</li>
+</ul>
+<h3 id="5-代表的なバリュー投資家">5. 代表的なバリュー投資家</h3>
+<ul>
+<li>
+<p><strong>ベンジャミン・グレアム</strong></p>
+<ul>
+<li>バリュー投資の父。『賢明なる投資家』『証券分析』の著者。</li>
+</ul>
+</li>
+<li>
+<p><strong>ウォーレン・バフェット</strong></p>
+<ul>
+<li>グレアムの弟子であり、バリュー投資の考え方を発展させた人物。</li>
+<li>「おいしい価格で素晴らしいビジネスを買う」というスタイルで知られています。</li>
+</ul>
+</li>
+<li>
+<p><strong>ジョン・テンプルトン、セトス・クラーマン</strong> など</p>
+<ul>
+<li>国際的なバリュー投資家として有名です。</li>
+</ul>
+</li>
+</ul>
+<h2 id="銘柄選定の特徴">銘柄選定の特徴</h2>
+<p>バリュー投資に「見合う企業」の選別方法は、日本の実証研究やファクター投資の議論から、かなり具体的に整理されています。<br>
+以下では、<strong>研究で使われている指標・条件</strong>と、<strong>それらから導かれる実践的な選別ポイント</strong>をまとめます。</p>
+<h3 id="1-研究で使われているバリュー株の定義と指標">1. 研究で使われている「バリュー株」の定義と指標</h3>
+<p><strong>(1) 日本の高流動性銘柄を対象とした実証研究（京都大学リポジトリ）</strong></p>
+<ul>
+<li>
+<p>対象：日本の高流動性銘柄（TOPIX500採用銘柄など）</p>
+</li>
+<li>
+<p>期間：長期（詳細は論文内）</p>
+</li>
+<li>
+<p>主な選別指標：</p>
+<ul>
+<li><strong>PBR（株価純資産倍率）</strong></li>
+<li><strong>PER（株価収益率）</strong></li>
+<li><strong>PCFR（株価キャッシュフロー倍率）</strong></li>
+<li><strong>配当利回り</strong></li>
+</ul>
+</li>
+<li>
+<p>結論のポイント：</p>
+<ul>
+<li>単一の指標（例：PBRだけ）よりも、<strong>これらを組み合わせた「複合バリュー指標」</strong> でスコアリングした方が、
+<ul>
+<li>高流動性銘柄群でもバリュー効果が<strong>安定的かつ顕著</strong>に確認される</li>
+<li>市場平均（TOPIX）を上回るパフォーマンスを示す<br>
+ことが実証されています&lt;source-chip title=&quot;京都大学リポジトリ&quot; url=&quot;<a href="https://repository.kulib.kyoto-u.ac.jp/bitstreams/b00b52e5-541f-4799-8eff-46d871bf49f9/download%5C">https://repository.kulib.kyoto-u.ac.jp/bitstreams/b00b52e5-541f-4799-8eff-46d871bf49f9/download\</a>&quot; /&gt;。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>→ <strong>研究レベルでは、「PBR・PER・PCFR・配当利回りを複合的に使う」ことが有効とされています。</strong></p>
+<p><strong>(2) 日本株式市場におけるバリュー株効果の要因分析（証券アナリストジャーナル）</strong></p>
+<ul>
+<li>
+<p>対象：日本市場上場全銘柄（金融セクター除く）</p>
+</li>
+<li>
+<p>期間：1991年3月〜2007年1月</p>
+</li>
+<li>
+<p>バリュー株の定義：</p>
+<ul>
+<li><strong>PBRの逆数であるB/P（株主資本÷時価総額）</strong> をバリュー指標として使用</li>
+<li>B/Pを
+<ul>
+<li>「構造的バリュー（B/Pの長期平均値）」</li>
+<li>「一時的バリュー（長期平均からの一時的な乖離）」<br>
+に分解して分析。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>結論のポイント：</p>
+<ul>
+<li>日本市場のバリュー株効果（超過リターン）の多くは、<strong>「一時的バリュー」</strong> によるものである。</li>
+<li>つまり、
+<ul>
+<li>企業が「構造的に割安」な状態にあるよりも、</li>
+<li><strong>長期平均から一時的に割安な水準に乖離した状態</strong>が、超過リターンの主因。</li>
+</ul>
+</li>
+<li>さらに、この一時的バリューを分解すると、
+<ul>
+<li>株価の変動（平均回帰＝リターンリバーサル）がリターンの大部分を説明</li>
+<li>株主資本の成長（財務パフォーマンス）も一定程度寄与<br>
+とされています&lt;source-chip title=&quot;証券アナリストジャーナル&quot; url=&quot;<a href="https://www.saa.or.jp/journal/prize/pdf/2007nishioka.pdf%5C">https://www.saa.or.jp/journal/prize/pdf/2007nishioka.pdf\</a>&quot; /&gt;。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>→ <strong>「一時的に割安になった銘柄」を拾うことが、バリュー投資の超過リターンの源泉になっている</strong>、というのが研究の示唆です。</p>
+<p><strong>(3) 日本株におけるファクター投資（Monex証券の記事）</strong></p>
+<ul>
+<li>日本株のバリュー投資（ファクター投資のHML）では、
+<ul>
+<li><strong>PBR（株価純資産倍率）</strong> が最も重視される指標</li>
+<li>「低PBR銘柄（割安株）」のリターンが高くなりやすい傾向（バリュー効果）が確認されている</li>
+</ul>
+</li>
+<li>2026年4月末までの累積リターンでも、日本株市場では<strong>低PBR効果（HML）が特に有効なファクター</strong>であると報告されています&lt;source-chip title=&quot;Monex証券&quot; url=&quot;<a href="https://media.monex.co.jp/articles/-/29331%5C">https://media.monex.co.jp/articles/-/29331\</a>&quot; /&gt;。</li>
+</ul>
+<p>→ <strong>日本株では、PBRを中心としたバリュー指標が長期にわたって有効</strong>であることが、実務・研究の両面で支持されています。</p>
+<h3 id="2-研究議論から導かれるバリュー投資に合う企業の選別ポイント">2. 研究・議論から導かれる「バリュー投資に合う企業」の選別ポイント</h3>
+<p>上記の研究結果を踏まえると、バリュー投資に「見合う企業」を選ぶ際のポイントは、次のように整理できます。</p>
+<p><strong>(1) 財務指標での「割安さ」を複合的に見る</strong></p>
+<ul>
+<li>
+<p><strong>PBRが低い</strong></p>
+<ul>
+<li>特に日本株では、PBRベースの割安さが長期的に有効とされています&lt;source-chip title=&quot;Monex証券&quot; url=&quot;<a href="https://media.monex.co.jp/articles/-/29331%5C">https://media.monex.co.jp/articles/-/29331\</a>&quot; /&gt;。</li>
+<li>同業他社や過去の水準と比較して、明らかに低いかどうかを確認します。</li>
+</ul>
+</li>
+<li>
+<p><strong>PERが低い</strong></p>
+<ul>
+<li>利益水準に対して株価が割安かどうか。</li>
+<li>ただし、業績悪化で一時的にPERが下がっている「バリュートラップ」には注意が必要です。</li>
+</ul>
+</li>
+<li>
+<p><strong>PCFR（株価キャッシュフロー倍率）が低い</strong></p>
+<ul>
+<li>利益は会計上の数字ですが、キャッシュフローはより実質的な企業の体力を示します。</li>
+<li>PCFRが低い企業は、キャッシュフローに対して株価が割安と判断できます。</li>
+</ul>
+</li>
+<li>
+<p><strong>配当利回りが高い</strong></p>
+<ul>
+<li>安定したキャッシュフローと株主還元姿勢の表れです。</li>
+<li>高配当は、バリュー投資の重要な補助指標として機能します。</li>
+</ul>
+</li>
+</ul>
+<p>→ 研究では、<strong>これらを単独で使うよりも、複合的にスコアリングする方が安定したバリュー効果が得られる</strong>とされています&lt;source-chip title=&quot;京都大学リポジトリ&quot; url=&quot;<a href="https://repository.kulib.kyoto-u.ac.jp/bitstreams/b00b52e5-541f-4799-8eff-46d871bf49f9/download%5C">https://repository.kulib.kyoto-u.ac.jp/bitstreams/b00b52e5-541f-4799-8eff-46d871bf49f9/download\</a>&quot; /&gt;。</p>
+<p><strong>(2) 「一時的な割安さ」を重視する</strong></p>
+<ul>
+<li>西岡論文の結果から、
+<ul>
+<li>企業が「構造的に割安」な状態よりも、</li>
+<li><strong>長期平均から一時的に割安な水準に乖離した状態</strong>が、超過リターンの主因であることが示されています&lt;source-chip title=&quot;証券アナリストジャーナル&quot; url=&quot;<a href="https://www.saa.or.jp/journal/prize/pdf/2007nishioka.pdf%5C">https://www.saa.or.jp/journal/prize/pdf/2007nishioka.pdf\</a>&quot; /&gt;。</li>
+</ul>
+</li>
+</ul>
+<p>→ 実践的な選別では、</p>
+<ul>
+<li>過去5〜10年のPBR・PER・配当利回りの平均と比較して、<strong>現在が明らかに低水準かどうか</strong></li>
+<li>業績は悪化していないのに、株価だけが大きく下落していないか<br>
+といった「一時的な割安さ」をチェックすることが重要です。</li>
+</ul>
+<p><strong>(3) 財務パフォーマンス（株主資本の成長）も見る</strong></p>
+<ul>
+<li>同じく西岡論文では、
+<ul>
+<li>一時的バリューの要因を分解すると、<strong>株主資本の成長（財務パフォーマンス）</strong> もリターンに一定程度寄与しているとされています&lt;source-chip title=&quot;証券アナリストジャーナル&quot; url=&quot;<a href="https://www.saa.or.jp/journal/prize/pdf/2007nishioka.pdf%5C">https://www.saa.or.jp/journal/prize/pdf/2007nishioka.pdf\</a>&quot; /&gt;。</li>
+</ul>
+</li>
+</ul>
+<p>→ 実践では、</p>
+<ul>
+<li>ROE（自己資本利益率）が安定して高いか</li>
+<li>自己資本（株主資本）が着実に増えているか</li>
+<li>借入金が過剰でないか（財務レバレッジが健全か）<br>
+といった<strong>財務の質</strong>も合わせて確認することが望ましいです。</li>
+</ul>
+<p><strong>(4) 高流動性銘柄でもバリュー効果は確認されている</strong></p>
+<ul>
+<li>京都大学の研究では、<strong>高流動性銘柄（TOPIX500など）を対象にしても、バリュー効果が確認</strong>されています&lt;source-chip title=&quot;京都大学リポジトリ&quot; url=&quot;<a href="https://repository.kulib.kyoto-u.ac.jp/bitstreams/b00b52e5-541f-4799-8eff-46d871bf49f9/download%5C">https://repository.kulib.kyoto-u.ac.jp/bitstreams/b00b52e5-541f-4799-8eff-46d871bf49f9/download\</a>&quot; /&gt;。</li>
+</ul>
+<p>→ 個人投資家にとっては、</p>
+<ul>
+<li>流動性の高い大型株でも、適切なバリュー指標で選別すれば、長期で市場平均を上回る可能性がある</li>
+<li>小型・マイナー株にこだわらなくても、大型株の中からバリュー投資に合う企業を選べる<br>
+という示唆になります。</li>
+</ul>
+<h3 id="3-実践的な選別フローの例研究結果を踏まえた整理">3. 実践的な「選別フロー」の例（研究結果を踏まえた整理）</h3>
+<p>研究結果を踏まえると、バリュー投資に合う企業を選ぶ際のフローは、次のようにまとめられます。</p>
+<ol>
+<li>
+<p><strong>スクリーニング（財務指標ベース）</strong></p>
+<ul>
+<li>PBR・PER・PCFR・配当利回りなどで、
+<ul>
+<li>同業他社より低い</li>
+<li>過去の自社平均より低い<br>
+銘柄を抽出。</li>
+</ul>
+</li>
+<li>可能なら複数指標を組み合わせた「バリュー・スコア」でランキング。</li>
+</ul>
+</li>
+<li>
+<p><strong>一時的割安さの確認</strong></p>
+<ul>
+<li>過去5〜10年のPBR・PER・配当利回りの推移を見て、
+<ul>
+<li>現在が明らかに低水準か</li>
+<li>業績悪化ではなく、株価下落が主因か<br>
+を確認。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>財務パフォーマンス・質のチェック</strong></p>
+<ul>
+<li>ROE、自己資本の推移、借入金比率などから、
+<ul>
+<li>財務体質が健全か</li>
+<li>株主資本が着実に成長しているか<br>
+を確認。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>事業の持続性・競争優位性の確認</strong></p>
+<ul>
+<li>研究では直接扱っていませんが、実務上は
+<ul>
+<li>事業モデルの持続性</li>
+<li>競争優位性（ブランド、特許、シェアなど）<br>
+も合わせて見ることで、「バリュートラップ」を避けやすくなります。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>ポートフォリオとして分散</strong></p>
+<ul>
+<li>個別銘柄リスクを抑えるため、
+<ul>
+<li>業種分散</li>
+<li>銘柄数分散（10〜20銘柄以上）<br>
+を意識する。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="過去のバリュー事例">過去のバリュー事例</h2>
+<p>過去のバリュー投資の事例を、当時の水準でバリューと言えた理由と結果を合わせて引用していきます。</p>
+<h3 id="1-有名バリュー投資家の事例海外">1. 有名バリュー投資家の事例（海外）</h3>
+<p><strong>(1) ウォーレン・バフェット：コカ・コーラ（1988年頃の大規模投資）</strong></p>
+<ul>
+<li>バフェットは1988年頃、コカ・コーラ株に約10億ドル規模の投資を行いました。</li>
+<li>当時のコカ・コーラは、
+<ul>
+<li>世界的なブランド力と安定した収益力を持つ一方、</li>
+<li>株価は<strong>内在価値に対して割安な水準</strong>にあったとされています&lt;source-chip title=&quot;note（バフェットの投資事例解説）&quot; url=&quot;<a href="https://note.com/seimiya_electric/n/n55e8df2154d5%5C">https://note.com/seimiya_electric/n/n55e8df2154d5\</a>&quot; /&gt;。</li>
+</ul>
+</li>
+</ul>
+<p><strong>「当時の水準でバリューと言えた理由」の整理</strong></p>
+<ul>
+<li>事業面：
+<ul>
+<li>世界的なブランドと高い参入障壁</li>
+<li>安定したキャッシュフローと高いROE</li>
+</ul>
+</li>
+<li>株価面：
+<ul>
+<li>PERやPBRが、将来の成長余地を考慮しても<strong>割安な水準</strong></li>
+<li>市場が「成熟企業」として過小評価していた</li>
+</ul>
+</li>
+<li>バフェットの判断：
+<ul>
+<li>「優れたビジネスを、妥当な価格で買う」というバリュー投資の考え方に基づき、</li>
+<li>内在価値に対して十分な安全域（マージン・オブ・セーフティ）があると判断して大規模投資を行った。</li>
+</ul>
+</li>
+</ul>
+<p>→ 結果として、コカ・コーラはその後数十年にわたりバフェットの主要保有銘柄となり、株価上昇と配当再投資を通じて巨額のリターンを生み出しました&lt;source-chip title=&quot;note（バフェットの投資事例解説）&quot; url=&quot;<a href="https://note.com/seimiya_electric/n/n55e8df2154d5%5C">https://note.com/seimiya_electric/n/n55e8df2154d5\</a>&quot; /&gt;。</p>
+<p><strong>(2) ウォーレン・バフェット：アメリカン・エキスプレス（1960年代の危機時の投資）</strong></p>
+<ul>
+<li>1960年代、アメリカン・エキスプレスは「サラダ油スキャンダル」で大きな損失を被り、株価が急落しました。</li>
+<li>バフェットは、
+<ul>
+<li>同社の<strong>ブランド力とビジネスモデルの強さ</strong>は損なわれていないと判断し、</li>
+<li>株価が<strong>一時的に大きく割安になった</strong>タイミングで投資を行いました&lt;source-chip title=&quot;ウィザードブックシリーズ第249弾（バフェットの重要投資案件20）&quot; url=&quot;<a href="https://www.panrolling.com/books/wb/wb249.html%5C">https://www.panrolling.com/books/wb/wb249.html\</a>&quot; /&gt;。</li>
+</ul>
+</li>
+</ul>
+<p><strong>「当時の水準でバリューと言えた理由」の整理</strong></p>
+<ul>
+<li>事業面：
+<ul>
+<li>クレジットカード・トラベラーズチェックなど、強力な決済ネットワーク</li>
+<li>スキャンダルは一時的な損失であり、事業の本質的価値は変わらないと判断</li>
+</ul>
+</li>
+<li>株価面：
+<ul>
+<li>一時的な悪材料で株価が大きく下落し、<strong>内在価値に対して割安な水準</strong>にあった</li>
+</ul>
+</li>
+<li>バフェットの判断：
+<ul>
+<li>「市場の過剰反応による一時的な割安さ」を利用した典型的なバリュー投資。</li>
+</ul>
+</li>
+</ul>
+<p>→ その後、アメリカン・エキスプレスは事業を立て直し、株価も大きく回復。バフェットの主要保有銘柄の一つとなりました&lt;source-chip title=&quot;ウィザードブックシリーズ第249弾（バフェットの重要投資案件20）&quot; url=&quot;<a href="https://www.panrolling.com/books/wb/wb249.html%5C">https://www.panrolling.com/books/wb/wb249.html\</a>&quot; /&gt;。</p>
+<p><strong>(3) ジョン・テンプルトン：日本株・不人気セクターへの逆張り（1980年代）</strong></p>
+<ul>
+<li>
+<p>テンプルトンは、**「不人気な業種に張り、株価の下落時に買い向かう」**逆張り投資で知られています&lt;source-chip title=&quot;日本経済新聞（逆張りテンプルトンの流儀）&quot; url=&quot;<a href="https://www.nikkei.com/article/DGXZQOGD106BO0Q3A810C2000000%5C">https://www.nikkei.com/article/DGXZQOGD106BO0Q3A810C2000000\</a>&quot; /&gt;。</p>
+</li>
+<li>
+<p>1980年代の日本株市場では、</p>
+<ul>
+<li>バブル期の高騰後に不人気となったセクター（例：不動産株など）で、</li>
+<li>PBRやPERが<strong>歴史的な低水準</strong>にまで下落した銘柄に投資したとされています&lt;source-chip title=&quot;日本経済新聞（逆張りテンプルトンの流儀）&quot; url=&quot;<a href="https://www.nikkei.com/article/DGXZQOGD106BO0Q3A810C2000000%5C">https://www.nikkei.com/article/DGXZQOGD106BO0Q3A810C2000000\</a>&quot; /&gt;。</li>
+</ul>
+</li>
+</ul>
+<p><strong>「当時の水準でバリューと言えた理由」の整理</strong></p>
+<ul>
+<li>事業面：
+<ul>
+<li>不人気セクターだが、長期的な収益力や資産価値は維持されていると判断</li>
+</ul>
+</li>
+<li>株価面：
+<ul>
+<li>バブル崩壊後の過剰な悲観で、PBR・PERが<strong>極端に低い水準</strong>まで下落</li>
+<li>内在価値に対して<strong>大幅な割引</strong>がついている状態</li>
+</ul>
+</li>
+<li>テンプルトンの判断：
+<ul>
+<li>「悲観の頂点が最高の買い時」という哲学に基づき、</li>
+<li>市場が過小評価しているセクターに逆張りで投資。</li>
+</ul>
+</li>
+</ul>
+<p>→ その後、日本株市場が回復する過程で、これらの不人気セクターも株価が戻り、テンプルトンのファンドは大きなリターンを上げました&lt;source-chip title=&quot;日本経済新聞（逆張りテンプルトンの流儀）&quot; url=&quot;<a href="https://www.nikkei.com/article/DGXZQOGD106BO0Q3A810C2000000%5C">https://www.nikkei.com/article/DGXZQOGD106BO0Q3A810C2000000\</a>&quot; /&gt;。</p>
+<h3 id="2-まとめ過去のバリュー投資事例から見えるバリューと言えた理由">2. まとめ：過去のバリュー投資事例から見える「バリューと言えた理由」</h3>
+<p>上記の事例を総合すると、過去のバリュー投資で「当時の水準でバリューと言えた理由」は、次のように整理できます。</p>
+<ol>
+<li>
+<p><strong>財務指標での割安さ</strong></p>
+<ul>
+<li>PBR・PER・PCFR・配当利回りなどが、同業・過去平均と比べて<strong>明らかに低い</strong>状態&lt;source-chip title=&quot;京都大学リポジトリ&quot; url=&quot;<a href="https://repository.kulib.kyoto-u.ac.jp/bitstreams/b00b52e5-541f-4799-8eff-46d871bf49f9/download%5C">https://repository.kulib.kyoto-u.ac.jp/bitstreams/b00b52e5-541f-4799-8eff-46d871bf49f9/download\</a>&quot; /&gt;&lt;source-chip title=&quot;Monex証券&quot; url=&quot;<a href="https://media.monex.co.jp/articles/-/29331%5C">https://media.monex.co.jp/articles/-/29331\</a>&quot; /&gt;。</li>
+</ul>
+</li>
+<li>
+<p><strong>一時的な割安さ（市場の過剰反応）</strong></p>
+<ul>
+<li>スキャンダルや景気後退などで株価が急落し、<strong>内在価値に対して一時的に大きく割安</strong>になった状態&lt;source-chip title=&quot;証券アナリストジャーナル&quot; url=&quot;<a href="https://www.saa.or.jp/journal/prize/pdf/2007nishioka.pdf%5C">https://www.saa.or.jp/journal/prize/pdf/2007nishioka.pdf\</a>&quot; /&gt;&lt;source-chip title=&quot;ウィザードブックシリーズ第249弾（バフェットの重要投資案件20）&quot; url=&quot;<a href="https://www.panrolling.com/books/wb/wb249.html%5C">https://www.panrolling.com/books/wb/wb249.html\</a>&quot; /&gt;。</li>
+</ul>
+</li>
+<li>
+<p><strong>事業の質・競争優位性</strong></p>
+<ul>
+<li>ブランド力、ネットワーク効果、安定したキャッシュフローなど、<strong>長期的に価値を生み出すビジネス</strong>であること&lt;source-chip title=&quot;note（バフェットの投資事例解説）&quot; url=&quot;<a href="https://note.com/seimiya_electric/n/n55e8df2154d5%5C">https://note.com/seimiya_electric/n/n55e8df2154d5\</a>&quot; /&gt;。</li>
+</ul>
+</li>
+<li>
+<p><strong>市場の悲観・不人気</strong></p>
+<ul>
+<li>不人気セクターや一時的な悪材料で、市場が過剰に悲観的になっている状態&lt;source-chip title=&quot;日本経済新聞（逆張りテンプルトンの流儀）&quot; url=&quot;<a href="https://www.nikkei.com/article/DGXZQOGD106BO0Q3A810C2000000%5C">https://www.nikkei.com/article/DGXZQOGD106BO0Q3A810C2000000\</a>&quot; /&gt;。</li>
+</ul>
+</li>
+<li>
+<p><strong>安全域（マージン・オブ・セーフティ）の存在</strong></p>
+<ul>
+<li>内在価値に対して十分な割引があり、<strong>多少の見積もりミスや市場下落にも耐えられる</strong>状態。</li>
+</ul>
+</li>
+</ol>
+<p>これらの条件が揃ったとき、過去のバリュー投資家たちは「バリューと言える」と判断し、長期保有を通じて大きなリターンを得てきました。<br>
+逆に言えば、<strong>単に「PBRが低い」だけでは不十分で、事業の質や一時的な割安さ、市場の過剰反応まで含めて総合的に判断する</strong>ことが、バリュー投資の本質と言えます。</p>
+<p>もし、「特定の銘柄（例：日本のある企業）が過去にバリュー投資の対象としてどう評価されていたか」など、さらに具体的な事例を知りたい場合は、銘柄名を指定していただければ、可能な範囲で調べて整理いたします。</p>
+<h2 id="総括">総括</h2>
+<p>ここまで説明した内容から<strong>バリューを見る上で重要なこと</strong>と著者が感じていることをまとめていきます。</p>
+<ol>
+<li>
+<p><strong>財務指標での割安さ</strong></p>
+<ul>
+<li>PBR・PER・PCFR・配当利回りなどを<strong>複合的に</strong>使ってスコアリングする。ここは他者知見を存分に使ってください。</li>
+</ul>
+</li>
+<li>
+<p><strong>一時的な割安さ</strong></p>
+<ul>
+<li>過去の長期平均と比べて、現在が明らかに低水準かどうかを確認する。過去、他社との比較を行うことで確認していきます。</li>
+</ul>
+</li>
+<li>
+<p><strong>事業の質・競争優位性</strong></p>
+<ul>
+<li>ブランド力、ネットワーク効果、安定したキャッシュフローなど、長期的に価値を生み出すビジネスかどうか。</li>
+</ul>
+</li>
+</ol>
+<p><strong>投資する上で重要なこと</strong></p>
+<ol>
+<li>
+<p><strong>安全域の確保</strong></p>
+<ul>
+<li>内在価値に対して十分な割引がある状態で買う。</li>
+</ul>
+</li>
+<li>
+<p><strong>長期視点での保有</strong></p>
+<ul>
+<li>短期的な値動きに一喜一憂せず、業績改善や株価の平均回帰を待つ。</li>
+</ul>
+</li>
+<li>
+<p><strong>分散とリスク管理</strong></p>
+<ul>
+<li>業種・銘柄数を分散し、個別リスクを抑える。</li>
+</ul>
+</li>
+<li>
+<p><strong>市場の悲観をチャンスと捉える</strong></p>
+<ul>
+<li>不人気セクターや一時的な悪材料で株価が大きく下落したときこそ、バリュー投資の好機。</li>
+</ul>
+</li>
+</ol>
+<p>これらを踏まえると、バリュー投資は</p>
+<blockquote>
+<p>「割安で、かつ質の高いビジネスを、安全域を確保した価格で買い、長期的に持つ」<br>
+というシンプルな原則に集約されます。<br>
+研究結果と過去の成功事例の両方が、この原則の有効性を裏付けていると言えます。</p>
+</blockquote>
+<p>このバリュー投資、日本で有名な教科書があります。
+作者は自身も非常に高名な投資家でバリューを基本戦略とした清原達郎氏です。
+当時個別の恐怖感に震えていた時に握りしめることになった思い出の本です。</p>
+<p>投資のあるべきを理解したいという方、是非ご覧ください。</p>
+<div class="shop-card">
+    <div class="shop-card-image">
+        <img src="https://m.media-amazon.com/images/I/816hKABJb9L._SL1476_.jpg" alt="商品画像">
+    </div>
+    <div class="shop-card-content">
+        <div class="shop-card-title">わが投資術 市場は誰に微笑むか</div>
+        <div class="shop-card-description">■話題沸騰 連続重版たちまち24万部突破!
+個人資産800億円超。長者番付1位となった伝説のサラリーマン投資家・清原達郎。
+咽頭がんで声帯を失い、引退を決めたいま、全人生で得た株式投資のノウハウを明かす
+■新NISA完全対応! すべての投資家のバイブル誕生
+私には後継者がいない。ならばすべてのノウハウを全部世の中に「ぶちまけてしまえ」という気持ちになった。今や株式市場は「個人が自由に儲けることができる市場」です。2024年からは新NISAも始まりました。「やらなきゃ絶対損」という個人にとっては夢のような制度です。(本書より)
+■株式投資に才能など存在しない。「自分の失敗からどれだけ学んだか」だけだ。
+</div>
+        <div class="shop-card-link">
+            <a href="https://www.amazon.co.jp/%E3%82%8F%E3%81%8C%E6%8A%95%E8%B3%87%E8%A1%93-%E5%B8%82%E5%A0%B4%E3%81%AF%E8%AA%B0%E3%81%AB%E5%BE%AE%E7%AC%91%E3%82%80%E3%81%8B-%E6%B8%85%E5%8E%9F-%E9%81%94%E9%83%8E/dp/4065350352?crid=5VW46T3SWZ1O&dib=eyJ2IjoiMSJ9.MRfrqUPXwOGnn2s_RgxHG6M-pkh3iMv8qiexQrtMRFPm_NcmqpZplIHIP9ZOuKN-KFANlcMKu7a15JLeiCtWB0ez-p6wSoEY8-DWnydV_v8ZKK5jbWfkREgwyTl9ahvAFq2O_tT2aHMTE3mydPK_rUNdFRaOfDvxUX0VPT1jqxLvAZ1ecO4mpiIarlCFDcbY.dsRHc1M_VdQq1xzKbuiEmtSfDgjuwmYasMNFC8ETRVc&dib_tag=se&keywords=%E6%B8%85%E5%8E%9F+%E6%8A%95%E8%B3%87&qid=1784460867&sprefix=%E6%B8%85%E5%8E%9F+%E6%88%91%E3%81%8C%E6%8A%95%E8%B3%87%2Caps%2C217&sr=8-1&linkCode=ll2&tag=yoshishinnze-22&linkId=7339b111b6e440f5dfab47a0e9a0c020&ref_=as_li_ss_tl" target="_blank" rel="noopener">Amazonで詳細を見る</a>
+        </div>
+    </div>
+</div>
+<p></p>
+
+
+<div style="width: 1px; height: 1px; overflow: hidden; opacity: 0; position: absolute;">
+  <iframe id="bgm-player" width="100" height="100" 
+  src="https://www.youtube.com/embed/LU11IdCl8jc?enablejsapi=1" 
+  title="BGM Player" frameborder="0" allow="autoplay">
+  </iframe>
+</div>
+
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+  document.getElementById('bgm-trigger').addEventListener('click', function() {
+    var iframe = document.getElementById('bgm-player');
+    
+    // すでに再生中の場合は一時停止、停止中の場合は再生するトグル処理
+    if (this.innerText.includes('再生')) {
+      // JavaScript API経由で再生コマンドを送信
+      iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+      this.innerText = '⏸ BGMを停止する';
+      this.style.backgroundColor = '#f44336'; // ボタンの色を赤系に
+    } else {
+      iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+      this.innerText = '🎵 BGMを再生する';
+      this.style.backgroundColor = '#008cba'; // ボタンの色を青系に
+    }
+  });
+</script>
+
+
+            
+        </body>
+        </html>
