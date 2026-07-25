@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&#x682a;&#x4fa1;&#x306e;&#x5e95;&#x6253;&#x3061;&#x30b5;&#x30a4;&#x30f3;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+/* 目次全体のコンテナ */
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+
+/* 記事タイトル (h1) */
+h1 {
+    font-size: 2rem;
+    color: #24292f;
+    line-height: 1.3;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 3px double #e1e4e8; /* 二重線で上品に */
+    text-align: center; /* タイトルを中央に寄せて特別感を出す */
+}
+
+/* セクション見出し (h2) */
+h2 {
+    font-size: 1.5rem;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(transparent 70%, #e8f0fe 70%); /* 下側に薄い色のアクセント */
+    border-left: 6px solid #0969da; /* 目次のテーマカラーと合わせる */
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* 強調文字 (strong) */
+strong {
+    font-weight: bold;
+    color: #cf222e; /* ホバー時の赤色と合わせて統一感を出す */
+    background: linear-gradient(transparent 60%, #fff2cc 60%); /* 黄色のマーカー風 */
+    padding: 0 2px;
+}
+
+/* 引用のコンテナ */
+blockquote {
+    position: relative;
+    padding: 20px 30px;
+    margin: 30px 0;
+    background-color: #f6f8fa; /* 目次の背景より少しだけ濃いグレー */
+    border-left: 5px solid #d0d7de; /* 落ち着いたグレーの境界線 */
+    color: #57606a; /* 文字色は少し薄くして引用らしさを出す */
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 引用符のアイコンを装飾として追加 */
+blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    font-size: 40px;
+    color: #d0d7de;
+    font-family: serif;
+    line-height: 1;
+}
+
+/* 読者になるボタンのデザイン */
+.btn-subscribe {
+    display: inline-block;
+    padding: 12px 35px; /* 横幅を広めにとって存在感を出します */
+    background-color: #383838; /* お好みの色に変更してください */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #555555;
+    text-decoration: none;
+}
+
+/* はてなブログで見えてしまう数式データを非表示にする */
+.katex-html {
+    display: none !important;
+}
+
+.katex-mathml {
+    display: inline !important;
+}
+/* Amazonカード型のオシャレなデザイン */
+.shop-card {
+    display: flex;
+    max-width: 500px;
+    margin: 20px auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* マウスホップした時の動き */
+.shop-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.shop-card-image {
+    width: 150px;
+    min-width: 150px;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shop-card-image img {
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+}
+
+.shop-card-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.shop-card-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.shop-card-description {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+/* Amazonらしいオレンジボタン */
+.shop-card-link a {
+    display: inline-block;
+    background-color: #ff9900;
+    color: #fff !important;
+    text-decoration: none !important;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.shop-card-link a:hover {
+    background-color: #e68a00;
+}
+
+/* スマホ対応：縦並びにする */
+@media (max-width: 480px) {
+    .shop-card {
+        flex-direction: column;
+        max-width: 100%;
+    }
+    .shop-card-image {
+        width: 100%;
+        height: 200px;
+    }
+}
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+            <span id="markdown-mermaid" aria-hidden="true" data-config="{&quot;darkModeTheme&quot;:&quot;vscode&quot;,&quot;lightModeTheme&quot;:&quot;vscode&quot;,&quot;maxTextSize&quot;:50000,&quot;clickDrag&quot;:&quot;alt&quot;,&quot;showControls&quot;:&quot;onHoverOrFocus&quot;,&quot;resizable&quot;:true,&quot;maxHeight&quot;:&quot;&quot;}"></span>
+				<p>著者は投資はしてますが、日中仕事をしているおかげでアプリを開いて銘柄の金額を見る時間はほとんど取れません。
+なので1日1日変動する銘柄の底値を狙いたい、安い時に買いたいというのが投資の姿勢です。
+そんな著者なので株価が皆さんが売りまくって安くなり切った<strong>底値</strong>が大好きだったりします。</p>
+<p>本日テーマ：</p>
+<blockquote>
+<p>底値を見分けるサインにはどのようなものがあるか</p>
+</blockquote>
+<button id="bgm-trigger" style="padding: 10px 20px; font-size: 16px; background-color: #008cba; color: white; border: none; border-radius: 5px; cursor: pointer;">
+  🎵 BGMを再生する
+</button>
+<h2 id="株価の底打ちサイン">株価の底打ちサイン</h2>
+<p>株価の「下げ止まり」や「底打ち」を見分けるための、<strong>確実な公式のようなものは存在しません</strong>が、市場参加者がよく注目する「サインになりうるパターン」はいくつかあります。<br>
+以下では、代表的なものを整理してご説明します。</p>
+<h3 id="1-テクニカル面で見られる底打ちのサインになりうるパターン">1. テクニカル面で見られる「底打ちのサイン」になりうるパターン</h3>
+<p><strong>(1) チャートパターン</strong></p>
+<ul>
+<li>
+<p><strong>ダブルボトム（W底）</strong><br>
+一度底を打ったあと、再び同じ水準まで下落し、そこから反発するパターン。<br>
+2回目の安値が1回目と同じか、わずかに上回る（ハイヤーロー）場合、「底打ち」のサインとみなされることが多いです。</p>
+</li>
+<li>
+<p><strong>トリプルボトム</strong><br>
+ダブルボトムをさらに一歩進めた形で、同じ水準で3回以上下値を試すパターン。<br>
+何度も同じ水準で買い支えられていると見なされ、底打ちの可能性が高いと判断されることがあります。</p>
+</li>
+<li>
+<p><strong>上昇トレンドラインへの転換</strong><br>
+長期的な下降トレンドラインを上抜けし、<strong>安値が切り上がり、高値も切り上がる</strong>状態になると、トレンド転換のサインとされます。</p>
+</li>
+</ul>
+<p><strong>(2) 出来高（売買高）の動き</strong></p>
+<ul>
+<li>
+<p><strong>急落後の出来高急増＋反発</strong><br>
+急落の末に、<strong>出来高が急増してから反発に転じる</strong>パターンは、「売り一巡」のサインとみなされることがあります。<br>
+多くの投資家が売り切った後、買いが入りやすくなるという考え方です。</p>
+</li>
+<li>
+<p><strong>底値圏での出来高の増加</strong><br>
+長い間低迷した後、底値圏で出来高が徐々に増え始め、価格が上昇に転じるパターンも、<strong>買い戻しが本格化している</strong>サインと解釈されることがあります。</p>
+</li>
+</ul>
+<p><strong>(3) オシレーター系指標</strong></p>
+<ul>
+<li>
+<p><strong>RSIのダイバージェンス</strong><br>
+株価は新安値を更新しているのに、RSI（相対力指数）の安値が切り上がっている場合、<strong>下落の勢いが弱まっている</strong>サインとみなされることがあります。<br>
+いわゆる「強気のダイバージェンス」と呼ばれるパターンです。</p>
+</li>
+<li>
+<p><strong>ストキャスティクスの底入れ</strong><br>
+ストキャスティクスが20％以下の「売られすぎ」圏で底入れし、そこから上昇に転じる場合、短期的な反発のサインとされることがあります。</p>
+</li>
+<li>
+<p><strong>MACDのゴールデンクロス</strong><br>
+長期的な下落局面で、MACDのシグナル線がMACDラインを下から上に抜ける（ゴールデンクロス）と、トレンド転換のサインとみなされることがあります。</p>
+</li>
+</ul>
+<h3 id="2-ファンダメンタル面で見られる底打ちのサインになりうるパターン">2. ファンダメンタル面で見られる「底打ちのサイン」になりうるパターン</h3>
+<p><strong>(1) バリュエーション（割安度）</strong></p>
+<ul>
+<li>
+<p><strong>PER・PBRが歴史的な安値水準</strong><br>
+過去のバブル期や高値圏と比べて、PER（株価収益率）やPBR（株価純資産倍率）が<strong>極端に低い水準</strong>まで下落している場合、<br>
+「これ以上は下がりにくい」と判断されることがあります。</p>
+</li>
+<li>
+<p><strong>配当利回りの高さ</strong><br>
+配当利回りが過去平均よりかなり高く、かつ企業の財務が健全であれば、<br>
+「配当目当ての長期投資家が買い支える」可能性が高まり、下げ止まりの材料とされることがあります。</p>
+</li>
+</ul>
+<p><strong>(2) 企業業績の転換点</strong></p>
+<ul>
+<li>
+<p><strong>業績の下方修正が終わり、上方修正に転じる</strong><br>
+業績悪化が続いていた企業が、<strong>予想以上に悪化しきった</strong>と市場が判断し、<br>
+その後、業績の底打ち・回復が見えてくると、株価も底打ちしやすくなります。</p>
+</li>
+<li>
+<p><strong>新製品・新規事業・構造改革の効果が出始める</strong><br>
+長期的な構造改革や新事業への投資が実を結び始めると、<br>
+将来の成長期待が再評価され、株価が下げ止まるきっかけになることがあります。</p>
+</li>
+</ul>
+<h3 id="3-マーケット全体心理面で見られる底打ちのサインになりうるパターン">3. マーケット全体・心理面で見られる「底打ちのサイン」になりうるパターン</h3>
+<p><strong>(1) 市場心理の極端な悲観</strong></p>
+<ul>
+<li>
+<p><strong>「もう誰も株を買わない」という空気</strong><br>
+ニュースやSNSで「株はもうダメ」「もう売るしかない」といった極端な悲観論が広がり、<br>
+それでも株価がそれ以上下がらなくなってきた場合、<strong>悲観のピーク＝底</strong>とみなされることがあります。</p>
+</li>
+<li>
+<p><strong>VIX（恐怖指数）の急上昇とその後の落ち着き</strong><br>
+市場の恐怖指数であるVIXが急上昇した後、<strong>高止まりから徐々に低下</strong>し始めると、<br>
+パニック売りが一巡したサインとみなされることがあります。</p>
+</li>
+</ul>
+<p><strong>(2) 出来高・ボラティリティの収束</strong></p>
+<ul>
+<li><strong>急落後のボラティリティ低下</strong><br>
+急落局面では日々の値動きが大きくなりますが、<br>
+その後、<strong>値動きの幅が小さくなり、出来高も落ち着いてくる</strong>と、<br>
+売り圧力が弱まり、底打ちに向かっているサインとみなされることがあります。</li>
+</ul>
+<h3 id="4-注意点これらはサインであって保証ではない">4. 注意点：これらは「サイン」であって「保証」ではない</h3>
+<ul>
+<li>どの指標も<strong>過去のデータに基づく確率論</strong>であり、<br>
+「このパターンが出たら必ず底」というものではありません。</li>
+<li>市場環境（金利、為替、景気、地政学リスクなど）によって、<br>
+同じパターンでも結果が大きく変わることもあります。</li>
+<li>特に、<strong>ファンダメンタルズが悪化し続けている局面</strong>では、<br>
+テクニカル的な底打ちサインが何度も「だまし」になることもあります。</li>
+</ul>
+<h3 id="5-実務的な考え方の例">5. 実務的な考え方の例</h3>
+<ul>
+<li>
+<p><strong>単一の指標に頼らず、複数の指標を組み合わせて判断する</strong><br>
+例：</p>
+<ul>
+<li>チャートがW底＋出来高急増＋RSIダイバージェンス</li>
+<li>PERが歴史的低水準＋業績の下方修正終了＋市場心理が極端に悲観的<br>
+など、複数のサインが重なると、底打ちの確度が高まると考えられます。</li>
+</ul>
+</li>
+<li>
+<p><strong>「底をピンポイントで当てる」より「底値圏で積み上げる」発想</strong><br>
+完全な底を特定することはほぼ不可能なので、<br>
+「かなり割安な水準」と判断できれば、時間をかけて少しずつ買い増す<br>
+というアプローチもよく取られます。</p>
+</li>
+</ul>
+<h2 id="報告事例から紐解く">報告事例から紐解く</h2>
+<p>上記のようなサインはよくyahooファイナンスの下げすぎ銘柄でも話はよく出てきます。
+では一体どれが最も確度が高いのでしょう？</p>
+<p>結論から申し上げますと、<strong>「底打ちサインの中で、どれが一番確度が高いか」を直接・網羅的に比較した統一的な研究は、ほとんど存在しないようです。</strong></p>
+<p>ただし、「特定のパターンや指標が、どの程度の予測力を持つか」を個別に検証した研究は多数あります。<br>
+以下、代表的なものを整理します。</p>
+<h3 id="1-テクニカルパターンの予測力を扱う研究">1. テクニカルパターンの予測力を扱う研究</h3>
+<p><strong>(1) チャートパターン全般</strong></p>
+<ul>
+<li>
+<p><strong>「Searching for Patterns in Daily Stock Data: First Steps Towards Data-Driven Technical Analysis」</strong><br>
+J.P. Morgan の技術ブログで、機械学習を用いて日次株価データからパターンを抽出し、その予測力を検証する試みが紹介されています<a href="https://www.jpmorgan.com/technology/technology-blog/searching-for-patterns">J.P. Morgan Technology Blog</a>。<br>
+ただし、「どのパターンが一番強いか」というランキング形式の結論は示されていません。</p>
+</li>
+<li>
+<p><strong>「Technical patterns and news sentiment in stock markets」</strong><br>
+チャートパターンとニュースセンチメントを組み合わせた予測力を検証する研究で、<br>
+いくつかのパターン（例：ヘッドアンドショルダー、ダブルボトムなど）の異常リターン（CAR）を比較しています<a href="https://www.sciencedirect.com/science/article/pii/S2405918824000308">ScienceDirect</a>。<br>
+ただし、こちらも「最も強いパターン」を明示するよりは、<strong>パターン＋センチメントの組み合わせが有効かどうか</strong>に焦点が置かれています。</p>
+</li>
+</ul>
+<p><strong>(2) ヘッドアンドショルダー（頭肩底）パターン</strong></p>
+<ul>
+<li><strong>「The Predictive Power of ‘Head-and-Shoulders’ Price Patterns in the US Stock Market」</strong><br>
+ヘッドアンドショルダー（頭肩底を含む）パターンの予測力を、S&amp;P500 のデータで検証した研究です<a href="https://www.researchgate.net/publication/31474225_The_Predictive_Power_of_Head-and-Shoulders_Price_Patterns_in_the_US_Stock_Market_Gene_Savin">ResearchGate</a>。<br>
+結果として、<strong>一定の期間では統計的に有意な異常リターンが確認される</strong>ことが示されていますが、<br>
+他のパターン（ダブルボトムなど）との<strong>直接比較は行っていません</strong>。</li>
+</ul>
+<p><strong>(3) キャンドルスティックパターン</strong></p>
+<ul>
+<li><strong>「The predictive power of Japanese candlestick charting in Chinese stock market」</strong><br>
+日本のキャンドルスティックパターン（例：明けの明星、三川明けの明星など）が、中国市場でどの程度予測力を持つかを検証した研究です<a href="https://ideas.repec.org/a/eee/phsmap/v457y2016icp148-165.html">ScienceDirect</a>。<br>
+一部のパターンで短期的な予測力が確認されていますが、<br>
+こちらも「どのパターンが一番強いか」というランキングではなく、<strong>各パターンの有無とリターンの関係</strong>を調べる形です。</li>
+</ul>
+<h3 id="2-テクニカル分析全体の予測力をレビューする研究">2. テクニカル分析全体の「予測力」をレビューする研究</h3>
+<ul>
+<li><strong>「The Profitability of Technical Analysis: A Review」</strong><br>
+テクニカル分析全体の収益性・予測力をレビューしたサーベイ論文です<a href="https://ageconsearch.umn.edu/record/37487/files/AgMAS04_04.pdf">AgEcon Search</a>。<br>
+ここでは、移動平均線やRSI、チャートパターンなどが、<br>
+為替市場や先物市場では一定の収益性を示す一方、<br>
+株式市場では結果が一貫しないことなどがまとめられています。</li>
+</ul>
+<p>ただし、この論文も <strong>「どの指標が一番強いか」を順位付けするものではなく</strong>、<br>
+「テクニカル分析は、どの市場・どの期間でどの程度有効か」というマクロな視点での整理です。</p>
+<h3 id="3-なぜ一番確度が高いサインを決める研究が少ないのか">3. なぜ「一番確度が高いサイン」を決める研究が少ないのか</h3>
+<ol>
+<li>
+<p><strong>市場・期間・銘柄によって結果が大きく変わる</strong><br>
+ある市場・ある期間で強いパターンが、別の市場・別の期間では全く機能しないことがよくあります。<br>
+そのため、「どのパターンが一番強いか」という一般論を出すのが難しいのです。</p>
+</li>
+<li>
+<p><strong>検証方法が統一されていない</strong><br>
+各研究で、</p>
+<ul>
+<li>どのパターンを「検出」とみなすか（視覚的判断か、アルゴリズムか）</li>
+<li>どの期間のリターンを評価するか（1日後、1週間後、1か月後など）</li>
+<li>どの市場・銘柄を対象とするか<br>
+が異なるため、<strong>結果を単純に比較しにくい</strong>という問題があります。</li>
+</ul>
+</li>
+<li>
+<p><strong>「底打ち」そのものをどう定義するかが難しい</strong><br>
+学術研究では、「底打ち」を</p>
+<ul>
+<li>一定期間の最低値からの反発</li>
+<li>あるいは、その後の一定期間の累積リターン<br>
+など、<strong>客観的な基準で定義</strong>します。<br>
+しかし、実務でいう「底打ち」は、期間や許容する下落幅によっても解釈が変わるため、<br>
+研究で「底打ちサイン」を一意に評価するのは難しい側面があります。</li>
+</ul>
+</li>
+</ol>
+<h3 id="4-実務的な示唆">4. 実務的な示唆</h3>
+<ul>
+<li>
+<p>研究の傾向としては、</p>
+<ul>
+<li><strong>ヘッドアンドショルダー（頭肩底）</strong></li>
+<li><strong>ダブルボトム（W底）</strong></li>
+<li><strong>一部のキャンドルスティックパターン</strong><br>
+などが、<strong>短期的なリターン予測に一定の統計的有意性を持つ</strong>ことが示されています。</li>
+</ul>
+</li>
+<li>
+<p>しかし、</p>
+<ul>
+<li>「どのパターンが一番強いか」</li>
+<li>「どのパターンが底打ちの確度が最も高いか」<br>
+を<strong>明確に順位付けした研究は、ほぼ見当たりません。</strong></li>
+</ul>
+</li>
+<li>
+<p>実務では、</p>
+<ul>
+<li>複数のパターン・指標を組み合わせる</li>
+<li>市場環境（金利、景気、セクターの状況）を考慮する</li>
+<li>リスク管理（損切り・ポジションサイズ）を徹底する<br>
+といった<strong>総合的な判断</strong>が重要になります。</li>
+</ul>
+</li>
+</ul>
+<h2 id="最後に">最後に</h2>
+<p>底値を掴むのは非常に難しい話だと思います。
+著者自身ここが底と考えてまだ落ちていったことなんて何度もあります。
+但し、今持っている銘柄、いずれも月日が経過すると購入した時よりは高くなっています。
+日中仕事している分、銘柄をずっと凝視しているわけにはいかないので大体あってればそれで良いと考えるようになりました。
+10%程度の含み損ならば、他の銘柄のプラスに埋もれて気にもならず、もっていると半期に一度お金がもらえたり商品がもらえます。</p>
+<p>そしてこれくらいの気持ちでいると、テクニカルやチャートの形状で購入して少し低下したなんてどうでもよくなります。
+というお話でした。</p>
+<p>とはいえ、単元株を購入して、買値から30%以上上がったタイミングで売った際には真面目に仕事するのがバカバカしくなるような金額の利益が出ることも確かです。</p>
+<p>ですので、銘柄の底値で買う上の見分け方は文献で知っておくと、行動するときの安心材料になります。この本はそういう意味では分かりやすくお勧めの本です</p>
+<p><img src="file:///d:\PycharmProjects\ScienceCalculation\image\signal_bottom\1783846270738.png" alt="1783846270738"></p>
+
+<div class="shop-card">
+    <div class="shop-card-image">
+        <img src="https://m.media-amazon.com/images/I/81Suf3uhWVL._SL1500_.jpg" alt="商品画像">
+    </div>
+    <div class="shop-card-content">
+        <div class="shop-card-title">株取引の要点 買いのタイミングはココだ</div>
+        <div class="shop-card-description">投資初心者ほど株式購入ができず躊躇します。これは誰しもが経験することといってもよいかもしれません。「もっと下がってから買おう」という気持ちはわかります。本書は、株式購入を前にして、考え込んでしまって結局は株式購入のタイミングを逸してしまった経験のある方に向けて、最適の「買いのタイミング」を解説する書籍です。この本を読むことで、株式を購入する根拠と勇気を手に入れましょう!</div>
+        <div class="shop-card-link">
+            <a href="https://amzn.to/44lem4N" target="_blank" rel="noopener">Amazonで詳細を見る</a>
+        </div>
+    </div>
+</div>
+
+<p> </p>
+<div style="width: 1px; height: 1px; overflow: hidden; opacity: 0; position: absolute;">
+  <iframe id="bgm-player" width="100" height="100" 
+  src="https://www.youtube.com/embed/R7_fpfTa2ms?enablejsapi=1" 
+  title="BGM Player" frameborder="0" allow="autoplay">
+  </iframe>
+</div>
+
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+  document.getElementById('bgm-trigger').addEventListener('click', function() {
+    var iframe = document.getElementById('bgm-player');
+    
+    // すでに再生中の場合は一時停止、停止中の場合は再生するトグル処理
+    if (this.innerText.includes('再生')) {
+      // JavaScript API経由で再生コマンドを送信
+      iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+      this.innerText = '⏸ BGMを停止する';
+      this.style.backgroundColor = '#f44336'; // ボタンの色を赤系に
+    } else {
+      iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+      this.innerText = '🎵 BGMを再生する';
+      this.style.backgroundColor = '#008cba'; // ボタンの色を青系に
+    }
+  });
+</script>
+
+            
+        </body>
+        </html>
