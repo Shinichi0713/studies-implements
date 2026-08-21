@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&#x6982;&#x8981;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+/* 目次全体のコンテナ */
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+
+/* 記事タイトル (h1) */
+h1 {
+    font-size: 2rem;
+    color: #24292f;
+    line-height: 1.3;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 3px double #e1e4e8; /* 二重線で上品に */
+    text-align: center; /* タイトルを中央に寄せて特別感を出す */
+}
+
+/* セクション見出し (h2) */
+h2 {
+    font-size: 1.5rem;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(transparent 70%, #e8f0fe 70%); /* 下側に薄い色のアクセント */
+    border-left: 6px solid #0969da; /* 目次のテーマカラーと合わせる */
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* 強調文字 (strong) */
+strong {
+    font-weight: bold;
+    color: #cf222e; /* ホバー時の赤色と合わせて統一感を出す */
+    background: linear-gradient(transparent 60%, #fff2cc 60%); /* 黄色のマーカー風 */
+    padding: 0 2px;
+}
+
+/* 引用のコンテナ */
+blockquote {
+    position: relative;
+    padding: 20px 30px;
+    margin: 30px 0;
+    background-color: #f6f8fa; /* 目次の背景より少しだけ濃いグレー */
+    border-left: 5px solid #d0d7de; /* 落ち着いたグレーの境界線 */
+    color: #57606a; /* 文字色は少し薄くして引用らしさを出す */
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 引用符のアイコンを装飾として追加 */
+blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    font-size: 40px;
+    color: #d0d7de;
+    font-family: serif;
+    line-height: 1;
+}
+
+/* 読者になるボタンのデザイン */
+.btn-subscribe {
+    display: inline-block;
+    padding: 12px 35px; /* 横幅を広めにとって存在感を出します */
+    background-color: #383838; /* お好みの色に変更してください */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #555555;
+    text-decoration: none;
+}
+
+/* はてなブログで見えてしまう数式データを非表示にする */
+.katex-html {
+    display: none !important;
+}
+
+.katex-mathml {
+    display: inline !important;
+}
+/* Amazonカード型のオシャレなデザイン */
+.shop-card {
+    display: flex;
+    max-width: 500px;
+    margin: 20px auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* マウスホップした時の動き */
+.shop-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.shop-card-image {
+    width: 150px;
+    min-width: 150px;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shop-card-image img {
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+}
+
+.shop-card-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.shop-card-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.shop-card-description {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+/* Amazonらしいオレンジボタン */
+.shop-card-link a {
+    display: inline-block;
+    background-color: #ff9900;
+    color: #fff !important;
+    text-decoration: none !important;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.shop-card-link a:hover {
+    background-color: #e68a00;
+}
+
+/* スマホ対応：縦並びにする */
+@media (max-width: 480px) {
+    .shop-card {
+        flex-direction: column;
+        max-width: 100%;
+    }
+    .shop-card-image {
+        width: 100%;
+        height: 200px;
+    }
+}
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+            <span id="markdown-mermaid" aria-hidden="true" data-config="{&quot;darkModeTheme&quot;:&quot;vscode&quot;,&quot;lightModeTheme&quot;:&quot;vscode&quot;,&quot;maxTextSize&quot;:50000,&quot;clickDrag&quot;:&quot;alt&quot;,&quot;showControls&quot;:&quot;onHoverOrFocus&quot;,&quot;resizable&quot;:true,&quot;maxHeight&quot;:&quot;&quot;}"></span>
+				<p>1590年に秀吉は北条征伐を行いました。
+北条が降伏した段階で、奥州の大名は秀吉の帰順しており、実質秀吉に抵抗する勢力はなくなりました。
+小田原征伐の後に秀吉は統治体制の安定化のために施策を行いました。</p>
+<p>本日テーマ：</p>
+<blockquote>
+<p>小田原征伐後に秀吉が行った施策とはどのようなものだったかについて説明してみる</p>
+</blockquote>
+<button id="bgm-trigger" style="padding: 10px 20px; font-size: 16px; background-color: #008cba; color: white; border: none; border-radius: 5px; cursor: pointer;">
+  🎵 BGMを再生する
+</button>
+<h2 id="概要">概要</h2>
+<p>小田原征伐（1590年）は、豊臣秀吉による天下統一の最終段階にあたる大規模な軍事行動でした。この戦いで北条氏を滅ぼしたあと、秀吉は以下のようなことを行っています。
+少し駆け足で実際の主だつ施策について列挙してみます。</p>
+<h3 id="1-関東奥羽の大名配置と支配体制の確立">1. 関東・奥羽の大名配置と支配体制の確立</h3>
+<ul>
+<li>
+<p>徳川家康を関東へ移封<br>
+小田原征伐の論功行賞として、徳川家康を駿河・遠江・三河などから関東へ移しました。家康は江戸城を本拠とし、関東240万石を領有することになります。これにより、家康の勢力を中央から離れた関東に封じ込める狙いがあったとされています。</p>
+</li>
+<li>
+<p>伊達政宗らの服属と奥羽仕置<br>
+伊達政宗は小田原に参陣して秀吉に服属し、本領を安堵されました。一方で、奥羽では「奥州仕置」と呼ばれる検地・知行割・一揆鎮圧などを行い、秀吉政権の支配を奥羽一帯にまで徹底させました。</p>
+</li>
+</ul>
+<h3 id="2-全国統一の完成と惣無事令の徹底">2. 全国統一の完成と「惣無事令」の徹底</h3>
+<ul>
+<li>九州平定（1587年）に続き、小田原征伐で東国を平定したことで、秀吉の天下統一はほぼ完成しました。</li>
+<li>以後、私的な大名間の戦争を禁じる「惣無事令」を全国に徹底し、大名間の争いは秀吉の裁定で解決する体制を固めました。</li>
+</ul>
+<h3 id="3-朝鮮出兵文禄慶長の役の準備と実行">3. 朝鮮出兵（文禄・慶長の役）の準備と実行</h3>
+<ul>
+<li>小田原征伐の翌年（1591年）には、関白職を甥の豊臣秀次に譲り、自らは「太閤」として軍事的・外交的な活動に専念する体制を整えました。</li>
+<li>1592年からは、明（中国）を目指す「唐入り」構想のもと、朝鮮出兵（文禄の役）を開始し、日本軍を朝鮮半島へ派遣しました。</li>
+<li>1597年には再度出兵（慶長の役）を行い、秀吉の晩年まで朝鮮半島での戦いが続きました。</li>
+</ul>
+<h3 id="4-京都大坂の都市整備と文化政策">4. 京都・大坂の都市整備と文化政策</h3>
+<ul>
+<li>聚楽第や大坂城を中心に、京都・大坂の都市整備を進め、城下町の発展を図りました。</li>
+<li>茶の湯を奨励し、千利休を重用するなど、茶道・能楽・建築などの文化を保護・育成しました（いわゆる「桃山文化」の形成に大きく寄与）。</li>
+</ul>
+<h3 id="5-検地刀狩身分統制などの政策">5. 検地・刀狩・身分統制などの政策</h3>
+<ul>
+<li>全国的な「太閤検地」を推進し、石高制に基づく統一的な年貢・軍役体系を整えました。</li>
+<li>「刀狩令」を出して農民から武器を没収し、兵農分離を進めました。</li>
+<li>身分統制令（1591年）により、武士・町人・百姓の身分移動を制限し、身分秩序を固定化しました。</li>
+</ul>
+<h3 id="6-秀吉の晩年と後継体制の構築">6. 秀吉の晩年と後継体制の構築</h3>
+<ul>
+<li>嫡男・豊臣秀頼の誕生（1593年）後、甥の豊臣秀次を謀反の疑いで切腹させ（1595年）、秀頼を後継者とする体制を固めようとしました。</li>
+<li>1598年に秀吉が死去するまで、朝鮮出兵の継続と豊臣政権の安定化に力を注ぎましたが、その死後、豊臣政権は急速に不安定化し、関ヶ原の戦い（1600年）へとつながっていきます。</li>
+</ul>
+<p>このように、小田原征伐後の秀吉は、天下統一を完成させたうえで、国内統治の整備（検地・刀狩・身分統制など）と対外進出（朝鮮出兵）を同時に進め、豊臣政権の基盤を固めつつ、晩年には後継問題にも直面していました。
+こうしてみると変化は非常に大きいと感じます。</p>
+<p>変化の引き金となったことは1585～1590年に向けて四国、九州、関東、奥州といった、本来秀吉の統治下でなかった地域を急ピッチで統一したことだと思います。
+本日はこの統治事業について掘り下げてみようと思います。</p>
+<h2 id="統一と反動">統一と反動</h2>
+<p>秀吉の急ピッチな天下統一に対しては、各地でさまざまな「反動」や抵抗が起こっています。主なものは以下のとおりです。</p>
+<h3 id="1-一揆国人衆の抵抗奥州仕置検地への反発">1. 一揆・国人衆の抵抗（奥州仕置・検地への反発）</h3>
+<ul>
+<li>奥州仕置後、検地や知行割の変更により、それまで地元で勢力を持っていた国人衆や地侍の立場が大きく揺らぎました。</li>
+<li>その結果、奥羽各地で一揆が頻発し、秀吉政権の支配に抵抗する動きが続きました。</li>
+<li>検地そのものに対しても、年貢負担の増加や土地の再編成を嫌う農民・在地勢力の抵抗が各地で見られました。</li>
+</ul>
+<h3 id="2-大名の不満疑心暗鬼特に徳川家康との関係">2. 大名の不満・疑心暗鬼（特に徳川家康との関係）</h3>
+<ul>
+<li>徳川家康を関東へ移封したことは、形式的には「論功行賞」ですが、家康にとっては長年築いた東海の基盤を失うことでもありました。</li>
+<li>秀吉は家康の力を関東に「封じ込める」狙いがあったとされ、家康側から見れば、天下統一の過程で常に警戒され続けた立場に置かれていたとも言えます。</li>
+<li>このような秀吉の強力な中央集権化は、多くの大名に「いつ取り潰されるか分からない」という不安を抱かせ、豊臣政権への忠誠と同時に、潜在的な不満や警戒心を生みました。</li>
+</ul>
+<h3 id="3-文化宗教政策への反発キリシタン禁制など">3. 文化・宗教政策への反発（キリシタン禁制など）</h3>
+<ul>
+<li>秀吉は九州平定後に「バテレン追放令」（1587年）を出し、キリスト教の布教を制限しました。</li>
+<li>これは、キリスト教が大名や民衆を結びつけ、秀吉の統治秩序とは別の権威を形成しうることを警戒したためとされています。</li>
+<li>この政策は、キリシタン大名や信者にとっては大きな反動・弾圧であり、のちの江戸幕府によるキリスト教禁制の先駆けともなりました。</li>
+</ul>
+<h3 id="4-刀狩令に対する潜在的な不満">4. 刀狩令に対する潜在的な不満</h3>
+<ul>
+<li>刀狩令（1588年）は、農民から武器を没収し、兵農分離を進める政策でした。</li>
+<li>直接的な大規模一揆として表面化した事例は少ないものの、武器を奪われた農民や在地勢力の間には、潜在的な不満や抵抗意識が残りました。</li>
+<li>この政策は、秀吉政権が「農民は農民、武士は武士」という身分秩序を強制するものであり、戦国時代的な「武装した在地勢力」の力を削ぐ狙いがありました。</li>
+</ul>
+<h2 id="顕在化した例">顕在化した例</h2>
+<p>秀吉の急ピッチな天下統一、とくに「奥州仕置」や「太閤検地」に対して、農民や在地勢力の不満・反抗が顕在化した出来事はいくつも起こっています。代表的なものを挙げると、以下のようになります。</p>
+<h3 id="1-葛西大崎一揆15901591年">1. 葛西・大崎一揆（1590–1591年）</h3>
+<ul>
+<li>奥州仕置後、葛西氏・大崎氏の旧領（現在の宮城県北部から岩手県南部）で、検地や知行割の変更に不満を持つ在地の国人・農民が蜂起しました。</li>
+<li>秀吉はこれを「奥州再仕置」として鎮圧し、伊達政宗らに出兵させて一揆を平定しました。</li>
+<li>この一揆は、秀吉政権による急激な支配体制の転換に対する、在地勢力の典型的な反発として知られています。</li>
+</ul>
+<h3 id="2-和賀稗貫一揆15901591年">2. 和賀・稗貫一揆（1590–1591年）</h3>
+<ul>
+<li>現在の岩手県中部（和賀郡・稗貫郡）で、旧領主の和賀氏・稗貫氏を支持する在地の国人・農民が蜂起しました。</li>
+<li>奥州仕置で所領を失った旧領主たちと、その家臣・農民が結びつき、秀吉政権の支配に抵抗しました。</li>
+<li>こちらも伊達政宗らによって鎮圧され、秀吉の奥州支配がさらに強化されました。</li>
+</ul>
+<h3 id="3-九戸政実の乱1591年">3. 九戸政実の乱（1591年）</h3>
+<ul>
+<li>現在の岩手県九戸郡周辺で、九戸政実が中心となって大規模な反乱を起こしました。</li>
+<li>奥州仕置に不満を持つ在地の国人・農民が多数参加し、秀吉政権の支配に正面から対抗する動きとなりました。</li>
+<li>秀吉は豊臣秀次を総大将とする大軍を派遣し、九戸城を攻め落として政実を滅ぼしました。この乱の鎮圧をもって、奥州仕置はほぼ完了したとされています。</li>
+</ul>
+<h3 id="4-検地に対する各地の一揆抵抗">4. 検地に対する各地の一揆・抵抗</h3>
+<ul>
+<li>太閤検地は、石高制に基づく統一的な年貢体系を全国に導入するものでしたが、これまでの土地慣行や年貢負担を大きく変えるものでした。</li>
+<li>そのため、各地で検地に反対する農民・在地勢力の一揆が発生しました。
+<ul>
+<li>例：九州平定後の肥後国で起こった国人一揆（肥後国人一揆）なども、検地や知行割の変更に不満を持つ在地勢力の反乱として知られています。</li>
+</ul>
+</li>
+<li>検地帳の改ざんや、検地役人の追い払い、年貢減免要求など、さまざまな形で抵抗が行われました。</li>
+</ul>
+<h2 id="秀吉の打ち手">秀吉の打ち手</h2>
+<p>秀吉は中央から遠い地方での反乱にはある程度手を打っていたと考えられます。
+その打ち手は九州や奥州において手厚く、治世当初の反動を十分に抑えることが出来ました。</p>
+<h3 id="九州仕置き">九州仕置き</h3>
+<p>九州の反対勢力が統一後に反乱を起こす可能性については、加藤清正や立花宗茂などの軍事力に優れた部将の抜擢により対応しました。</p>
+<p><strong>1. 九州平定後の大名配置の特徴</strong></p>
+<ul>
+<li>九州平定（1587年）後、秀吉は九州の大名配置を大きく組み替えました。</li>
+<li>島津氏は本領を安堵されつつも、その勢力を分断・抑制する形で、豊臣系の大名を九州各地に配置しました。</li>
+<li>特に、肥後国（現在の熊本県）や筑後国（現在の福岡県南部）など、九州の要衝に、豊臣政権に忠実で軍事力の高い武将を置いています。</li>
+</ul>
+<p><strong>2. 加藤清正の肥後入封とその狙い</strong></p>
+<ul>
+<li>加藤清正は、小田原征伐後の1591年に肥後北部（約25万石）を与えられ、熊本城を築いて入封しました。</li>
+<li>肥後は、もともと国人勢力が強く、島津氏とも近い地域でした。そのため、秀吉はここに清正を置くことで、
+<ul>
+<li>島津氏の動向を牽制する</li>
+<li>肥後の国人一揆に備える(実際に国人一揆は起きたが、清正があっという間に鎮圧している)</li>
+<li>有事には九州全体の抑えとして動員できる
+という役割を期待していました。</li>
+</ul>
+</li>
+<li>実際、清正は熊本城を堅固な城に築き上げ、軍事拠点としての機能を重視しています。これは「反乱が起きても耐えられる体制」を整える意味合いが強かったと考えられます。</li>
+</ul>
+<p><strong>3. 立花宗茂の筑後入封と軍事力の活用</strong></p>
+<ul>
+<li>立花宗茂は、もともと大友氏の家臣でしたが、九州平定で戦功を挙げ、筑後柳川13万石を与えられました。</li>
+<li>宗茂は「西国無双」と称されるほどの猛将であり、秀吉はその軍事力を高く評価していました。</li>
+<li>筑後は、肥後と隣接し、かつ島津氏の影響力も及ぶ地域です。ここに宗茂を置くことで、
+<ul>
+<li>肥後・筑後一帯の国人勢力を抑える</li>
+<li>島津氏の動きを監視する</li>
+<li>九州全体の有事に即応できる軍事拠点とする
+という役割を担わせました。</li>
+</ul>
+</li>
+</ul>
+<p><strong>4. 肥後国人一揆と清正・宗茂の動員</strong></p>
+<ul>
+<li>九州平定直後の1587年、肥後では検地や知行割の変更に不満を持つ国人勢力が大規模な一揆を起こしました（肥後国人一揆）。</li>
+<li>秀吉は、この一揆鎮圧のために、加藤清正や立花宗茂らを動員し、徹底的に鎮圧させました。</li>
+<li>この対応は、
+<ul>
+<li>九州平定後も反乱が起こることを想定していた</li>
+<li>そのためにあらかじめ豊臣系の有力武将を配置していた</li>
+<li>実際に反乱が起きたら、彼らを動員して即座に鎮圧する
+という秀吉の戦略が、九州でも機能していたことを示しています。</li>
+</ul>
+</li>
+</ul>
+<h3 id="奥州仕置き">奥州仕置き</h3>
+<p><strong>1. 蒲生氏郷の会津移封と大軍動員能力</strong></p>
+<ul>
+<li>小田原征伐後の奥州仕置で、秀吉は蒲生氏郷を伊勢松坂から会津92万石へと大幅に加増・移封しました。</li>
+<li>会津は、奥羽の要衝であり、かつて伊達政宗が支配を狙った地域でもあります。ここに氏郷を置いたことは、奥羽の動向を常に監視し、有事には大軍を動員して鎮圧できる体制を整える狙いがあったとされています。</li>
+<li>氏郷は、もともと織田信長・豊臣秀吉のもとで戦功を重ねた武将であり、軍事力・統治力ともに高く評価されていました。</li>
+<li>この配置は、「奥州で反乱が起きた場合、蒲生氏郷が即座に動員して対応できる」という前提があったことを示しています。</li>
+</ul>
+<p><strong>2. 伊達政宗の「奥州再仕置」への動員</strong></p>
+<ul>
+<li>奥州仕置後、葛西・大崎一揆や和賀・稗貫一揆が起こると、秀吉は伊達政宗に出兵を命じ、一揆の鎮圧に当たらせました。</li>
+<li>政宗は、もともと奥州で強い影響力を持つ大名であり、その軍事力と地元の情報網を利用して、反乱勢力を鎮圧する役割を担いました。</li>
+<li>これは、秀吉が「奥州の反乱は、奥州の有力大名を使って鎮圧する」という方針を持っていたことを示しています。</li>
+<li>政宗自身も、小田原参陣が遅れたことなどから秀吉に警戒されていましたが、その軍事力を「反乱鎮圧のための駒」として活用する形で、秀吉政権に組み込まれていきました。</li>
+</ul>
+<p><strong>3. 九戸政実の乱での豊臣秀次・蒲生氏郷らの大動員</strong></p>
+<ul>
+<li>1591年の九戸政実の乱では、秀吉は豊臣秀次を総大将とする大軍を奥州に派遣しました。</li>
+<li>この軍には、蒲生氏郷や伊達政宗らも加わり、九戸城を包囲・攻撃して徹底的に鎮圧しました。</li>
+<li>この規模の動員は、「単なる小規模な一揆」ではなく、「奥州全体の支配を揺るがしかねない大反乱」と秀吉が認識していたことを示します。</li>
+<li>秀吉は、反乱が起きるたびに臨時で軍を編成するのではなく、あらかじめ奥州周辺に有力大名を配置し、有事には中央からも大軍を送る体制を整えていました。</li>
+</ul>
+<p><strong>4. これらの事例から見える「秀吉の予見」</strong></p>
+<ul>
+<li>蒲生氏郷を会津に置いたこと、伊達政宗に反乱鎮圧を命じたこと、九戸政実の乱で豊臣秀次を総大将とする大軍を送ったことなどは、いずれも「奥州で反乱が起きることは想定内」という前提で動いていたことを示しています。</li>
+<li>秀吉は、奥州仕置や検地が在地勢力の反発を招くことを十分に理解しており、
+<ul>
+<li>平時には有力大名を要衝に配置して抑えと監視を兼ねさせる</li>
+<li>反乱が起きたら、その地域の大名と中央軍を組み合わせて迅速に鎮圧する
+という二段構えの体制を整えていました。</li>
+</ul>
+</li>
+</ul>
+<h2 id="秀吉が発給した公的文章">秀吉が発給した公的文章</h2>
+<p>秀吉自身が九州・奥州の反乱について残した「発言」や「文章」は、完全な形で現存するものは多くありませんが、いくつかの公的文書や命令の形で記録が残っています。代表的なものを挙げると、以下のようになります。</p>
+<h3 id="1-奥州仕置九戸政実の乱に関する秀吉の文書">1. 奥州仕置・九戸政実の乱に関する秀吉の文書</h3>
+<p><strong>(1) 南部信直宛ての朱印状（1590年7月27日付）</strong></p>
+<ul>
+<li>九戸政実の乱の背景となる「奥州仕置」に関連して、秀吉は南部信直を南部氏宗家として公認する朱印状を出しています。</li>
+<li>この文書は、秀吉が南部氏を「近世大名」として組み込み、その支配を認める内容です。</li>
+<li>これにより、九戸氏は「南部氏の家臣」として位置づけられ、これが九戸政実の反乱の一因になったとされています。</li>
+</ul>
+<p><strong>(2) 奥州再仕置軍編成の号令（1591年6月20日）</strong></p>
+<ul>
+<li>九戸政実の乱が本格化した際、秀吉は甥の豊臣秀次を総大将とする「奥州再仕置軍」の編成を命じました。</li>
+<li>この号令は、徳川家康・蒲生氏郷・伊達政宗ら諸将に動員と指揮を指示するもので、秀吉が乱を「天下統一の最終段階として鎮圧すべき対象」と位置づけていたことを示します。</li>
+<li>具体的な文言そのものは史料集などに断片的に残っていますが、秀吉の強い意志が読み取れます。</li>
+</ul>
+<p><strong>(3) 戦後処理に関する命令</strong></p>
+<ul>
+<li>九戸城を落とした後、秀吉の命により蒲生氏郷が城を改修し、南部信直に引き渡したことが記録されています。</li>
+<li>これは、乱後の奥州支配を確立するための具体的な指示であり、秀吉の「徹底した平定」の姿勢を示すものです。</li>
+</ul>
+<h3 id="2-九州平定肥後国人一揆に関する秀吉の文書">2. 九州平定・肥後国人一揆に関する秀吉の文書</h3>
+<p><strong>(1) 九州平定後の大名宛ての朱印状・黒印状</strong></p>
+<ul>
+<li>九州平定後、秀吉は島津義久・龍造寺政家・大友義統らに対し、所領安堵や配置変更を命じる朱印状・黒印状を多数発給しています。</li>
+<li>これらの文書は、九州の大名を豊臣政権の枠組みに組み込むためのもので、反乱を抑え込む意図が込められています。</li>
+</ul>
+<p><strong>(2) 肥後国人一揆後の処分に関する命令</strong></p>
+<ul>
+<li>肥後国人一揆（1587年）の鎮圧後、秀吉は一揆の首謀者や協力者に対する処分、および新たな領主（加藤清正・小西行長）への知行割を命じる文書を出しています。</li>
+<li>これらは、反乱の責任を明確にし、再発防止を図るための命令として残されています。</li>
+</ul>
+<h3 id="3-発言として残っているものの限界">3. 「発言」として残っているものの限界</h3>
+<ul>
+<li>秀吉自身の「口頭での発言」は、同時代の日記や覚書（『義演准后日記』『多聞院日記』など）に一部引用されることがありますが、多くは後世の編纂物や軍記物に依存しています。</li>
+<li>特に九戸政実の乱や肥後国人一揆について、「秀吉がこう言った」という具体的な台詞は、軍記物や後世の編纂史料に頼る部分が多く、一次史料として確実なものは限られています。</li>
+<li>一方で、朱印状・黒印状・動員命令などは、公文書として現存しており、秀吉が反乱をどのように位置づけ、どのように対応したかをうかがう重要な手がかりとなっています。</li>
+</ul>
+<h2 id="豊臣家衰亡の種">豊臣家衰亡の種</h2>
+<p>九州、奥州に対して打った手は有効に機能し、急ピッチな統一事業の反動を抑え込むことに成功したと考えています。
+一報、それ以外の仕置きで、結果として「秀吉なき後の争乱の種」になったと考えているものもあります。
+その中で最大のものは家康の関東転封だと考えています。</p>
+<h3 id="1-家康の関東移封の狙いと実際の効果">1. 家康の関東移封の狙いと実際の効果</h3>
+<ul>
+<li>
+<p>秀吉の狙い<br>
+家康を駿河・遠江・三河などから関東へ移し、江戸を本拠とする約240万石の大名としました。これは形式的には「論功行賞」ですが、実際には</p>
+<ul>
+<li>家康の勢力を中央から離れた関東に「封じ込める」</li>
+<li>家康が長年築いた東海の基盤を切り離す
+という意図があったとされています。</li>
+</ul>
+</li>
+<li>
+<p>実際の効果<br>
+しかし、関東240万石は当時日本最大級の石高であり、家康はここで</p>
+<ul>
+<li>広大な新田開発</li>
+<li>江戸城と城下町の整備</li>
+<li>関東一円の支配体制の確立
+を進め、むしろ強大な経済力・軍事力を蓄えることになりました。</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-秀吉死後の争乱の種としての側面">2. 秀吉死後の「争乱の種」としての側面</h3>
+<p><strong>(1) 豊臣政権内部での最大の外様大名としての位置づけ</strong></p>
+<ul>
+<li>家康は関東移封後も、豊臣政権内で最大の外様大名として存在し続けました。</li>
+<li>秀吉の存命中は、その権威によって抑えられていましたが、秀吉の死後は「唯一、豊臣家と対等かそれ以上の力を持つ存在」として浮上します。</li>
+<li>この「力のバランスの崩れ」が、関ヶ原の戦いへとつながる大きな要因となりました。</li>
+</ul>
+<p><strong>(2) 関東という地理的・軍事的優位</strong></p>
+<ul>
+<li>関東は、当時の政治的中心である畿内から距離があり、一方で東国・北国へのアクセスに優れていました。</li>
+<li>家康は関東を基盤に、東北や関東の諸大名との結びつきを強め、有事には広範な動員が可能な体制を築きました。</li>
+<li>これは、関ヶ原の戦いで東軍を形成するうえで大きな利点となりました。</li>
+</ul>
+<p><strong>(3) 豊臣家との「距離」の確保</strong></p>
+<ul>
+<li>家康が関東にいたことで、豊臣家の本拠である大坂・畿内から物理的にも政治的にも距離を置くことができました。</li>
+<li>秀吉死後、家康は「五大老筆頭」として中央政権に関与しつつも、必要に応じて関東に戻り、独自の基盤を維持できました。</li>
+<li>この「距離」が、家康が豊臣家から独立した権力基盤を築くうえで有利に働きました。</li>
+</ul>
+<h3 id="3-秀吉の仕置きが種となったメカニズム">3. 秀吉の仕置きが「種」となったメカニズム</h3>
+<ul>
+<li>秀吉は家康の力を「封じ込める」つもりで関東に移しましたが、結果的には家康に「日本最大の領国と独自の基盤」を与えてしまいました。</li>
+<li>秀吉の存命中は、そのカリスマと権威によって家康は従属していましたが、秀吉の死後はその抑えがなくなり、家康が台頭する土台がすでにできていたことになります。</li>
+<li>つまり、秀吉の仕置きは「短期的には家康を抑える」効果があったものの、「長期的には家康が天下を取るための地盤を整えてしまった」という秀吉が恐らく意図しなかった結果をもたらしました。</li>
+</ul>
+<h2 id="総括">総括</h2>
+<p>秀吉の天下統一後の仕置きは、<strong>短期的には非常に成功したが、長期的には豊臣政権の崩壊と新たな争乱の種をまいた</strong>という評価が妥当です。</p>
+<h3 id="短期的成功15851590年代">短期的成功（1585〜1590年代）</h3>
+<ul>
+<li>
+<p><strong>全国統一の完成</strong><br>
+四国・九州・関東・奥州を急ピッチで平定し、惣無事令で私戦を禁じ、検地・刀狩・身分統制で全国的な統治体制を整えた。</p>
+</li>
+<li>
+<p><strong>反乱の抑え込み</strong><br>
+奥州仕置後の葛西・大崎一揆、和賀・稗貫一揆、九戸政実の乱、肥後国人一揆などに対し、蒲生氏郷・伊達政宗・加藤清正・立花宗茂らを動員して迅速に鎮圧し、支配を徹底した。</p>
+</li>
+<li>
+<p><strong>中央集権の強化</strong><br>
+京都・大坂の都市整備、朝鮮出兵を通じて豊臣政権の権威を高め、大名を「豊臣家の家臣」として組み込んだ。</p>
+</li>
+</ul>
+<h3 id="長期的な禍根秀吉死後江戸期">長期的な禍根（秀吉死後〜江戸期）</h3>
+<ul>
+<li>
+<p><strong>家康の関東移封が「最大の種」</strong><br>
+家康を関東240万石に封じたことで、日本最大の領国と独自の基盤を与えてしまい、秀吉死後に関ヶ原の戦い・江戸幕府成立へつながる土台を作った。</p>
+</li>
+<li>
+<p><strong>外様大名の潜在的不満</strong><br>
+島津・伊達らは豊臣政権下で抑え込まれたが、その不満や独立心は幕末の倒幕運動にまで影響した。</p>
+</li>
+<li>
+<p><strong>在地勢力の弱体化と中央依存</strong><br>
+検地・刀狩・一揆鎮圧で在地勢力を弱め、大名による一元的支配を強めたが、地方の自律性を奪い、中央政権への依存構造を固定化した。</p>
+</li>
+<li>
+<p><strong>朝鮮出兵の負担と政権の疲弊</strong><br>
+対外戦争は豊臣政権の威信を高めた一方、財政・軍事の負担を増やし、秀吉死後の政権不安定化を招いた。</p>
+</li>
+</ul>
+<h3 id="総評">総評</h3>
+<p>秀吉の仕置きは、<strong>「急ピッチの統一」と「強権的な統治」によって短期的には天下を固めたが、その過程で生まれた不満・緊張・力の偏りが、秀吉の死後に一気に噴出し、豊臣政権の崩壊と新たな争乱（関ヶ原）の原因となった</strong>と言えます。<br>
+特に家康の関東移封は、秀吉が意図した「封じ込め」とは逆に、<strong>家康に天下を取るための地盤を整えてしまった</strong>という皮肉な結果をもたらしました。</p>
+
+
+<div style="width: 1px; height: 1px; overflow: hidden; opacity: 0; position: absolute;">
+  <iframe id="bgm-player" width="100" height="100" 
+  src="https://www.youtube.com/embed/20S3gDn6rYI?enablejsapi=1" 
+  title="BGM Player" frameborder="0" allow="autoplay">
+  </iframe>
+</div>
+
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+  document.getElementById('bgm-trigger').addEventListener('click', function() {
+    var iframe = document.getElementById('bgm-player');
+    
+    // すでに再生中の場合は一時停止、停止中の場合は再生するトグル処理
+    if (this.innerText.includes('再生')) {
+      // JavaScript API経由で再生コマンドを送信
+      iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+      this.innerText = '⏸ BGMを停止する';
+      this.style.backgroundColor = '#f44336'; // ボタンの色を赤系に
+    } else {
+      iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+      this.innerText = '🎵 BGMを再生する';
+      this.style.backgroundColor = '#008cba'; // ボタンの色を青系に
+    }
+  });
+</script>
+            
+        </body>
+        </html>
