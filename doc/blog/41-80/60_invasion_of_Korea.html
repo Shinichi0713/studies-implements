@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&#x767a;&#x751f;&#x3057;&#x305f;&#x539f;&#x56e0;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+/* 目次全体のコンテナ */
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+
+/* 記事タイトル (h1) */
+h1 {
+    font-size: 2rem;
+    color: #24292f;
+    line-height: 1.3;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 3px double #e1e4e8; /* 二重線で上品に */
+    text-align: center; /* タイトルを中央に寄せて特別感を出す */
+}
+
+/* セクション見出し (h2) */
+h2 {
+    font-size: 1.5rem;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(transparent 70%, #e8f0fe 70%); /* 下側に薄い色のアクセント */
+    border-left: 6px solid #0969da; /* 目次のテーマカラーと合わせる */
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* 強調文字 (strong) */
+strong {
+    font-weight: bold;
+    color: #cf222e; /* ホバー時の赤色と合わせて統一感を出す */
+    background: linear-gradient(transparent 60%, #fff2cc 60%); /* 黄色のマーカー風 */
+    padding: 0 2px;
+}
+
+/* 引用のコンテナ */
+blockquote {
+    position: relative;
+    padding: 20px 30px;
+    margin: 30px 0;
+    background-color: #f6f8fa; /* 目次の背景より少しだけ濃いグレー */
+    border-left: 5px solid #d0d7de; /* 落ち着いたグレーの境界線 */
+    color: #57606a; /* 文字色は少し薄くして引用らしさを出す */
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 引用符のアイコンを装飾として追加 */
+blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    font-size: 40px;
+    color: #d0d7de;
+    font-family: serif;
+    line-height: 1;
+}
+
+/* 読者になるボタンのデザイン */
+.btn-subscribe {
+    display: inline-block;
+    padding: 12px 35px; /* 横幅を広めにとって存在感を出します */
+    background-color: #383838; /* お好みの色に変更してください */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #555555;
+    text-decoration: none;
+}
+
+/* はてなブログで見えてしまう数式データを非表示にする */
+.katex-html {
+    display: none !important;
+}
+
+.katex-mathml {
+    display: inline !important;
+}
+/* Amazonカード型のオシャレなデザイン */
+.shop-card {
+    display: flex;
+    max-width: 500px;
+    margin: 20px auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* マウスホップした時の動き */
+.shop-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.shop-card-image {
+    width: 150px;
+    min-width: 150px;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shop-card-image img {
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+}
+
+.shop-card-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.shop-card-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.shop-card-description {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+/* Amazonらしいオレンジボタン */
+.shop-card-link a {
+    display: inline-block;
+    background-color: #ff9900;
+    color: #fff !important;
+    text-decoration: none !important;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.shop-card-link a:hover {
+    background-color: #e68a00;
+}
+
+/* スマホ対応：縦並びにする */
+@media (max-width: 480px) {
+    .shop-card {
+        flex-direction: column;
+        max-width: 100%;
+    }
+    .shop-card-image {
+        width: 100%;
+        height: 200px;
+    }
+}
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+            <span id="markdown-mermaid" aria-hidden="true" data-config="{&quot;darkModeTheme&quot;:&quot;vscode&quot;,&quot;lightModeTheme&quot;:&quot;vscode&quot;,&quot;maxTextSize&quot;:50000,&quot;clickDrag&quot;:&quot;alt&quot;,&quot;showControls&quot;:&quot;onHoverOrFocus&quot;,&quot;resizable&quot;:true,&quot;maxHeight&quot;:&quot;&quot;}"></span>
+				<p>秀吉晩年に起こした朝鮮への侵略。この戦いが豊臣政権の安定性を毀損する理由にもつながりました。
+そんな朝鮮侵略について調べていきます。
+2回に分けて、今回は勃発した経緯や大局的な推移について説明します。</p>
+<button id="bgm-trigger" style="padding: 10px 20px; font-size: 16px; background-color: #008cba; color: white; border: none; border-radius: 5px; cursor: pointer;">
+  🎵 BGMを再生する
+</button>
+<h2 id="発生した原因">発生した原因</h2>
+<p>秀吉による朝鮮侵略（文禄・慶長の役、朝鮮側では壬辰倭乱）の原因は、単一の動機ではなく、秀吉個人の野望、豊臣政権の国内事情、そして東アジアの国際秩序に対する認識の違いなど、複数の要因が重なった結果と考えられています。以下、主な原因を整理します。</p>
+<h3 id="1-明征服構想唐入りが根本目的">1. 明征服構想（唐入り）が根本目的</h3>
+<p>秀吉の最大の目的は、朝鮮そのものを征服することではなく、<strong>明（中国大陸）を征服すること</strong>、いわゆる「唐入り」にありました。秀吉は朝鮮に対し、明への道案内を求める「仮道入明（かどうにゅうみん）」を要求しましたが、朝鮮がこれを拒否したため、出兵に踏み切ったというのが基本的な経緯です。<source-chip title="コトバンク 改訂新版世界大百科事典" url="https://kotobank.jp/word/%E6%96%87%E7%A6%84%E6%85%B6%E9%95%B7%E3%81%AE%E5%BD%B9-1203561" /></p>
+<p>秀吉は日本国内で天下人として唯一無二の地位を築いた後、次の目標として東アジア全体を支配する存在になりたいと考えるようになりました。彼にとって「唐（明）」は中国文明の中心であり、その地を支配することは最高の権威でした。<source-chip title="History-P-World" url="https://www.history-p-world.com/archives/2212/" /></p>
+<h3 id="2-豊臣政権の国内矛盾を解消する必要">2. 豊臣政権の国内矛盾を解消する必要</h3>
+<p>天下統一後、秀吉は諸大名に対して新たな土地を恩賞として与え続けることが困難になりました。長年の合戦で武功を挙げてきた武士たちが次の戦場や報酬を求める中で、<strong>国内では処遇できない武功心を海外に向ける必要</strong>が生じたとする説があります。<source-chip title="歴史をわかりやすく解説！ヒストリーランド" url="https://history-land.com/bunroku-keicho/" /></p>
+<p>また、全国の諸大名を大規模な軍事遠征に動員し続けることは、彼らを豊臣政権のもとに縛り付け、統制を保つ手段でもありました。つまり朝鮮出兵は、国内統一後の「豊臣平和令（惣無事令・刀狩令など）」の延長として、対外戦争という形で政権の求心力を維持しようとした側面も指摘されています。<source-chip title="JKCF 文禄・慶長の役（壬辰倭乱）研究史PDF" url="https://jkcf.or.jp/cms/wp-content/uploads/2019/11/1_1_2j.pdf" /></p>
+<h3 id="3-東アジアの国際秩序冊封体制との認識の違い">3. 東アジアの国際秩序（冊封体制）との認識の違い</h3>
+<p>当時の東アジアでは、明の皇帝が中心となり周辺諸国を「王」として認める<strong>冊封体制</strong>が秩序の基盤となっていました。朝鮮はこの枠組みの中で「小中華」として位置づけられていました。</p>
+<p>ところが秀吉は、自らを明の皇帝に対等かそれ以上の存在として扱われることを望みました。この認識の違いが後の外交交渉の混乱を生み、講和交渉でも明側が秀吉を「日本国王」として冊封しようとしたことに秀吉が激怒し、慶長の役への再出兵につながる要因となりました。<source-chip title="History-P-World" url="https://www.history-p-world.com/archives/2212/" /></p>
+<h3 id="4-対外的要因西洋勢力の東漸への対抗意識">4. 対外的要因：西洋勢力の東漸への対抗意識</h3>
+<p>16世紀、ポルトガルやスペインなどの西洋勢力が東アジアに進出してくる中で、秀吉はこうした「欧州商業資本」に対抗する意識を持っていた可能性も指摘されています。戦後の研究（鈴木良一など）では、秀吉が明の冊封体制からの独立を志向し、その延長として大陸征服構想を掲げたとする見方もあります。<source-chip title="JKCF 文禄・慶長の役（壬辰倭乱）研究史PDF" url="https://jkcf.or.jp/cms/wp-content/uploads/2019/11/1_1_2j.pdf" /></p>
+<h3 id="5-研究史上の議論">5. 研究史上の議論</h3>
+<p>歴史学界では、原因について様々な学説が提示されてきました：</p>
+<table>
+<thead>
+<tr>
+<th>学説</th>
+<th>主な主張</th>
+<th>代表的研究者</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>勘合貿易復興説</td>
+<td>日明間の公式貿易（勘合貿易）の復活を目指した</td>
+<td>辻善之助、田中義成（現在は批判が強い）</td>
+</tr>
+<tr>
+<td>功名説・征服説</td>
+<td>秀吉個人の征服欲・功名心が主因</td>
+<td>池内宏、徳富蘇峰</td>
+</tr>
+<tr>
+<td>領土拡張説</td>
+<td>豊臣政権の対外的領土拡張政策</td>
+<td>田保橋潔、中村栄孝</td>
+</tr>
+<tr>
+<td>国内矛盾解消説</td>
+<td>統一後の武士のエネルギーはけ口としての戦争</td>
+<td>鈴木良一、岩沢愿彦</td>
+</tr>
+<tr>
+<td>豊臣平和令延長説</td>
+<td>朝鮮への惣無事令適用（支配圏拡大）が目的</td>
+<td>藤木久志</td>
+</tr>
+</tbody>
+</table>
+<p>現在の通説的な理解では、<strong>秀吉の明征服という対外膨張の野望と、天下統一後の豊臣政権の国内政治的矛盾を解消する必要が複合的に作用した</strong>と考えるのが一般的です。<source-chip title="JKCF 文禄・慶長の役（壬辰倭乱）研究史PDF" url="https://jkcf.or.jp/cms/wp-content/uploads/2019/11/1_1_2j.pdf" /></p>
+<h2 id="経緯">経緯</h2>
+<p>文禄・慶長の役（壬辰倭乱）の主要な時系列を、<strong>出兵前の準備期間</strong>から<strong>最終撤退</strong>まで整理しました。</p>
+<h3 id="出兵前の準備段階">出兵前の準備段階</h3>
+<table>
+<thead>
+<tr>
+<th>西暦</th>
+<th>和暦</th>
+<th>主な出来事</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1585年</td>
+<td>天正13年</td>
+<td>秀吉が関白任官直後、対外的な領土拡張・明征服の意志を公表。対馬の宗義智に外交交渉を命じる。</td>
+</tr>
+<tr>
+<td>1587年</td>
+<td>天正15年</td>
+<td>九州征服完了。秀吉が「海賊停止令」を発布し、倭寇活動を取り締まる。</td>
+</tr>
+<tr>
+<td>1590年</td>
+<td>天正18年</td>
+<td>朝鮮通信使が日本に派遣される。秀吉は朝鮮国王の来日を求めるが、宗氏がこれを調整。</td>
+</tr>
+<tr>
+<td>1591年</td>
+<td>天正19年</td>
+<td>8月、出兵基地として名護屋城（肥前国・現佐賀県唐津市）の築城を開始。博多を兵站基地化。</td>
+</tr>
+<tr>
+<td>1592年1月</td>
+<td>天正20年1月</td>
+<td>全国の諸大名に朝鮮出兵を命じ、名護屋に25万の兵が集結。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="文禄の役第一次出兵1592年1593年">文禄の役（第一次出兵）1592年～1593年</h3>
+<table>
+<thead>
+<tr>
+<th>西暦</th>
+<th>和暦</th>
+<th>主な出来事</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1592年5月24日</strong></td>
+<td><strong>天正20年4月13日</strong></td>
+<td><strong>小西行長・宗義智らが釜山鎮に上陸。文禄の役開始。</strong></td>
+</tr>
+<tr>
+<td>1592年5月下旬</td>
+<td>4月下旬</td>
+<td>釜山鎮・多大鎮・東萊城を攻略。朝鮮軍が次々と敗北。</td>
+</tr>
+<tr>
+<td>1592年6月12日</td>
+<td>5月3日</td>
+<td>加藤清正・小西行長らが漢城（現在のソウル）に入場。朝鮮国王宣祖が平壌へ北逃。</td>
+</tr>
+<tr>
+<td>1592年6月～7月</td>
+<td>5月～6月</td>
+<td>李舜臣率いる朝鮮水軍が玉浦海戦・泗川海戦などで連勝。日本軍の補給路（制海権）を脅かす。</td>
+</tr>
+<tr>
+<td>1592年7月頃</td>
+<td>6月頃</td>
+<td>日本軍は平壌を占領。加藤清正隊は満州方面の兀良哈（オランカイ）まで進軍。</td>
+</tr>
+<tr>
+<td>1592年後半</td>
+<td>天正20年後半</td>
+<td>明軍が援軍として参戦開始。祖承訓らが平壌で小西行長隊と交戦。</td>
+</tr>
+<tr>
+<td>1593年1月～2月</td>
+<td>文禄元年12月～元年2月</td>
+<td>明軍李如松が平壌を攻撃。小西行長隊が平壌から撤退（第2次・第3次平壌の戦い）。</td>
+</tr>
+<tr>
+<td>1593年2月</td>
+<td>文禄2年1月</td>
+<td>碧蹄館の戦い。明軍と日本軍が漢城近郊で激突。</td>
+</tr>
+<tr>
+<td>1593年5月</td>
+<td>文禄2年4月</td>
+<td>第2次晋州城戦。日本軍が晋州城を攻略。</td>
+</tr>
+<tr>
+<td>1593年7月～8月</td>
+<td>文禄2年6月～7月</td>
+<td>戦線膠着。秀吉が講和交渉を指示。日本軍は南海岸の倭城に駐留し、文禄の役は休戦状態に。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="講和交渉期間-1593年1596年">講和交渉期間 1593年～1596年</h3>
+<table>
+<thead>
+<tr>
+<th>西暦</th>
+<th>和暦</th>
+<th>主な出来事</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1593年～1594年</td>
+<td>文禄2年～3年</td>
+<td>小西行長・沈惟敬らが日明間の講和交渉を仲介。</td>
+</tr>
+<tr>
+<td>1596年</td>
+<td>慶長元年</td>
+<td>明の使節が日本に来日。秀吉に「日本国王冊封」を伝えるが、秀吉はこれを侮辱と受け取り激怒。講和決裂。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="慶長の役第二次出兵1597年1598年">慶長の役（第二次出兵）1597年～1598年</h3>
+<table>
+<thead>
+<tr>
+<th>西暦</th>
+<th>和暦</th>
+<th>主な出来事</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1597年3月1日</strong></td>
+<td><strong>慶長2年1月14日</strong></td>
+<td><strong>講和決裂を受け、秀吉が再び朝鮮に大軍を送る。慶長の役開始。</strong></td>
+</tr>
+<tr>
+<td>1597年7月～8月</td>
+<td>慶長2年6月～7月</td>
+<td>漆川梁海戦。朝鮮水軍が大敗し、元均戦死。一時的に日本軍が海上的優位に。</td>
+</tr>
+<tr>
+<td>1597年8月</td>
+<td>慶長2年7月</td>
+<td>南原城戦。日本軍が南原城を攻略。明軍・朝鮮軍が敗退。</td>
+</tr>
+<tr>
+<td>1597年9月</td>
+<td>慶長2年8月</td>
+<td>稷山の戦い。明軍と日本軍が激突し、日本軍の北上を阻止。</td>
+</tr>
+<tr>
+<td>1597年9月～10月</td>
+<td>慶長2年8月～9月</td>
+<td>鳴梁海戦。李舜臣が13隻で日本軍水師を撃破（朝鮮側の大勝利）。</td>
+</tr>
+<tr>
+<td>1597年10月～1598年1月</td>
+<td>慶長2年9月～慶長3年閏月</td>
+<td>第1次蔚山城戦。加藤清正が明・朝鮮連合軍を防戦。</td>
+</tr>
+<tr>
+<td>1598年9月～10月</td>
+<td>慶長3年8月～9月</td>
+<td>泗川の戦い。島津義弘が明軍を大破。第2次蔚山城戦も日本軍が防衛。</td>
+</tr>
+<tr>
+<td>1598年9月</td>
+<td>慶長3年8月</td>
+<td>秀吉が死去（8月18日）。五大老が遺命により秘不发丧。</td>
+</tr>
+<tr>
+<td><strong>1598年12月16日</strong></td>
+<td><strong>慶長3年11月19日</strong></td>
+<td><strong>露梁海戦。日本軍の撤退を掩護する島津義弘水軍が、明・朝鮮連合水軍と激突。李舜臣・鄧子龍が戦死。</strong></td>
+</tr>
+<tr>
+<td><strong>1598年12月22日</strong></td>
+<td><strong>慶長3年11月25日</strong></td>
+<td><strong>日本軍が朝鮮半島から全面撤退。文禄・慶長の役終結。</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="補足終戦後">補足：終戦後</h3>
+<table>
+<thead>
+<tr>
+<th>西暦</th>
+<th>出来事</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1607年</td>
+<td>日朝国交が回復。朝鮮通信使が再び日本に派遣される（対馬を介した交際）。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="時系列のポイント">時系列のポイント</h3>
+<p>意外に感じられるかもしれませんが、秀吉がそもそも日本国外への領土拡張を企図したのは1585年です。
+つまり日本を統一する前から中華圏への意欲があったことになります。</p>
+<p>ほして本格的に国外出征の準備は1591年の名護屋城の築城から開始しました。つまり天下統一の翌年には準備を開始していたことになります。</p>
+<h2 id="朝鮮の役の推移">朝鮮の役の推移</h2>
+<p>文禄・慶長の役（壬辰倭乱）の戦闘の流れは、大局的に見ると <strong>「電撃的な日本軍の攻勢 → 明軍参戦と水軍による封じ込め → 膠着・消耗 → 最終撤退」</strong> という4つの局面に整理できます。以下、それぞれを概観します。</p>
+<h3 id="第1局面電撃戦と朝鮮半島の縦断文禄の役序盤1592年">第1局面：電撃戦と朝鮮半島の縦断（文禄の役序盤、1592年）</h3>
+<p>1592年5月の釜山上陸後、日本軍は<strong>戦国時代に鍛えられた鉄砲の集団運用と機動力</strong>を活かし、驚異的な速さで朝鮮半島を北上しました。小西行長隊と加藤清正隊を中心とする各部隊は、20日余りで首都・漢城（現在のソウル）を陥落させ、さらに平壌を占領。加藤隊は満州方面の兀良哈（オランカイ）まで進軍し、一時は明国本土への侵攻も目前かと思われました。</p>
+<p>この急進撃が可能だった背景には、<strong>朝鮮王朝の国防体制の未整備</strong>と、日本軍の城攻め技術・鉄砲戦術への対応不足がありました。朝鮮軍の正規軍は次々と敗北し、国王宣祖は義州（現在の北朝鮮領域）まで北逃する事態に追い込まれました。</p>
+<h3 id="第2局面明軍参戦と戦線の膠着文禄の役中盤1592年後半1593年">第2局面：明軍参戦と戦線の膠着（文禄の役中盤、1592年後半～1593年）</h3>
+<p>しかし、日本軍の攻勢はここで大きく止められます。主な要因は2つです。</p>
+<p><strong>① 李舜臣の水軍による制海権喪失</strong>
+日本軍の補給は海路に依存していましたが、朝鮮水軍の李舜臣が玉浦海戦・泗川海戦・閑山島海戦などで連勝し、日本軍の補給船団を次々と撃破しました。亀甲船の投入もあり、日本軍は海上の主導権を握れず、前線の兵站（食料・弾薬の補給）が逼迫しました。</p>
+<p><strong>② 明軍の本格参戦</strong>
+朝鮮国王が明に援軍を求め、1592年後半から明軍が参戦。当初は遼東軍の小規模部隊でしたが、李如松率いる大軍が1593年初頭に平壌を攻撃し、小西行長隊は平壌から撤退しました。碧蹄館の戦いでは互角の激突となりましたが、日本軍は漢城以北での支配を固めることができなくなります。</p>
+<p>この結果、日本軍は<strong>一気に明国へ進軍する構想を断念</strong>し、漢城からも撤退。朝鮮半島南部の海岸部に「倭城」と呼ばれる日本式の城砦を築き、そこを拠点とする防衛的な体制へ転換しました。</p>
+<h3 id="第3局面講和交渉と休戦1593年1596年">第3局面：講和交渉と休戦（1593年～1596年）</h3>
+<p>戦線が膠着したまま、日明間で講和交渉が開始されます。秀吉は明の服属や対等な外交関係の確立を望んでいましたが、明側は秀吉を「日本国王」として冊封し、朝貢体制に組み込む案を提示。双方の認識の違い（冊封体制に対する秀吉の理解の相違）により、交渉は長期化しました。</p>
+<p>1596年、明の冊封使が来日し、秀吉に「日本国王」の称号を伝えたことで秀吉は激怒。講和は決定的に破綻し、再出兵へと向かいます。</p>
+<h3 id="第4局面消耗戦と最終撤退慶長の役1597年1598年">第4局面：消耗戦と最終撤退（慶長の役、1597年～1598年）</h3>
+<p>1597年に開始された慶長の役は、文禄の役のような電撃戦ではなく、<strong>朝鮮南部の倭城を拠点とした防衛・消耗戦</strong>の性格が強くなりました。</p>
+<p>日本軍は南原城などを攻略する初期攻勢を見せましたが、明軍と朝鮮軍の連携は前回より緊密になっていました。蔚山城・泗川城・順天城などの倭城をめぐる攻防が続き、特に蔚山籠城戦では日本軍が飢餓と寒さの中で必死の防衛戦を強いられました。</p>
+<p>このような膠着状態の中、1598年9月に秀吉が死去。五大老は遺命により秘不发丧としつつも、朝鮮からの全面撤退を決定しました。撤退の際、島津義弘の水軍が明・朝鮮連合水軍と激突した<strong>露梁海戦</strong>（1598年12月）で大きな損害を出しましたが、日本軍は朝鮮半島から完全に撤退しました。</p>
+<h3 id="大局的な特徴の総括">大局的な特徴の総括</h3>
+<table>
+<thead>
+<tr>
+<th>局面</th>
+<th>時期</th>
+<th>特徴</th>
+<th>決定要因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>電撃戦</strong></td>
+<td>1592年</td>
+<td>日本軍の圧倒的な機動力と鉄砲戦術</td>
+<td>戦国型戦術の優位、朝鮮側の準備不足</td>
+</tr>
+<tr>
+<td><strong>攻勢停止</strong></td>
+<td>1592年後半～1593年</td>
+<td>明軍参戦と水軍による補給遮断</td>
+<td>李舜臣の活躍、明の大規模援軍</td>
+</tr>
+<tr>
+<td><strong>膠着・休戦</strong></td>
+<td>1593年～1596年</td>
+<td>南海岸倭城での駐留と講和交渉</td>
+<td>兵站限界、外交的認識の相違</td>
+</tr>
+<tr>
+<td><strong>消耗戦・撤退</strong></td>
+<td>1597年～1598年</td>
+<td>倭城を中心とした防衛戦、秀吉死後の撤退</td>
+<td>長期戦による疲弊、豊臣政権の弱体化</td>
+</tr>
+</tbody>
+</table>
+<p>大局的に見れば、この戦争は <strong>「日本軍の陸戦能力の優位」と「明・朝鮮連合の資源・補給・持久力の優位」が拮抗した結果、短期決戦から長期膠着へと発展し、最終的に遠征側である日本軍が撤退を余儀なくされた」</strong> という推移をたどりました。</p>
+<h2 id="総括">総括</h2>
+<p>文禄・慶長の役（朝鮮出兵）は、豊臣政権にとって <strong>「天下統一を完成させたはずの政権が、なぜ秀吉の死後わずか2年で事実上崩壊したのか」</strong> という問いに対する、最大の鍵となります。</p>
+<p>大局的に見れば、<strong>「豊臣政権の実力を削ぎ、徳川家康の台頭を可能にした」</strong> というのが核心です。以下、わかりやすく4つのポイントで整理します。</p>
+<h3 id="1-豊臣派大名の消耗と家康の実力温存">1. 豊臣派大名の消耗と、家康の「実力温存」</h3>
+<p>朝鮮出兵では、<strong>加藤清正、小西行長、福島正則、宇喜多秀家、島津義弘</strong>など、秀吉の腹心である豊臣系大名が主力として出兵し、兵員・資金・武器を大量に投入しました。7年にわたる遠征は、彼らの領国経済と軍事力を大きく消耗させました。</p>
+<p>一方で、<strong>徳川家康は関東転封後の領地の事情から、朝鮮出兵にほとんど兵を出さずに済みました</strong>。家康は秀吉の命令で九州の名護屋まで赴きましたが、実戦には参加せず、自国の兵力と財力を温存できたのです。</p>
+<p>この結果、秀吉存命中から <strong>「豊臣派大名が弱体化し、家康が相対的に強大化する」</strong> という力関係の逆転が進行しました。<source-chip title="PRESIDENT Online" url="https://president.jp/articles/-/74100" /></p>
+<h3 id="2-恩賞の枯渇と家臣団の不満">2. 恩賞の枯渇と家臣団の不満</h3>
+<p>秀吉は天下統一の過程で、大名たちに <strong>「戦功に応じて領地（石高）を増やす」</strong> という恩賞システムで結びつけていました。しかし、日本国内が統一されると、新たに配下できる土地がなくなります。</p>
+<p>そこで秀吉は、<strong>「朝鮮や明の領土を恩賞に充てる」</strong> という構想を持っていたとする学説があります。ところが朝鮮出兵は膠着し、新領土を獲得できなかったため、<strong>「約束された恩賞が支払えない」</strong> 事態が生じました。</p>
+<p>現代風に言えば、<strong>「会社が大規模な海外事業に投資するも失敗し、社員へのボーナスや昇進が止まる」</strong> ような状態です。これが豊臣家臣団の不満を高め、政権内部の亀裂を深めました。<source-chip title="history-p-world.com" url="https://www.history-p-world.com/archives/2212/" /></p>
+<h3 id="3-家臣団の分裂武断派-vs-文治派の遠因">3. 家臣団の分裂（武断派 vs 文治派）の遠因</h3>
+<p>朝鮮出兵中、加藤清正や福島正則といった<strong>武断派（武功派）</strong> と、石田三成や大谷吉継といった<strong>文治派（行政派）</strong> の対立が深まりました。出兵中の補給や戦略をめぐる対立が、秀吉死後の<strong>関ヶ原の戦い（1600年）</strong> における東軍・西軍の分断に直結します。</p>
+<p>特に、朝鮮出兵で大きな損害を被った武断派諸将は、出兵中の補給不備を石田三成ら行政官僚の責任として恨み、秀吉死後に家康に接近しました。関ヶ原の東軍（徳川側）に加わった福島正則や加藤嘉明らは、まさにこのグループです。</p>
+<p>つまり、朝鮮出兵は <strong>「豊臣家臣団を分裂させ、家康に取り込まれる契機」</strong> を作り出しました。<source-chip title="history-p-world.com" url="https://www.history-p-world.com/archives/2212/" /></p>
+<h3 id="4-秀吉死後の空中分解">4. 秀吉死後の「空中分解」</h3>
+<p>秀吉は晩年、幼い秀頼を守るために<strong>五大老・五奉行</strong>という合議制を設けました。しかし、朝鮮出兵で消耗した豊臣系大名たちは、もはや家康を抑える力を持ちませんでした。</p>
+<p>秀吉が死去した1598年から、関ヶ原の戦いが起きた1600年までの<strong>わずか2年</strong>で、豊臣政権は事実上瓦解しました。これは、朝鮮出兵による<strong>豊臣派の軍事・経済的消耗</strong>と、<strong>家康の実力温存</strong>という対比が生んだ結果です。<source-chip title="JBpress" url="https://jbpress.ismedia.jp/articles/-/78041" /></p>
+<p>一言で言えば、<strong>朝鮮出兵は「豊臣政権が自らの足元を掘る形で、徳川政権への道を開いてしまった戦争」</strong> だったと言えます。秀吉の野望は東アジア征服に向けられましたが、その代償として、わずか8年で統一したはずの「秀吉の天下」は、彼の死後あっけなく崩れ去った結果につながったと考えています。</p>
+
+            
+
+<div style="width: 1px; height: 1px; overflow: hidden; opacity: 0; position: absolute;">
+  <iframe id="bgm-player" width="100" height="100" 
+  src="https://www.youtube.com/embed/RrXJGGxZI50?enablejsapi=1" 
+  title="BGM Player" frameborder="0" allow="autoplay">
+  </iframe>
+</div>
+
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+  document.getElementById('bgm-trigger').addEventListener('click', function() {
+    var iframe = document.getElementById('bgm-player');
+    
+    // すでに再生中の場合は一時停止、停止中の場合は再生するトグル処理
+    if (this.innerText.includes('再生')) {
+      // JavaScript API経由で再生コマンドを送信
+      iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+      this.innerText = '⏸ BGMを停止する';
+      this.style.backgroundColor = '#f44336'; // ボタンの色を赤系に
+    } else {
+      iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+      this.innerText = '🎵 BGMを再生する';
+      this.style.backgroundColor = '#008cba'; // ボタンの色を青系に
+    }
+  });
+</script>
+        </body>
+        </html>
