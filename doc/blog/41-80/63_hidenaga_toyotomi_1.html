@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&#x6982;&#x8981;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+/* 目次全体のコンテナ */
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+
+/* 記事タイトル (h1) */
+h1 {
+    font-size: 2rem;
+    color: #24292f;
+    line-height: 1.3;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 3px double #e1e4e8; /* 二重線で上品に */
+    text-align: center; /* タイトルを中央に寄せて特別感を出す */
+}
+
+/* セクション見出し (h2) */
+h2 {
+    font-size: 1.5rem;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(transparent 70%, #e8f0fe 70%); /* 下側に薄い色のアクセント */
+    border-left: 6px solid #0969da; /* 目次のテーマカラーと合わせる */
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* 強調文字 (strong) */
+strong {
+    font-weight: bold;
+    color: #cf222e; /* ホバー時の赤色と合わせて統一感を出す */
+    background: linear-gradient(transparent 60%, #fff2cc 60%); /* 黄色のマーカー風 */
+    padding: 0 2px;
+}
+
+/* 引用のコンテナ */
+blockquote {
+    position: relative;
+    padding: 20px 30px;
+    margin: 30px 0;
+    background-color: #f6f8fa; /* 目次の背景より少しだけ濃いグレー */
+    border-left: 5px solid #d0d7de; /* 落ち着いたグレーの境界線 */
+    color: #57606a; /* 文字色は少し薄くして引用らしさを出す */
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 引用符のアイコンを装飾として追加 */
+blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    font-size: 40px;
+    color: #d0d7de;
+    font-family: serif;
+    line-height: 1;
+}
+
+/* 読者になるボタンのデザイン */
+.btn-subscribe {
+    display: inline-block;
+    padding: 12px 35px; /* 横幅を広めにとって存在感を出します */
+    background-color: #383838; /* お好みの色に変更してください */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #555555;
+    text-decoration: none;
+}
+
+/* はてなブログで見えてしまう数式データを非表示にする */
+.katex-html {
+    display: none !important;
+}
+
+.katex-mathml {
+    display: inline !important;
+}
+/* Amazonカード型のオシャレなデザイン */
+.shop-card {
+    display: flex;
+    max-width: 500px;
+    margin: 20px auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* マウスホップした時の動き */
+.shop-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.shop-card-image {
+    width: 150px;
+    min-width: 150px;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shop-card-image img {
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+}
+
+.shop-card-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.shop-card-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.shop-card-description {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+/* Amazonらしいオレンジボタン */
+.shop-card-link a {
+    display: inline-block;
+    background-color: #ff9900;
+    color: #fff !important;
+    text-decoration: none !important;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.shop-card-link a:hover {
+    background-color: #e68a00;
+}
+
+/* スマホ対応：縦並びにする */
+@media (max-width: 480px) {
+    .shop-card {
+        flex-direction: column;
+        max-width: 100%;
+    }
+    .shop-card-image {
+        width: 100%;
+        height: 200px;
+    }
+}
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+            <span id="markdown-mermaid" aria-hidden="true" data-config="{&quot;darkModeTheme&quot;:&quot;vscode&quot;,&quot;lightModeTheme&quot;:&quot;vscode&quot;,&quot;maxTextSize&quot;:50000,&quot;clickDrag&quot;:&quot;alt&quot;,&quot;showControls&quot;:&quot;onHoverOrFocus&quot;,&quot;resizable&quot;:true,&quot;maxHeight&quot;:&quot;&quot;}"></span>
+				<p>豊臣兄弟がクライマックスに近づいてきて、著者的にはそろそろかという思いです。
+豊臣の弟である秀長についてまとめていきたいと思います。</p>
+<p>全2回で、今回は生い立ちや秀吉と歩んだ部将としての道のりについて語っていきます。</p>
+<button id="bgm-trigger" style="padding: 10px 20px; font-size: 16px; background-color: #008cba; color: white; border: none; border-radius: 5px; cursor: pointer;">
+  🎵 BGMを再生する
+</button>
+<h2 id="概要">概要</h2>
+<p>豊臣秀長（1540年～1591年）は、戦国時代から安土桃山時代にかけて活躍した武将・大名で、天下人・豊臣秀吉の弟として知られます。秀吉の「天下統一」において、軍事・政治両面で欠かせない存在だった人物です。</p>
+<h3 id="出自と生い立ち">出自と生い立ち</h3>
+<p>秀長は天文9年（1540年）、尾張国中々村（現・名古屋市中村区）に生まれました。従来は秀吉と異父弟とされることが多かったですが、近年の研究では、父親は秀吉と同一人物（木下弥右衛門）であった可能性が高いと考えられています。父の死後、貧しい幼少期を送り、秀吉が家を出て放浪する中、秀長はしばらく家族と共に故郷に残っていました。<source-chip title="NHK出版デジタルマガジン" url="https://mag.nhk-book.co.jp/article/90149" /></p>
+<h3 id="秀吉の右腕としての活躍">秀吉の「右腕」としての活躍</h3>
+<p>秀長は、秀吉が織田信長に仕え始めると兄に連れられて出仕し、数々の合戦に従軍しました。信長の死後、秀吉が天下取りを進める中で、秀長は常にその右腕として活躍しました。</p>
+<p><strong>軍事面では</strong>、中国征伐、四国征伐、九州征伐、小田原征伐など、秀吉の主要な戦役で別働隊の大将や重要な守備役を務め、高い信頼を得ました。</p>
+<p><strong>政治・内政面では</strong>、秀吉の名代として政務を執ることも多く、大和・紀伊・和泉の3か国に河内国の一部を加えた約110余万石を領する大大名に昇進しました。従二位・権大納言に至り、「大和大納言」とも呼ばれました。<source-chip title="Wikipedia" url="https://ja.wikipedia.org/wiki/%E8%B1%8A%E8%87%A3%E7%A7%80%E9%95%B7" /></p>
+<h3 id="性格と役割">性格と役割</h3>
+<p>秀長は、派手な活躍で知られる秀吉とは対照的に、地に足のついた堅実な人物像が描かれています。秀吉が感情に流されやすい面もあった中、秀長は兄に異を唱え、抑制できる貴重な存在でした。</p>
+<p>また、徳川家康や毛利輝元などの有力外様大名との間に立ち、政権の潤滑油としての役割も果たしました。秀吉の側近としてだけでなく、豊臣政権全体を支える「緩衝材」としての存在が、秀長の大きな特徴です。<source-chip title="NHK出版デジタルマガジン" url="https://mag.nhk-book.co.jp/article/90149" /><source-chip title="サライ.jp" url="https://serai.jp/hobby/1144318" /></p>
+<h3 id="死とその影響">死とその影響</h3>
+<p>秀長は天正19年（1591年）に52歳で没しました。秀長の死は、秀吉にとって計り知れない衝撃であり、豊臣政権にとっても大きな転換点となりました。秀長のような補佐役・抑制役がいなくなったことで、秀吉の政策はより独断的な方向へ傾き、のちの朝鮮出兵（文禄・慶長の役）や過酷な政策へと繋がっていった、とする見解もあります。</p>
+<h2 id="出仕と史跡で確認できる時期">出仕と史跡で確認できる時期</h2>
+<p>秀長が兄・秀吉のもとで部将として活躍し始めたきっかけは、<strong>天正元年（1573年）の浅井氏滅亡と、それに伴う秀吉の長浜城主就任</strong>にあります。</p>
+<h3 id="いつ出仕したのか">いつ出仕したのか？</h3>
+<p>秀長が織田家に出仕した正確な時期は史料上不明ですが、大河ドラマ『豊臣兄弟！』の時代考証を担当した柴裕之氏は、**「永禄8年（1565年）以前、永禄5年（1562年）以降」**と推察しています。永禄5年は秀吉が所領を得て「木下藤吉郎」を名乗り始めた時期であり、そのタイミングで秀長も呼ばれたのではないか、という見方です。<source-chip title="武将ジャパン" url="https://bushoojapan.com/bushoo/toyotomi/2026/01/23/205335" /></p>
+<h3 id="史料に現れるまでの空白期間">史料に現れるまでの「空白期間」</h3>
+<p>秀長が史料に初めて登場するのは、天正元年（1573年）8月の『西村文書』です。当時は「木下小一郎長秀」(そうです。秀長ではなく、丹羽長秀からいただいた長秀です)と名乗っており、浅井・織田の合戦が終わった近江国黒田郷の住民に対し、織田軍の略奪を取り締まることを呼びかけていました。<source-chip title="武将ジャパン" url="https://bushoojapan.com/bushoo/toyotomi/2026/01/23/205335" /></p>
+<p>その翌年、天正2年（1574年）の長島一向一揆では『信長公記』に「木下小一郎」として見えますが、ここでも<strong>秀吉の家臣ではなく、織田信長の直臣（馬廻衆）</strong> だった可能性が高いとされています。つまり、当初の秀長は秀吉直属の家臣ではなく、信長に直属する武士として出仕していたのです。<source-chip title="武将ジャパン" url="https://bushoojapan.com/bushoo/toyotomi/2026/01/23/205335" /></p>
+<h3 id="きっかけとなった浅井氏滅亡と長浜城主就任">きっかけとなった「浅井氏滅亡」と長浜城主就任</h3>
+<p>秀長にとって大きな転機となったのが、天正元年（1573年）の浅井長政滅亡です。武功を挙げた秀吉は、浅井氏の旧領である<strong>北近江三郡を与えられ、長浜城主</strong>となりました。<source-chip title="武将ジャパン" url="https://bushoojapan.com/bushoo/toyotomi/2026/05/14/214413" /></p>
+<p>城持ちとなり領国支配を始めた秀吉にとって、新たな課題は<strong>統治に必要な人材の確保</strong>でした。北近江は浅井氏の旧臣が多く残り、一向一揆の影響もある複雑な地域でした。そこで秀吉が頼りにしたのが、弟の小一郎（秀長）だったのです。</p>
+<p>秀吉が各地の戦場を転戦する間、秀長は<strong>名代として長浜周辺の実務を支え</strong>始めました。寺社への禁制、旧浅井家臣や在地勢力への対応、城下形成など、領国支配の具体的な仕事を担ったことが、天正元年末から天正2年にかけての文書から確認できます。<source-chip title="武将ジャパン" url="https://bushoojapan.com/bushoo/toyotomi/2026/05/14/214413" /></p>
+<h3 id="羽柴姓を与えられ秀吉一門の中核へ">「羽柴」姓を与えられ、秀吉一門の中核へ</h3>
+<p>天正3年（1575年）11月の書状で、秀長は「羽柴」の苗字を使用していることが確認されています。これは、秀吉が織田家中で有力な軍団長へと成長する中で、秀長も<strong>正式に秀吉一門の中核として兄を支える立場</strong>に就いたことを示しています。<source-chip title="武将ジャパン" url="https://bushoojapan.com/bushoo/toyotomi/2026/01/23/205335" /></p>
+<p>秀長が秀吉の部将として本格的に活躍し始めたきっかけは、<strong>1573年の浅井氏滅亡後、秀吉が長浜城主となり北近江を領したこと</strong>でした。秀吉が戦場を転戦する中、秀長は領国統治の実務担当として兄の名代を務め、そこから軍事・政治両面で秀吉を支える「天下一の補佐役」へと成長していきました。</p>
+<h2 id="竹中重治との関係">竹中重治との関係</h2>
+<p>堺屋太一氏の小説における「秀長が半兵衛に師事していた」という描写がされています。個人的には凄い好きな設定でした。
+ですが、結論から申し上げますと、<strong>秀長が竹中重治（半兵衛）に師事していたことを示す一次史料は存在せず、史実として確認できる事実ではありません。</strong></p>
+<h3 id="史料上の限界">史料上の限界</h3>
+<p>秀長と竹中重治の関係について、信頼できる一次史料は極めて乏しいのが現状です。和楽webの記事では次のように述べられています。</p>
+<blockquote>
+<p>「小一郎（秀長）も35歳頃まで確かな記録がなく、両者の交流がどんなものだったのかを示す良質な史料もありません。」<source-chip title="和楽web" url="https://intojapanwaraku.com/culture/299654/" /></p>
+</blockquote>
+<p>また、竹中重治自身についても、Wikipediaの記述によれば「軍功に関する逸話や美談の多くは後世の創作によるものと見られ、史実上の実像が不明瞭な人物」とされています。<source-chip title="Wikipedia" url="https://ja.wikipedia.org/wiki/%E7%AB%B9%E4%B8%AD%E9%87%8D%E6%B2%BB" /></p>
+<h3 id="小説や創作における描写">小説や創作における描写</h3>
+<p>堺屋太一氏の小説のように、秀長が半兵衛に師事し、戦術や教養、人間心理などを学んだという描写は、<strong>後世の推測や創作に基づくもの</strong>です。例えば、ある経営雑誌の記事では「半兵衛は戦術だけでなく、集団統率、教養、中国古典、人間心理、防衛設計、部隊運用まで含めて秀長へ教え込んだ」と書かれていますが、これも一次史料に裏付けられたものではなく、現代の解釈・創作に基づく叙述です。<source-chip title="理念と経営 | 株式会社アルコーネ" url="https://ameblo.jp/arcone/entry-12967291172.html" /></p>
+<h3 id="実際に言えること">実際に言えること</h3>
+<p>史料から確実に言えるのは、<strong>秀長と竹中重治はともに秀吉を支え、協力して活動していた</strong>ということだけです。秀長が長浜城主時代以降、秀吉の代理として領国統治の実務を担うようになった時期と、竹中重治が秀吉の参謀として活躍した時期は重なります。両者が近しい関係にあった可能性は否定できませんが、<strong>「師弟関係」として史料に残っているわけではありません。</strong></p>
+<h2 id="秀長の戦場での活躍">秀長の戦場での活躍</h2>
+<p>秀長が秀吉とともに（または秀吉軍の一員として）戦場で活躍したことが史料から確認できる主な実績を、時系列で整理します。</p>
+<h3 id="織田政権下での戦功">織田政権下での戦功</h3>
+<p><strong>箕作城攻め（永禄11年／1568年）</strong>
+織田信長の上洛作戦の途中、六角氏と交戦した際、秀吉が夜襲を敢行して武功を挙げたとされ、秀長もこれに加わったと考えられています。<source-chip title="Japaaan" url="https://mag.japaaan.com/archives/270299" /></p>
+<p><strong>金ヶ崎の退き口（元亀元年／1570年）</strong>
+信長の朝倉攻めで浅井長政の裏切りにより窮地に陥った際、秀吉は殿軍を志願し、秀長とともに敵の追撃を食い止めて信長軍の撤退を支えました。秀長にとって初めての大きな戦場での活躍とされる場面です。<source-chip title="Japaaan" url="https://mag.japaaan.com/archives/270299" /></p>
+<p><strong>姉川の戦い（元亀元年／1570年）</strong>
+朝倉・浅井連合軍に対する反撃戦。秀吉は浅井氏の重要拠点である横山城を攻略し、秀長もこれに従って奮戦したと伝わります。<source-chip title="Japaaan" url="https://mag.japaaan.com/archives/270299" /></p>
+<p><strong>小谷城攻め（天正元年／1573年）</strong>
+浅井氏の本拠地である小谷城の攻略戦。秀吉が重要な役割を担い滅亡させたこの戦いに、秀長も参戦したと推定されています。<source-chip title="Japaaan" url="https://mag.japaaan.com/archives/270299" /></p>
+<p><strong>伊勢長島一向一揆鎮圧（天正2年／1574年）</strong>
+秀長が『信長公記』に初登場する合戦です。秀吉とは別行動をとり、信長の馬廻衆として参陣。一向一揆を壊滅させる戦果を挙げました。秀長が「兄のおまけ」ではなく、一人前の武将として認められていたことを示す記録です。<source-chip title="Japaaan" url="https://mag.japaaan.com/archives/270299" /><source-chip title="PRESIDENT Online" url="https://president.jp/articles/-/105598" /></p>
+<p><strong>中国攻め・但馬方面（天正5年〜／1577年〜）</strong>
+秀吉が播磨・但馬へ軍を進める中、秀長は別働隊を率いて但馬国の竹田城を攻略するなど、軍事面での活動を拡大しました。<source-chip title="武将ジャパン" url="https://bushoojapan.com/bushoo/toyotomi/2026/05/14/214413" /></p>
+<h3 id="本能寺の変後秀吉の天下取りを支えた合戦">本能寺の変後、秀吉の天下取りを支えた合戦</h3>
+<p><strong>山崎の戦い（天正10年／1582年）</strong>
+明智光秀討伐の決定的な合戦。秀長は秀吉軍の主要な指揮官の一人として参戦し、羽柴軍の勝利に貢献しました。<source-chip title="Wikipedia" url="https://ja.wikipedia.org/wiki/%E5%B1%B1%E5%B4%8E%E3%81%AE%E6%88%A6%E3%81%84" /><source-chip title="戦国ジャーナル" url="https://sengoku-journal.com/busho/toyotomi-hidenaga" /></p>
+<p><strong>賤ヶ岳の戦い（天正11年／1583年）</strong>
+柴田勝家との決戦。秀長は伊勢方面への転戦から戻り、秀吉軍の備えを整えて参戦。秀吉の覇権確立に大きく貢献しました。<source-chip title="中公新書" url="http://www.chuko.co.jp/shinsho/portal/127460.html" /><source-chip title="戦国ジャーナル" url="https://sengoku-journal.com/busho/toyotomi-hidenaga" /></p>
+<p><strong>小牧・長久手の戦い（天正12年〜13年／1584年〜1585年）</strong>
+徳川家康・織田信雄との対決。秀長はこの戦いにも参戦し、秀吉の軍事行動を支えました。<source-chip title="ホームメイト" url="https://www.homemate-research-castle.com/useful/10495_castle/busyo/65/" /></p>
+<h3 id="豊臣政権下での大規模遠征">豊臣政権下での大規模遠征</h3>
+<p>後年は秀長が独立して軍団を指揮を行うことも多々ありました。</p>
+<p><strong>紀州征伐（天正13年／1585年）</strong>
+秀長は主力として前面に立ち、雑賀衆や根来衆などの武装勢力がひしめく紀伊国を短期間で服属させました。<source-chip title="history-p-world" url="https://www.history-p-world.com/archives/2325/" /></p>
+<p><strong>四国攻め（天正13年／1585年）</strong>
+秀長は<strong>総大将</strong>として大軍を率い、長宗我部元親への圧力を段階的に高めて降伏へと追い込みました。秀長単独での大規模な軍事指揮が確認できる代表的な戦役です。<source-chip title="戦国ジャーナル" url="https://sengoku-journal.com/busho/toyotomi-hidenaga" /><source-chip title="history-p-world" url="https://www.history-p-world.com/archives/2325/" /></p>
+<p><strong>九州平定（天正15年／1587年）</strong>
+秀長は<strong>日向方面軍</strong>を指揮し、島津氏との複雑な戦況の中で現地情勢を踏まえた進軍と処遇を行いました。<source-chip title="戦国ジャーナル" url="https://sengoku-journal.com/busho/toyotomi-hidenaga" /><source-chip title="history-p-world" url="https://www.history-p-world.com/archives/2325/" /></p>
+<h3 id="実際の活躍">実際の活躍</h3>
+<p>秀長が各戦場で「どのように」活躍したかについて、前半生では史実としての事実確認が難しいようなものがあります。
+今回は確実に<strong>一次史料で確認できる事実</strong>について説明します。</p>
+<p><strong>伊勢長島一向一揆鎮圧（天正2年／1574年）</strong></p>
+<p>秀長が史料に初登場する合戦です。秀吉とは別行動をとり、信長の馬廻衆として参陣し、一向一揆を壊滅させる戦果を挙げました。<source-chip title="Japaaan" url="https://mag.japaaan.com/archives/270299" /><source-chip title="PRESIDENT Online" url="https://president.jp/articles/-/105598" /></p>
+<p><strong>具体的な活躍</strong>: 秀吉の「おまけ」ではなく、独立した武将として信長の直属部隊に配属され、長島の一向一揆鎮圧で実績を積みました。これは秀長が単なる兄の影ではなく、一人前の軍事指揮官として認められていたことを示す最古の記録です。</p>
+<p><strong>山崎の戦い（天正10年／1582年）</strong></p>
+<p>秀長の役割について、近年の新史料発見により新たな事実が明らかになっています。中京大学所蔵の新出秀吉書状により、合戦当日（6月13日）の秀吉は戦場から10キロ以上後方におり、実質的な前線指揮は秀長が執っていた可能性が高いとされています。<source-chip title="リアルタイムニュースNAVI" url="https://reaitimenews.com/entry/yamazaki-hidenaga-shiryo-2026" /><source-chip title="PRESIDENT Online" url="https://president.jp/articles/-/115466" /></p>
+<p><strong>具体的な活躍</strong>:</p>
+<ul>
+<li><strong>中国大返しの兵站管理</strong>: 備中高松城から京都へ約2万の大軍を驚異的な速度で移動させる際、秀長が兵士の管理や移動計画を完璧に遂行したと考えられます。<source-chip title="Re: TERAKOYA" url="https://tsumariblog3150.com/toyotomi-brothers/hidenaga/yamazaki-battle-vanguard/" /></li>
+<li><strong>右翼部隊の指揮</strong>: 実戦では右翼部隊を指揮し、中川清秀や高山右近などの摂津衆を支えました。<source-chip title="Re: TERAKOYA" url="https://tsumariblog3150.com/toyotomi-brothers/hidenaga/yamazaki-battle-vanguard/" /></li>
+<li><strong>天王山麓の死守</strong>: 勝敗の鍵となる天王山の麓を死守し、明智軍に高所を取らせませんでした。これにより光秀軍は平地での苦しい戦いを強いられました。<source-chip title="Re: TERAKOYA" url="https://tsumariblog3150.com/toyotomi-brothers/hidenaga/yamazaki-battle-vanguard/" /></li>
+<li><strong>組織的な包囲</strong>: 敵の疲れが見えた瞬間を逃さず、池田恒興ら他部隊と連携して光秀本隊を側面から包み込み、総崩れに追い込みました。<source-chip title="Re: TERAKOYA" url="https://tsumariblog3150.com/toyotomi-brothers/hidenaga/yamazaki-battle-vanguard/" /></li>
+</ul>
+<p><strong>賤ヶ岳の戦い（天正11年／1583年）</strong></p>
+<p>秀長は伊勢方面の制圧から戻り、秀吉軍の備えを整えて参戦しました。<source-chip title="中公新書" url="http://www.chuko.co.jp/shinsho/portal/127460.html" /></p>
+<p><strong>具体的な活躍</strong>: 秀吉は決戦に備え、たびたび秀長に書状を送り、細かい指示を出していました。秀長は勝家軍に攻め込まれても前線を動かず、秀吉の戦略に従って陣地を固守したとされています。<source-chip title="PRESIDENT Online" url="https://president.jp/articles/-/117801" /></p>
+<p><strong>紀州征伐（天正13年／1585年）</strong></p>
+<p><strong>具体的な活躍</strong>: 秀長は雑賀衆や根来衆などの宗教・武装勢力を相手に、力攻めだけでなく「投降の出口」を示すことで短期間で服属させました。降伏後の寺寺領の扱いや城割の線引きまで含めて、戦後処理を設計したと考えられます。<source-chip title="history-p-world" url="https://www.history-p-world.com/archives/2308/" /></p>
+<p><strong>四国攻め（天正13年／1585年）</strong></p>
+<p>秀長の軍事指揮官としての手腕が最も輝いた戦役です。秀吉は病と称して出馬せず、総大将の全権を秀長に委ねました。<source-chip title="Re: TERAKOYA" url="https://tsumariblog3150.com/toyotomi-brothers/hidenaga/shikoku-campaign-general/" /></p>
+<p><strong>具体的な活躍</strong>:</p>
+<ul>
+<li><strong>三方面同時侵攻の設計</strong>: 西から毛利輝元配下の小早川隆景らを伊予へ、北から宇喜多秀家を讃岐へ、秀長自身は副将の豊臣秀次と共に最も守りの堅い阿波へ淡路島から攻め入るという、四国全土を包囲する作戦を立案・実行しました。<source-chip title="Re: TERAKOYA" url="https://tsumariblog3150.com/toyotomi-brothers/hidenaga/shikoku-campaign-general/" /></li>
+<li><strong>兵站の完璧な管理</strong>: 10万の兵が消費する膨大な米や水を、堺の商人と連携して補給路を盤石にしました。元親が持久戦を狙っても、物資が尽きない豊臣軍を見て絶望させました。<source-chip title="Re: TERAKOYA" url="https://tsumariblog3150.com/toyotomi-brothers/hidenaga/shikoku-campaign-general/" /></li>
+<li><strong>一宮城の攻略</strong>: 阿波の要衝・一宮城の水の手を断ち、開城させました。<source-chip title="サライ.jp" url="https://serai.jp/hobby/1254275" /></li>
+<li><strong>外交交渉による降伏誘導</strong>: 捕虜とした元親の重臣・谷忠澄を土佐へ帰し、降伏を勧めさせました。そして「阿波・讃岐・伊予の没収と引き換えの土佐一国安堵」という条件で元親を降伏させ、無駄な流血を避けて四国を安定させました。<source-chip title="Re: TERAKOYA" url="https://tsumariblog3150.com/toyotomi-brothers/hidenaga/shikoku-campaign-general/" /></li>
+</ul>
+<p><strong>九州平定（天正15年／1587年）</strong></p>
+<p><strong>具体的な活躍</strong>: 秀長は日向方面軍を指揮し、島津氏との対決に臨みました。複数の軍が九州へ集結する中で、他の方面軍との連携を調整し、兵站路を確保しました。特に瀬戸内から九州へ向かう物資の流れを支え、遠征軍の致命的な行き詰まりを防ぎました。<source-chip title="history-p-world" url="https://www.history-p-world.com/archives/2308/" /></p>
+<h3 id="秀長の戦い方の特徴">秀長の戦い方の特徴</h3>
+<p>これらの戦場での活躍を通じて、秀長の軍事的特徴が見えてきます。</p>
+<table>
+<thead>
+<tr>
+<th>特徴</th>
+<th>具体例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>兵站（補給）の重視</strong></td>
+<td>四国攻めで10万軍の補給路を確保、山崎の大返しで行軍管理を担当</td>
+</tr>
+<tr>
+<td><strong>組織的な連携</strong></td>
+<td>山崎で右翼部隊を指揮し、中川清秀・高山右近と連携</td>
+</tr>
+<tr>
+<td><strong>降伏工作と戦後処理</strong></td>
+<td>紀州・四国で「戦を終わらせる段取り」を設計</td>
+</tr>
+<tr>
+<td><strong>冷静な状況判断</strong></td>
+<td>賤ヶ岳で秀吉の指示に従い前線を固守、山崎で包囲のタイミングを見極める</td>
+</tr>
+</tbody>
+</table>
+<p>秀長は「一騎当千の武勇」ではなく、<strong>「戦を支え、完遂させる」タイプの指揮官</strong>でした。特に大規模な遠征では、兵站の確保、諸大名との連携調整、降伏条件の設計といった「地味ながら重要な領域」で能力を発揮し、秀吉の天下統一を支えました。<source-chip title="history-p-world" url="https://www.history-p-world.com/archives/2308/" /></p>
+<p>命令の達成を最上にする理想的な司令官だと、つくづく考えさせられます。</p>
+<h2 id="秀長の発言">秀長の発言</h2>
+<p>秀長が実際行った発言が気になります。
+調べてみる限り秀長自身の言葉として一次史料に残っているものがいくつかあります。それらは「口頭の発言」ではなく「書状（文書）」の形ですが、秀長自らの言葉として確認できます。</p>
+<h3 id="秀長自身の言葉として残る最古の書状">秀長自身の言葉として残る最古の書状</h3>
+<p><strong>木下長秀書状（黒田郷状（黒田郷惣百姓中宛）｜天正元年（1573年）8月16日</strong></p>
+<p>秀長が「木下長秀」を名乗っていた頃、織田信長による小谷城（浅井長政の本拠地）攻めの際に、北近江の黒田郷（現在の滋賀県長浜市木之本町黒田）の百姓全員に出した文書です。<source-chip title="中世歴史めぐり" url="https://www.yoritomo-japan.com/sengoku/oumi/hidenaga-shojyo.html" /></p>
+<p><strong>内容</strong>:</p>
+<ul>
+<li>戦火を避けて山中に逃れていた農民たちに「村へ戻るよう命じた」</li>
+<li>「兵による乱暴狼藉を一切禁止する」ことを約束した</li>
+</ul>
+<p>これは秀長がまだ30歳代の若さで、兄秀吉の補佐役として現地を任されていた時期のものです。戦場の近くで領民を統治する実務家としての側面が、秀長自身の言葉で残っている貴重な一次史料です。</p>
+<h3 id="その他秀長の書状として確認できるもの">その他、秀長の書状として確認できるもの</h3>
+<p>残念ながらインターネット上に公開はされていませんが、以下の書状が存在しています。
+国会図書館に行けば内容確認できるかもしれません。</p>
+<table>
+<thead>
+<tr>
+<th>書状</th>
+<th>時期</th>
+<th>内容・特徴</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>羽柴秀長書状</strong>（須賀野金左衛門尉宛）</td>
+<td>9月10日付</td>
+<td>慶應義塾大学デジタルコレクション所蔵。秀長の日下判（花押）が入った書状。<source-chip title="慶應義塾大学" url="https://dcollections.lib.keio.ac.jp/ja/sorimachi/130x-64-1" /></td>
+</tr>
+<tr>
+<td><strong>豊臣秀長書状</strong>（さヽの坊宛）</td>
+<td>10月2日付</td>
+<td>十津川郷文書所収。「吉野郡篠坊に北山追討に合力せしむ」という内容。秀長が大和・紀伊方面の在地勢力に対して出した軍事指示と見られる。<source-chip title="奈良県立図書館" url="https://www2.library.pref.nara.jp/nlmc/modules/xoonips/detail.php?item_id=4628" /></td>
+</tr>
+<tr>
+<td><strong>羽柴秀長文書集</strong></td>
+<td>天正期</td>
+<td>黒田基樹編、東京堂出版（2025年刊）。秀長の書状を集成したもの。<source-chip title="版元ドットコム" url="https://www.hanmoto.com/bd/isbn/9784490211153" /></td>
+</tr>
+</tbody>
+</table>
+<h3 id="秀長宛の書状に見える秀長への言及参考">秀長宛の書状に見える「秀長への言及」（参考）</h3>
+<p>秀長自身の発言ではありませんが、戦場の文脈で秀長に宛てられた秀吉の書状が残っており、兄弟の関係性を示す貴重な史料です。</p>
+<p><strong>羽柴秀吉書状（羽柴秀長宛）｜天正12年（1584年）6月18日</strong></p>
+<p>小牧・長久手の戦いの最中、秀吉が数十キロ離れた秀長に送った書状です。敵の支配地域に火を放ったことを伝え、<strong>「煙が見えただろう」</strong> と冗談を言う内容。東京大学史料編纂所・村井祐樹准教授が花押などから本物と判断しています。<source-chip title="中日新聞" url="https://www.chunichi.co.jp/article/1241900" /></p>
+<h3 id="発言を見る限り">発言を見る限り</h3>
+<p>信長時代は秀吉の代官として発言を行ったり、外部組織と調整を行っている様子が確認出来ます。
+秀吉から自分の代わりに公の発言を任せられるくらい、広報に向いた見識を持っていたんだろうと推定しています。</p>
+<p>秀長は調整が得意な部将です。
+内部外部と調整をしながら軍団の運営を堅実に行っていたのだろうと考えています。</p>
+<p>秀吉との間では、数少ない肉親であり、かつ、自身の考えを共有できる相手としてかけがえのない存在だったものと思われます。</p>
+<h2 id="秀長のエピソード">秀長のエピソード</h2>
+<p>戦場以外にも秀長に関するエピソードは存在します。ただし、秀長の場合、<strong>「派手な逸話」よりも「文書に残る実務的な活動」</strong> が中心となります。以下、内政・人間関係・病没など、戦場以外の側面から秀長のエピソードを整理します。</p>
+<h3 id="一内政領国統治のエピソード">一、内政・領国統治のエピソード</h3>
+<p><strong>1. 大和国統治と「200の地蔵」</strong></p>
+<p>秀長が天正13年（1585年）に大和国を拝領して郡山城に入城した際、城の石垣に<strong>約200体の石仏（地蔵）を埋め込んだ</strong>ことが確認されています。これは単なる信仰ではなく、<strong>「既存の寺社勢力への配慮と威圧の両面」</strong> を持つ政治的メッセージと解釈されています。秀長は武力だけでなく、宗教的シンボルを使って支配を正当化したのです。<source-chip title="PRESIDENT Online" url="https://president.jp/articles/-/107803" /></p>
+<p><strong>2. 秀長の国では「大きな一揆が起きなかった」</strong></p>
+<p>秀長が治めた大和・紀伊・和泉では、同時代の他の領国と比べて<strong>大規模な一揆がほとんど記録されません</strong>。これは秀長が<strong>検地・年貢・村落支配を丁寧に行い、寺社勢力とも折り合いをつけた</strong>結果と見られています。領民から「静かな殿様」として受け入れられていた側面がうかがえます。<source-chip title="英略.com" url="https://eiryaku.com/hidenaga-ikki-sukunai/" /></p>
+<p><strong>3. 興福寺の衆徒への祭礼命令</strong></p>
+<p>天正13年（1585年）頃、秀長の家臣・<a href="https://yoshishinnze.hatenablog.com/entry/2026/04/15/000000">横浜良慶</a>が秀長の命を受けて、興福寺の僧侶兼武士である「衆徒」に書状を送り、<strong>「伝統的な祭礼をつつがなく執り行え」</strong> と命じました。秀長が武力だけでなく、<strong>寺社の伝統的権威を利用して支配を安定させようとした</strong>実例です。<source-chip title="日本経済新聞" url="https://www.nikkei.com/article/DGXZQOUD167OK0W6A210C2000000/" /></p>
+<h3 id="二秀吉との兄弟関係のエピソード">二、秀吉との兄弟関係のエピソード</h3>
+<p><strong>4. 秀吉の「兄者トーク」書状</strong></p>
+<p>天正12年（1584年）、小牧・長久手の戦いの最中、秀吉が秀長に宛てた書状で、敵の支配地域に火を放ったことを伝え、<strong>「煙が見えただろう」</strong> と冗談を言っています。秀吉が戦場の緊張の中で弟に見せた<strong>親密で軽口な一面</strong>が残る貴重な史料です。<source-chip title="中日新聞" url="https://www.chunichi.co.jp/article/1241900" /></p>
+<p><strong>5. 「我ら弟の小一郎め同然に心安く存じ候」</strong></p>
+<p>天正6年（1578年）、秀吉が織田信長のもとで播磨攻略を進めている際、他の武将に対して秀長のことを <strong>「我ら弟の小一郎め同然に心安く存じ候（わが弟の小一郎と同じように心から信頼している）」</strong> と書き送りました。秀吉が秀長を単なる弟ではなく、<strong>自分の分身のように信頼していた</strong>ことを示す言葉です。<source-chip title="WEB歴史街道" url="https://rekishikaido.php.co.jp/detail/13344" /></p>
+<p><strong>6. 「内々は宗易、公儀は宰相」</strong></p>
+<p>秀吉が大友宗麟に語ったとされる言葉で、<strong>「私的な相談は千利休（宗易）、公的な政務は秀長（宰相＝大納言）に任せている」</strong> という意味です。秀長が豊臣政権の<strong>実質的な行政責任者</strong>であったことを示す最も有名なエピソードです。<source-chip title="戦国合戦録" url="https://sengoku-kassenroku.com/hashiba-hidenaga/" /></p>
+<h3 id="三家臣との関係のエピソード">三、家臣との関係のエピソード</h3>
+<p><strong>7. 藤堂高虎を「300石で見出した」</strong></p>
+<p>秀長は、主君を転々としていた若き日の藤堂高虎を<strong>300石で召し抱え</strong>、重用しました。高虎はその後、秀長政権の軍事・外交・築城の実務を一手に担い、和歌山城の普請、徳川家康の京屋敷建設、長宗我部家との外交などで活躍します。秀長の <strong>「人を見る目」</strong> を示すエピソードです。<source-chip title="taigadramas.com" url="https://taigadramas.com/toyotomihidenaga/toyotomihidenaga_toudoutakatora/" /></p>
+<p><strong>8. 桑山重晴を「筆頭家老」に据えた</strong></p>
+<p>秀長はもともと秀吉の家臣であった桑山重晴を自分の筆頭家老に迎え、和泉・紀伊の城代として任じました。賤ヶ岳の戦いでは桑山が絶体絶命の砦を守り抜き、秀吉の逆転勝利の足がかりを作りました。秀長が<strong>秀吉の家臣を自らの配下に引き入れ、信頼して任せた</strong>実例です。<source-chip title="歴史の一歩" url="https://rekishinoippo.jp/kuwayama-shigeharu/" /></p>
+<h3 id="四性格人柄に関するエピソード">四、性格・人柄に関するエピソード</h3>
+<p><strong>9. 秀長は「秀吉のサーモスタット」</strong></p>
+<p>歴史評論家の童門冬二は、秀長を <strong>「秀吉のサーモスタット（自動温度調節装置）」</strong> に例えています。秀吉が熱くなりすぎたときに冷却し、冷えすぎたときに再加熱する、<strong>「秀吉の暴走を静かに制御する存在」</strong> だったという評価です。<source-chip title="WEB歴史街道" url="https://rekishikaido.php.co.jp/detail/5942" /></p>
+<p><strong>10. 秀長が「異を唱え、制御できる貴重な人物」だった</strong></p>
+<p>秀吉は天下人となってから高圧的な態度を取ることが多くなりましたが、秀長は<strong>秀吉に対して異を唱え、制御できた数少ない存在</strong>でした。秀吉が他の大名を圧倒する中、秀長が<strong>調停役・缓冲材</strong>として機能したことが、諸大名からの信望の厚さにつながりました。<source-chip title="Wikipedia" url="https://ja.wikipedia.org/wiki/%E8%B1%8A%E8%87%A3%E7%A7%80%E9%95%B7" /></p>
+<h3 id="五病気最期のエピソード">五、病気・最期のエピソード</h3>
+<p><strong>11. 秀長の病歴（「横根」と湯治）</strong></p>
+<p>『多聞院日記』などの記録によると、秀長は晩年、体調を崩していました。</p>
+<ul>
+<li><strong>天正14年（1586年）11月頃</strong>: 「横根（よこね）」＝両足の付け根のリンパ節炎に悩まされていた記録あり。</li>
+<li><strong>天正14年以降</strong>: 頻繁に<strong>湯治</strong>に訪れるようになり、体調悪化がうかがえます。<source-chip title="taigadramas.com" url="https://taigadramas.com/toyotomihidenaga/hidenaga-byouki/" /></li>
+</ul>
+<p><strong>12. 病床でも政務を続けた最期</strong></p>
+<p>秀長は天正19年（1591年）1月22日、大和郡山城で病死しました（享年52）。秀吉が天下統一を成し遂げてからわずか3年後のことです。病床においても政務を続けていたとされる記録があり、<strong>「政権の仕事を止めない」</strong> ために動き続けた現実派の側面が示されています。<source-chip title="tx-seiyukai.com" url="https://tx-seiyukai.com/hidenaga-life/" /></p>
+<h2 id="総括">総括</h2>
+<p>ちょっと比喩を交えて秀長の表向きの存在についてまとめていきます。
+秀長の本質は、<strong>「秀吉という天才的な破壊者・創造者を、現実の政治体制として機能させ続けた人」</strong> にあります。</p>
+<table>
+<thead>
+<tr>
+<th>秀吉の役割</th>
+<th>秀長の役割</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ビジョンを掲げる</td>
+<td>ビジョンを実行計画に落とす</td>
+</tr>
+<tr>
+<td>敵を打ち破る</td>
+<td>降伏後の処理と安定化を設計する</td>
+</tr>
+<tr>
+<td>大名を圧倒する</td>
+<td>大名との信頼関係を維持・調整する</td>
+</tr>
+<tr>
+<td>決断する</td>
+<td>決断の現実化と摩擦吸収を行う</td>
+</tr>
+<tr>
+<td>文書を大量に発給する（約7,000通）</td>
+<td>文書を精緻に発給し、現場を統治する（約130通）</td>
+</tr>
+</tbody>
+</table>
+<p>秀長の死後、豊臣政権は急速に揺らぎました。千利休切腹、秀次事件、朝鮮出兵と、秀吉の独断的な政策が次々と実行されていきます。これは、<strong>秀長という「制御装置」がなくなった</strong>ことの証左です。</p>
+<p>秀長の本質は、<strong>「天下統一という巨大プロジェクトのPM（プロジェクトマネージャー）」</strong> でした。秀吉が「何をするか」を決めたなら、秀長は「誰が」「いつまでに」「どうやって」「何を必要とするか」を設計し、走らせ続けた。それが、史料に残る約130通の文書と、一揆の起きなかった領国、そして秀吉からの絶大な信頼が示す、秀長の真の姿です。</p>
+
+<div style="width: 1px; height: 1px; overflow: hidden; opacity: 0; position: absolute;">
+  <iframe id="bgm-player" width="100" height="100" 
+  src="https://www.youtube.com/embed/GBvnpowsPPg?enablejsapi=1" 
+  title="BGM Player" frameborder="0" allow="autoplay">
+  </iframe>
+</div>
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+  document.getElementById('bgm-trigger').addEventListener('click', function() {
+    var iframe = document.getElementById('bgm-player');
+    
+    // すでに再生中の場合は一時停止、停止中の場合は再生するトグル処理
+    if (this.innerText.includes('再生')) {
+      // JavaScript API経由で再生コマンドを送信
+      iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+      this.innerText = '⏸ BGMを停止する';
+      this.style.backgroundColor = '#f44336'; // ボタンの色を赤系に
+    } else {
+      iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+      this.innerText = '🎵 BGMを再生する';
+      this.style.backgroundColor = '#008cba'; // ボタンの色を青系に
+    }
+  });
+</script>
+
+
+            
+        </body>
+        </html>
