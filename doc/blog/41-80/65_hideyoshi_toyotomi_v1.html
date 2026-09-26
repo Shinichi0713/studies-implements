@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&#x79c0;&#x5409;&#x306e;&#x6982;&#x8981;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+/* 目次全体のコンテナ */
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+
+/* 記事タイトル (h1) */
+h1 {
+    font-size: 2rem;
+    color: #24292f;
+    line-height: 1.3;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 3px double #e1e4e8; /* 二重線で上品に */
+    text-align: center; /* タイトルを中央に寄せて特別感を出す */
+}
+
+/* セクション見出し (h2) */
+h2 {
+    font-size: 1.5rem;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(transparent 70%, #e8f0fe 70%); /* 下側に薄い色のアクセント */
+    border-left: 6px solid #0969da; /* 目次のテーマカラーと合わせる */
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* 強調文字 (strong) */
+strong {
+    font-weight: bold;
+    color: #cf222e; /* ホバー時の赤色と合わせて統一感を出す */
+    background: linear-gradient(transparent 60%, #fff2cc 60%); /* 黄色のマーカー風 */
+    padding: 0 2px;
+}
+
+/* 引用のコンテナ */
+blockquote {
+    position: relative;
+    padding: 20px 30px;
+    margin: 30px 0;
+    background-color: #f6f8fa; /* 目次の背景より少しだけ濃いグレー */
+    border-left: 5px solid #d0d7de; /* 落ち着いたグレーの境界線 */
+    color: #57606a; /* 文字色は少し薄くして引用らしさを出す */
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 引用符のアイコンを装飾として追加 */
+blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    font-size: 40px;
+    color: #d0d7de;
+    font-family: serif;
+    line-height: 1;
+}
+
+/* 読者になるボタンのデザイン */
+.btn-subscribe {
+    display: inline-block;
+    padding: 12px 35px; /* 横幅を広めにとって存在感を出します */
+    background-color: #383838; /* お好みの色に変更してください */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #555555;
+    text-decoration: none;
+}
+
+/* はてなブログで見えてしまう数式データを非表示にする */
+.katex-html {
+    display: none !important;
+}
+
+.katex-mathml {
+    display: inline !important;
+}
+/* Amazonカード型のオシャレなデザイン */
+.shop-card {
+    display: flex;
+    max-width: 500px;
+    margin: 20px auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* マウスホップした時の動き */
+.shop-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.shop-card-image {
+    width: 150px;
+    min-width: 150px;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shop-card-image img {
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+}
+
+.shop-card-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.shop-card-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.shop-card-description {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+/* Amazonらしいオレンジボタン */
+.shop-card-link a {
+    display: inline-block;
+    background-color: #ff9900;
+    color: #fff !important;
+    text-decoration: none !important;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.shop-card-link a:hover {
+    background-color: #e68a00;
+}
+
+/* スマホ対応：縦並びにする */
+@media (max-width: 480px) {
+    .shop-card {
+        flex-direction: column;
+        max-width: 100%;
+    }
+    .shop-card-image {
+        width: 100%;
+        height: 200px;
+    }
+}
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+            <span id="markdown-mermaid" aria-hidden="true" data-config="{&quot;darkModeTheme&quot;:&quot;vscode&quot;,&quot;lightModeTheme&quot;:&quot;vscode&quot;,&quot;maxTextSize&quot;:50000,&quot;clickDrag&quot;:&quot;alt&quot;,&quot;showControls&quot;:&quot;onHoverOrFocus&quot;,&quot;resizable&quot;:true,&quot;maxHeight&quot;:&quot;&quot;}"></span>
+				<p>先日<a href="https://yoshishinnze.hatenablog.com/entry/2026/10/14/043000">豊臣秀長</a>の話を行いました。
+秀長の話をしたら、彼の生き方を変えた秀吉についても触れない訳にはいきません。
+今回は秀吉の一生についてまとめていきます。</p>
+<button id="bgm-trigger" style="padding: 10px 20px; font-size: 16px; background-color: #008cba; color: white; border: none; border-radius: 5px; cursor: pointer;">
+  🎵 BGMを再生する
+</button>
+<h2 id="秀吉の概要">秀吉の概要</h2>
+<p>豊臣秀吉（とよとみ ひでよし、1537年〜1598年）は、日本の戦国時代から安土桃山時代にかけて活躍した武将・大名であり、天下人として日本の統一を成し遂げた人物です。</p>
+<h3 id="主な生涯と功績">主な生涯と功績</h3>
+<p><strong>出自と青年期</strong></p>
+<ul>
+<li>尾張国（現在の愛知県）の農民の家に生まれたとされています。</li>
+<li>若い頃に故郷を離れ、織田信長に仕えることになりました。はじめは持靴（草鞋取り）の下働きから始めたと伝えられています。</li>
+</ul>
+<p><strong>織田家臣としての台頭</strong></p>
+<ul>
+<li>織田信長の側近として軍功を重ね、特に「中国征伐」（毛利氏との戦い）の司令官として活躍しました。</li>
+<li>1582年、信長が本能寺の変で倒れた際、中国地方で毛利軍と対峙していた秀吉は、迅速に講和を結び、山陽道を急ぎ帰京して光秀を討ちました（山崎の戦い）。</li>
+</ul>
+<p><strong>天下統一への道</strong></p>
+<ul>
+<li>信長の後継者争いを制し、清洲会議を経て豊臣政権を樹立しました。</li>
+<li>四国の長宗我部氏、九州の島津氏、関東・奥羽の諸大名などを次々と臣従させ、1590年の小田原征伐で北条氏を滅ぼしたことで、日本全国を事実上統一しました。</li>
+</ul>
+<p><strong>主な政策と事業</strong></p>
+<ul>
+<li><strong>太閤検地</strong>：全国の土地を測量し、石高（生産力）を把握することで、支配体制を確立しました。</li>
+<li><strong>刀狩り</strong>：農民から武器を没収し、兵農分離を進めました。</li>
+<li><strong>身分統制令</strong>：職人・商人と農民の移動を制限し、社会の安定を図りました。</li>
+<li><strong>城郭建築</strong>：大阪城、伏見城などを築城し、政治・経済の中心地を整備しました。</li>
+<li><strong>朱印船貿易</strong>：海外貿易を許可制にし、経済的繁栄を促しました。</li>
+</ul>
+<p><strong>朝鮮出兵（文禄・慶長の役）</strong></p>
+<ul>
+<li>1592年から1598年にかけて、明（中国）との貿易ルート確保などを目的として朝鮮に出兵しましたが、明・朝鮮連合軍との激しい抵抗に遭い、最終的に講和交渉も決裂しました。</li>
+</ul>
+<p><strong>人物像</strong></p>
+<ul>
+<li>庶民出身ながら天下人にまで上り詰めた稀な人物として知られています。</li>
+<li>機略に長け、人を使うのに長けていた一方、晩年には養子の秀次を切腹させるなど、猜疑心が強くなったとも伝えられています。</li>
+<li>茶道を好み、千利休らと親交がありました。</li>
+</ul>
+<p><strong>死とその後</strong></p>
+<ul>
+<li>1598年に伏見城で病没しました。</li>
+<li>死後、政権は幼い子・秀頼に継承されましたが、五大老・五奉行の対立が深まり、徳川家康が実権を握ることになりました。その結果、1600年の関ヶ原の戦いを経て、徳川幕府が成立することになります。</li>
+</ul>
+<h2 id="始めの仕官まで">始めの仕官まで</h2>
+<p>豊臣秀吉は、織田信長に仕える前に、今川家の家臣である松下氏に仕えていた経歴があります。</p>
+<h3 id="秀吉の出生と出自">秀吉の出生と出自</h3>
+<p>豊臣秀吉は、天文6年（1537年）2月6日、尾張国愛知郡中村（現在の愛知県名古屋市中村区）に生まれました。幼名は<strong>日吉丸（ひよしまる）</strong> といい、父は弥右衛門（竹阿弥とも）、母は仲（なか）とされています。</p>
+<p>秀吉の出自については諸説ありますが、一般的には貧しい農家の出身と伝えられています。幼い頃、父が早くに亡くなり、母が再婚したことで、秀吉は継父との折り合いが悪く、少年時代から苦労したとされています。</p>
+<h3 id="尾張を出て今川家臣松下氏に仕える">尾張を出て今川家臣・松下氏に仕える</h3>
+<p>秀吉は14歳頃（天文20年・1551年頃）、故郷の尾張・中村を離れ、諸国を巡る放浪の旅に出ました。この頃、秀吉は<strong>木下藤吉郎</strong>と名乗るようになります。</p>
+<p>その途中、秀吉は今川義元に仕えていた武将である<strong>松下長則</strong>・<strong>之綱（ゆきつな）父子</strong>と出会い、彼らのもとで奉公することになりました。松下氏は遠江国（現在の静岡県浜松市）の<strong>頭陀寺城（ずだじじょう）</strong> 主で、今川家の家臣として知行していました。之綱は通称・<strong>加兵衛（かへえ）</strong> とも呼ばれ、秀吉とほぼ同い年の武将でした。</p>
+<p>なお、秀吉が仕え始めた当時、頭陀寺城の当主は之綱の父・長則だった可能性が高いとする説もありますが、一般的には「松下之綱に仕えた」として伝えられています。</p>
+<h3 id="松下屋敷での奉公">松下屋敷での奉公</h3>
+<p>秀吉は松下氏のもとで約3年間、奉公に励んだとされています。『名将言行録』などには、秀吉が針売りなどをしながら旅をしていた際、機知に富んだ受け答えが松下之綱の気に入られて仕えた、という逸話が残っています。</p>
+<p>秀吉は才覚を発揮して長則・之綱父子に可愛がられたと伝えられますが、その一方で周囲の家臣から嫉妬を受けたともいわれています。</p>
+<h3 id="松下家を離れる経緯">松下家を離れる経緯</h3>
+<p>秀吉が松下家を離れた理由には諸説あります。</p>
+<ul>
+<li><strong>周囲の嫉妬説</strong>：秀吉の才能が目立ちすぎたため、他の家臣から讒言（ざんげん）を受け、やむなく出ていったとする説。</li>
+<li><strong>金の持ち逃げ説</strong>：主君から鎧を買うための代金を預かったまま、尾張へ持ち逃げしたとする説も『太閤記』などに見られます。</li>
+</ul>
+<p>いずれにせよ、秀吉は17歳頃（天文23年・1554年頃）に尾張へ戻り、清洲城の織田信長のもとに出仕しました。そこから小者として働き始め、後に天下人への階段を上っていくことになります。</p>
+<h3 id="その後の松下之綱">その後の松下之綱</h3>
+<p>その後、主従関係は後に逆転します。松下之綱は今川氏の衰退後、徳川家康に仕えましたが、高天神城の戦いで武田氏に降伏した後、秀吉のもとへ来て家臣となりました。秀吉は旧恩を忘れず、之綱に遠江久野（くの）城と1万6千石を与えました。
+之綱への恩義は感じていたんだろうと思います。</p>
+<h2 id="織田への仕官">織田への仕官</h2>
+<p>秀吉が松下家を離れた後、織田信長に仕えるまでの経緯について、伝承や史料に基づいてお話しします。</p>
+<h3 id="尾張への帰還と再会">尾張への帰還と再会</h3>
+<p>秀吉は天文23年（1554年）頃、約3年間奉公した今川家臣・松下氏のもとを離れ、故郷の尾張・中村へ戻りました。帰郷した秀吉は、母・仲と再会し、しばらく村で過ごしたとされています。</p>
+<p>この頃、秀吉の運命を大きく変える人物との出会いがありました。それが、同郷の<strong>一若（いちわか）</strong> という人物です。</p>
+<h3 id="一若を介した仕官の道">一若を介した仕官の道</h3>
+<p>『太閤素性記』によると、一若は秀吉と同じ中村の出身で、秀吉の父・弥右衛門とも知り合いでした。そして重要なことに、一若は<strong>織田信長の小人頭（こびとがしら：雑役に従事する者の頭）</strong> として仕えていました。</p>
+<p>久しぶりに帰郷した秀吉と対面した一若は、「この三年、どこに行っていたのだ。母上は嘆いているぞ」と秀吉を労いました。そして、信長に仕える一若の伝手を通じて、秀吉は織田家に「草履取（ぞうりとり）」として出仕することになったと伝えられています。</p>
+<h3 id="叔父のアドバイスと直訴甫庵太閤記の説">叔父のアドバイスと直訴（『甫庵太閤記』の説）</h3>
+<p>一方、『甫庵太閤記』には異なる経緯が記されています。</p>
+<p>秀吉は松下加兵衛から黄金を渡され、尾張で流行する「胴丸」という鎧を買ってくるよう言いつけられました。しかし秀吉は、その黄金を使って「丈夫の身となる支度」をし、有能な主君に仕えることを決意したとされます。</p>
+<p>迷いを覚えた秀吉は叔父に相談すると、叔父はこう助言しました。</p>
+<blockquote>
+<p>「信長公を謗る者もいるが、実は賢く度量が広い人である。百姓を虐げるような小人を殊の外、憎まれておる。この人は天下の主となるであろう」</p>
+</blockquote>
+<p>叔父の励ましを受けた秀吉は、刀・脇差・衣服を購入して身なりを整え、清洲城にいた信長に直訴に出ました。秀吉はこう申し出たとされます。</p>
+<blockquote>
+<p>「それがしの父は、織田大和守殿に仕えし筑阿弥入道にございます。愛知郡中村の住人です。代々、武家でございましたが、父の代に至り家貧しく、それがしも微小にして方々で使令の身となっておりました。願わくばお仕え致したく」</p>
+</blockquote>
+<p>このように、父と織田家との縁を持ち出して仕官を懇願したと伝えられています。</p>
+<h3 id="信長に仕えた当初の身分">信長に仕えた当初の身分</h3>
+<p>信長に仕えた当初の秀吉の身分は、<strong>草履取</strong>、あるいは<strong>小者</strong>とされる下級の奉公人でした。信長の草履を懐で温めて差し出したという有名な逸話も、実は江戸時代の創作とする説が有力ですが、秀吉が末端の身分から始めたことは間違いありません。</p>
+<h2 id="草履とりからの出世">草履とりからの出世</h2>
+<p>秀吉が織田信長に仕えてから「草履取り」の末端の身分から、武将として頭角を現す「足軽頭（あしがるがしら）」や「侍大将（さむらいだいしょう）」へと昇進するまでの経緯を、伝承と史料の観点から整理してお話しします。</p>
+<h3 id="前提として史料の限界">前提として：史料の限界</h3>
+<p>まず重要な注意点として、秀吉の信長家臣時代の初期（1554年〜1565年頃）については、<strong>同時代の確実な史料がほとんど残っていません</strong>。『信長公記』においても、秀吉の名が初めて登場するのは永禄年間後半のことです。したがって、以下でお話しする多くの逸話は、江戸時代の軍記物（『甫庵太閤記』『絵本太閤記』など）に基づく伝承であり、史実との区別を意識しながらお読みください。</p>
+<h3 id="草履取り小者としての出仕天文23年1554年頃">草履取り・小者としての出仕（天文23年・1554年頃）</h3>
+<p>先述の通り秀吉は尾張・中村から清洲城に出仕し、信長の<strong>草履取（ぞうりとり）</strong> や<strong>小者（こもの）</strong> といった、家臣団の最下級に近い奉公人として働き始めました。信長の草履を懐で温めて差し出したという有名な逸話も、実は江戸時代の創作とする説が有力ですが、秀吉が末端の身分から始めたこと自体は間違いありません。</p>
+<p>この頃、秀吉は<strong>木下藤吉郎</strong>と名乗り、信長の日常生活に密着した雑役に従事していました。</p>
+<h3 id="清洲城の普請と足軽への取り立て永禄4年1561年頃">清洲城の普請と「足軽」への取り立て（永禄4年・1561年頃）</h3>
+<p>秀吉が初めて信長の目に留まったとされる出来事が、<strong>清洲城の普請（ふしん）</strong> の逸話です。</p>
+<p>永禄4年（1561年）8月、清洲城の塀が崩れた際、秀吉は自ら修理奉行を買って出て、これを見事に短期間で修復したと伝えられています。この功績を認めた信長が秀吉を <strong>「足軽」に取り立てた</strong>とするのが、一般的な出世譚の流れです。</p>
+<p>この時期、秀吉は<strong>木下雅楽助（きのした うたのすけ）</strong> の寄子（よりこ）に編成され、足軽給分（俸給）を支給されるようになったとされます。これにより、秀吉は単なる雑役人から、正式な軍役を帯びる武士の一員へと足がかりを掴んだと考えられています。</p>
+<h3 id="浅野寧々ねねとの結婚永禄4年1561年">浅野寧々（ねね）との結婚（永禄4年・1561年）</h3>
+<p>秀吉の出世に大きく貢献したのが、<strong>浅野長勝（あさの ながかつ）の養女・寧々</strong>との婚姻です。</p>
+<p>浅野長勝は織田信長直属の<strong>弓衆（ゆみしゅう）</strong> として、信長の側近に仕える有力な家臣でした。身分の低かった秀吉が、信長直属の家臣の娘婿となったことは、社会的な信用と人脈を大きく高めることになりました。この婚姻を機に、秀吉は信長の認知をさらに得やすくなり、軍役での活躍の場も広がっていきます。</p>
+<h3 id="美濃攻略への参加永禄5年1562年頃">美濃攻略への参加（永禄5年〜・1562年頃〜）</h3>
+<p>足軽としての地位を得た秀吉は、信長の<strong>美濃攻略戦</strong>に次々と参戦していきました。</p>
+<ul>
+<li>森部の戦い</li>
+<li>十四条合戦</li>
+<li>軽海合戦</li>
+</ul>
+<p>これらの戦いで秀吉は実戦経験を積み、軍功を重ねていきました。信長は実力主義的な人物であり、出身や身分よりも能力と成果を重視したため、秀吉のような下級出身者でも武功を挙げれば昇進の道が開かれていました。</p>
+<h3 id="墨俣築城伝説と蜂須賀正勝の人脈永禄9年1566年">墨俣築城伝説と蜂須賀正勝の人脈（永禄9年・1566年）</h3>
+<p>秀吉の出世物語で最も有名なのが、<strong>「墨俣一夜城（すのまた いちやじょう）」</strong> の伝説です。</p>
+<p>永禄9年（1566年）、信長は美濃の斎藤龍興を攻略するため、尾張と美濃の国境にある墨俣（現在の岐阜県大垣市）に前線基地を築くことを計画しました。しかし、重臣の佐久間信盛や柴田勝家が相次いで失敗したため、秀吉が自ら名乗りを上げたとされます。</p>
+<p>秀吉は、美濃・尾張の国境近くで勢力を持っていた野武士の棟梁・<strong>蜂須賀正勝（はちすか まさかつ、小六）</strong> らの協力を得て、短期間に砦を築き上げたと伝えられています。</p>
+<p>ただし、この「墨俣一夜城」のエピソードについては、<strong>『武功夜話』という史料が偽書と断定されたことから、創作である可能性が高い</strong>とする説が現在の通説です。墨俣に城が築かれたこと自体は事実かもしれませんが、秀吉が「一夜で築いた」という戯曲的な部分は信憑性に乏しいとされています。</p>
+<h3 id="足軽頭侍大将への昇進">足軽頭・侍大将への昇進</h3>
+<p>こうした軍功と、寧々との婚姻による社会的地位の向上を背景に、秀吉は<strong>足軽頭（あしがるがしら）</strong>、さらに<strong>侍大将（さむらいだいしょう）</strong> へと順調に昇進していきました。</p>
+<p>永禄8年（1565年）の時点では、秀吉はすでに織田軍の<strong>有力な武将</strong>として、信長が発行する書状に「副状（そえじょう）」を添える立場にありました。これは、秀吉が一定の部隊を指揮し、領地の統括なども任されるレベルに達していたことを示しています。</p>
+<h2 id="織田家の主要な部将へ">織田家の主要な部将へ</h2>
+<p>秀吉が美濃での活躍から、織田家が近畿を統治するようになるまでの経緯を、時系列で整理して説明します。</p>
+<h3 id="1-美濃攻略での秀吉の役割永禄8年10年15651567年">1. 美濃攻略での秀吉の役割（永禄8年〜10年・1565〜1567年）</h3>
+<p>信長は永禄年間、美濃の斎藤氏を攻略していました。永禄10年（1567年）の<strong>稲葉山城の戦い</strong>で、信長はついに斎藤龍興を破り、美濃を手中に収めました。</p>
+<p>この過程で秀吉は、<strong>調略</strong>に大きく貢献したと伝えられています。西美濃の国人衆である<strong>美濃三人衆（稲葉良通、安藤守就、氏家直元）</strong> の寝返り工作など、武力だけでなく情報戦・外交戦の面で秀吉の才能が発揮されました。信長は稲葉山城を「岐阜城」と改名し、天下布武の拠点としました。</p>
+<h3 id="2-信長の上洛と秀吉の従軍永禄11年1568年">2. 信長の上洛と秀吉の従軍（永禄11年・1568年）</h3>
+<p>美1568年）</p>
+<p>美濃を獲得した信長は、将軍候補の<strong>足利義昭</strong>を奉じて<strong>上洛</strong>を果たしました（永禄11年・1568年9月）。秀吉もこの上洛軍に従軍しています。</p>
+<p>信長は近江の六角氏を破り、京都の三好勢を退け、義昭を室町幕府第15代将軍に擁立しました。これにより織田家は畿内への足がかりを獲得し、秀吉も京都という中央の舞台に初めて本格的に関わることになりました。</p>
+<h3 id="3-金ヶ崎の退き口での殿軍元亀元年1570年4月">3. 金ヶ崎の退き口での殿軍（元亀元年・1570年4月）</h3>
+<p>上洛後、信長は越前の朝倉義景を討つべく出兵しましたが、同盟者であったはずの<strong>浅井長政</strong>が突然離反し、背後を塞がれました。織田軍は前後を挟撃される絶体絶命の危機に陥ります。</p>
+<p>この時、秀吉は<strong>殿軍（しんがり）</strong> を任され、信長の本隊が安全に撤退できるよう追撃を食い止めました。朽木谷を越えて京都へ戻る信長を守護したこの武功は、秀吉の信頼を大きく高めた出来事でした。</p>
+<h3 id="4-姉川の戦いと横山城番の任命元亀元年1570年6月">4. 姉川の戦いと横山城番の任命（元亀元年・1570年6月）</h3>
+<p>金ヶ崎から2か月後、信長は浅井・朝倉連合軍との決戦に臨みます。近江の<strong>姉川河原</strong>で織田・徳川連合軍が浅井・朝倉軍を破った<strong>姉川の戦い</strong>で、秀吉も参戦しました。</p>
+<p>この戦いの後、信長は浅井氏の支城である<strong>横山城</strong>を落とし、<strong>秀吉を城番に任命</strong>しました。これは秀吉にとって初めての城番任せであり、北近江における前線基地の司令官として、浅井攻略の拠点を任されたことを意味します。秀吉の武将としての地位が大きく向上した証です。</p>
+<h3 id="5-畿内統治の確立元亀2年天正元年15711573年">5. 畿内統治の確立（元亀2年〜天正元年・1571〜1573年）</h3>
+<p>信長は畿内の支配を確実なものにするため、次のような施策を進めました。</p>
+<ul>
+<li><strong>比叡山焼き討ち（元亀2年・1571年）</strong>：延暦寺などの僧兵勢力を掃討</li>
+<li><strong>一向一揆との戦い</strong>：石山本願寺を包囲</li>
+<li><strong>将軍義昭との決裂</strong>：義昭は信長包囲網を結成するが、信長はこれを破り、<strong>天正元年（1573年）に義昭を京都から追放</strong>。室町幕府は事実上終焉しました。</li>
+</ul>
+<p>この過程で秀吉は、北近江の横山城を拠点に浅井氏の動向を監視し、信長の畿内支配を支える重要な前線指揮官として活躍しました。</p>
+<h2 id="エピソード">エピソード</h2>
+<p>秀吉の美濃〜畿内期（1565年〜1573年頃）に関する、面白く意外なエピソードをいくつか紹介します。史料批判の観点も含めて整理します。</p>
+<h3 id="1-小豆袋の逸話は創作だった">1. 「小豆袋」の逸話は創作だった？</h3>
+<p>金ヶ崎の退き口で最も有名なのが、浅井長政の妻・お市の方が、兄・信長に「袋の両端を固く結んだ小豆」を送って「挟撃される」ことを知らせたという逸話です。</p>
+<p>しかし、<strong>この逸話に一次史料の裏付けはありません</strong>。『信長公記』などの同時代史料には一切記載がなく、江戸時代の軍記物に初めて登場する物語です。浅井長政の離反を察知したのは、実際には朽木元綱や池田勝正らの情報網によるものと考えられています。<source-chip title="Yahoo!ニュース" url="https://news.yahoo.co.jp/expert/articles/181948a47ef264bfab876d26cd710d4ae690bc12" /></p>
+<p>「悲劇の美談」として後世に愛されたこのエピソードは、実は<strong>江戸時代の創作</strong>というのが現在の通説です。</p>
+<h3 id="2-蜂須賀小六は野盗ではなかった">2. 蜂須賀小六は「野盗」ではなかった</h3>
+<p>秀吉の最古参家臣として知られる蜂須賀正勝（小六）は、『甫庵太閤記』などによって「野武士の頭領」「川並衆の棟梁」として描かれ、墨俣一夜城の築城で秀吉を助けた「義賊」的なイメージが定着しています。</p>
+<p>しかし、最新の研究では以下の点が明らかになっています。</p>
+<ul>
+<li>蜂須賀氏は<strong>尾張国のれっきとした土豪・国衆</strong>であり、父・正利は蜂須賀城主</li>
+<li>「野盗の親分」像は**『甫庵太閤記』が話を面白くするための創作**</li>
+<li>実際には水運・兵站・調略の実務家として秀吉を支えた知性派の武将</li>
+</ul>
+<p>秀吉との出会いの場として語られる「矢作橋の逸話」も、後世の作り話である可能性が高いとされています。<source-chip title="戦国ヒストリー" url="https://sengoku-his.com/505" /><source-chip title="bushoojapan.com" url="https://bushoojapan.com/bushoo/toyotomi/2026/02/28/208204" /></p>
+<h3 id="3-秀吉が軍令違反でハゲネズミめと叱られた話">3. 秀吉が軍令違反で「ハゲネズミめ！」と叱られた話</h3>
+<p>元亀年間、秀吉が信長の軍令に違反して叱責された際のエピソードがあります。信長は秀吉を「<strong>けしからんハゲネズミめ！</strong>」と罵り、自宅謹慎を命じました。</p>
+<p>謹慎中の秀吉の行動が意外です。彼は<strong>謹慎を「逆手に取った」働き</strong>をしたと伝えられます。具体的には、信長の機嫌を損ねないよう、家臣たちに指示を出しながら陣中の仕事を遠隔で処理し続けたというのです。この「謹慎中も働き続ける」姿勢が、信長の評価をさらに高めたとされます。<source-chip title="PRESIDENT Online" url="https://president.jp/articles/-/106194" /></p>
+<h3 id="4-竹中半兵衛の調略実は秀長が主役だった">4. 竹中半兵衛の調略、実は秀長が主役だった？</h3>
+<p>美濃攻略で秀吉が「三顧の礼」で竹中半兵衛（重治）を味方に引き入れたという逸話は有名ですが、近年の研究では<strong>交渉の主役は弟の秀長だった可能性</strong>が示唆されています。</p>
+<p>稲葉山城攻略の陰で進行した半兵衛へのスカウト工作。通説では兄・秀吉の功績とされていますが、実直な秀長が何度も足を運んで信頼を勝ち取った、という見方が有力化しています。<source-chip title="Re: TERAKOYA" url="https://tsumariblog3150.com/toyotomi-brothers/hidenaga/inabayama-hanbei-strategy/" /></p>
+<p>秀吉の「人たらし」としてのイメージの陰に、<strong>秀長の地道な調整力</strong>があった、というのは興味深い再評価です。</p>
+<h3 id="5-墨俣一夜城は秀吉の功績として後付けされた">5. 墨俣一夜城は「秀吉の功績」として後付けされた</h3>
+<p>墨俣一夜城の伝説は、秀吉出世譚の象徴ですが、これも<strong>時代とともに「盛られていった」</strong> 逸話です。</p>
+<ul>
+<li>同時代史料では、墨俣の築城は<strong>信長自身の指示による軍事行動</strong>として記録されている</li>
+<li>秀吉の名前が「築城者」として結びつくのは、江戸時代の『甫庵太閤記』『絵本太閤記』以降</li>
+<li>『武功夜話』が偽書と断定されたことで、蜂須賀小六らとの協力劇も創作の色濃い</li>
+</ul>
+<p>つまり、<strong>「信長が行った築城」が、江戸時代に入ると「秀吉の快挙」として再構築された</strong>のです。<source-chip title="ステラnet" url="https://www.steranet.jp/articles/108932" /></p>
+<h3 id="6-秀吉が黄金を持ち逃げしていた">6. 秀吉が「黄金を持ち逃げ」していた？</h3>
+<p>秀吉が信長に仕える前、松下之綱に仕えていた時代に「渡された金を持ち逃げした」という逸話が『太閤記』に記されています。</p>
+<p>秀吉は松下氏から出奔する際、支度金として渡された黄金を持って逃げ出し、それを資金にして信長に仕官した、という物語です。これも <strong>『太閤記』系の軍記物による創作</strong>の可能性が高いものの、秀吉の「泥臭い出自」と「才覚」の対比を象徴するエピソードとして、後世に広まりました。<source-chip title="PRESIDENT Online" url="https://president.jp/articles/-/106858" /></p>
+<h2 id="秀吉の人柄">秀吉の人柄</h2>
+<p>秀吉の性格について、同時代史料と後世の創作を区別しながら、史実に基づいて説明します。</p>
+<h3 id="1-史料の問題陽気な人たらしはどこまで本当か">1. 史料の問題：「陽気な人たらし」はどこまで本当か</h3>
+<p>秀吉の性格を語る上で、まず<strong>史料の信頼性</strong>を確認する必要があります。</p>
+<table>
+<thead>
+<tr>
+<th>史料</th>
+<th>性質</th>
+<th>秀吉の性格に関する記述の特徴</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>『日本史』</strong>（ルイス・フロイス）</td>
+<td>同時代の宣教師記録。秀吉と直接面会</td>
+<td>容貌・行動・性格の具体的描写あり。ただし宣教師の立場による偏見の可能性</td>
+</tr>
+<tr>
+<td><strong>『信長公記』</strong>（太田牛一）</td>
+<td>信長側近による一代記。江戸初期成立</td>
+<td>秀吉の軍事・普請の行動が記される。性格の直接描写は少ない</td>
+</tr>
+<tr>
+<td><strong>『天正記』</strong>（大村由己）</td>
+<td>秀吉の命令で作成された公式記録</td>
+<td>秀吉の意向を反映した記述</td>
+</tr>
+<tr>
+<td><strong>『太閤記』</strong>（小瀬甫庵）</td>
+<td>江戸時代前期の軍記物</td>
+<td>「人たらし」「陽気」などのイメージの源泉。物語的創作が多い</td>
+</tr>
+</tbody>
+</table>
+<p>「陽気で人たらし」という秀吉のイメージの多くは、<strong>『太閤記』系の江戸時代の軍記物</strong>に由来します。同時代史料から読み取れる秀吉の実像は、これとはかなり異なります。<source-chip title="PRESIDENT Online" url="https://president.jp/articles/-/106455" /></p>
+<h3 id="2-ルイスフロイスが見た秀吉知略と冷酷の二面">2. ルイス・フロイスが見た秀吉：知略と冷酷の二面</h3>
+<p>ポルトガルのイエズス会宣教師ルイス・フロイスは、1563年（永禄6年）来日し、秀吉と直接面会しています。彼の著した『日本史』は、<strong>秀吉を直接観察した外国人の視点</strong>として極めて貴重です。</p>
+<p><strong>容貌と気質について</strong></p>
+<p>フロイスは秀吉の外見を辛辣に描写しています。</p>
+<blockquote>
+<p>「小柄で醜悪」「右手の指が6本あった」「シナ人のように髭が少なかった」</p>
+</blockquote>
+<p>また、出自についても「血統からみれば大して高貴な出ではなく、その家系は日本の君主になり得る身には程遠いものがあった」と記しています。<source-chip title="歴史の一歩" url="https://rekishinoippo.jp/toyotomi-hideyoshi-frois/" /></p>
+<p><strong>才能についての評価</strong></p>
+<p>一方で、フロイスは秀吉の才能を高く評価しています。</p>
+<ul>
+<li><strong>教養はない</strong>が、<strong>驚異的な記憶力と知略</strong>で天下を掴み取った</li>
+<li>政治・軍事の天才性を絶賛</li>
+</ul>
+<p><strong>冷酷な支配者としての側面</strong></p>
+<p>フロイスは晩年の秀吉を「暴君」とまで書き残しています。特にバテレン追放令（1587年）以降、キリシタンに対する迫害を深く憎悪し、その性格を「獣より劣ったもの」と酷評しています。<source-chip title="戦国ヒストリー" url="https://sengoku-his.com/2005" /></p>
+<p>ただし、フロイスは<strong>信長に強く傾倒していた</strong>ため、「信長の天下を盗み取った秀吉」という見方をしていた可能性があります。その点を考慮した上で、フロイスの記述を読む必要があります。<source-chip title="草の実堂" url="https://kusanomido.com/study/history/japan/azuchi/25331/" /></p>
+<h3 id="3-人たらし像の再検討">3. 「人たらし」像の再検討</h3>
+<p>秀吉が「人心を掌握する巧みな術」を持っていたことは、史料上も認められます。しかし、<strong>「陽気で愛想の良い人たらし」というイメージは、後世の創作</strong>です。</p>
+<p><strong>史料上確認できる「人心掌握」</strong></p>
+<ul>
+<li>金ヶ崎の退き口（1570年）での殿軍行為が信長の信長の信頼を獲得</li>
+<li>敵将の調略・寝返り工作に長けていた（竹中半兵衛らの獲得）</li>
+<li>家康を臣従させるまでの巧妙な外交</li>
+</ul>
+<p>これらは <strong>「愛想の良さ」ではなく「計算された政治技術」</strong> です。国際日本文化研究センターの呉座勇一氏は「秀吉がそのような気質を持っていたことを示す証拠はない。むしろ、戦国時代でも珍しいほどの残虐性を持つ武将だった」と指摘しています。<source-chip title="PRESIDENT Online" url="https://president.jp/articles/-/106455" /></p>
+<h2 id="総括">総括</h2>
+<p>豊臣秀吉の幼少期から織田家臣として頭角を現すまでの生涯を、史料批判の観点も含めて簡潔にまとめます。</p>
+<h3 id="1-幼少期15371551年頃謎だらけの前半生">1. 幼少期（1537〜1551年頃）：謎だらけの前半生</h3>
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th>通説</th>
+<th>史料批判的見解</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>出生</strong></td>
+<td>天文6年（1537年）、尾張国中村、貧農の家</td>
+<td>出自は不明確。父・弥右衛門、母・なか（大政所）の存在は認められるが詳細は不確定</td>
+</tr>
+<tr>
+<td><strong>幼名</strong></td>
+<td>「日吉丸」</td>
+<td><strong>後世の創作の可能性大</strong>。武家の命名慣習から庶民の子が「○○丸」を名乗る例は少ない</td>
+</tr>
+<tr>
+<td><strong>継父</strong></td>
+<td>竹阿弥（筑阿弥）</td>
+<td>弥右衛門との同一人物説もあり。確執のエピソードは『太閤記』系の軍記物に依存</td>
+</tr>
+<tr>
+<td><strong>家出</strong></td>
+<td>7〜8歳頃、父死後に家を出る</td>
+<td>『太閤素生記』（江戸時代初期）の記述。一次史料なし</td>
+</tr>
+<tr>
+<td><strong>放浪</strong></td>
+<td>針売り、薪売りなど</td>
+<td>イエズス会報告書等に記録あり。貧困と放浪は事実と考えられる</td>
+</tr>
+<tr>
+<td><strong>性格</strong></td>
+<td>「怒りっぽい」「暴れん坊」</td>
+<td><strong>一次史料なし</strong>。『太閤記』が「利根聡明」と記すのみ</td>
+</tr>
+</tbody>
+</table>
+<p><strong>ポイント</strong>：幼少期の秀吉像のほとんどは、秀吉の死後数十年〜百年以上経ってから成立した『太閤記』『太閤素生記』などの<strong>軍記物による創作</strong>です。「怒りっぽい性格」という記述は同時代史料には存在しません。</p>
+<h3 id="2-松下之綱への仕官15511554年頃">2. 松下之綱への仕官（1551〜1554年頃）</h3>
+<ul>
+<li><strong>今川家臣・松下長則・之綱父子</strong>に仕え、約3年間奉公</li>
+<li>頭陀寺城（遠江）で過ごしたとされる</li>
+<li><strong>離脱の理由</strong>：他の家臣からの嫉妬・讒言、または金の持ち逃げ（『太閤記』説）など諸説あり</li>
+<li>後に之綱は秀吉の家臣となり、遠江久野城1万6千石を与えられる（旧恩に報いた）</li>
+</ul>
+<h3 id="3-織田信長への仕官と出世15541567年">3. 織田信長への仕官と出世（1554〜1567年）</h3>
+<table>
+<thead>
+<tr>
+<th>年代</th>
+<th>出来事</th>
+<th>備考</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1554年頃</strong></td>
+<td>尾張へ帰郷、一若（信長の小人頭）を介して仕官</td>
+<td>草履取り・小者から始まる</td>
+</tr>
+<tr>
+<td><strong>1561年頃</strong></td>
+<td>清洲城普請の功で足軽に取り立てられる</td>
+<td>『太閤記』系の逸話。信長の実力主義的な登用は確か</td>
+</tr>
+<tr>
+<td><strong>1561年</strong></td>
+<td>浅野長勝の養女・寧々（ねね）と結婚</td>
+<td>信長直属家臣の娘婿となり、社会的信用が向上</td>
+</tr>
+<tr>
+<td><strong>1565年頃</strong></td>
+<td>美濃攻略戦（森部、十四条、軽海）に参戦</td>
+<td>実戦経験を積み、侍大将へ昇進</td>
+</tr>
+<tr>
+<td><strong>1566年</strong></td>
+<td>「墨俣一夜城」の伝説</td>
+<td><strong>創作の可能性大</strong>。同時代史料では信長の指示による築城。秀吉名義は後付け</td>
+</tr>
+<tr>
+<td><strong>1567年</strong></td>
+<td>稲葉山城攻略、美濃三人衆の調略</td>
+<td>秀長が主役だった可能性も指摘される</td>
+</tr>
+</tbody>
+</table>
+<h3 id="4-上洛畿内支配の確立15681573年">4. 上洛〜畿内支配の確立（1568〜1573年）</h3>
+<table>
+<thead>
+<tr>
+<th>年代</th>
+<th>出来事</th>
+<th>備考</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1568年</strong></td>
+<td>信長の上洛に従軍</td>
+<td>畿内への足がかり獲得</td>
+</tr>
+<tr>
+<td><strong>1570年4月</strong></td>
+<td><strong>金ヶ崎の退き口</strong></td>
+<td>秀吉の出世を決定づけた武功。「小豆袋」の逸話は<strong>江戸時代の創作</strong></td>
+</tr>
+<tr>
+<td><strong>1570年6月</strong></td>
+<td>姉川の戦い</td>
+<td>浅井・朝倉連合軍を破る</td>
+</tr>
+<tr>
+<td><strong>1570年〜</strong></td>
+<td><strong>横山城番</strong></td>
+<td>初めての城番。北近江の前線基地司令官として浅井攻略の拠点に</td>
+</tr>
+<tr>
+<td><strong>1571年</strong></td>
+<td>比叡山焼き討ち</td>
+<td>信長の畿内支配確立の一環</td>
+</tr>
+<tr>
+<td><strong>1573年</strong></td>
+<td>将軍・足利義昭の追放</td>
+<td>室町幕府終焉。秀吉は北近江で浅井氏監視を継続</td>
+</tr>
+</tbody>
+</table>
+<h3 id="5-秀吉の人物像史料から読み解く実像">5. 秀吉の「人物像」：史料から読み解く実像</h3>
+<p><strong>「陽気な人たらし」は創作</strong></p>
+<table>
+<thead>
+<tr>
+<th>イメージ</th>
+<th>出典・根拠</th>
+<th>評価</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>陽気・愛想良い</strong></td>
+<td>『太閤記』『絵本太閤記』など江戸時代軍記物</td>
+<td><strong>創作</strong>。一次史料なし</td>
+</tr>
+<tr>
+<td><strong>人たらし・人心掌握</strong></td>
+<td>調略・寝返り工作の成功</td>
+<td><strong>計算された政治技術</strong>。愛想ではなく知略</td>
+</tr>
+<tr>
+<td><strong>知略・記憶力</strong></td>
+<td>ルイス・フロイス『日本史』</td>
+<td><strong>同時代の証言</strong>。教養なき天才として絶賛</td>
+</tr>
+<tr>
+<td><strong>冷酷・残虐</strong></td>
+<td>フロイスの晩年評価、秀次事件、朝鮮出兵</td>
+<td>晩年に顕在化した暗い側面</td>
+</tr>
+<tr>
+<td><strong>利根聡明</strong></td>
+<td>『太閤記』</td>
+<td>幼少期の特徴として唯一の性格描写</td>
+</tr>
+</tbody>
+</table>
+<p><strong>ルイス・フロイスが見た秀吉</strong></p>
+<ul>
+<li><strong>容貌</strong>：「小柄で醜悪」「右手の指が6本あった」（身体的特徴の記録）</li>
+<li><strong>才能</strong>：「教養はないが、驚異的な記憶力と知略」</li>
+<li><strong>晩年</strong>：「暴君」「獣より劣ったもの」（バテレン追放令以降の酷評）</li>
+</ul>
+<p>※フロイスは信長に強く傾倒していたため、秀吉への評価には偏見の可能性があります。</p>
+
+ 
+<div style="width: 1px; height: 1px; overflow: hidden; opacity: 0; position: absolute;">
+  <iframe id="bgm-player" width="100" height="100" 
+  src="https://www.youtube.com/embed/3uTYZjJPP0I?enablejsapi=1" 
+  title="BGM Player" frameborder="0" allow="autoplay">
+  </iframe>
+</div>
+
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+  document.getElementById('bgm-trigger').addEventListener('click', function() {
+    var iframe = document.getElementById('bgm-player');
+    
+    // すでに再生中の場合は一時停止、停止中の場合は再生するトグル処理
+    if (this.innerText.includes('再生')) {
+      // JavaScript API経由で再生コマンドを送信
+      iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+      this.innerText = '⏸ BGMを停止する';
+      this.style.backgroundColor = '#f44336'; // ボタンの色を赤系に
+    } else {
+      iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+      this.innerText = '🎵 BGMを再生する';
+      this.style.backgroundColor = '#008cba'; // ボタンの色を青系に
+    }
+  });
+</script>
+            
+        </body>
+        </html>
