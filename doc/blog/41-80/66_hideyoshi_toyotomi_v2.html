@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&#x7e54;&#x7530;&#x5305;&#x56f2;&#x7db2;&#x3067;&#x306e;&#x79c0;&#x5409;&#x306e;&#x50cd;&#x304d;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+/* 目次全体のコンテナ */
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+
+/* 記事タイトル (h1) */
+h1 {
+    font-size: 2rem;
+    color: #24292f;
+    line-height: 1.3;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 3px double #e1e4e8; /* 二重線で上品に */
+    text-align: center; /* タイトルを中央に寄せて特別感を出す */
+}
+
+/* セクション見出し (h2) */
+h2 {
+    font-size: 1.5rem;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(transparent 70%, #e8f0fe 70%); /* 下側に薄い色のアクセント */
+    border-left: 6px solid #0969da; /* 目次のテーマカラーと合わせる */
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* 強調文字 (strong) */
+strong {
+    font-weight: bold;
+    color: #cf222e; /* ホバー時の赤色と合わせて統一感を出す */
+    background: linear-gradient(transparent 60%, #fff2cc 60%); /* 黄色のマーカー風 */
+    padding: 0 2px;
+}
+
+/* 引用のコンテナ */
+blockquote {
+    position: relative;
+    padding: 20px 30px;
+    margin: 30px 0;
+    background-color: #f6f8fa; /* 目次の背景より少しだけ濃いグレー */
+    border-left: 5px solid #d0d7de; /* 落ち着いたグレーの境界線 */
+    color: #57606a; /* 文字色は少し薄くして引用らしさを出す */
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 引用符のアイコンを装飾として追加 */
+blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    font-size: 40px;
+    color: #d0d7de;
+    font-family: serif;
+    line-height: 1;
+}
+
+/* 読者になるボタンのデザイン */
+.btn-subscribe {
+    display: inline-block;
+    padding: 12px 35px; /* 横幅を広めにとって存在感を出します */
+    background-color: #383838; /* お好みの色に変更してください */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #555555;
+    text-decoration: none;
+}
+
+/* はてなブログで見えてしまう数式データを非表示にする */
+.katex-html {
+    display: none !important;
+}
+
+.katex-mathml {
+    display: inline !important;
+}
+/* Amazonカード型のオシャレなデザイン */
+.shop-card {
+    display: flex;
+    max-width: 500px;
+    margin: 20px auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* マウスホップした時の動き */
+.shop-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.shop-card-image {
+    width: 150px;
+    min-width: 150px;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shop-card-image img {
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+}
+
+.shop-card-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.shop-card-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.shop-card-description {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+/* Amazonらしいオレンジボタン */
+.shop-card-link a {
+    display: inline-block;
+    background-color: #ff9900;
+    color: #fff !important;
+    text-decoration: none !important;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.shop-card-link a:hover {
+    background-color: #e68a00;
+}
+
+/* スマホ対応：縦並びにする */
+@media (max-width: 480px) {
+    .shop-card {
+        flex-direction: column;
+        max-width: 100%;
+    }
+    .shop-card-image {
+        width: 100%;
+        height: 200px;
+    }
+}
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+            <span id="markdown-mermaid" aria-hidden="true" data-config="{&quot;darkModeTheme&quot;:&quot;vscode&quot;,&quot;lightModeTheme&quot;:&quot;vscode&quot;,&quot;maxTextSize&quot;:50000,&quot;clickDrag&quot;:&quot;alt&quot;,&quot;showControls&quot;:&quot;onHoverOrFocus&quot;,&quot;resizable&quot;:true,&quot;maxHeight&quot;:&quot;&quot;}"></span>
+				<p>秀吉が織田に仕官してから力を認められ、織田屈指の大将となるまでは、織田が四方に拡大する方針をとり、方面の司令官クラスを立てる必要があったことも寄与していたと思います。
+そして、織田の拡大政策は沢山の敵を抱えることになり、織田の包囲網との熾烈な戦いを切り抜ける必要性に迫られました。</p>
+<p>今日はそんな織田が拡大していく中での秀吉の話です。</p>
+<button id="bgm-trigger" style="padding: 10px 20px; font-size: 16px; background-color: #008cba; color: white; border: none; border-radius: 5px; cursor: pointer;">
+  🎵 BGMを再生する
+</button>
+<h2 id="織田包囲網での秀吉の働き">織田包囲網での秀吉の働き</h2>
+<p>織田家が畿内を制圧してから（1573年）、秀吉が中国攻めに派遣されるまでの<strong>1573年〜1577年</strong>、秀吉は信長の主要な戦線で次々と従軍し、方面の指揮官として抜けた存在となっていきました。</p>
+<h3 id="1-北近江横山城番として浅井氏の監視攻略1570年1573年">1. 北近江・横山城番として浅井氏の監視・攻略（1570年〜1573年）</h3>
+<p>姉川の戦い（1570年）後、信長は浅井氏の本城・小谷城の目の前にある<strong>横山城</strong>を攻略し、<strong>秀吉を城番に任命</strong>しました。これは秀吉にとって初めての城番です。</p>
+<ul>
+<li><strong>仕事内容</strong>：小谷城の浅井長政を監視し、信長の北近江攻略の前線基地として機能させる</li>
+<li>秀吉は横山城を拠点に、浅井氏の動向を常に把握し、信長の小谷城攻めを支えました</li>
+<li>1572年（元亀3年）には虎御前山に陣城を築き、浅井・朝倉の連合軍と対峙</li>
+</ul>
+<p>この<strong>約3年間の横山城番</strong>は、秀吉が「単なる武将」から「領地を持つ城主」へと昇進する重要な期間でした。<a href="https://shiroexpo-shiga.jp/2020/column/no33.html">近江の城めぐり</a></p>
+<h3 id="2-朝倉氏討伐一乗谷攻撃への従軍1573年8月">2. 朝倉氏討伐・一乗谷攻撃への従軍（1573年8月）</h3>
+<p>天正元年（1573年）8月、信長は越前の朝倉義景を討伐するため一乗谷へ侵攻しました。秀吉もこの遠征に従軍しています。</p>
+<ul>
+<li><strong>刀根坂の戦い</strong>（8月13日）で朝倉軍を壊滅させ、義景を追い詰める</li>
+<li>朝倉義景は同族・朝倉景景鏡の裏切りにより自刃</li>
+<li>一乗谷城下町は信長の命で<strong>三日三晩にわたって焼き討ち</strong>され、灰燼に帰しました</li>
+</ul>
+<p>秀吉はこの朝倉討伐でも武功を挙げています。<source-chip title="Wikipedia" url="https://ja.wikipedia.org/wiki/%E4%B8%80%E4%B9%97%E8%B0%B7%E5%9F%8E%E3%81%AE%E6%88%A6%E3%81%84" /><source-chip title="戦国ヒストリー" url="https://sengoku-his.com/414" /></p>
+<h3 id="3-小谷城攻略浅井氏滅亡1573年">3. 小谷城攻略・浅井氏滅亡（1573年）</h3>
+<p>朝倉氏を滅ぼした信長は、即座に北近江へ戻り、浅井長政の小谷城を包囲しました。秀吉は横山城から出撃し、小谷城攻略に参加します。</p>
+<ul>
+<li>小谷城は山城であり、浅井長政は籠城</li>
+<li>秀吉は<strong>小谷城攻めで戦功を挙げ</strong>、浅井氏の滅亡に貢献</li>
+<li>浅井長政は城内で自害</li>
+</ul>
+<p>この戦功を認められ、秀吉は<strong>旧浅井領の北近江を拝領</strong>し、<strong>長浜城を築城</strong>しました（12万石）。これにより秀吉は<strong>織田家の大名クラスの武将</strong>へと昇進しました。<a href="https://deep-sengoku.net/?page=page-kassen-%E9%95%B7%E6%B5%9C%E5%9F%8E%E3%81%AE%E6%88%A6%E3%81%84%EF%BC%881573%EF%BC%89">戦国Deep Research</a></p>
+<h3 id="4-長島一向一揆討伐への従軍1574年">4. 長島一向一揆討伐への従軍（1574年）</h3>
+<p>天正2年（1574年）、信長は伊勢長島の一向一揆討伐に出陣。秀吉も従軍しました。</p>
+<ul>
+<li>長島は石山本願寺と並ぶ一向一揆の重要拠点</li>
+<li>信長は激しい抵抗に遭いながらも、長島を制圧</li>
+<li>この戦いは信長にとっても苦戦した戦線の一つ</li>
+</ul>
+<h3 id="5-越前一向一揆討伐への従軍1575年">5. 越前一向一揆討伐への従軍（1575年）</h3>
+<p>天正3年（1575年）8月〜9月、信長は越前の一向一揆討伐に出陣。秀吉も参戦しました。</p>
+<ul>
+<li>朝倉氏滅亡後、越前は朝倉旧臣の桂田長俊（前波吉継）が守護代として統治</li>
+<li>しかし富田長繁ら朝倉旧臣との対立から<strong>越前一向一揆</strong>が発生</li>
+<li>信長は自ら越前へ出陣し、一向一揆を鎮圧</li>
+<li>秀吉もこの討伐軍に参加</li>
+</ul>
+<h3 id="6-長篠の戦いへの従軍1575年5月">6. 長篠の戦いへの従軍（1575年5月）</h3>
+<p>天正3年（1575年）5月21日、織田・徳川連合軍は武田勝頼軍と<strong>長篠の戦い</strong>で対決しました。秀吉もこの合戦に従軍しています。</p>
+<ul>
+<li>武田軍が徳川家の長篠城を包囲</li>
+<li>信長は大軍を率いて救援に向かい、設楽原で武田騎馬隊を<strong>鉄砲隊の三段撃ち</strong>で壊滅させる</li>
+<li>武田軍の精鋭が壊滅し、武田氏の衰退が決定的に</li>
+</ul>
+<p>秀吉は長篠の戦いでも織田軍の一員として参戦し、武功を積んでいます。<a href="https://kotobank.jp/word/%E9%95%B7%E7%AF%A0%E3%81%AE%E6%88%A6%E3%81%84-107676">コトバンク</a></p>
+<h3 id="7-石山本願寺摂津方面の戦い1570年1575年頃">7. 石山本願寺・摂津方面の戦い（1570年〜1575年頃）</h3>
+<p>石山本願寺との戦い（石山合戦）は1570年から続く長期戦でした。秀吉も摂津方面の戦いに参加しています。</p>
+<ul>
+<li>信長包囲網の一翼を担った石山本願寺</li>
+<li>野田・福島の戦いなど、摂津の諸城攻めに従軍</li>
+<li>秀吉は摂津の国人衆の調略や城攻めに従事</li>
+</ul>
+<p>この方面は<a href="https://yoshishinnze.hatenablog.com/entry/2026/07/01/043000">佐久間信盛</a>が指揮を執っていましたが、実質ほとんど成果が上がっていません。
+近畿への出兵の度に遠征することになる秀吉も大変だったかもしれません。</p>
+<h3 id="8-松永久秀の謀反討伐1577年">8. 松永久秀の謀反討伐（1577年）</h3>
+<p>天正5年（1577年）、信濃の松永久秀が再び謀反を起こしました。秀吉は信長の嫡男・信忠の指揮下で、<strong>佐久間信盛・明智光秀・丹羽長秀</strong>らと共に久秀討伐に参加しました。</p>
+<ul>
+<li>久秀は信貴山城に籠城</li>
+<li>織田軍が攻め込み、久秀は自害</li>
+<li>この討伐直後、秀吉は<strong>中国攻めの総司令官</strong>に任命され、播磨へ向かいました</li>
+</ul>
+<h3 id="1573年1577年の秀吉の仕事">1573年〜1577年の秀吉の仕事</h3>
+<table>
+<thead>
+<tr>
+<th>年</th>
+<th>主な仕事・従軍</th>
+<th>成果・昇進</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1570〜1573年</strong></td>
+<td>横山城番。浅井氏監視・小谷城攻略</td>
+<td>城主としての経験を積む</td>
+</tr>
+<tr>
+<td><strong>1573年8月</strong></td>
+<td>朝倉氏討伐・一乗谷攻撃従軍</td>
+<td>朝倉氏滅亡に貢献</td>
+</tr>
+<tr>
+<td><strong>1573年</strong></td>
+<td>小谷城攻略・浅井氏滅亡</td>
+<td><strong>北近江12万石を拝領、長浜城主に</strong></td>
+</tr>
+<tr>
+<td><strong>1574年</strong></td>
+<td>長島一向一揆討伐従軍</td>
+<td>信長の主要戦線で武功を重ねる</td>
+</tr>
+<tr>
+<td><strong>1575年</strong></td>
+<td>越前一向一揆討伐従軍</td>
+<td>北陸の平定に貢献</td>
+</tr>
+<tr>
+<td><strong>1575年5月</strong></td>
+<td>長篠の戦い従軍</td>
+<td>武田軍撃滅に参加</td>
+</tr>
+<tr>
+<td><strong>1570〜1575年頃</strong></td>
+<td>石山本願寺・摂津方面の戦い</td>
+<td>畿内の平定に従事</td>
+</tr>
+<tr>
+<td><strong>1577年</strong></td>
+<td>松永久秀討伐従軍</td>
+<td>直後に<strong>中国攻め総司令官</strong>に任命</td>
+</tr>
+</tbody>
+</table>
+<p>この約4年間、秀吉は<strong>信長の主要な戦線で次々と従軍し、武功を重ねる</strong>ことで、長浜城主（12万石）という大名クラスの地位を獲得しました。そして1577年、信長は秀吉に <strong>「毛利氏を制圧せよ」という大役</strong>を与え、中国攻めの総司令官として播磨へ派遣したのです。</p>
+<h2 id="中国攻め">中国攻め</h2>
+<p>秀吉VS毛利で戦闘が行われた中国攻めについて説明していきます。</p>
+<h3 id="開始の背景">開始の背景</h3>
+<p>天正5年（1577年）10月、織田信長は秀吉を<strong>中国方面軍の総司令官</strong>に任命し、毛利氏の勢力圏である中国地方への侵攻を命じました。秀吉は<strong>姫路城を拠点</strong>として、播磨国に入りました。<source-chip title="Wikipedia" url="https://ja.wikipedia.org/wiki/%E4%B8%AD%E5%9B%BD%E6%94%BB%E3%82%81" /></p>
+<p>因みにこの時期に秀吉の帷幕に加わった部将が高名な<a href="https://yoshishinnze.hatenablog.com/entry/2026/06/02/043000">黒田孝高</a>です。</p>
+<h3 id="1-播磨入りと初期の戦況1577年10月12月">1. 播磨入りと初期の戦況（1577年10月〜12月）</h3>
+<p>秀吉が播磨に入ると、播磨の国人衆の多くは当初、秀吉に服属しました。黒田孝高の調略が決定的な役割を果たしました。</p>
+<ul>
+<li><strong>1577年10月</strong>：秀吉、播磨に入国。姫路城を拠点とする</li>
+<li><strong>1577年11月</strong>：但馬へ進出し、岩洲城などを攻略</li>
+<li><strong>1577年11月〜12月</strong>：福原城の戦い、第一次上月城の戦い。秀吉は上月城を攻略し、尼子勝久・山中鹿介の尼子再興軍を入城させた</li>
+</ul>
+<p>この時期、秀吉は播磨の<a href="https://yoshishinnze.hatenablog.com/entry/2026/06/11/043000">国人衆を味方につける<strong>外交戦</strong>が中心</a>でした。</p>
+<h3 id="2-第一次危機別所長治の離反と三木合戦1578年1580年">2. 第一次危機：別所長治の離反と三木合戦（1578年〜1580年）</h3>
+<p>天正6年（1578年）2月、秀吉の中国攻めは大きな転換点を迎えます。</p>
+<ul>
+<li><strong>1578年2月</strong>：播磨三木城の<strong>別所長治が離反</strong>。毛利方へ鞍替え</li>
+<li><strong>1578年3月</strong>：秀吉は別所長治討伐のため三木城を包囲開始。これが <strong>「三木の干殺し」</strong> の始まり</li>
+<li>秀吉は城周囲に約40の付城と土塁を築き、補給路を完全遮断する<strong>兵糧攻め</strong>を開始</li>
+</ul>
+<p>三木合戦は約1年10ヶ月（1578年3月〜1580年1月）に及ぶ長期戦となり、秀吉の大軍を釘付けにしました。城内は極度の飢餓に陥り、1580年1月17日、別所長治は城兵の助命と引き換えに一族で自害し、開城しました。<source-chip title="戦国バトルヒストリー" url="https://www.sengoku-battle-history.net/mikikassen/" /></p>
+<h3 id="3-第二次危機上月城の戦いと尼子再興軍の滅亡1578年">3. 第二次危機：上月城の戦いと尼子再興軍の滅亡（1578年）</h3>
+<p>別所長治の離反と同時期、秀吉はさらに深刻な危機に直面します。</p>
+<ul>
+<li><strong>1578年4月〜7月</strong>：毛利軍（吉川元春・小早川隆景・宇喜多忠家）が<strong>約3万</strong>の大軍で上月城を包囲</li>
+<li>上月城には尼子勝久・山中鹿介の尼子再興軍（約2,300〜3,000）が籠城</li>
+<li>秀吉は別所長治討伐で手一杯で、上月城への救援ができない状況</li>
+</ul>
+<p><strong>信長は上月城の救援を断念</strong>し、三木攻略を優先する方針を取りました。結果、上月城は落城し、尼子勝久は自刃（享年26）、山中鹿介は護送中に横死。尼子氏の再興運動はここで潰えました。<source-chip title="戦国ジャーナル" url="https://sengoku-journal.com/kassen/kozuki-jo-no-tatakai" /><source-chip title="WEB歴史街道" url="https://rekishikaido.php.co.jp/detail/4067" /></p>
+<h3 id="4-第三次危機有岡城の乱と荒木村重の謀反1578年1579年">4. 第三次危機：有岡城の乱と荒木村重の謀反（1578年〜1579年）</h3>
+<p>上月城の悲劇と同時期、秀吉の背後でさらなる危機が発生します。</p>
+<ul>
+<li><strong>1578年10月</strong>：摂津有岡城の<strong>荒木村重が謀反</strong>。信長に背き、毛利方へ</li>
+<li>秀吉の軍師・黒田官兵衛は、村重を説得するため有岡城に入るが、村重に<strong>幽閉</strong>される</li>
+<li>秀吉は官兵衛の無事を信じきれず、一時は見捨てるような状況もあったが、後に救出</li>
+</ul>
+<p>有岡城の乱は1579年まで続き、秀吉は三木城攻めと並行して、背後の脅威にも対処しなければならない<strong>二正面作戦</strong>を強いられました。<source-chip title="戦国バトルヒストリー" url="https://www.sengoku-battle-history.net/arioka-castle/" /></p>
+<h3 id="5-但馬因幡の進攻1579年1581年">5. 但馬・因幡の進攻（1579年〜1581年）</h3>
+<p>三木城落城（1580年1月）後、秀吉はようやく播磨を平定し、山陰方面への進出が可能になります。</p>
+<ul>
+<li><strong>秀長（秀吉の弟）が山陰方面を担当</strong>：但馬・因幡の攻略を進める</li>
+<li><strong>宮部継潤</strong>らが秀長を補佐</li>
+<li>但馬の国人衆を調略し、因幡へ進出</li>
+</ul>
+<p>秀吉・秀長の兄弟連携が、山陽・山陰両方面からの進攻を可能にしました。<source-chip title="Wikipedia" url="https://w.lzycloud.uk/wiki/%E4%B8%AD%E5%9C%8B%E5%BE%81%E4%BC%90" /></p>
+<h3 id="6-鳥取城の戦い1581年7月10月">6. 鳥取城の戦い（1581年7月〜10月）</h3>
+<p>天正9年（1581年）、秀吉は因幡の要衝・鳥取城を攻略します。</p>
+<ul>
+<li><strong>秀吉の戦術</strong>：城を攻める前に、鳥取周辺の<strong>米を買い占め</strong>、市場から流通させる経済戦</li>
+<li>城周囲に付城を築き、兵糧道を完全遮断</li>
+<li>城内は約4ヶ月で飢餓地獄に陥る</li>
+<li><strong>1581年10月25日</strong>：城将・吉川経家は城兵の助命と引き換えに自刃し、開城</li>
+</ul>
+<p>これが <strong>「鳥取の飢え殺し」</strong> として知られる戦いです。<source-chip title="戦国ジャーナル" url="https://sengoku-journal.com/kassen/tottori-jo-no-tatakai" /></p>
+<h3 id="7-備前備中への進出と宇喜多氏の寝返り1581年1582年">7. 備前・備中への進出と宇喜多氏の寝返り（1581年〜1582年）</h3>
+<p>鳥取城落城後、秀吉は山陽道方面へ進出します。</p>
+<ul>
+<li><strong>備前の宇喜多直家</strong>：当初は毛利方だったが、秀吉の調略により<strong>織田方へ寝返り</strong></li>
+<li>直家の死後、宇喜多家は秀吉を後見人として毛利から織田へ帰属</li>
+<li>秀吉は備前に入り、備中方面へ進出</li>
+</ul>
+<p>宇喜多氏の寝返りは、毛利氏にとって大きな痛手となりました。<source-chip title="備中高松城" url="https://www.bitchu.jp/muneharu/mizuzeme/kankei.html" /></p>
+<h3 id="8-備中高松城の戦いと本能寺の変1582年3月6月">8. 備中高松城の戦いと本能寺の変（1582年3月〜6月）</h3>
+<p>天正10年（1582年）3月、秀吉は備中の要衝・高松城を攻撃します。</p>
+<ul>
+<li><strong>秀吉の戦術</strong>：足守川を堰き止め、<strong>堤で城を水没させる「水攻め」</strong></li>
+<li>城を湖上の孤島に追い込み、毛利軍の救援を阻む</li>
+<li><strong>毛利輝元・吉川元春・小早川隆景</strong>が救援に向かう</li>
+</ul>
+<p>水攻めの最中、<strong>1582年6月2日</strong>、<strong>本能寺の変</strong>が発生。織田信長が明智光秀に討たれます。</p>
+<p>秀吉はこの事実を秘し、城将・清水宗治の切腹を条件に<strong>毛利氏との講和</strong>を急ぎます。宗治は城外の舟上で辞世を残して自刃し、高松城は開城しました。<source-chip title="戦国ジャーナル" url="https://sengoku-journal.com/kassen/takamatsu-jo-no-tatakai" /></p>
+<h3 id="9-中国大返し1582年6月">9. 中国大返し（1582年6月）</h3>
+<p>講和成立後、秀吉は主君・信長の仇を討つため、<strong>中国路から京への大返し</strong>を開始します。</p>
+<ul>
+<li>備中高松城から山城・山崎まで約230kmを、約10日間で踏破</li>
+<li><strong>6月13日</strong>：山崎の戦いで明智光秀軍を撃破</li>
+<li>光秀は敗走中に落命</li>
+</ul>
+<p>これが <strong>「中国大返し」</strong> として知られる、日本戦史上屈指の大強行軍です。<source-chip title="Wikipedia" url="https://ja.wikipedia.org/wiki/%E4%B8%AD%E5%9B%BD%E5%A4%A7%E8%BF%94%E3%81%97" /></p>
+<h3 id="中国攻めの経過一覧">中国攻めの経過一覧</h3>
+<table>
+<thead>
+<tr>
+<th>年</th>
+<th>主な出来事</th>
+<th>秀吉の状況</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1577年10月</strong></td>
+<td>播磨入り、姫路城を拠点に</td>
+<td>中国方面軍総司令官に任命</td>
+</tr>
+<tr>
+<td><strong>1577年11月〜12月</strong></td>
+<td>但馬進出、福原城・上月城攻略</td>
+<td>順調な立ち上がり</td>
+</tr>
+<tr>
+<td><strong>1578年2月</strong></td>
+<td><strong>別所長治が離反</strong></td>
+<td>初の大きな危機</td>
+</tr>
+<tr>
+<td><strong>1578年3月〜1580年1月</strong></td>
+<td><strong>三木合戦（干殺し）</strong></td>
+<td>約2年の長期包囲戦</td>
+</tr>
+<tr>
+<td><strong>1578年4月〜7月</strong></td>
+<td><strong>上月城の戦い、尼子再興軍滅亡</strong></td>
+<td>信長が救援断念</td>
+</tr>
+<tr>
+<td><strong>1578年10月〜1579年</strong></td>
+<td><strong>有岡城の乱、荒木村重謀反</strong></td>
+<td>背後からの脅威、官兵衛幽閉</td>
+</tr>
+<tr>
+<td><strong>1580年1月</strong></td>
+<td>三木城開城、別所長治自刃</td>
+<td>播磨平定</td>
+</tr>
+<tr>
+<td><strong>1581年7月〜10月</strong></td>
+<td><strong>鳥取城の戦い（飢え殺し）</strong></td>
+<td>因幡制圧</td>
+</tr>
+<tr>
+<td><strong>1581年〜1582年</strong></td>
+<td>宇喜多氏寝返り、備前・備中進出</td>
+<td>山陽道方面へ進攻</td>
+</tr>
+<tr>
+<td><strong>1582年3月〜6月</strong></td>
+<td><strong>備中高松城の戦い（水攻め）</strong></td>
+<td>毛利本軍と対峙</td>
+</tr>
+<tr>
+<td><strong>1582年6月2日</strong></td>
+<td><strong>本能寺の変</strong></td>
+<td>信長横死</td>
+</tr>
+<tr>
+<td><strong>1582年6月4日</strong></td>
+<td>高松城開城、毛利と講和</td>
+<td>清水宗治自刃</td>
+</tr>
+<tr>
+<td><strong>1582年6月5日〜13日</strong></td>
+<td><strong>中国大返し</strong></td>
+<td>山崎の戦いで光秀撃破</td>
+</tr>
+</tbody>
+</table>
+<h3 id="秀吉の中国攻めの特徴">秀吉の中国攻めの特徴</h3>
+<ol>
+<li><strong>「干殺し・飢え殺し・水攻め」の三種の神器</strong>：力攻めを避け、敵の兵糧・補給・地形を利用した包囲戦術を徹底</li>
+<li><strong>調略の重視</strong>：黒田官兵衛を中心に、国人衆の寝返り工作を積極的に行う</li>
+<li><strong>長期戦の忍耐</strong>：三木城で約2年、鳥取城で約4ヶ月の包囲を継続</li>
+<li><strong>二正面・三正面作戦の対処</strong>：別所長治・荒木村重・毛利軍の同時発生的な脅威に対応</li>
+<li><strong>情報網と判断の速さ</strong>：本能寺の変後、即座に講和を成立させて大返しを実行</li>
+</ol>
+<p>秀吉の中国攻めは、単なる「城攻め」ではなく、<strong>外交・兵站・情報・土木・心理戦</strong>が複合した、極めて高度な戦略戦でした。
+このレベルの戦略を経験することが出来たことが秀吉を天下取りの実力をつける足腰になったと考えています。</p>
+<h2 id="総括">総括</h2>
+<p>織田の方面司令官となった秀吉が織田の中でも出色の大将となったキーと感じていることをまとめていきます。</p>
+<h3 id="1-調略能力人心掌握ではなく利害計算の外交">1. 調略能力＝「人心掌握」ではなく「利害計算の外交」</h3>
+<p>秀吉の調略は、後世の創作が描く「陽気に人を惹きつける魅力」ではありません。史料上、そのような性格像の根拠はありません。</p>
+<p>秀吉の調略の本質は以下の通りです：</p>
+<ul>
+<li><strong>播磨国人衆の寝返り</strong>：黒田孝高（官兵衛）を介して、播磨の在地領主たちの利害を精密に読み、織田方へ引き入れた。これは「情」ではなく「得失の計算」に基づく外交</li>
+<li><strong>宇喜多直家の寝返り</strong>：毛利方から織田方への帰属は、秀吉が「宇喜多家の存続と拡大」を約束した政治交渉の結果</li>
+<li><strong>敵将の降伏条件の設計</strong>：三木城・鳥取城・高松城のいずれも、「城兵の助命」と引き換えに城将の自刃という条件を提示。これは「温情」ではなく、<strong>抵抗を最小化するための計算された交渉術</strong></li>
+</ul>
+<p>つまり秀吉の調略は、「人を喜ばせる」ことではなく「相手の利害を正確に把握し、最適な条件を提示して動かす」能力でした。</p>
+<h3 id="2-兵站補給管理能力長期戦を支える地味な実務の極致">2. 兵站・補給管理能力＝長期戦を支える「地味な実務」の極致</h3>
+<p>秀吉の最も突出した力量は、<strong>兵站（補給）管理</strong>です。</p>
+<ul>
+<li><strong>三木城の干殺し（約2年）</strong>：城周囲に約40の付城と土塁を築き、完全包囲を維持。自軍の補給路を確保しつつ、敵の補給路を物理的に遮断する</li>
+<li><strong>鳥取城の飢え殺し</strong>：事前に鳥取周辺の米を買い占め、市場から流通させる<strong>経済戦</strong>。城内の飢餓を「作為的に」引き起こした</li>
+<li><strong>備中高松城の水攻め</strong>：足守川を堰き止め、堤を築いて城を水没させる。これは大規模な土木工事の計画・管理・実行能力がなければ不可能</li>
+</ul>
+<p>これらは「派手な野戦の武将」ではなく、<strong>「地味な実務のプロ」</strong> としての秀吉を示しています。数ヶ月〜数年にわたる長期駐軍で、士気と補給を維持し続ける統率力は、戦国時代の武将の中でも最高クラスだったと言えます。</p>
+<h3 id="3-土木築城能力戦場を作る技術者">3. 土木・築城能力＝「戦場を作る」技術者</h3>
+<p>秀吉は「戦場を選ぶ」だけでなく、「戦場を作る」能力に長けていました。</p>
+<ul>
+<li><strong>付城の築造</strong>：標的城を数十箇所の小砦で包囲し、敵の出入りを完全に封じる</li>
+<li><strong>土塁・柵の建設</strong>：補給路を物理的に遮断する防御工事</li>
+<li><strong>水攻めの堤</strong>：備中高松城では、川を堰き止めて城を湖上の孤島にする大規模な土木工事を実行</li>
+</ul>
+<p>これらは単なる「戦術」ではなく、<strong>土木技術者・プロジェクト管理者</strong>としての秀吉の力量を示しています。</p>
+<h3 id="4-冷酷な決断力必要とあれば恐怖政治も辞さない">4. 冷酷な決断力＝「必要とあれば恐怖政治も辞さない」</h3>
+<p>秀吉の力量のもう一つの側面は、<strong>冷酷な決断力</strong>です。</p>
+<ul>
+<li><strong>上月城の見殺し（1578年）</strong>：尼子勝久・山中鹿介の救援を信長が断念した際、秀吉は三木城攻めを優先。結果として尼子再興軍は滅亡した。この「選択」は、秀吉が「情」より「戦略的優先順位」を取る人物であったことを示す</li>
+<li><strong>上月城の皆殺し・遺体晒し</strong>：城内の者を皆殺しにし、遺体を毛利家との国境線上に晒したという記録あり。これは「威嚇戦術」としての冷徹な計算</li>
+<li><strong>兵糧攻めによる飢餓地獄</strong>：三木城・鳥取城の包囲により、城内の者を意図的に飢餓状態に追い込んだ。これは「人たらし」の温情主義者にはできない行為</li>
+</ul>
+<p>呉座勇一氏が指摘するように、秀吉は「戦国時代でも珍しいほどの残虐性」を持っていたと言えます。しかしそれは単なる「残虐」ではなく、<strong>「目的達成のためなら恐怖も手段として使う」計算高さ</strong>です。</p>
+<h3 id="5-多任務処理能力二正面三正面作戦の同時対処">5. 多任務処理能力＝二正面・三正面作戦の同時対処</h3>
+<p>1578年〜1579年の秀吉は、以下の脅威を同時に抱えていました：</p>
+<ul>
+<li><strong>別所長治の離反</strong>（三木城攻め、正面）</li>
+<li><strong>毛利軍の上月城包囲</strong>（山陽道方面）</li>
+<li><strong>荒木村重の謀反</strong>（背後の摂津、有岡城の乱）</li>
+<li><strong>黒田官兵衛の幽閉</strong>（軍師を失う）</li>
+</ul>
+<p>この状況下で秀吉は三木城攻めを継続しつつ、背後の脅威にも対処し、最終的に播磨を平定しました。これは<strong>多任務処理能力・危機管理能力・優先順位の設定能力</strong>が極めて高かったことを示しています。</p>
+<h3 id="6-情報収集判断速度中国大返しの前提となる能力">6. 情報収集・判断速度＝「中国大返し」の前提となる能力</h3>
+<p>本能寺の変後の秀吉の行動は、彼の力量の集大成です。</p>
+<ul>
+<li><strong>情報の秘匿と講和の成立</strong>：信長の死を秘しつつ、毛利との講和を即座に成立させる</li>
+<li><strong>清水宗治の切腹という条件設定</strong>：城将の自刃を条件に開城させ、体面を保ちながら撤退を可能にする</li>
+<li><strong>約10日間で京へ230kmの大強行軍</strong>：軍団全体の迅速な移動を指揮</li>
+</ul>
+<p>これらは「運」ではなく、<strong>情報網の構築・状況判断の速さ・決断の確実さ</strong>がなければ不可能です。</p>
+<p>この時期の秀吉は、<strong>「陽気な人たらし」ではなく、「計算と実行の鬼」</strong> でした。温情主義的な「人心掌握」ではなく、<strong>利害の計算・兵站の管理・土木の実行・冷酷な決断</strong>という、極めて実務的・理性的な能力の集合体として、中国攻めを推進したのです。</p>
+<p>そしてこの5年間の経験が、秀吉に <strong>「大軍を動かし・長期戦を継続し・情報を掌握し・敵を計算して倒す」</strong> という、天下人に必要な全ての能力を与えたと言えます。本能寺の変後、秀吉があれほど速やかに天下を取れたのは、この中国攻めの5年間で「足腰」が鍛えられていたからです。</p>
+
+            
+
+<div style="width: 1px; height: 1px; overflow: hidden; opacity: 0; position: absolute;">
+  <iframe id="bgm-player" width="100" height="100" 
+  src="https://www.youtube.com/embed/LAmZrJFe9cw?enablejsapi=1" 
+  title="BGM Player" frameborder="0" allow="autoplay">
+  </iframe>
+</div>
+
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+  document.getElementById('bgm-trigger').addEventListener('click', function() {
+    var iframe = document.getElementById('bgm-player');
+    
+    // すでに再生中の場合は一時停止、停止中の場合は再生するトグル処理
+    if (this.innerText.includes('再生')) {
+      // JavaScript API経由で再生コマンドを送信
+      iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+      this.innerText = '⏸ BGMを停止する';
+      this.style.backgroundColor = '#f44336'; // ボタンの色を赤系に
+    } else {
+      iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+      this.innerText = '🎵 BGMを再生する';
+      this.style.backgroundColor = '#008cba'; // ボタンの色を青系に
+    }
+  });
+</script>
+        </body>
+        </html>
