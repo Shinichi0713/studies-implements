@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>視差3D再構成 DSM生成アプリ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f4f1eb;
+  --surface: #fffdf8;
+  --ink: #1e1b17;
+  --muted: #5e584e;
+  --accent: #3a6b3d;
+  --accent-weak: color-mix(in oklab, var(--accent) 10%, var(--surface));
+  --accent-warm: #8c5e33;
+  --accent-warm-weak: color-mix(in oklab, var(--accent-warm) 12%, var(--surface));
+  --line: color-mix(in oklab, var(--ink) 10%, transparent);
+  --step--1: clamp(0.85rem, 0.82rem + 0.15vw, 0.95rem);
+  --step-0: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  --step-1: clamp(1.15rem, 1.05rem + 0.5vw, 1.35rem);
+  --step-2: clamp(1.6rem, 1.35rem + 1.2vw, 2.2rem);
+  --step-3: clamp(2.2rem, 1.7rem + 2.5vw, 3.6rem);
+  --space: clamp(1rem, 0.8rem + 1vw, 1.6rem);
+  --radius: 16px;
+  --shadow: 0 1px 2px rgba(0,0,0,0.04), 0 10px 30px -10px rgba(0,0,0,0.12);
+}
+
+* { box-sizing: border-box; margin: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.8;
+  font-size: var(--step-0);
+}
+
+header {
+  background: linear-gradient(120deg, #2a4d2e 0%, #3a6b3d 60%, #5a4a2e 100%);
+  color: #fff;
+  padding: calc(var(--space)*3) var(--space) calc(var(--space)*2.5);
+  position: relative;
+  overflow: hidden;
+}
+
+header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 30 Q15 20 30 30 T60 30' fill='none' stroke='rgba(255,255,255,0.06)' stroke-width='1'/%3E%3C/svg%3E");
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.header-inner {
+  max-width: 920px;
+  margin: 0 auto;
+  position: relative;
+}
+
+header h1 {
+  font-family: "Outfit", "Noto Sans JP", sans-serif;
+  font-size: var(--step-3);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: calc(var(--space)*0.6);
+}
+
+header p {
+  color: rgba(255,255,255,0.85);
+  max-width: 56ch;
+  font-size: var(--step-1);
+  line-height: 1.7;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 0.35em 0.9em;
+  border-radius: 999px;
+  font-size: var(--step--1);
+  font-weight: 500;
+  margin-bottom: calc(var(--space)*0.8);
+  backdrop-filter: blur(4px);
+}
+
+main {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: calc(var(--space)*2.5) var(--space);
+}
+
+section {
+  margin-bottom: calc(var(--space)*2.5);
+}
+
+.section-title {
+  font-family: "Outfit", "Noto Sans JP", sans-serif;
+  font-size: var(--step-2);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: calc(var(--space)*0.6);
+  display: flex;
+  align-items: baseline;
+  gap: 0.5em;
+}
+
+.section-title .num {
+  font-variant-numeric: tabular-nums;
+  color: var(--accent-warm);
+  font-weight: 600;
+  font-size: 0.75em;
+}
+
+.section-desc {
+  color: var(--muted);
+  margin-bottom: calc(var(--space)*1.2);
+  max-width: 72ch;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: calc(var(--space)*1.2);
+  box-shadow: var(--shadow);
+}
+
+.dropzone {
+  border: 2px dashed color-mix(in oklab, var(--accent) 30%, transparent);
+  border-radius: var(--radius);
+  padding: calc(var(--space)*1.5) var(--space);
+  text-align: center;
+  background: var(--accent-weak);
+  transition: background 0.2s, border-color 0.2s;
+  cursor: pointer;
+  position: relative;
+}
+
+.dropzone:hover, .dropzone.dragover {
+  background: color-mix(in oklab, var(--accent) 16%, var(--surface));
+  border-color: var(--accent);
+}
+
+.dropzone input[type="file"] {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.dropzone-label {
+  font-weight: 600;
+  color: var(--accent);
+  pointer-events: none;
+}
+
+.dropzone-hint {
+  font-size: var(--step--1);
+  color: var(--muted);
+  pointer-events: none;
+}
+
+.preview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space);
+  margin-top: var(--space);
+}
+
+.preview-box {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: calc(var(--radius)*0.6);
+  padding: 0.6em;
+  text-align: center;
+}
+
+.preview-box img, .preview-box canvas {
+  max-width: 100%;
+  height: auto;
+  border-radius: calc(var(--radius)*0.4);
+  display: block;
+  margin: 0 auto 0.4em;
+}
+
+.preview-label {
+  font-size: var(--step--1);
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.param-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: calc(var(--space)*0.8);
+}
+
+label.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35em;
+  font-size: var(--step--1);
+  font-weight: 500;
+}
+
+label.field input[type="number"], label.field input[type="range"] {
+  width: 100%;
+}
+
+label.field input[type="number"] {
+  padding: 0.5em 0.7em;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+  font-size: var(--step-0);
+  font-family: inherit;
+}
+
+.range-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+}
+
+.range-row input[type="range"] { flex: 1; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  border: none;
+  border-radius: 12px;
+  padding: 0.85em 1.4em;
+  font-size: var(--step-0);
+  font-family: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.2s;
+}
+
+.btn:active { transform: translateY(1px); }
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 4px 14px -6px color-mix(in oklab, var(--accent) 60%, transparent);
+}
+
+.btn-primary:hover {
+  background: #2d5a30;
+  box-shadow: 0 6px 20px -8px color-mix(in oklab, var(--accent) 70%, transparent);
+}
+
+.btn-secondary {
+  background: var(--accent-warm-weak);
+  color: var(--accent-warm);
+  border: 1px solid color-mix(in oklab, var(--accent-warm) 25%, transparent);
+}
+
+.btn-secondary:hover {
+  background: color-mix(in oklab, var(--accent-warm) 18%, var(--surface));
+}
+
+.btn-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(var(--space)*0.6);
+  margin-top: calc(var(--space)*1);
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  font-size: var(--step--1);
+  color: var(--muted);
+  margin-top: calc(var(--space)*0.6);
+}
+
+.status-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #c9b896;
+}
+
+.status.ready .status-dot { background: var(--accent); box-shadow: 0 0 0 4px color-mix(in oklab, var(--accent) 20%, transparent); }
+
+.status.error .status-dot { background: #b23a2e; }
+
+.result-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space);
+  margin-top: var(--space);
+}
+
+.result-panel {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: calc(var(--space)*0.9);
+  box-shadow: var(--shadow);
+}
+
+.result-panel h3 {
+  font-family: "Outfit", "Noto Sans JP", sans-serif;
+  font-size: var(--step-1);
+  font-weight: 600;
+  margin-bottom: 0.6em;
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+}
+
+.result-panel canvas, .result-panel img {
+  width: 100%;
+  height: auto;
+  border-radius: calc(var(--radius)*0.6);
+  border: 1px solid var(--line);
+  background: #0f1410;
+}
+
+#threeContainer {
+  width: 100%;
+  height: 360px;
+  border-radius: calc(var(--radius)*0.6);
+  border: 1px solid var(--line);
+  background: #0f1410;
+  position: relative;
+  overflow: hidden;
+}
+
+#threeContainer canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 0;
+}
+
+.colorbar {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  margin-top: 0.6em;
+  font-size: var(--step--1);
+  color: var(--muted);
+}
+
+.colorbar-gradient {
+  width: 100%;
+  height: 12px;
+  border-radius: 6px;
+  background: linear-gradient(to right, #301934, #4169e1, #00fa9a, #ffd700, #ff4500);
+  border: 1px solid var(--line);
+}
+
+.download-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6em;
+  margin-top: 0.8em;
+}
+
+.hidden { display: none !important; }
+
+#loadingOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(244,241,235,0.85);
+  backdrop-filter: blur(6px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1em;
+  z-index: 1000;
+  transition: opacity 0.4s;
+}
+
+#loadingOverlay.hidden { opacity: 0; pointer-events: none; }
+
+.spinner {
+  width: 44px; height: 44px;
+  border: 3px solid var(--line);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+footer {
+  text-align: center;
+  color: var(--muted);
+  font-size: var(--step--1);
+  padding: calc(var(--space)*2) var(--space);
+  border-top: 1px solid var(--line);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
+
+@media print {
+  body { background: #fff; }
+  .no-print { display: none; }
+  .card, .result-panel { box-shadow: none; border: 1px solid #ccc; }
+}
+</style>
+</head>
+<body>
+
+<div id="loadingOverlay">
+  <div class="spinner"></div>
+  <div>ライブラリを読み込み中です…</div>
+  <div style="font-size:var(--step--1);color:var(--muted);">OpenCV.js + Three.js</div>
+</div>
+
+<header>
+  <div class="header-inner">
+    <div class="badge">ブラウザ上で完結</div>
+    <h1>視差3D再構成<br>DSM生成アプリ</h1>
+    <p>ステレオ画像の視差からデジタル・サーフェス・モデル（DSM）を自動生成。3D表示、ヒートマップ、CSV出力に対応。</p>
+  </div>
+</header>
+
+<main>
+
+<section>
+  <h2 class="section-title"><span class="num">01</span>画像の入力</h2>
+  <p class="section-desc">ステレオ撮影した左右2枚の画像をアップロードするか、下のボタンで合成デモ画像を生成してください。</p>
+
+  <div class="card">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:calc(var(--space)*0.8);">
+      <div class="dropzone" id="dropLeft">
+        <input type="file" id="fileLeft" accept="image/*">
+        <div class="dropzone-label">左画像を選択 / ドラッグ</div>
+        <div class="dropzone-hint">ステレオペアの左側</div>
+      </div>
+      <div class="dropzone" id="dropRight">
+        <input type="file" id="fileRight" accept="image/*">
+        <div class="dropzone-label">右画像を選択 / ドラッグ</div>
+        <div class="dropzone-hint">ステレオペアの右側</div>
+      </div>
+    </div>
+
+    <div class="preview-grid hidden" id="previewGrid">
+      <div class="preview-box"><img id="imgLeft" alt="左画像"><div class="preview-label">左画像</div></div>
+      <div class="preview-box"><img id="imgRight" alt="右画像"><div class="preview-label">右画像</div></div>
+    </div>
+
+    <div class="btn-group">
+      <button class="btn btn-secondary" id="btnSynthetic">合成デモ画像を生成</button>
+      <button class="btn btn-secondary" id="btnReset">リセット</button>
+    </div>
+
+    <div class="status" id="statusInput"><span class="status-dot"></span>画像をアップロードするか、合成デモを生成してください</div>
+  </div>
+</section>
+
+<section>
+  <h2 class="section-title"><span class="num">02</span>再構成パラメータ</h2>
+  <p class="section-desc">カメラ・測量条件に応じて数値を調整してください。合成デモでは既定値で動作します。</p>
+
+  <div class="card">
+    <div class="param-grid">
+      <label class="field">
+        焦点距離 f（px）
+        <input type="number" id="paramF" value="800" step="10">
+      </label>
+      <label class="field">
+        ベースライン B（m）
+        <input type="number" id="paramB" value="0.12" step="0.01">
+      </label>
+      <label class="field">
+        視差最大値（16の倍数）
+        <input type="number" id="paramNumDisp" value="64" step="16" min="16">
+      </label>
+      <label class="field">
+        ブロックサイズ（奇数）
+        <input type="number" id="paramBlockSize" value="15" step="2" min="5">
+      </label>
+      <label class="field">
+        セルサイズ（m/px）
+        <input type="number" id="paramCellSize" value="0.5" step="0.1">
+      </label>
+      <label class="field">
+        高さ倍率
+        <div class="range-row">
+          <input type="range" id="paramZScale" min="0.1" max="5" step="0.1" value="1">
+          <span id="valZScale">1.0</span>
+        </div>
+      </label>
+    </div>
+    <div class="btn-group">
+      <button class="btn btn-primary" id="btnRun">DSMを生成</button>
+    </div>
+    <div class="status" id="statusRun"><span class="status-dot"></span>パラメータを確認して「DSMを生成」を押してください</div>
+  </div>
+</section>
+
+<section id="resultSection" class="hidden">
+  <h2 class="section-title"><span class="num">03</span>再構成結果</h2>
+  <p class="section-desc">視差マップ、DSMヒートマップ、3D表示を確認できます。</p>
+
+  <div class="result-grid">
+    <div class="result-panel">
+      <h3>視差マップ</h3>
+      <canvas id="canvasDisparity"></canvas>
+      <div class="colorbar">
+        <span>視差小</span>
+        <div class="colorbar-gradient" style="background:linear-gradient(to right,#000,#fff);"></div>
+        <span>視差大</span>
+      </div>
+    </div>
+
+    <div class="result-panel">
+      <h3>DSMヒートマップ</h3>
+      <canvas id="canvasDSM"></canvas>
+      <div class="colorbar">
+        <span>低標高</span>
+        <div class="colorbar-gradient"></div>
+        <span>高標高</span>
+      </div>
+      <div class="download-group">
+        <button class="btn btn-secondary" id="btnDownloadCSV">DSMをCSVダウンロード</button>
+        <button class="btn btn-secondary" id="btnDownloadImage">画像をPNGダウンロード</button>
+      </div>
+    </div>
+
+    <div class="result-panel" style="grid-column:1 / -1;">
+      <h3>3D表示</h3>
+      <div id="threeContainer"></div>
+      <p style="font-size:var(--step--1);color:var(--muted);margin-top:0.6em;">マウス左ドラッグ：回転 / 右ドラッグ：パン / スクロール：ズーム</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  視差3D再構成 DSM生成アプリ — ブラウザ上でステレオ画像から地形モデルを生成
+</footer>
+
+<!-- Three.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<!-- OrbitControls -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+
+<script>
+// =====================
+// OpenCV.js loader
+// =====================
+function loadOpenCV() {
+  return new Promise((resolve, reject) => {
+    if (window.cv && cv.Mat) { resolve(); return; }
+    const script = document.createElement('script');
+    script.src = 'https://docs.opencv.org/4.9.0/opencv.js';
+    script.async = true;
+    script.onload = () => {
+      if (cv.getBuildInformation) { resolve(); }
+      else { cv.onRuntimeInitialized = () => resolve(); }
+    };
+    script.onerror = () => reject(new Error('OpenCV.js load failed'));
+    document.head.appendChild(script);
+  });
+}
+
+// =====================
+// State
+// =====================
+let leftImage = null;
+let rightImage = null;
+let dsmData = null;
+let dsmWidth = 0;
+let dsmHeight = 0;
+let scene3D = null;
+
+// =====================
+// UI refs
+// =====================
+const el = {
+  loading: document.getElementById('loadingOverlay'),
+  fileLeft: document.getElementById('fileLeft'),
+  fileRight: document.getElementById('fileRight'),
+  dropLeft: document.getElementById('dropLeft'),
+  dropRight: document.getElementById('dropRight'),
+  imgLeft: document.getElementById('imgLeft'),
+  imgRight: document.getElementById('imgRight'),
+  previewGrid: document.getElementById('previewGrid'),
+  btnSynthetic: document.getElementById('btnSynthetic'),
+  btnReset: document.getElementById('btnReset'),
+  btnRun: document.getElementById('btnRun'),
+  btnDownloadCSV: document.getElementById('btnDownloadCSV'),
+  btnDownloadImage: document.getElementById('btnDownloadImage'),
+  statusInput: document.getElementById('statusInput'),
+  statusRun: document.getElementById('statusRun'),
+  resultSection: document.getElementById('resultSection'),
+  canvasDisparity: document.getElementById('canvasDisparity'),
+  canvasDSM: document.getElementById('canvasDSM'),
+  threeContainer: document.getElementById('threeContainer'),
+  paramF: document.getElementById('paramF'),
+  paramB: document.getElementById('paramB'),
+  paramNumDisp: document.getElementById('paramNumDisp'),
+  paramBlockSize: document.getElementById('paramBlockSize'),
+  paramCellSize: document.getElementById('paramCellSize'),
+  paramZScale: document.getElementById('paramZScale'),
+  valZScale: document.getElementById('valZScale'),
+};
+
+// =====================
+// Helpers
+// =====================
+function setStatus(elStatus, msg, type='ready') {
+  elStatus.innerHTML = `<span class="status-dot"></span>${msg}`;
+  elStatus.className = 'status ' + type;
+}
+
+function readFileAsImage(file) {
+  return new Promise((resolve) => {
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+    img.onload = () => { URL.revokeObjectURL(url); resolve(img); };
+    img.src = url;
+  });
+}
+
+function setupDrop(dropzone, fileInput, onFile) {
+  dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('dragover'); });
+  dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
+  dropzone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropzone.classList.remove('dragover');
+    if (e.dataTransfer.files.length) onFile(e.dataTransfer.files[0]);
+  });
+  fileInput.addEventListener('change', () => { if (fileInput.files.length) onFile(fileInput.files[0]); });
+}
+
+// =====================
+// Synthetic stereo pair generator
+// =====================
+function generateSyntheticStereoPair() {
+  const W = 480, H = 360;
+  const canvasL = document.createElement('canvas');
+  const canvasR = document.createElement('canvas');
+  canvasL.width = canvasR.width = W;
+  canvasL.height = canvasR.height = H;
+  const ctxL = canvasL.getContext('2d');
+  const ctxR = canvasR.getContext('2d');
+
+  // Background gradient (sky)
+  const grad = ctxL.createLinearGradient(0,0,0,H);
+  grad.addColorStop(0, '#87CEEB'); grad.addColorStop(0.5, '#e0f0ff'); grad.addColorStop(1, '#d0e8d0');
+  ctxL.fillStyle = grad; ctxL.fillRect(0,0,W,H);
+  ctxR.fillStyle = grad; ctxR.fillRect(0,0,W,H);
+
+  // Terrain function: returns height at x
+  function terrainHeight(x) {
+    const nx = x / W;
+    return H * (0.55
+      + 0.12 * Math.sin(nx * Math.PI * 4)
+      + 0.08 * Math.sin(nx * Math.PI * 9)
+      + 0.06 * Math.exp(-Math.pow((nx-0.35)*6, 2))
+      + 0.10 * Math.exp(-Math.pow((nx-0.7)*5, 2))
+    );
+  }
+
+  // Draw terrain as filled shape
+  function drawTerrain(ctx, offsetX) {
+    ctx.beginPath();
+    ctx.moveTo(0, H);
+    for (let x = 0; x <= W; x++) {
+      const h = terrainHeight(x + offsetX);
+      ctx.lineTo(x, h);
+    }
+    ctx.lineTo(W, H);
+    ctx.closePath();
+    const grad = ctx.createLinearGradient(0,0,0,H);
+    grad.addColorStop(0, '#5a8a4e');
+    grad.addColorStop(0.4, '#7aad6a');
+    grad.addColorStop(1, '#3d6b33');
+    ctx.fillStyle = grad;
+    ctx.fill();
+    ctx.strokeStyle = '#2a4d24';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+  }
+
+  // Draw some trees
+  function drawTrees(ctx, offsetX) {
+    const seed = 42;
+    for (let i = 0; i < 18; i++) {
+      const x = ((i * 9301 + 49297) % W + W) % W;
+      const tx = (x + i * 27) % W;
+      const th = terrainHeight(tx + offsetX);
+      const h = 18 + (i % 5) * 6;
+      // trunk
+      ctx.fillStyle = '#5c4033';
+      ctx.fillRect(tx - 2, th - h*0.3, 4, h*0.3);
+      // foliage
+      ctx.fillStyle = i % 3 === 0 ? '#2d5a27' : (i % 3 === 1 ? '#3a6b33' : '#1e4220');
+      ctx.beginPath();
+      ctx.moveTo(tx - 12, th - h*0.4);
+      ctx.lineTo(tx, th - h);
+      ctx.lineTo(tx + 12, th - h*0.4);
+      ctx.closePath();
+      ctx.fill();
+    }
+  }
+
+  // Draw buildings
+  function drawBuildings(ctx, offsetX) {
+    const buildings = [
+      {x: 120, w: 50, h: 70, color: '#8c8c8c'},
+      {x: 280, w: 40, h: 90, color: '#a0a0a0'},
+      {x: 360, w: 35, h: 55, color: '#7a7a7a'},
+    ];
+    for (const b of buildings) {
+      const bx = b.x;
+      const by = terrainHeight(bx + offsetX);
+      ctx.fillStyle = b.color;
+      ctx.fillRect(bx - b.w/2, by - b.h, b.w, b.h);
+      ctx.strokeStyle = '#555';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(bx - b.w/2, by - b.h, b.w, b.h);
+      // windows
+      ctx.fillStyle = '#cde8ff';
+      for (let wy = by - b.h + 10; wy < by - 5; wy += 14) {
+        for (let wx = bx - b.w/2 + 6; wx < bx + b.w/2 - 6; wx += 10) {
+          ctx.fillRect(wx, wy, 5, 8);
+        }
+      }
+    }
+  }
+
+  const disparityOffset = 18; // pixels shift for right image
+
+  drawTerrain(ctxL, 0);
+  drawTrees(ctxL, 0);
+  drawBuildings(ctxL, 0);
+
+  drawTerrain(ctxR, disparityOffset);
+  drawTrees(ctxR, disparityOffset);
+  drawBuildings(ctxR, disparityOffset);
+
+  leftImage = new Image();
+  leftImage.src = canvasL.toDataURL('image/png');
+  rightImage = new Image();
+  rightImage.src = canvasR.toDataURL('image/png');
+
+  leftImage.onload = () => {
+    el.imgLeft.src = leftImage.src;
+    el.imgRight.src = rightImage.src;
+    el.previewGrid.classList.remove('hidden');
+    setStatus(el.statusInput, '合成デモ画像を生成しました（左・右）', 'ready');
+  };
+}
+
+// =====================
+// Disparity & DSM
+// =====================
+function imageToGrayMat(img) {
+  const c = document.createElement('canvas');
+  c.width = img.naturalWidth || img.width;
+  c.height = img.naturalHeight || img.height;
+  const ctx = c.getContext('2d');
+  ctx.drawImage(img, 0, 0);
+  const imgData = ctx.getImageData(0, 0, c.width, c.height);
+  const mat = new cv.Mat(c.height, c.width, cv.CV_8UC4);
+  mat.data.set(imgData.data);
+  const gray = new cv.Mat();
+  cv.cvtColor(mat, gray, cv.COLOR_RGBA2GRAY);
+  mat.delete();
+  return {mat: gray, width: c.width, height: c.height};
+}
+
+function computeDisparity(leftImg, rightImg) {
+  const left = imageToGrayMat(leftImg);
+  const right = imageToGrayMat(rightImg);
+
+  if (left.width !== right.width || left.height !== right.height) {
+    // Resize right to match left
+    const resized = new cv.Mat();
+    cv.resize(right.mat, resized, new cv.Size(left.width, left.height));
+    right.mat.delete();
+    right.mat = resized;
+    right.width = left.width;
+    right.height = left.height;
+  }
+
+  const numDisparities = Math.max(16, parseInt(el.paramNumDisp.value) || 64);
+  const blockSize = Math.max(5, parseInt(el.paramBlockSize.value) || 15);
+
+  const disparity = new cv.Mat();
+  const stereo = new cv.StereoBM();
+  stereo.setNumDisparities(numDisparities);
+  stereo.setBlockSize(blockSize);
+  stereo.setPreFilterType(cv.STEREO_BM_PREFILTER_NORMALIZED_RESPONSE);
+  stereo.setPreFilterSize(5);
+  stereo.setPreFilterCap(31);
+  stereo.setTextureThreshold(10);
+  stereo.setMinDisparity(0);
+  stereo.setSpeckleWindowSize(100);
+  stereo.setSpeckleRange(32);
+  stereo.setDisp12MaxDiff(1);
+
+  stereo.compute(left.mat, right.mat, disparity);
+
+  left.mat.delete();
+  right.mat.delete();
+  stereo.delete();
+
+  return {disparity, width: left.width, height: left.height};
+}
+
+function disparityToDSM(disparityMat, width, height) {
+  const f = parseFloat(el.paramF.value) || 800;
+  const B = parseFloat(el.paramB.value) || 0.12;
+  const zScale = parseFloat(el.paramZScale.value) || 1.0;
+  const cellSize = parseFloat(el.paramCellSize.value) || 0.5;
+
+  const disp = new Float32Array(width * height);
+  const dsm = new Float32Array(width * height);
+
+  // StereoBM output is 16-bit fixed point (actual value = value / 16)
+  for (let y = 0; y < height; y++) {
+    for (let x = 0; x < width; x++) {
+      const idx = y * width + x;
+      const val = disparityMat.int16At(y, x);
+      const d = val / 16.0;
+      disp[idx] = d;
+      // Z = f * B / disparity; add epsilon to avoid div/0
+      const z = (d > 0.1) ? (f * B / d) * zScale : 0;
+      dsm[idx] = z;
+    }
+  }
+
+  // Normalize DSM for visualization
+  let minZ = Infinity, maxZ = -Infinity;
+  for (let i = 0; i < dsm.length; i++) {
+    if (dsm[i] > 0) {
+      if (dsm[i] < minZ) minZ = dsm[i];
+      if (dsm[i] > maxZ) maxZ = dsm[i];
+    }
+  }
+  if (!isFinite(minZ)) { minZ = 0; maxZ = 1; }
+
+  return {dsm, disp, width, height, minZ, maxZ, cellSize};
+}
+
+function renderDisparityCanvas(disp, width, height, canvas) {
+  canvas.width = width;
+  canvas.height = height;
+  const ctx = canvas.getContext('2d');
+  const imgData = ctx.createImageData(width, height);
+
+  let minD = Infinity, maxD = -Infinity;
+  for (let i = 0; i < disp.length; i++) {
+    if (disp[i] < minD) minD = disp[i];
+    if (disp[i] > maxD) maxD = disp[i];
+  }
+  if (!isFinite(minD)) { minD = 0; maxD = 1; }
+  const rangeD = maxD - minD || 1;
+
+  for (let i = 0; i < disp.length; i++) {
+    const v = Math.round(255 * (disp[i] - minD) / rangeD);
+    imgData.data[i*4] = v;
+    imgData.data[i*4+1] = v;
+    imgData.data[i*4+2] = v;
+    imgData.data[i*4+3] = 255;
+  }
+  ctx.putImageData(imgData, 0, 0);
+}
+
+function jetColor(t) {
+  // t: 0..1
+  const r = Math.max(0, Math.min(1, 1.5 - Math.abs(t*4 - 3)));
+  const g = Math.max(0, Math.min(1, 1.5 - Math.abs(t*4 - 2)));
+  const b = Math.max(0, Math.min(1, 1.5 - Math.abs(t*4 - 1)));
+  return {r: Math.round(r*255), g: Math.round(g*255), b: Math.round(b*255)};
+}
+
+function renderDSMCanvas(dsm, width, height, minZ, maxZ, canvas) {
+  canvas.width = width;
+  canvas.height = height;
+  const ctx = canvas.getContext('2d');
+  const imgData = ctx.createImageData(width, height);
+  const rangeZ = maxZ - minZ || 1;
+
+  for (let i = 0; i < dsm.length; i++) {
+    const t = (dsm[i] - minZ) / rangeZ;
+    const c = jetColor(Math.max(0, Math.min(1, t)));
+    imgData.data[i*4] = c.r;
+    imgData.data[i*4+1] = c.g;
+    imgData.data[i*4+2] = c.b;
+    imgData.data[i*4+3] = 255;
+  }
+  ctx.putImageData(imgData, 0, 0);
+}
+
+// =====================
+// Three.js 3D Terrain
+// =====================
+function initThreeJS() {
+  if (scene3D) return scene3D;
+  const container = el.threeContainer;
+  const width = container.clientWidth;
+  const height = container.clientHeight;
+
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x0f1410);
+
+  const camera = new THREE.PerspectiveCamera(60, width / height, 0.01, 1000);
+  camera.position.set(0, 1.5, 2.5);
+
+  const renderer = new THREE.WebGLRenderer({antialias: true});
+  renderer.setSize(width, height);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  container.innerHTML = '';
+  container.appendChild(renderer.domElement);
+
+  const controls = new THREE.OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true;
+  controls.dampingFactor = 0.08;
+
+  // Lights
+  const ambient = new THREE.AmbientLight(0xffffff, 0.5);
+  scene.add(ambient);
+  const dir = new THREE.DirectionalLight(0xffffff, 0.8);
+  dir.position.set(5, 10, 7);
+  scene.add(dir);
+
+  // Grid helper
+  const grid = new THREE.GridHelper(10, 20, 0x334433, 0x1a221a);
+  grid.position.y = -0.01;
+  scene.add(grid);
+
+  function animate() {
+    requestAnimationFrame(animate);
+    controls.update();
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  scene3D = {scene, camera, renderer, controls, mesh: null, width, height};
+  return scene3D;
+}
+
+function updateThreeMesh(dsm, width, height, minZ, maxZ, cellSize) {
+  const s3 = initThreeJS();
+  if (s3.mesh) { s3.scene.remove(s3.mesh); s3.mesh.geometry.dispose(); s3.mesh.material.dispose(); }
+
+  const rangeZ = maxZ - minZ || 1;
+  const W = width;
+  const H = height;
+
+  const geometry = new THREE.PlaneGeometry(W * cellSize, H * cellSize, W - 1, H - 1);
+  geometry.rotateX(-Math.PI / 2);
+
+  const colors = [];
+  const posAttr = geometry.attributes.position;
+
+  for (let y = 0; y < H; y++) {
+    for (let x = 0; x < W; x++) {
+      const idx = y * W + x;
+      const z = dsm[idx];
+      const t = Math.max(0, Math.min(1, (z - minZ) / rangeZ));
+      const c = jetColor(t);
+      colors.push(c.r/255, c.g/255, c.b/255);
+
+      // In PlaneGeometry rotated -90deg around X, Y in geometry becomes height (world Y)
+      // vertex index = y*W + x
+      const vIdx = y * W + x;
+      // Height scaling for visibility
+      const h = (z - minZ) * 0.5;
+      posAttr.setY(vIdx, h);
+    }
+  }
+
+  geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+  geometry.computeVertexNormals();
+
+  const material = new THREE.MeshStandardMaterial({
+    vertexColors: true,
+    side: THREE.DoubleSide,
+    roughness: 0.8,
+    metalness: 0.1,
+    flatShading: false,
+  });
+
+  const mesh = new THREE.Mesh(geometry, material);
+  // Center the mesh
+  mesh.position.x = - (W * cellSize) / 2;
+  mesh.position.z = - (H * cellSize) / 2;
+  s3.scene.add(mesh);
+  s3.mesh = mesh;
+}
+
+// =====================
+// Downloads
+// =====================
+function downloadCSV() {
+  if (!dsmData) return;
+  const {dsm, width, height, cellSize} = dsmData;
+  let csv = 'x,y,z
+';
+  for (let y = 0; y < height; y++) {
+    for (let x = 0; x < width; x++) {
+      const idx = y * width + x;
+      const worldX = x * cellSize;
+      const worldY = (height - y) * cellSize;
+      csv += `${worldX.toFixed(2)},${worldY.toFixed(2)},${dsm[idx].toFixed(4)}
+`;
+    }
+  }
+  const blob = new Blob([csv], {type: 'text/csv'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'dsm_output.csv';
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+function downloadImage() {
+  const canvas = el.canvasDSM;
+  const a = document.createElement('a');
+  a.href = canvas.toDataURL('image/png');
+  a.download = 'dsm_heatmap.png';
+  a.click();
+}
+
+// =====================
+// Event wiring
+// =====================
+setupDrop(el.dropLeft, el.fileLeft, async (file) => {
+  leftImage = await readFileAsImage(file);
+  el.imgLeft.src = leftImage.src;
+  el.previewGrid.classList.remove('hidden');
+  setStatus(el.statusInput, `左画像: ${file.name}`, 'ready');
+});
+
+setupDrop(el.dropRight, el.fileRight, async (file) => {
+  rightImage = await readFileAsImage(file);
+  el.imgRight.src = rightImage.src;
+  el.previewGrid.classList.remove('hidden');
+  setStatus(el.statusInput, `右画像: ${file.name}`, 'ready');
+});
+
+el.btnSynthetic.addEventListener('click', () => {
+  generateSyntheticStereoPair();
+});
+
+el.btnReset.addEventListener('click', () => {
+  leftImage = null; rightImage = null; dsmData = null;
+  el.imgLeft.src = ''; el.imgRight.src = '';
+  el.previewGrid.classList.add('hidden');
+  el.resultSection.classList.add('hidden');
+  setStatus(el.statusInput, '画像をアップロードするか、合成デモを生成してください');
+});
+
+el.paramZScale.addEventListener('input', () => {
+  el.valZScale.textContent = parseFloat(el.paramZScale.value).toFixed(1);
+});
+
+el.btnRun.addEventListener('click', async () => {
+  if (!leftImage || !rightImage) {
+    setStatus(el.statusRun, '左右の画像が必要です', 'error');
+    return;
+  }
+  setStatus(el.statusRun, '視差計算中…', 'ready');
+  await new Promise(r => setTimeout(r, 50)); // allow UI update
+
+  try {
+    const {disparity, width, height} = computeDisparity(leftImage, rightImage);
+    renderDisparityCanvas(new Float32Array(width*height).map((_,i)=>disparity.int16At(Math.floor(i/width), i%width)/16), width, height, el.canvasDisparity);
+
+    setStatus(el.statusRun, 'DSM変換中…', 'ready');
+    await new Promise(r => setTimeout(r, 30));
+
+    const result = disparityToDSM(disparity, width, height);
+    dsmData = result;
+    renderDSMCanvas(result.dsm, result.width, result.height, result.minZ, result.maxZ, el.canvasDSM);
+
+    setStatus(el.statusRun, '3D表示構築中…', 'ready');
+    await new Promise(r => setTimeout(r, 30));
+
+    updateThreeMesh(result.dsm, result.width, result.height, result.minZ, result.maxZ, result.cellSize);
+
+    disparity.delete();
+    el.resultSection.classList.remove('hidden');
+    setStatus(el.statusRun, `完了: ${result.width}×${result.height}点、標高範囲 ${result.minZ.toFixed(2)}～${result.maxZ.toFixed(2)} m`, 'ready');
+    el.resultSection.scrollIntoView({behavior: 'smooth'});
+  } catch (e) {
+    console.error(e);
+    setStatus(el.statusRun, 'エラー: ' + e.message, 'error');
+  }
+});
+
+el.btnDownloadCSV.addEventListener('click', downloadCSV);
+el.btnDownloadImage.addEventListener('click', downloadImage);
+
+// =====================
+// Init
+// =====================
+Promise.all([loadOpenCV()]).then(() => {
+  el.loading.classList.add('hidden');
+  setStatus(el.statusInput, '準備完了。画像をアップロードするか、合成デモを生成してください', 'ready');
+}).catch(err => {
+  el.loading.innerHTML = `<div style="color:#b23a2e">ライブラリ読み込みに失敗しました<br>${err.message}</div>`;
+});
+</script>
+</body>
+</html>
