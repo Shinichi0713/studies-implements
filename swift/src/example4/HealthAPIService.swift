@@ -1,11 +1,10 @@
 import Foundation
 import SwiftData
 
-// API通信のエラー定義
 enum APIError: Error, LocalizedError {
     case invalidURL
     case invalidResponse
-case decodeError(String)
+    case decodeError(String)
     case serverError(Int)
     case networkError(Error)
 
@@ -20,16 +19,11 @@ case decodeError(String)
     }
 }
 
-// 外部DB（REST API）と通信するサービス
 class HealthAPIService {
-    // バックエンドサーバーのベースURL
-    // ローカルテスト用: http://localhost:8080
-    // 実際の運用時は自分のサーバーURLに変更
     static let shared = HealthAPIService()
     private let baseURL: URL
 
     private init() {
-        // TODO: 自分のサーバーURLに変更してください
         if let url = URL(string: "http://localhost:8080") {
             self.baseURL = url
         } else {
@@ -37,12 +31,10 @@ class HealthAPIService {
         }
     }
 
-    // ベースURLを変更する場合のイニシャライザ（テスト用）
     init(baseURL: URL) {
         self.baseURL = baseURL
     }
 
-    // MARK: - GET /healthrecords → サーバーから全記録を取得
     func fetchAllRecords() async throws -> [HealthRecord.DTO] {
         let url = baseURL.appendingPathComponent("healthrecords")
         let (data, response) = try await URLSession.shared.data(from: url)
@@ -64,7 +56,6 @@ class HealthAPIService {
         }
     }
 
-    // MARK: - POST /healthrecords → 新規記録をサーバーに送信
     func createRecord(_ dto: HealthRecord.DTO) async throws -> HealthRecord.DTO {
         let url = baseURL.appendingPathComponent("healthrecords")
         var request = URLRequest(url: url)
@@ -90,7 +81,6 @@ class HealthAPIService {
         return try decoder.decode(HealthRecord.DTO.self, from: data)
     }
 
-    // MARK: - PUT /healthrecords/:id → 記録を更新
     func updateRecord(id: UUID, dto: HealthRecord.DTO) async throws -> HealthRecord.DTO {
         let url = baseURL.appendingPathComponent("healthrecords/\(id.uuidString)")
         var request = URLRequest(url: url)
@@ -116,7 +106,6 @@ class HealthAPIService {
         return try decoder.decode(HealthRecord.DTO.self, from: data)
     }
 
-    // MARK: - DELETE /healthrecords/:id → 記録を削除
     func deleteRecord(id: UUID) async throws {
         let url = baseURL.appendingPathComponent("healthrecords/\(id.uuidString)")
         var request = URLRequest(url: url)
@@ -133,7 +122,6 @@ class HealthAPIService {
         }
     }
 
-    // MARK: - ローカルDBとサーバーの一方向同期（アップロード）
     func syncToServer(records: [HealthRecord]) async throws -> (uploaded: Int, failed: Int) {
         var uploaded = 0
         var failed = 0

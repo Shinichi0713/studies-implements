@@ -113,5 +113,5 @@ struct AddRecordView: View {
 
 #Preview {
     AddRecordView()
-        .modelContainer(for: HealthRecord.self, inMemory: true)
+        .modelContainer(for: [HealthRecord.self, HealthReminder.self], inMemory: true)
 }
