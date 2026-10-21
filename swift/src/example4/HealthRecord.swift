@@ -3,7 +3,6 @@ import SwiftData
 
 @Model
 class HealthRecord {
-    // CloudKit同期時のユニーク識別子
     @Attribute(.unique) var id: UUID
     var date: Date
     var bodyTemperature: Double?
@@ -12,7 +11,6 @@ class HealthRecord {
     var diastolicBloodPressure: Int?
     var heartRate: Int?
     var memo: String
-    // 外部DBとの同期状態管理
     var lastSyncedAt: Date?
     var serverRecordId: String?
 
@@ -75,7 +73,6 @@ class HealthRecord {
     }
 }
 
-// API通信用のCodable構造体
 extension HealthRecord {
     struct DTO: Codable {
         let id: UUID?

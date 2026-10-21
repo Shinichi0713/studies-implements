@@ -27,7 +27,6 @@ struct ContentView: View {
                                         Text(record.formattedDate)
                                             .font(.headline)
                                         Spacer()
-                                        // 同期状態インジケータ
                                         if record.lastSyncedAt == nil {
                                             Image(systemName: "arrow.up.circle.badge.clock")
                                                 .foregroundStyle(.orange)
@@ -86,5 +85,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
-        .modelContainer(for: HealthRecord.self, inMemory: true)
+        .modelContainer(for: [HealthRecord.self, HealthReminder.self], inMemory: true)
 }

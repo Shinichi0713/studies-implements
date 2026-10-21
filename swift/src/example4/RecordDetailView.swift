@@ -29,7 +29,6 @@ struct RecordDetailView: View {
 
     var body: some View {
         Form {
-            // 期状態セクション（新規追加）
             if !isEditing {
                 Section("同期状態") {
                     HStack {
@@ -164,7 +163,6 @@ struct RecordDetailView: View {
         record.diastolicBloodPressure = Int(editedDiastolicText)
         record.heartRate = Int(editedHeartRateText)
         record.memo = editedMemo
-        // 編集したら未同期状態に戻す
         record.lastSyncedAt = nil
     }
 }
