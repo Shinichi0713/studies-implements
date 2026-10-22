@@ -90,3 +90,55 @@ struct ContentView: View {
         try? modelContext.save()
     }
 }
+
+import SwiftUI
+import SwiftData
+
+struct EditTaskView: View {
+    @Bindable var task: TaskItem
+    @Environment(\.dismiss) private var dismiss
+    @Environment(\.modelContext) private var modelContext
+    
+    var body: some View {
+        Form {
+            Section("タスク名") {
+                TextField("タスク名", text: $task.title)
+            }
+            
+            Section("詳細") {
+                TextEditor(text: $task.memo)
+                    .frame(minHeight: 80)
+            }
+            
+            Section("期限") {
+                DatePicker("日時", selection: $task.dueDate)
+            }
+            
+            Section("優先度") {
+                Picker("優先度", selection: $task.priority) {
+                    ForEach(TaskItem.Priority.allCases) { p in
+                        Text(p.title).tag(p)
+                    }
+                }
+                .pickerStyle(.segmented)
+            }
+            
+            Section {
+                Toggle("完了済み", isOn: $task.isCompleted)
+            }
+            
+            Section {
+                Button(role: .destructive) {
+                    modelContext.delete(task)
+                    try? modelContext.save()
+                    dismiss()
+                } label: {
+                    Text("タスクを削除")
+                        .frame(maxWidth: .infinity)
+                }
+            }
+        }
+        .navigationTitle("タスク詳細")
+        .navigationBarTitleDisplayMode(.inline)
+    }
+}
