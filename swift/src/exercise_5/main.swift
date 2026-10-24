@@ -142,3 +142,22 @@ struct EditTaskView: View {
         .navigationBarTitleDisplayMode(.inline)
     }
 }
+
+import SwiftUI
+import SwiftData
+
+struct ContentView: View {
+    @Environment(\.modelContext) private var context
+    @StateObject private var viewModel: TaskViewModel
+    @State private var showAddSheet = false
+    
+    init() {
+        // SwiftDataのcontextはenvironmentから取得するため、
+        // onAppearでviewModelを初期化するか、以下のようにする
+        _viewModel = StateObject(wrappedValue: TaskViewModel(context: ???)) // 後述の修正版で対応
+    }
+    
+    var body: some View {
+        Text("後述の完成版をご利用ください")
+    }
+}
