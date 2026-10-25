@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&#x30d1;&#x30b1;&#x30c3;&#x30c8;&#x8ee2;&#x9001;&#x30eb;&#x30fc;&#x30eb;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+/* 目次全体のコンテナ */
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+
+/* 記事タイトル (h1) */
+h1 {
+    font-size: 2rem;
+    color: #24292f;
+    line-height: 1.3;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 3px double #e1e4e8; /* 二重線で上品に */
+    text-align: center; /* タイトルを中央に寄せて特別感を出す */
+}
+
+/* セクション見出し (h2) */
+h2 {
+    font-size: 1.5rem;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(transparent 70%, #e8f0fe 70%); /* 下側に薄い色のアクセント */
+    border-left: 6px solid #0969da; /* 目次のテーマカラーと合わせる */
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* 強調文字 (strong) */
+strong {
+    font-weight: bold;
+    color: #cf222e; /* ホバー時の赤色と合わせて統一感を出す */
+    background: linear-gradient(transparent 60%, #fff2cc 60%); /* 黄色のマーカー風 */
+    padding: 0 2px;
+}
+
+/* 引用のコンテナ */
+blockquote {
+    position: relative;
+    padding: 20px 30px;
+    margin: 30px 0;
+    background-color: #f6f8fa; /* 目次の背景より少しだけ濃いグレー */
+    border-left: 5px solid #d0d7de; /* 落ち着いたグレーの境界線 */
+    color: #57606a; /* 文字色は少し薄くして引用らしさを出す */
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 引用符のアイコンを装飾として追加 */
+blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    font-size: 40px;
+    color: #d0d7de;
+    font-family: serif;
+    line-height: 1;
+}
+
+/* 読者になるボタンのデザイン */
+.btn-subscribe {
+    display: inline-block;
+    padding: 12px 35px; /* 横幅を広めにとって存在感を出します */
+    background-color: #383838; /* お好みの色に変更してください */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #555555;
+    text-decoration: none;
+}
+
+/* はてなブログで見えてしまう数式データを非表示にする */
+.katex-html {
+    display: none !important;
+}
+
+.katex-mathml {
+    display: inline !important;
+}
+/* Amazonカード型のオシャレなデザイン */
+.shop-card {
+    display: flex;
+    max-width: 500px;
+    margin: 20px auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* マウスホップした時の動き */
+.shop-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.shop-card-image {
+    width: 150px;
+    min-width: 150px;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shop-card-image img {
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+}
+
+.shop-card-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.shop-card-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.shop-card-description {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+/* Amazonらしいオレンジボタン */
+.shop-card-link a {
+    display: inline-block;
+    background-color: #ff9900;
+    color: #fff !important;
+    text-decoration: none !important;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.shop-card-link a:hover {
+    background-color: #e68a00;
+}
+
+/* スマホ対応：縦並びにする */
+@media (max-width: 480px) {
+    .shop-card {
+        flex-direction: column;
+        max-width: 100%;
+    }
+    .shop-card-image {
+        width: 100%;
+        height: 200px;
+    }
+}
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+            <span id="markdown-mermaid" aria-hidden="true" data-config="{&quot;darkModeTheme&quot;:&quot;vscode&quot;,&quot;lightModeTheme&quot;:&quot;vscode&quot;,&quot;maxTextSize&quot;:50000,&quot;clickDrag&quot;:&quot;alt&quot;,&quot;showControls&quot;:&quot;onHoverOrFocus&quot;,&quot;resizable&quot;:true,&quot;maxHeight&quot;:&quot;&quot;}"></span>
+				<p>社内LANや拠点間通信、あるいは出張先から社内ネットワークに接続など、組織での通信にはいろんなタイプが存在します。
+パケットがどのようなルールに基づいて転送されることになるか知っておくと、いざ、通信するときやトラブルがあった場合の対処に役立つことになります。</p>
+<p>本日はそんな組織内の通信、パケットの転送ルールについて説明していきます。</p>
+<button id="bgm-trigger" style="padding: 10px 20px; font-size: 16px; background-color: #008cba; color: white; border: none; border-radius: 5px; cursor: pointer;">
+  🎵 BGMを再生する
+</button>
+<h2 id="パケット転送ルール">パケット転送ルール</h2>
+<p>パケットが複数のネットワーク機器を通過する際の転送ルールについて、順を追って説明いたします。</p>
+<h3 id="コアアイデア">コアアイデア</h3>
+<p>パケットの転送は、<strong>「レイヤーごとの役割分担」</strong> と <strong>「経路選択の優先順位」</strong> によって決まります。各機器は自分の担当する階層（OSI参照モデルのレイヤー）で判断を行い、次に送る先を決定します。</p>
+<h3 id="直感的な理解">直感的な理解</h3>
+<p>郵便物の配送に例えると理解しやすいです。</p>
+<ul>
+<li>**L2SW（レイヤー2スイッチ）**は、マンションの受付のようなものです。部屋番号（MACアドレス）を見て、同じ建物内のどの部屋へ届けるかを判断します。</li>
+<li><strong>L3SW（レイヤー3スイッチ）/ルータ</strong>は、郵便局のようなものです。住所（IPアドレス）を見て、別の建物・別の町へ送る必要があるかどうかを判断します。</li>
+<li>**FW（ファイアウォール）**は、警備員のようなものです。届いた郵便物の中身や送り状を確認し、「危険なもの」や「許可されていないもの」を通さずに破棄します。</li>
+<li><strong>IPsecルータ</strong>は、機密書類を送る専用の封筒に入れ替える郵便局員のようなものです。中身を暗号化してから次の宛先へ送ります。</li>
+</ul>
+<h3 id="各機器の具体的な転送ルール">各機器の具体的な転送ルール</h3>
+<p><strong>1. L2SW（レイヤー2スイッチ）の動作</strong></p>
+<p>L2SWは<strong>データリンク層（レイヤー2）</strong> で動作し、<strong>MACアドレス</strong>に基づいて転送します。</p>
+<ul>
+<li>受信したフレームの「宛先MACアドレス」を確認します</li>
+<li>MACアドレステーブル（CAMテーブル）を参照し、そのMACアドレスが接続されているポートを特定します</li>
+<li>該当するポートからのみフレームを送信します（ユニキャストの場合）</li>
+<li>MACアドレステーブルに該当がない場合、受信ポート以外の全ポートにフラッディングします</li>
+<li>同一ブロードキャストドメイン内でのみ動作します</li>
+</ul>
+<p><strong>2. L3SW / ルータの動作</strong></p>
+<p>L3SWやルータは<strong>ネットワーク層（レイヤー3）</strong> で動作し、<strong>IPアドレス</strong>に基づいて転送します。</p>
+<ul>
+<li>受信したパケットの「宛先IPアドレス」を確認します</li>
+<li>ルーティングテーブルを参照し、最も適切な経路（ネクストホップや出力インターフェース）を決定します</li>
+<li>パケットのTTL（Time To Live）を1減らします</li>
+<li>必要に応じて、宛先MACアドレスを書き換えます（L2ヘッダーの再作成）</li>
+<li>異なるサブネット間の通信を可能にします</li>
+</ul>
+<p><strong>経路選択の優先順位</strong>：</p>
+<ul>
+<li>最も具体的な（ロンゲストマッチ）ルートが優先されます</li>
+<li>同じ宛先ネットワークが複数ある場合は、管理距離（AD）が小さいものが優先</li>
+<li>さらに同じ場合は、メトリック（コスト）が小さいものが優先</li>
+</ul>
+<p><strong>3. FW（ファイアウォール）の動作</strong></p>
+<p>FWは<strong>レイヤー3〜レイヤー7</strong>で動作し、<strong>セキュリティポリシー</strong>に基づいて転送を制御します。</p>
+<ul>
+<li>パケットの送信元・宛先IPアドレス、ポート番号、プロトコルなどを確認します</li>
+<li>ステートフルインスペクション（状態管理）を行う場合が多く、接続の状態を追跡します</li>
+<li>設定されたACL（アクセスコントロールリスト）やゾーンベースポリシーに従い、許可（forward）または拒否（drop/reject）を決定します</li>
+<li>許可されたパケットのみが転送されます</li>
+</ul>
+<p><strong>4. IPsecルータの動作</strong></p>
+<p>IPsecルータは、<strong>暗号化と認証</strong>を行うルータです。</p>
+<ul>
+<li>パケットがIPsecポリシーの対象かどうかを確認します</li>
+<li>対象の場合、パケットを暗号化（ESP）または認証（AH）してカプセル化します</li>
+<li>トンネルモードの場合、新しいIPヘッダーが追加されます</li>
+<li>通常のルーティングと同様に、カプセル化後のパケットを転送します</li>
+<li>受信時は、暗号化を解除してから通常のルーティング処理を行います</li>
+</ul>
+<h3 id="パケットが複数機器を通過する際の流れ">パケットが複数機器を通過する際の流れ</h3>
+<p>例えば、社内LANのPCからIPsecトンネルを経由して支社のサーバーへアクセスする場合：</p>
+<ol>
+<li>PCがパケットを送信（宛先IP = 支社サーバー）</li>
+<li><strong>L2SW</strong>：MACアドレスに基づいて、デフォルトゲートウェイ（L3SWまたはルータ）へ転送</li>
+<li><strong>L3SW/ルータ</strong>：ルーティングテーブルを参照し、次のホップ（FWまたはIPsecルータ）へ向けて転送</li>
+<li><strong>FW</strong>：セキュリティポリシーを確認し、許可されたパケットのみ転送</li>
+<li><strong>IPsecルータ</strong>：IPsecポリシーに従いパケットを暗号化・カプセル化し、インターネット経由で支社へ送信</li>
+<li>支社側のIPsecルータで復号化</li>
+<li>支社側のL3SW/L2SWが宛先サーバーへパケットを届ける</li>
+</ol>
+<h3 id="よく混同されるポイント">よく混同されるポイント</h3>
+<table>
+<thead>
+<tr>
+<th>誤解</th>
+<th>正しい理解</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>L3SWはL2SWの機能を持たない</td>
+<td>L3SWは基本的にL2SWの機能も兼ね備えています</td>
+</tr>
+<tr>
+<td>FWはルータと同じ</td>
+<td>FWはフィルタリングが主目的で、ルーティングは副次的な場合が多いです</td>
+</tr>
+<tr>
+<td>IPsecは暗号化だけ</td>
+<td>認証・完全性確認も重要な機能です</td>
+</tr>
+<tr>
+<td>ルーティングは常に最短経路</td>
+<td>実際にはポリシールーティングやコスト、管理距離などで優先順位が変わります</td>
+</tr>
+</tbody>
+</table>
+<h2 id="ケーススタディ">ケーススタディ</h2>
+<p><strong>「パケットの宛先IPアドレス（どこへ行くか）」と「ルーティングテーブル・IPsecポリシーの照合順序」</strong> によって、同じ送信元から出たパケットでも通る道が変わります。
+実際のケースに沿ってどのようにパケット転送されることになるか確認していきます。</p>
+<h3 id="具体的なシナリオで考えてみましょう">具体的なシナリオで考えてみましょう</h3>
+<p>以下のようなネットワーク構成を想定します：</p>
+<pre><code>[PC] → [L3SW（デフォルトGW）] → [IPsecルータ] → Internet
+                              ↓
+                        [インターネット出口（通常ルート）]
+</code></pre>
+<ul>
+<li>社内ネットワーク：<code>192.168.1.0/24</code></li>
+<li>支社ネットワーク（IPsec対向）：<code>10.0.0.0/24</code></li>
+<li>L3SWのデフォルトルート：<code>0.0.0.0/0</code> → インターネット出口ルータ</li>
+<li>IPsecルータのLAN側IP：<code>192.168.1.254</code></li>
+</ul>
+<h3 id="パターン1l3swが宛先に応じて振り分ける場合">パターン1：L3SWが「宛先に応じて振り分ける」場合</h3>
+<p>L3SW上で以下のように設定されているとします：</p>
+<table>
+<thead>
+<tr>
+<th>宛先ネットワーク</th>
+<th>ネクストホップ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>10.0.0.0/24</code>（支社）</td>
+<td><code>192.168.1.254</code>（IPsecルータ）</td>
+</tr>
+<tr>
+<td><code>0.0.0.0/0</code>（その他）</td>
+<td>インターネット出口ルータ</td>
+</tr>
+</tbody>
+</table>
+<p>この場合の転送ルールは：</p>
+<p><strong>パケットA：宛先 = <code>10.0.0.50</code>（支社サーバー）</strong></p>
+<ol>
+<li>PCがパケットを送信（宛先IP = <code>10.0.0.50</code>）</li>
+<li>PCは「自分のサブネット外」と判断し、<strong>デフォルトGW（L3SW）へ送信</strong></li>
+<li>L3SWはルーティングテーブルを参照</li>
+<li><code>10.0.0.0/24</code> の静的ルートにマッチ → <strong>IPsecルータ（<code>192.168.1.254</code>）へ転送</strong></li>
+<li>IPsecルータは「興味深いトラフィック（Interesting Traffic）」と判断し、<strong>IPsecトンネル経由で暗号化して送信</strong></li>
+</ol>
+<p><strong>パケットB：宛先 = <code>8.8.8.8</code>（Google DNSなどインターネット）</strong></p>
+<ol>
+<li>PCがパケットを送信（宛先IP = <code>8.8.8.8</code>）</li>
+<li>PCはデフォルトGW（L3SW）へ送信</li>
+<li>L3SWはルーティングテーブルを参照</li>
+<li><code>8.8.8.8</code> は <code>10.0.0.0/24</code> にマッチしない</li>
+<li>デフォルトルート（<code>0.0.0.0/0</code>）にマッチ → <strong>インターネット出口へそのまま転送</strong></li>
+<li>IPsecルータは<strong>通過させません</strong></li>
+</ol>
+<h3 id="パターン2pcのデフォルトgwがipsecルータになっている場合">パターン2：PCのデフォルトGWがIPsecルータになっている場合</h3>
+<pre><code>[PC] → [IPsecルータ（デフォルトGW）] → [L3SW] → Internet
+</code></pre>
+<p>この場合、IPsecルータが「振り分けの司令塔」になります。</p>
+<table>
+<thead>
+<tr>
+<th>宛先ネットワーク</th>
+<th>処理</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>10.0.0.0/24</code>（支社）</td>
+<td>IPsecカプセル化して送信</td>
+</tr>
+<tr>
+<td><code>0.0.0.0/0</code>（その他）</td>
+<td>L3SW → インターネット出口へ転送</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>支社宛てのパケットはIPsecルータで暗号化され、インターネットへ</li>
+<li>その他はIPsecルータからL3SWへ渡され、通常のインターネット通信として送出</li>
+</ul>
+<h3 id="パターン3ポリシーベースルーティングpbrを使う場合">パターン3：ポリシーベースルーティング（PBR）を使う場合</h3>
+<p>L3SWが高機能な場合、<strong>「宛先IPだけでなく、送信元やポート番号、プロトコル」</strong> によって次のホップを変えることができます。</p>
+<p>例えば：</p>
+<ul>
+<li>経理部（<code>192.168.10.0/24</code>）から支社へ → IPsecルータ経由</li>
+<li>開発部（<code>192.168.20.0/24</code>）から支社へ → 通常のインターネットVPN経由（IPsecしない）</li>
+</ul>
+<p>このように、<strong>「誰が」「どこへ」「どのサービスで」アクセスするか</strong>で転送先を変えることができます。</p>
+<h3 id="重要なルールまとめ">重要なルールまとめ</h3>
+<table>
+<thead>
+<tr>
+<th>判断の基準</th>
+<th>どの機器が判断するか</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>宛先IPアドレスがIPsec対象ネットワークか</td>
+<td>L3SW（ルーティングテーブル）またはIPsecルータ</td>
+</tr>
+<tr>
+<td>パケットを暗号化するかどうか</td>
+<td>IPsecルータ（Interesting Trafficの照合）</td>
+</tr>
+<tr>
+<td>インターネットへ出すかどうか</td>
+<td>デフォルトルートを持つ機器（L3SWやIPsecルータ）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="よくある落とし穴">よくある落とし穴</h3>
+<p><strong>「L3SWがデフォルトGWなのに、支社宛てパケットがIPsecルータを通らない」</strong></p>
+<p>原因として考えられるのは：</p>
+<ol>
+<li>L3SWに <code>10.0.0.0/24</code> への静的ルートが設定されていない</li>
+<li>結果として、デフォルトルートに従いインターネット出口へ出てしまい、暗号化されずに支社へ到達できない</li>
+</ol>
+<h2 id="総括">総括</h2>
+<p>パケットの通信ルールは、宛先IPを見て、最も具体的なルートを選び、IPsec対象なら暗号化して送るです。</p>
+<h3 id="もう少し分解すると">もう少し分解すると</h3>
+<table>
+<thead>
+<tr>
+<th>機器</th>
+<th>何を見るか</th>
+<th>何を決めるか</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>L2SW</td>
+<td>MACアドレス</td>
+<td>同じ建物（セグメント）内のどこへ届けるか</td>
+</tr>
+<tr>
+<td>L3SW</td>
+<td>宛先IPアドレス</td>
+<td>どの道（ネクストホップ）へ送るか</td>
+</tr>
+<tr>
+<td>FW</td>
+<td>IP・ポート・プロトコル</td>
+<td>通すか、破棄するか</td>
+</tr>
+<tr>
+<td>IPsecルータ</td>
+<td>宛先IPが対象ネットワークか</td>
+<td>暗号化して送るか、そのまま送るか</td>
+</tr>
+</tbody>
+</table>
+<h3 id="覚えておくべき3つのルール">覚えておくべき3つのルール</h3>
+<ol>
+<li><strong>ロンゲストマッチ</strong>：最も具体的な（prefixが長い）ルートが優先される</li>
+<li><strong>IPsec対象外はそのまま</strong>：暗号化しないパケットは通常のインターネット経由で送られる</li>
+<li><strong>ルートがないと届かない</strong>：L3SWに静的ルートがないと、支社宛てパケットがIPsecルータを通らずにインターネットへ出てしまう</li>
+</ol>
+<p><img src="file:///d:\PycharmProjects\ScienceCalculation\studies-implements\doc\blog\41-80\image\68_routing_rule\1792880903599.png" alt="1792880903599"></p>
+
+
+<div style="width: 1px; height: 1px; overflow: hidden; opacity: 0; position: absolute;">
+  <iframe id="bgm-player" width="100" height="100" 
+  src="https://www.youtube.com/embed/8vCFnSNz0E4?enablejsapi=1" 
+  title="BGM Player" frameborder="0" allow="autoplay">
+  </iframe>
+</div>
+
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+  document.getElementById('bgm-trigger').addEventListener('click', function() {
+    var iframe = document.getElementById('bgm-player');
+    
+    // すでに再生中の場合は一時停止、停止中の場合は再生するトグル処理
+    if (this.innerText.includes('再生')) {
+      // JavaScript API経由で再生コマンドを送信
+      iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+      this.innerText = '⏸ BGMを停止する';
+      this.style.backgroundColor = '#f44336'; // ボタンの色を赤系に
+    } else {
+      iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+      this.innerText = '🎵 BGMを再生する';
+      this.style.backgroundColor = '#008cba'; // ボタンの色を青系に
+    }
+  });
+</script>
+            
+        </body>
+        </html>
