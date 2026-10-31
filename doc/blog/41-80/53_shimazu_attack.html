@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&#x5cf6;&#x6d25;&#x5bb6;&#x3068;&#x306f;&#x3069;&#x3093;&#x306a;&#x5bb6;&#x7cfb;&#x304b;</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+/* 目次全体のコンテナ */
+nav {
+    background-color: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0 40px 0;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+/* 「目次」というタイトル */
+nav h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #0969da;
+    color: #24292f;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+/* タイトルの前にアイコン（絵文字）を追加 */
+nav h3::before {
+    content: "📖";
+    margin-right: 8px;
+}
+
+/* リストのスタイル調整 */
+#toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* リンクのスタイル */
+#toc a {
+    color: #0969da;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+#toc a:hover {
+    color: #cf222e;
+    transform: translateX(5px); /* ホバー時に少し右に動く */
+}
+
+/* h3（小見出し）がある場合のネスト表現（JSの修正も必要） */
+.toc-h3 {
+    padding-left: 20px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+
+/* 記事タイトル (h1) */
+h1 {
+    font-size: 2rem;
+    color: #24292f;
+    line-height: 1.3;
+    padding: 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 3px double #e1e4e8; /* 二重線で上品に */
+    text-align: center; /* タイトルを中央に寄せて特別感を出す */
+}
+
+/* セクション見出し (h2) */
+h2 {
+    font-size: 1.5rem;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    margin: 40px 0 20px 0;
+    background: linear-gradient(transparent 70%, #e8f0fe 70%); /* 下側に薄い色のアクセント */
+    border-left: 6px solid #0969da; /* 目次のテーマカラーと合わせる */
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* 強調文字 (strong) */
+strong {
+    font-weight: bold;
+    color: #cf222e; /* ホバー時の赤色と合わせて統一感を出す */
+    background: linear-gradient(transparent 60%, #fff2cc 60%); /* 黄色のマーカー風 */
+    padding: 0 2px;
+}
+
+/* 引用のコンテナ */
+blockquote {
+    position: relative;
+    padding: 20px 30px;
+    margin: 30px 0;
+    background-color: #f6f8fa; /* 目次の背景より少しだけ濃いグレー */
+    border-left: 5px solid #d0d7de; /* 落ち着いたグレーの境界線 */
+    color: #57606a; /* 文字色は少し薄くして引用らしさを出す */
+    font-style: italic;
+    border-radius: 0 8px 8px 0;
+}
+
+/* 引用符のアイコンを装飾として追加 */
+blockquote::before {
+    content: "“";
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    font-size: 40px;
+    color: #d0d7de;
+    font-family: serif;
+    line-height: 1;
+}
+
+/* 読者になるボタンのデザイン */
+.btn-subscribe {
+    display: inline-block;
+    padding: 12px 35px; /* 横幅を広めにとって存在感を出します */
+    background-color: #383838; /* お好みの色に変更してください */
+    color: #ffffff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn-subscribe:hover {
+    background-color: #555555;
+    text-decoration: none;
+}
+
+/* はてなブログで見えてしまう数式データを非表示にする */
+.katex-html {
+    display: none !important;
+}
+
+.katex-mathml {
+    display: inline !important;
+}
+/* Amazonカード型のオシャレなデザイン */
+.shop-card {
+    display: flex;
+    max-width: 500px;
+    margin: 20px auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* マウスホップした時の動き */
+.shop-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.shop-card-image {
+    width: 150px;
+    min-width: 150px;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shop-card-image img {
+    max-width: 100%;
+    height: auto;
+    padding: 10px;
+}
+
+.shop-card-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.shop-card-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.shop-card-description {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+/* Amazonらしいオレンジボタン */
+.shop-card-link a {
+    display: inline-block;
+    background-color: #ff9900;
+    color: #fff !important;
+    text-decoration: none !important;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.shop-card-link a:hover {
+    background-color: #e68a00;
+}
+
+/* スマホ対応：縦並びにする */
+@media (max-width: 480px) {
+    .shop-card {
+        flex-direction: column;
+        max-width: 100%;
+    }
+    .shop-card-image {
+        width: 100%;
+        height: 200px;
+    }
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+<nav>
+        <h3>目次</h3>
+        <ul id="toc"></ul> 
+</nav>
+
+            <span id="markdown-mermaid" aria-hidden="true" data-config="{&quot;darkModeTheme&quot;:&quot;vscode&quot;,&quot;lightModeTheme&quot;:&quot;vscode&quot;,&quot;maxTextSize&quot;:50000,&quot;clickDrag&quot;:&quot;alt&quot;,&quot;showControls&quot;:&quot;onHoverOrFocus&quot;,&quot;resizable&quot;:true,&quot;maxHeight&quot;:&quot;&quot;}"></span>
+				<p>1585年は秀吉が近畿から東海といった日本の中央の支配権を確保して、天下統一の方向性をほぼ確定した機関と言えます。
+この時期に地方で一番目立った動きを見せていたのは伊達か島津でしょう。</p>
+<p>後者の島津について本日は語っていこうと思います。</p>
+<button id="bgm-trigger" style="padding: 10px 20px; font-size: 16px; background-color: #008cba; color: white; border: none; border-radius: 5px; cursor: pointer;">
+  🎵 BGMを再生する
+</button>
+<h2 id="島津家とはどんな家系か">島津家とはどんな家系か</h2>
+<p>薩摩の島津家は、鎌倉時代から明治維新まで、ほぼ一貫して薩摩・大隅・日向を支配した、日本有数の大名・武家です。その家系は、源氏の流れをくむとされ、薩摩守護として土着し、戦国時代には九州の覇者として台頭しました。</p>
+<h3 id="1-島津家の出自と源氏との関係">1. 島津家の出自と源氏との関係</h3>
+<p>島津家は、<strong>源頼朝の側近として知られる惟宗広言（これむね の ひろこと）</strong> を祖とすると伝えられています。</p>
+<ul>
+<li>惟宗氏は、もともと秦氏（はたし）系の氏族とされ、後に源氏の流れをくむと称するようになりました。</li>
+<li>広言の子・忠久（ただひさ）が、源頼朝から薩摩・大隅・日向の守護職に任じられ、「島津」を名乗るようになったとされています。</li>
+<li>このため、島津家は<strong>源氏の名門</strong>としての家格を誇り、戦国時代には「源氏の正統」を自称することもありました。</li>
+</ul>
+<h3 id="2-薩摩守護としての定着と分家の分立">2. 薩摩守護としての定着と分家の分立</h3>
+<p>忠久以降、島津家は薩摩守護として土着し、鎌倉時代から室町時代にかけて勢力を拡大します。</p>
+<ul>
+<li>鎌倉時代：薩摩・大隅・日向の守護として、九州南部に基盤を築く。</li>
+<li>室町時代：守護大名としての地位を維持しつつ、分家（総州家・奥州家など）が分立し、一族内での勢力争いも生じました。</li>
+<li>戦国時代初期：分家同士の争い（「島津の乱」など）を経て、本家（宗家）が勢力を回復し、戦国大名としての体制を整えていきます。</li>
+</ul>
+<h3 id="3-戦国時代の島津家義久義弘の時代">3. 戦国時代の島津家（義久・義弘の時代）</h3>
+<p>戦国時代後期には、島津義久・義弘兄弟の時代に、島津家は九州統一を目指す大勢力となります。</p>
+<ul>
+<li>義久：島津家16代当主。冷静な戦略家として知られ、耳川の戦い（1578年）や沖田畷の戦い（1584年）で大友氏・龍造寺氏を破り、九州の大半を支配下に置きました。</li>
+<li>義弘：義久の弟。勇将として知られ、「鬼島津」の異名で恐れられました。特に朝鮮出兵（文禄・慶長の役）での活躍が有名です。</li>
+</ul>
+<p>この時代の島津家は、豊臣秀吉の天下統一の流れの中で、一時は九州の覇者として秀吉と対峙しましたが、1587年の九州征伐で降伏し、秀吉政権の一員となります。</p>
+<h3 id="4-江戸時代の薩摩藩と幕末への影響">4. 江戸時代の薩摩藩と幕末への影響</h3>
+<p>江戸時代、島津家は<strong>薩摩藩主</strong>として、77万石（表高）の大藩を統治しました。</p>
+<ul>
+<li>外様大名ながら、幕府からも一目置かれる存在で、「薩摩の隠れ念仏」とも呼ばれる独自の統治体制を築きました。</li>
+<li>幕末には、島津斉彬・久光らが登場し、薩摩藩は明治維新の中心勢力の一つとなります。</li>
+<li>西郷隆盛、大久保利通ら多くの維新志士を輩出し、明治新政府の成立に大きな役割を果たしました。</li>
+</ul>
+<h2 id="島津の北上">島津の北上</h2>
+<p>島津義久・義弘兄弟が率いる島津家は、戦国後期に薩摩から北上し、九州統一を目指して大きな勢力を築きました。その進展と、本格的な北上開始時期をまとめます。</p>
+<h3 id="1-本格的な北上開始の時期">1. 本格的な北上開始の時期</h3>
+<p>島津家が<strong>薩摩から本格的に北上を始めたのは、1570年代後半から1580年代前半にかけて</strong>です。</p>
+<ul>
+<li>1570年代前半までは、島津家は主に薩摩・大隅（現在の鹿児島県）の統一に力を注いでいました。</li>
+<li>1570年代後半になると、日向（現在の宮崎県）への進出を本格化させ、九州中央部への勢力拡大を目指します。</li>
+<li>特に<strong>1578年の耳川の戦い</strong>以降、島津家は九州の覇権争いの中心的存在となり、大友氏・龍造寺氏と激しく争うようになります。</li>
+</ul>
+<p>したがって、「本格的に薩摩から北上を始めた」明確な起点としては、<strong>1578年の耳川の戦い</strong>が一つの目安となります。</p>
+<h3 id="2-北上戦略の進展主な合戦と勢力拡大">2. 北上戦略の進展（主な合戦と勢力拡大）</h3>
+<p>島津家の北上は、以下のような主要な合戦を経て進展しました。</p>
+<p>耳川の戦いと沖田畷の戦いは、島津家が九州の覇権を握るうえで決定的な役割を果たした合戦です。それぞれの背景と戦闘の推移を、もう少し詳しくご説明します。</p>
+<p><strong>（1）耳川の戦い（1578年）</strong></p>
+<p><strong>背景：大友宗麟の日向侵攻と島津家の北上</strong></p>
+<ul>
+<li>当時の九州では、<strong>大友宗麟</strong>（豊後・筑前・肥後などを支配）と、<strong>島津義久</strong>（薩摩・大隅を統一しつつ北上）が、日向（現在の宮崎県）をめぐって激しく対立していました。</li>
+<li>大友宗麟は、キリスト教への傾倒もあり、日向に「キリスト教王国」を築こうとする構想を持っていたとされます。</li>
+<li>一方、島津家は日向の諸豪族を次第に従えつつあり、大友氏の南下を阻止しようとしていました。</li>
+</ul>
+<p>この対立が、日向・高城川（たかじょうがわ）付近での決戦へとつながります。</p>
+<p><strong>戦いの推移</strong></p>
+<ol>
+<li>
+<p><strong>大友軍の南下と高城包囲</strong></p>
+<ul>
+<li>大友宗麟は、大軍を率いて日向に侵攻し、島津方の<strong>高城（たかじょう）</strong> を包囲しました。</li>
+<li>高城は島津家の前線基地であり、ここを落とせば日向支配が確実になると考えられていました。</li>
+</ul>
+</li>
+<li>
+<p><strong>島津軍の出陣と釣り野伏せ戦術</strong></p>
+<ul>
+<li>島津義久・義弘兄弟は、薩摩から救援軍を率いて北上し、高城救援に向かいます。</li>
+<li>島津軍は、大友軍を<strong>耳川（みみかわ）</strong> 付近に誘い込む作戦をとりました。</li>
+<li>島津の得意戦術である<strong>釣り野伏せ（つりのぶせ）</strong> を駆使：
+<ul>
+<li>まず、少数の部隊が大友軍を挑発し、追撃させて深く引き込む（「釣る」）。</li>
+<li>その後、両翼や背後に伏せていた主力が一斉に襲いかかり、包囲殲滅する（「野伏せ」）。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>大友軍の壊滅</strong></p>
+<ul>
+<li>大友軍は、島津軍の囮部隊を追撃して耳川を渡り、陣形を乱したところを、島津軍の伏兵に襲われました。</li>
+<li>大友軍は混乱し、多くの武将が討ち死にし、壊滅的な打撃を受けます。</li>
+<li>大友宗麟自身は辛うじて脱出しましたが、この敗戦で大友氏の勢力は大きく後退しました。</li>
+</ul>
+</li>
+</ol>
+<p><strong>結果と影響</strong></p>
+<ul>
+<li>大友氏は、この敗戦で九州での覇権を失い、以後は島津家と龍造寺氏の台頭を許すことになります。</li>
+<li>島津家は日向をほぼ制圧し、九州中央部への進出を本格化させました。</li>
+<li>耳川の戦いは、島津家が「九州の覇者」として台頭するきっかけとなった、極めて重要な合戦です。</li>
+</ul>
+<h3 id="2沖田畷の戦い1584年">（2）沖田畷の戦い（1584年）</h3>
+<p><strong>背景：龍造寺隆信の肥前統一と島津家の介入</strong></p>
+<ul>
+<li>肥前（現在の佐賀県・長崎県一部）では、<strong>龍造寺隆信</strong>が勢力を拡大し、「五州二島の太守」と称されるほどに成長していました。</li>
+<li>龍造寺氏は、肥前の有馬氏を圧迫し、有馬晴信は窮地に立たされていました。</li>
+<li>一方、島津家は耳川の戦いで大友氏を破った後、九州統一を目指しており、龍造寺氏との対立が深まっていました。</li>
+</ul>
+<p>有馬晴信は、島津家に救援を求め、これが沖田畷の戦いの直接的なきっかけとなります。</p>
+<p><strong>戦いの推移</strong></p>
+<ol>
+<li>
+<p><strong>龍造寺軍の有馬攻め</strong></p>
+<ul>
+<li>龍造寺隆信は、有馬氏の本拠・日野江城（ひのえじょう）を攻撃するため、大軍を率いて肥前に進出しました。</li>
+<li>龍造寺軍は兵力で圧倒的優位にあり、有馬氏は危機的状況に陥ります。</li>
+</ul>
+</li>
+<li>
+<p><strong>島津軍の救援と奇襲作戦</strong></p>
+<ul>
+<li>有馬晴信の要請を受け、島津義弘が援軍を率いて肥前に到着します。</li>
+<li>島津・有馬連合軍は、龍造寺軍を**沖田畷（おきたなわて）**と呼ばれる湿地帯に誘い込む作戦をとりました。</li>
+<li>沖田畷は道幅が狭く、大軍が展開しにくい地形で、島津軍はここを活かした奇襲を計画します。</li>
+</ul>
+</li>
+<li>
+<p><strong>龍造寺軍の壊滅と隆信の戦死</strong></p>
+<ul>
+<li>龍造寺軍は、沖田畷を進軍中、島津・有馬連合軍の奇襲を受けます。</li>
+<li>道幅が狭いため、龍造寺軍は兵力を活かせず、各個撃破されていきました。</li>
+<li>龍造寺隆信自身も奮戦しましたが、島津軍の猛攻の前に討ち死にします。</li>
+<li>龍造寺軍は総崩れとなり、多くの重臣も戦死しました。</li>
+</ul>
+</li>
+</ol>
+<p><strong>結果と影響</strong></p>
+<ul>
+<li>龍造寺隆信の戦死により、龍造寺氏は急速に衰退し、後に鍋島氏が台頭するきっかけとなりました。</li>
+<li>島津家は肥前への影響力を強め、九州のほぼ全域を支配下に置く勢いを見せました。</li>
+<li>沖田畷の戦いは、島津家が九州の覇権をほぼ掌握したことを示す、決定的な勝利でした。</li>
+</ul>
+<h2 id="秀吉軍との戦い前半">秀吉軍との戦い(前半)</h2>
+<p>島津家が豊臣秀吉と争うようになった経緯は、島津家の「九州統一」の野望と、秀吉の「天下統一」政策が正面からぶつかった結果です。主な流れは以下の通りです。</p>
+<h3 id="1-島津家の九州統一戦略と秀吉の天下統一">1. 島津家の九州統一戦略と秀吉の天下統一</h3>
+<ul>
+<li>
+<p><strong>島津家の動き</strong><br>
+1578年の耳川の戦いで大友氏を破り、1584年の沖田畷の戦いで龍造寺隆信を討ち取った島津家は、九州のほぼ全域を支配下に置く勢いを見せていました。島津義久・義弘兄弟は、九州統一を目前にしていました。</p>
+</li>
+<li>
+<p><strong>秀吉の動き</strong><br>
+一方、1580年代前半には、秀吉はすでに畿内・中国地方を平定し、1584年の小牧長久手の戦いで織田信雄・徳川家康連合を事実上屈服させていました。秀吉は「天下統一」を目指し、九州にもその支配を及ぼそうとしていました。</p>
+</li>
+</ul>
+<p>この時点で、<strong>「九州を統一しようとする島津家」</strong> と <strong>「全国を統一しようとする秀吉」</strong> の利害が衝突することは避けられませんでした。</p>
+<h3 id="2-大友氏救援要請と秀吉の介入">2. 大友氏救援要請と秀吉の介入</h3>
+<ul>
+<li>
+<p><strong>大友氏の窮地</strong><br>
+耳川の戦い以降、大友宗麟は島津家の圧迫に苦しみ、領国を次々と奪われていました。特に豊後（現在の大分県）への侵攻が進み、大友氏は滅亡の危機に瀕します。</p>
+</li>
+<li>
+<p><strong>秀吉への救援要請</strong><br>
+大友宗麟は、秀吉に救援を求めます。秀吉はこれを受け、<strong>「惣無事令（そうぶじれい）」</strong>（大名同士の私戦禁止令）を根拠に、島津家に対して「戦いをやめ、秀吉の裁定に従え」と要求しました。</p>
+</li>
+<li>
+<p><strong>島津家の対応</strong><br>
+島津家は、すでに九州統一目前であり、秀吉の要求に従う理由はないと考えました。</p>
+<ul>
+<li>島津義久は、秀吉の要求を事実上無視し、大友氏への攻撃を続けます。</li>
+<li>これが、秀吉との直接対立を決定的なものにしました。</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-戸次川の戦い1587年と秀吉軍の敗北">3. 戸次川の戦い（1587年）と秀吉軍の敗北</h3>
+<p>秀吉は、まず先遣隊を九州に派遣します。</p>
+<ul>
+<li>
+<p><strong>派遣軍の構成</strong></p>
+<ul>
+<li>総大将：仙石秀久</li>
+<li>参加武将：長宗我部元親、十河存保（そごう まさやす）ら</li>
+<li>目的：大友氏を救援し、島津家を牽制すること</li>
+</ul>
+</li>
+<li>
+<p><strong>戦いの経過</strong><br>
+1587年、豊後国・戸次川（現在の大分県）付近で、島津軍と秀吉の派遣軍が激突します（<strong>戸次川の戦い</strong>）。</p>
+<ul>
+<li>島津軍は、得意の釣り野伏せ戦術などを駆使し、秀吉軍を撃破。</li>
+<li>仙石秀久は敗走し、長宗我部信親（元親の子）や十河存保らが討ち死にするなど、秀吉軍は大きな損害を出しました。</li>
+</ul>
+</li>
+<li>
+<p><strong>結果</strong></p>
+<ul>
+<li>一時的に島津家が優位に立ち、秀吉の介入を退けた形になりました。</li>
+<li>しかし、この勝利が逆に秀吉の本格的な九州征伐を招くことになります。</li>
+</ul>
+</li>
+</ul>
+<h2 id="秀吉軍との戦い後半">秀吉軍との戦い(後半)</h2>
+<p>戸次川の戦い（1587年）で先遣隊が敗北した後、豊臣秀吉は自ら大軍を率いて九州に乗り込み、島津家に対して本格的な九州征伐を開始しました。その動きと、九州に入ってからの具体的な動作を順を追ってご説明します。</p>
+<h3 id="1-戸次川の敗戦を受けた秀吉の対応">1. 戸次川の敗戦を受けた秀吉の対応</h3>
+<p>1587年初頭、秀吉の派遣軍（仙石秀久・長宗我部元親・十河存保ら）は、豊後国・戸次川で島津軍に敗れ、大きな損害を出しました。</p>
+<ul>
+<li>秀吉はこの敗戦を受け、<strong>「自ら大軍を率いて九州に乗り込む」</strong> ことを決意します。</li>
+<li>すでに畿内・中国・四国を平定していた秀吉は、10万を超える大軍を動員できる体制を整えていました。</li>
+<li>島津家に対しては、改めて「惣無事令（私戦禁止令）に従うこと」を要求し、従わない場合は武力で屈服させる姿勢を明確にしました。</li>
+</ul>
+<h3 id="2-九州征伐の本格開始と秀吉の九州上陸">2. 九州征伐の本格開始と秀吉の九州上陸</h3>
+<p>1587年春、秀吉は大軍を率いて九州に侵攻します。</p>
+<ul>
+<li><strong>進軍ルート</strong>：
+<ul>
+<li>秀吉自身は、山陽道を経て<strong>豊前国（現在の福岡県東部・大分県北部）</strong> から九州に入りました。</li>
+<li>一方、弟の<strong>羽柴秀長（豊臣秀長）</strong> を別働隊の総大将として、<strong>日向国（現在の宮崎県）</strong> 方面から進軍させました。</li>
+</ul>
+</li>
+<li><strong>兵力規模</strong>：
+<ul>
+<li>秀吉本隊・秀長隊を合わせて、総勢10万以上ともいわれる大軍でした。</li>
+<li>対する島津軍は、精強ではあるものの、兵力・物資の面で圧倒的に不利でした。</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-九州上陸後の主な軍事行動">3. 九州上陸後の主な軍事行動</h3>
+<p><strong>（1）豊前・豊後方面での進軍</strong></p>
+<ul>
+<li>秀吉本隊は、豊前・豊後を経て島津領に迫りました。</li>
+<li>大友宗麟の本拠・豊後を救援しつつ、島津方の諸城を次々と攻略・降伏させていきます。</li>
+<li>島津方の城主や家臣に対し、調略（寝返り工作）も積極的に行い、内部から切り崩しました。</li>
+</ul>
+<p><strong>（2）日向方面での秀長軍の動き</strong></p>
+<ul>
+<li>秀長軍は日向から南下し、島津家の前線基地である<strong>高城（たかじょう）</strong> などを攻撃しました。</li>
+<li>高城は耳川の戦いでも重要な拠点でしたが、秀吉軍の圧倒的な兵力の前に陥落します。</li>
+<li>日向の諸城も次々と秀吉方に降り、島津家の支配地域は急速に縮小していきました。</li>
+</ul>
+<p><strong>（3）薩摩・大隅への侵攻</strong></p>
+<ul>
+<li>秀吉軍は、日向を制圧した後、<strong>薩摩（現在の鹿児島県西部）</strong>・<strong>大隅（同東部）</strong> へと進軍します。</li>
+<li>島津家の本拠である<strong>内城（うちじょう）</strong>（鹿児島城）や、一族の拠点である<strong>清水城</strong>などが脅かされました。</li>
+<li>島津家は各地で抵抗しましたが、兵力差と物資不足から、長期戦は困難な状況に追い込まれます。</li>
+</ul>
+<h3 id="4-島津義久の降伏と和睦">4. 島津義久の降伏と和睦</h3>
+<p>秀吉軍が薩摩に迫る中、島津義久は降伏を決意します。</p>
+<ul>
+<li><strong>義久の降伏</strong>：
+<ul>
+<li>義久は自ら剃髪し、秀吉の陣に赴いて降伏を申し出ました。</li>
+<li>秀吉は、島津家の武勇を評価しつつも、その支配を認めさせ、薩摩・大隅・日向の一部を安堵する形で臣従させました。</li>
+</ul>
+</li>
+<li><strong>和睦の内容</strong>：
+<ul>
+<li>島津家は秀吉に臣従し、天下統一を認める。</li>
+<li>秀吉は島津家の所領を一部削減するものの、薩摩・大隅を本領として認める。</li>
+<li>これにより、島津家は豊臣政権の一員となり、後の関ヶ原の戦いや江戸時代の薩摩藩として存続します。</li>
+</ul>
+</li>
+</ul>
+<h3 id="5-九州征伐後の秀吉の動き">5. 九州征伐後の秀吉の動き</h3>
+<ul>
+<li>九州平定後、秀吉は <strong>「刀狩令」</strong> や <strong>「太閤検地」</strong> を本格的に実施し、全国的な兵農分離と年貢徴収体制を整えていきます。</li>
+<li>また、九州の諸大名に対して、朝鮮出兵（文禄・慶長の役）への参加を命じ、島津家もこれに従います。</li>
+<li>九州征伐の成功により、秀吉の天下統一はほぼ完成し、次の目標として <strong>「唐入り（明国征服）」</strong> 構想が具体化していきました。</li>
+</ul>
+<h2 id="その後">その後</h2>
+<p>戦国期の島津家は一旦ここで一区切りとなります。
+ですが島津家は面白い家です。せっかくなので続きも話していきたいと思います。
+島津家が豊臣秀吉に降伏した後、薩摩は豊臣政権の一部として組み込まれ、その後は江戸時代の薩摩藩、さらに幕末の雄藩として明治維新に大きな役割を果たしました。その流れを順を追ってご説明します。</p>
+<h3 id="1-豊臣政権下の薩摩と島津家1587年1600年">1. 豊臣政権下の薩摩と島津家（1587年〜1600年）</h3>
+<p><strong>降伏と所領安堵</strong></p>
+<ul>
+<li>1587年、島津義久は秀吉に降伏し、剃髪して秀吉の陣に赴きました。</li>
+<li>秀吉は、島津家の武勇を評価しつつも、その支配を認めさせ、<strong>薩摩・大隅・日向の一部</strong>を安堵する形で臣従させました。</li>
+<li>これにより、島津家は豊臣政権の一大名となり、九州統一の夢は断たれましたが、本領である薩摩・大隅は維持されました。</li>
+</ul>
+<p><strong>朝鮮出兵への参加</strong></p>
+<ul>
+<li>秀吉は朝鮮出兵（文禄・慶長の役）を開始し、島津家もこれに参加しました。</li>
+<li>特に島津義弘は、朝鮮で勇猛な戦いぶりを見せ、「鬼島津」の異名をさらに高めました。</li>
+<li>この出兵で島津家は大きな損害を出しましたが、豊臣政権内での地位は一定維持されました。</li>
+</ul>
+<p><strong>関ヶ原の戦いでの動向</strong></p>
+<ul>
+<li>1600年の関ヶ原の戦いでは、島津義弘が西軍（石田三成方）として参戦しました。</li>
+<li>義弘は、退路を断たれながらも「島津の退き口」と呼ばれる壮絶な退却戦を演じ、薩摩へ帰還しました。</li>
+<li>戦後、徳川家康は島津家を処罰せず、本領安堵を認めました。これにより、島津家は江戸時代の薩摩藩として存続します。</li>
+</ul>
+<h3 id="2-江戸時代の薩摩藩1603年1867年">2. 江戸時代の薩摩藩（1603年〜1867年）</h3>
+<p><strong>薩摩藩の成立と石高</strong></p>
+<ul>
+<li>江戸幕府が成立すると、島津家は<strong>薩摩藩主</strong>として77万石（表高）の大藩を統治しました。</li>
+<li>実際の石高はそれ以上ともいわれ、琉球を通じた貿易なども含め、経済的にも強い藩でした。</li>
+</ul>
+<p><strong>独自の統治体制</strong></p>
+<ul>
+<li>薩摩藩は「外様大名」ながら、幕府からも一目置かれる存在でした。</li>
+<li>独自の藩政として：
+<ul>
+<li><strong>門割（もんわり）</strong>：農民を組織化し、軍事・行政の基盤とする制度。</li>
+<li><strong>外城（とじょう）体制</strong>：各地に支城を置き、地域ごとに統治を強化。</li>
+<li><strong>琉球貿易</strong>：琉球王国を事実上の支配下に置き、中国との貿易で利益を得る。</li>
+</ul>
+</li>
+<li>これらの制度により、薩摩藩は「薩摩の隠れ念仏」とも呼ばれるほど、幕府の目が届きにくい独自の体制を築きました。</li>
+</ul>
+<p><strong>幕末への準備</strong></p>
+<ul>
+<li>18世紀後半以降、薩摩藩では<strong>調所広郷（ずしょ ひろさと）</strong> による財政改革が行われ、藩財政が立て直されました。</li>
+<li>また、<strong>島津斉彬（なりあきら）</strong> の時代には、集成館事業（反射炉・造船・紡績など）を推進し、西洋技術の導入と軍備強化を進めました。</li>
+<li>これらが、幕末の薩摩藩が雄藩として台頭する基盤となりました。</li>
+</ul>
+<h3 id="3-幕末の薩摩藩と明治維新">3. 幕末の薩摩藩と明治維新</h3>
+<p><strong>薩摩藩の台頭</strong></p>
+<ul>
+<li>幕末、薩摩藩は<strong>島津久光（ひさみつ）</strong>・<strong>島津忠義（ただよし）</strong> 父子のもとで、雄藩として大きな影響力を持ちました。</li>
+<li>藩士の<strong>西郷隆盛</strong>、<strong>大久保利通</strong>らが中心となり、倒幕運動を主導します。</li>
+</ul>
+<p><strong>薩長同盟と戊辰戦争</strong></p>
+<ul>
+<li>1866年、薩摩藩は長州藩と<strong>薩長同盟</strong>を結び、倒幕のための軍事協力を約束しました。</li>
+<li>1868年の戊辰戦争では、薩摩藩は新政府軍の主力として活躍し、旧幕府軍を破りました。</li>
+</ul>
+<p><strong>明治維新後の島津家</strong></p>
+<ul>
+<li>明治維新後、島津家は華族として<strong>公爵</strong>に叙せられ、日本の貴族としての地位を確立しました。</li>
+<li>島津忠義は鹿児島藩知事を経て、華族としての生活を送りました。</li>
+<li>薩摩藩出身者は、新政府の要職に就き、日本の近代化に大きな役割を果たしました（西郷隆盛、大久保利通、黒田清隆、松方正義など）。</li>
+</ul>
+<h3 id="4-現代における島津家">4. 現代における島津家</h3>
+<ul>
+<li>島津家は現在も続く名門家系として知られ、企業経営や文化活動など、さまざまな分野で活躍されています。</li>
+<li>鹿児島県には島津家ゆかりの史跡や資料館が多く残り、薩摩の歴史を今に伝えています。</li>
+</ul>
+<p>ということで鎌倉時代より続く薩摩の銘家である島津氏は今も存続しています。
+江戸時代末期は時代を変える原動力となり、その支配地より優秀な軍人、政治家を輩出しました。
+今の日本のある時期に最も影響を与えた銘家と言えるかもしれません。</p>
+
+
+<div style="width: 1px; height: 1px; overflow: hidden; opacity: 0; position: absolute;">
+  <iframe id="bgm-player" width="100" height="100" 
+  src="https://www.youtube.com/embed/_u42eRv3Yxg?enablejsapi=1" 
+  title="BGM Player" frameborder="0" allow="autoplay">
+  </iframe>
+</div>
+
+<script>
+const toc = document.getElementById('toc');
+// h2 と h3 の両方を取得
+const headings = document.querySelectorAll('h2, h3');
+
+headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = `heading-${i}`;
+    
+    const li = document.createElement('li');
+    const link = document.createElement('a');
+    link.href = `#${heading.id}`;
+    link.textContent = heading.textContent;
+    
+    // h3 の場合はクラスを付与して字下げする
+    if (heading.tagName === 'H3') {
+        li.classList.add('toc-h3');
+    }
+    
+    li.appendChild(link);
+    toc.appendChild(li);
+});
+
+// スムーズスクロールを有効にする
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+  document.getElementById('bgm-trigger').addEventListener('click', function() {
+    var iframe = document.getElementById('bgm-player');
+    
+    // すでに再生中の場合は一時停止、停止中の場合は再生するトグル処理
+    if (this.innerText.includes('再生')) {
+      // JavaScript API経由で再生コマンドを送信
+      iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+      this.innerText = '⏸ BGMを停止する';
+      this.style.backgroundColor = '#f44336'; // ボタンの色を赤系に
+    } else {
+      iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+      this.innerText = '🎵 BGMを再生する';
+      this.style.backgroundColor = '#008cba'; // ボタンの色を青系に
+    }
+  });
+</script>
+
+            
+        </body>
+        </html>
