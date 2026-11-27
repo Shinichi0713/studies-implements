@@ -9,3 +9,9 @@ sudo mv swift-5.10.1-RELEASE-ubuntu22.04-aarch64 /opt/swift
 echo 'export PATH=/opt/swift/usr/bin:$PATH' >> ~/.bashrc
 source ~/.bashrc
 
+# I2Cを有効化
+sudo raspi-config  # Interface Options -> I2C -> Enable
+
+# ビルド・実行
+swift build
+sudo swift run SensorApp
